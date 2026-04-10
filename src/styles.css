@@ -1,0 +1,60 @@
+/* Global Styles - Clean & Fixed */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #99d5a2;
+    --primary-dark: #003917;
+    --primary-light: #7bc490;
+    --bg-dark: #0a0a0a;
+    --bg-dark-2: #121212;
+    --bg-dark-3: #1a1a1a;
+    --text-light: #e2e3e0;
+    --text-gray: #c0c9be;
+    --border-light: #99d5a2;
+    --border-dark: #414941;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    border: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Remove conflicting hero styles */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Ensure proper stacking */
+#root {
+    position: relative;
+    z-index: 1;
+}
