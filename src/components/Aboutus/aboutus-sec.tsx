@@ -23,11 +23,10 @@ const Experience3D: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const scrollTargetRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const scrollPromptRef = useRef<HTMLDivElement>(null);
 
-  // Refs for text overlays
-  const startTextRef = useRef<HTMLDivElement>(null);
-  const centerTextRef = useRef<HTMLDivElement>(null);
-  const endTextRef = useRef<HTMLDivElement>(null);
+  // Refs for simple text sections
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Three.js refs
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -50,7 +49,7 @@ const Experience3D: React.FC = () => {
   useEffect(() => {
     if (!canvasRef.current || !scrollTargetRef.current || !containerRef.current) return;
 
-    // --- Setup Scene, Camera, Renderer ---
+    // --- Setup Scene, Camera, Renderer (unchanged) ---
     const ww = window.innerWidth;
     const wh = window.innerHeight;
 
@@ -78,7 +77,6 @@ const Experience3D: React.FC = () => {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     rendererRef.current = renderer;
 
-    // --- Post-processing (Bloom) ---
     const renderScene = new RenderPass(scene, camera);
     const bloomPass = new UnrealBloomPass(new THREE.Vector2(ww, wh), 1.5, 0.4, 0.85);
     bloomPass.renderToScreen = true;
@@ -91,7 +89,6 @@ const Experience3D: React.FC = () => {
     composer.addPass(bloomPass);
     composerRef.current = composer;
 
-    // --- Tube Path ---
     const pointsData = [
       [10, 89, 0], [50, 88, 10], [76, 139, 20], [126, 141, 12],
       [150, 112, 8], [157, 73, 0], [180, 44, 5], [207, 35, 10], [232, 36, 0]
@@ -101,7 +98,6 @@ const Experience3D: React.FC = () => {
     path.tension = 0.5;
     pathRef.current = path;
 
-    // --- Outer Tube ---
     const tubeGeometry = new THREE.TubeGeometry(path, 300, 4, 32, false);
     const texture = new THREE.TextureLoader().load('https://s3-us-west-2.amazonaws.com/s.cdpn.io/68819/3d_space_5.jpg');
     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
@@ -123,7 +119,6 @@ const Experience3D: React.FC = () => {
     scene.add(tube);
     tubeRef.current = tube;
 
-    // --- Inner Wireframe Tube ---
     const innerGeo = new THREE.TubeGeometry(path, 150, 3.4, 32, false);
     const edgesGeo = new THREE.EdgesGeometry(innerGeo);
     const wireMat = new THREE.LineBasicMaterial({ linewidth: 2, opacity: 0.2, transparent: true });
@@ -131,13 +126,11 @@ const Experience3D: React.FC = () => {
     scene.add(wireframe);
     wireframeRef.current = wireframe;
 
-    // --- Lighting ---
     const light = new THREE.PointLight(0xffffff, 0.35, 4, 0);
     light.castShadow = true;
     scene.add(light);
     lightRef.current = light;
 
-    // --- Particles ---
     const spikeyTexture = new THREE.TextureLoader().load('https://s3-us-west-2.amazonaws.com/s.cdpn.io/68819/spikey.png');
     const particleCount = 6800;
     const pMaterial = new THREE.PointsMaterial({
@@ -166,7 +159,6 @@ const Experience3D: React.FC = () => {
     scene.add(sys1, sys2, sys3);
     particleSystemsRef.current = [sys1, sys2, sys3];
 
-    // --- Camera Update Function ---
     const updateCameraPercentage = (percentage: number) => {
       if (!pathRef.current || !cameraGroupRef.current || !lightRef.current) return;
       const p1 = pathRef.current.getPointAt(percentage);
@@ -176,28 +168,35 @@ const Experience3D: React.FC = () => {
       lightRef.current.position.set(p2.x, p2.y, p2.z);
     };
 
-    // --- Update text opacity based on scroll progress ---
-    const updateTextOpacity = (progress: number) => {
-      const p = progress / 0.96; // normalize to 0..1
+    // Update text and scroll prompt opacity based on scroll progress
+    const updateUI = (progress: number) => {
+      const p = progress / 0.96; // normalize 0..1
 
-      // Start text: visible 0→0.15, fades out by 0.25
-      const startOpacity = p < 0.15 ? 1 : Math.max(0, 1 - (p - 0.15) / 0.1);
-      // Center text: fades in 0.4→0.5, stays 1 until 0.7, fades out 0.7→0.8
-      let centerOpacity = 0;
-      if (p >= 0.4 && p < 0.5) centerOpacity = (p - 0.4) / 0.1;
-      else if (p >= 0.5 && p < 0.7) centerOpacity = 1;
-      else if (p >= 0.7 && p < 0.8) centerOpacity = 1 - (p - 0.7) / 0.1;
-      // End text: fades in 0.8→0.9, stays 1 to end
-      let endOpacity = 0;
-      if (p >= 0.8 && p < 0.9) endOpacity = (p - 0.8) / 0.1;
-      else if (p >= 0.9) endOpacity = 1;
+      // Fade out scroll prompt quickly as soon as user scrolls
+      if (scrollPromptRef.current) {
+        scrollPromptRef.current.style.opacity = p < 0.05 ? (1 - p / 0.05) : '0';
+        scrollPromptRef.current.style.pointerEvents = p < 0.05 ? 'auto' : 'none';
+      }
 
-      if (startTextRef.current) startTextRef.current.style.opacity = startOpacity.toString();
-      if (centerTextRef.current) centerTextRef.current.style.opacity = centerOpacity.toString();
-      if (endTextRef.current) endTextRef.current.style.opacity = endOpacity.toString();
+      const sections = [
+        { el: sectionRefs.current[0], in: [0.00, 0.05], out: [0.12, 0.18] },
+        { el: sectionRefs.current[1], in: [0.18, 0.24], out: [0.32, 0.38] },
+        { el: sectionRefs.current[2], in: [0.38, 0.44], out: [0.52, 0.58] },
+        { el: sectionRefs.current[3], in: [0.58, 0.64], out: [0.72, 0.78] },
+        { el: sectionRefs.current[4], in: [0.78, 0.84], out: [0.94, 1.00] },
+      ];
+
+      sections.forEach(({ el, in: [in0, in1], out: [out0, out1] }) => {
+        if (!el) return;
+        let opacity = 0;
+        if (p >= in0 && p < in1) opacity = (p - in0) / (in1 - in0);
+        else if (p >= in1 && p < out0) opacity = 1;
+        else if (p >= out0 && p < out1) opacity = 1 - (p - out0) / (out1 - out0);
+        el.style.opacity = opacity.toString();
+        el.style.pointerEvents = 'none';
+      });
     };
 
-    // --- ScrollTrigger: update target percentage and text opacity ---
     scrollTriggerRef.current = ScrollTrigger.create({
       trigger: scrollTargetRef.current,
       start: 'top top',
@@ -206,7 +205,7 @@ const Experience3D: React.FC = () => {
       onUpdate: (self) => {
         const rawProgress = self.progress * 0.96;
         cameraTargetPercent.current = rawProgress;
-        updateTextOpacity(rawProgress);
+        updateUI(rawProgress);
       },
     });
 
@@ -214,19 +213,17 @@ const Experience3D: React.FC = () => {
       if (scrollTriggerRef.current) {
         const progress = scrollTriggerRef.current.progress * 0.96;
         cameraTargetPercent.current = progress;
-        updateTextOpacity(progress);
+        updateUI(progress);
       }
     };
     window.addEventListener('scroll', handleScroll);
 
-    // --- Mouse Move Handler ---
     const handleMouseMove = (evt: MouseEvent) => {
       cameraRotationProxy.current.x = Mathutils.map(evt.clientX, 0, window.innerWidth, 3.24, 3.04);
       cameraRotationProxy.current.y = Mathutils.map(evt.clientY, 0, window.innerHeight, -0.1, 0.1);
     };
     window.addEventListener('mousemove', handleMouseMove);
 
-    // --- Resize Handler ---
     const handleResize = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
@@ -239,7 +236,6 @@ const Experience3D: React.FC = () => {
     };
     window.addEventListener('resize', handleResize);
 
-    // --- Animation Loop ---
     const animate = () => {
       cameraCurrentPercent.current += (cameraTargetPercent.current - cameraCurrentPercent.current) * 0.08;
       updateCameraPercentage(cameraCurrentPercent.current);
@@ -260,7 +256,6 @@ const Experience3D: React.FC = () => {
     };
     animate();
 
-    // --- Cleanup ---
     return () => {
       if (animationIdRef.current) cancelAnimationFrame(animationIdRef.current);
       if (scrollTriggerRef.current) scrollTriggerRef.current.kill();
@@ -287,49 +282,186 @@ const Experience3D: React.FC = () => {
     };
   }, []);
 
-  // Shared style for all overlay texts – no background, clean font
-  const textStyle: React.CSSProperties = {
+  // Polished text style
+  const textContainerStyle: React.CSSProperties = {
     position: 'fixed',
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 'min(90vw, 800px)',
+    color: '#ffffff',
+    fontFamily: "'Montserrat', 'Segoe UI', sans-serif",
+    textAlign: 'center',
+    zIndex: 20,
+    opacity: 0,
+    transition: 'opacity 0.25s ease-out',
+    pointerEvents: 'none',
+    textShadow: '0 0 40px rgba(0,0,0,0.7), 0 0 80px rgba(0,0,0,0.4)',
+  };
+
+  const headingStyle: React.CSSProperties = {
+    fontSize: 'clamp(2.5rem, 8vw, 4.5rem)',
+    fontWeight: 800,
+    marginBottom: '1.5rem',
+    letterSpacing: '-0.02em',
+    lineHeight: 1.1,
+    textTransform: 'uppercase',
+  };
+
+  const subheadingStyle: React.CSSProperties = {
+    fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
+    fontWeight: 500,
+    marginBottom: '2rem',
+    letterSpacing: '0.1em',
+    opacity: 0.9,
+  };
+
+  const paragraphStyle: React.CSSProperties = {
+    fontSize: 'clamp(1rem, 3.5vw, 1.3rem)',
+    lineHeight: 1.7,
+    fontWeight: 400,
+    marginBottom: '1.2rem',
+  };
+
+  const strongStyle: React.CSSProperties = {
+    fontWeight: 700,
+    color: '#e0f0e0',
+  };
+
+  // Scroll prompt style
+  const scrollPromptStyle: React.CSSProperties = {
+    position: 'fixed',
+    bottom: '30px',
     left: '50%',
     transform: 'translateX(-50%)',
     color: '#ffffff',
-    fontFamily: "'Montserrat', 'Segoe UI', system-ui, sans-serif",
-    fontSize: 'clamp(2rem, 8vw, 4rem)',
-    fontWeight: 600,
-    textAlign: 'center',
-    zIndex: 20,
+    fontFamily: "'Montserrat', 'Segoe UI', sans-serif",
+    fontSize: '0.9rem',
+    fontWeight: 500,
+    letterSpacing: '0.2em',
+    textTransform: 'uppercase',
+    zIndex: 30,
+    opacity: 1,
+    transition: 'opacity 0.3s ease-out',
     pointerEvents: 'none',
-    textShadow: '0 0 20px rgba(0,0,0,0.7), 0 0 40px rgba(0,0,0,0.5)',
-    letterSpacing: '0.05em',
-    lineHeight: 1.2,
-    whiteSpace: 'nowrap',
-    opacity: 0,
-    transition: 'opacity 0.15s ease-out',
+    textShadow: '0 0 20px rgba(0,0,0,0.5)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '8px',
   };
 
   return (
     <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100vh' }}>
-      {/* Import Google Font */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap');
         body {
           margin: 0;
           overflow-x: hidden;
         }
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+          40% { transform: translateY(-10px); }
+          60% { transform: translateY(-5px); }
+        }
+        .scroll-arrow {
+          animation: bounce 2s infinite;
+        }
       `}</style>
 
       <canvas ref={canvasRef} className="experience" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100vh', zIndex: 2 }} />
-      <div ref={scrollTargetRef} className="scrollTarget" style={{ position: 'absolute', height: '1000vh', width: '100px', top: 0, zIndex: 0 }} />
+      <div ref={scrollTargetRef} className="scrollTarget" style={{ position: 'absolute', height: '1000vh', width: '100%', top: 0, zIndex: 0, pointerEvents: 'none' }} />
 
-      {/* Three sequential text overlays – Yuni narrative */}
-      <div ref={startTextRef} style={{ ...textStyle, top: '20%' }}>
-        AWAKEN THE YOUTH
+      {/* Scroll Down Prompt */}
+      <div ref={scrollPromptRef} style={scrollPromptStyle}>
+        <span>Scroll Down</span>
+        <svg className="scroll-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0 0 10px rgba(0,0,0,0.5))' }}>
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
       </div>
-      <div ref={centerTextRef} style={{ ...textStyle, top: '50%', transform: 'translate(-50%, -50%)' }}>
-        YUNI PAKISTAN
+
+      {/* Section 1 – Introduction */}
+      <div ref={el => sectionRefs.current[0] = el} style={textContainerStyle}>
+        <h1 style={headingStyle}>Yuni Pakistan</h1>
+        <div style={subheadingStyle}>Re‑Building The 21st Century Shaheen 🦅</div>
+        <p style={paragraphStyle}>
+          Yuni exists to <span style={strongStyle}>awaken the youth</span> of Pakistan, 
+          transform knowledge into power, and build a nation of thinkers, creators, and leaders.
+        </p>
+        <p style={paragraphStyle}>
+          Inspired by the vision of <span style={strongStyle}>Muhammad Iqbal</span>, 
+          we are a 360° ecosystem empowering students to rise through skill, innovation, and unity.
+        </p>
       </div>
-      <div ref={endTextRef} style={{ ...textStyle, bottom: '20%', top: 'auto', transform: 'translateX(-50%)' }}>
-        BUILD THE FUTURE
+
+      {/* Section 2 – Core Ideology */}
+      <div ref={el => sectionRefs.current[1] = el} style={textContainerStyle}>
+        <h2 style={headingStyle}>Our Ideology</h2>
+        <p style={paragraphStyle}>
+          <span style={strongStyle}>Khudi (Self‑Realization)</span> — Every young Pakistani carries untapped 
+          strength. Through education, discipline, and skill, they become agents of change.
+        </p>
+        <p style={paragraphStyle}>
+          <span style={strongStyle}>Knowledge as Power</span> — A strong nation is built on intellect. 
+          We promote learning in tech, leadership, and entrepreneurship.
+        </p>
+        <p style={paragraphStyle}>
+          <span style={strongStyle}>Economic Independence</span> — Financial dependency weakens us. 
+          Yuni fosters freelancing, startups, and digital skills for global earning.
+        </p>
+        <p style={paragraphStyle}>
+          <span style={strongStyle}>Unity & Ethical Leadership</span> — Beyond divisions, we cultivate 
+          leaders grounded in integrity and service.
+        </p>
+      </div>
+
+      {/* Section 3 – Products Overview */}
+      <div ref={el => sectionRefs.current[2] = el} style={textContainerStyle}>
+        <h2 style={headingStyle}>The Yuni Ecosystem</h2>
+        <p style={paragraphStyle}>
+          <span style={strongStyle}>Yuni-Buddy</span> (Parwaaz‑e‑Uqabi) — Connectivity, earning opportunities, jobs, and global access.
+        </p>
+        <p style={paragraphStyle}>
+          <span style={strongStyle}>Yuni-Courses</span> (Umeed‑e‑Sahar) — Practical courses taught by industry leaders, project‑based, with internships.
+        </p>
+        <p style={paragraphStyle}>
+          <span style={strongStyle}>Yuni-Coworking</span> (Yuni‑Anjuman) — Collaborative spaces fostering innovation and community.
+        </p>
+        <p style={paragraphStyle}>
+          <span style={strongStyle}>Yuni-Tech & Marketing</span> (Taqat‑e‑Parwaaz) — Boosting digital presence, AI, and e‑commerce enablement.
+        </p>
+        <p style={paragraphStyle}>
+          <span style={strongStyle}>Business Consultation</span> (Momin‑e‑Sana’at) — Guiding entrepreneurs with faith and action.
+        </p>
+      </div>
+
+      {/* Section 4 – Yuni Buddy & Courses Deep Dive */}
+      <div ref={el => sectionRefs.current[3] = el} style={textContainerStyle}>
+        <h2 style={headingStyle}>Yuni-Buddy & Yuni-Courses</h2>
+        <p style={paragraphStyle}>
+          <span style={strongStyle}>Parwaaz‑e‑Uqabi</span> — “Sitaron se aage jahan aur bhi hain”<br/>
+          Connectivity across Pakistan, earning opportunities & internships, leadership & community building, global opportunities & study resources.
+        </p>
+        <p style={paragraphStyle}>
+          <span style={strongStyle}>Umeed‑e‑Sahar</span> — “Khudi ko kar buland itna…”<br/>
+          Practical, project‑based courses taught by CEOs, COOs, Founders. Portfolio building & job security. No certification without passing final projects. Course + Internship guarantee.
+        </p>
+      </div>
+
+      {/* Section 5 – Tech, Marketing & Coworking */}
+      <div ref={el => sectionRefs.current[4] = el} style={textContainerStyle}>
+        <h2 style={headingStyle}>Taqat‑e‑Parwaaz & Yuni‑Anjuman</h2>
+        <p style={paragraphStyle}>
+          <span style={strongStyle}>Yuni-Tech & Marketing</span> — Boosting Pakistan’s digital presence with AI, 
+          automation, e‑commerce, and global branding. Empowering businesses to soar with tech.
+        </p>
+        <p style={paragraphStyle}>
+          <span style={strongStyle}>Yuni-Coworking</span> — Collaborative spaces for innovation, mentorship, 
+          and events. Where <em>Shaheens</em> gather to build the future.
+        </p>
+        <p style={{ ...paragraphStyle, marginTop: '2rem', fontStyle: 'italic' }}>
+          “Yaqeen Muhkam, Amal Paiham, Mohabbat Fateh‑e‑Alam”
+        </p>
       </div>
 
       {/* Vignette effect for depth */}

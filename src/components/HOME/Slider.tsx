@@ -1,3 +1,4 @@
+// src/components/HOME/slider.tsx
 import React from 'react';
 
 interface SliderProps {
@@ -44,7 +45,7 @@ const Slider: React.FC<SliderProps> = ({
           display: flex;
           width: 100%;
           min-width: calc(var(--width) * var(--quantity));
-          position: relative;
+          position: relative;  /* FIXED: absolute children need relative parent */
         }
         .slider .list .item {
           width: var(--width);
@@ -68,16 +69,7 @@ const Slider: React.FC<SliderProps> = ({
             left: calc(var(--width) * -1);
           }
         }
-        .slider:hover .item {
-          animation-play-state: paused !important;
-          filter: grayscale(1);
-        }
-        .slider .item:hover {
-          filter: grayscale(0);
-        }
-        .slider[reverse="true"] .item {
-          animation: reversePlay 10s linear infinite;
-        }
+        /* Reverse animation */
         @keyframes reversePlay {
           from {
             left: calc(var(--width) * -1);
@@ -86,10 +78,21 @@ const Slider: React.FC<SliderProps> = ({
             left: 100%;
           }
         }
+        /* Apply reverse class styling */
+        .slider.reverse .list .item {
+          animation: reversePlay 10s linear infinite;
+        }
+        .slider:hover .item {
+          animation-play-state: paused !important;
+          filter: grayscale(1);
+        }
+        .slider .item:hover {
+          filter: grayscale(0);
+        }
       `}</style>
 
       <div
-        className={`slider ${className}`}
+        className={`slider ${reverse ? 'reverse' : ''} ${className}`}
         style={
           {
             '--width': `${width}px`,
@@ -97,7 +100,6 @@ const Slider: React.FC<SliderProps> = ({
             '--quantity': effectiveQuantity,
           } as React.CSSProperties
         }
-        reverse={reverse ? 'true' : undefined}
       >
         <div className="list">
           {displayedImages.map((src, index) => (

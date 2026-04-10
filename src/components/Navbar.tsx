@@ -1,6 +1,6 @@
 // src/components/Navbar.tsx
 import { Link, useLocation } from 'react-router-dom';
-import {compname} from '../constants'
+import { compname } from '../constants';
 
 export default function Navbar() {
   const location = useLocation();
@@ -24,26 +24,28 @@ export default function Navbar() {
         </div>
 
         <div className="navbar-links">
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             className={location.pathname === '/' ? 'active' : ''}
           >
             Home
           </Link>
-          <Link 
-            to="/about" 
+          <Link
+            to="/about"
             className={location.pathname === '/about' ? 'active' : ''}
           >
             About
           </Link>
-          <a 
-            href="#services" 
-            onClick={(e) => handleSmoothScroll(e, 'services')}
+          {/* Services now uses react-router Link to "/services" */}
+          <Link
+            to="/services"
+            className={location.pathname === '/services' ? 'active' : ''}
           >
             Services
-          </a>
-          <a 
-            href="#contact" 
+          </Link>
+          {/* Contact remains a hash link with smooth scroll (works only on homepage) */}
+          <a
+            href="#contact"
             onClick={(e) => handleSmoothScroll(e, 'contact')}
           >
             Contact
@@ -64,7 +66,6 @@ export default function Navbar() {
         }
 
         .navbar-container {
-          // max-width: 1200px;
           margin: 0 auto;
           display: flex;
           justify-content: space-between;
