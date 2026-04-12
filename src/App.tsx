@@ -1,4 +1,5 @@
 // src/App.tsx
+import { useLayoutEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -12,20 +13,32 @@ import './styles.css';
 
 function App() {
   const location = useLocation();
-  
-  return (
-    <div>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/careers" element={<Careers />} />
-        <Route path="/events" element={<Events />} />
 
-      </Routes>
-      {/* Footer shown everywhere except About & Contact page */}
+  // 🔧 Disable browser's automatic scroll restoration (only once)
+  useLayoutEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
+
+  // 🔧 Scroll to top on every route change
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  return (
+    <div className="app-wrapper">
+      <Navbar />
+      <main className="page-content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/events" element={<Events />} />
+        </Routes>
+      </main>
       {(location.pathname !== '/about' && location.pathname !== '/contact') && <Footer />}
     </div>
   );

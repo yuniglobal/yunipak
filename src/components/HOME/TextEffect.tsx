@@ -1,5 +1,6 @@
 // src/components/HOME/TextEffect.tsx
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -9,13 +10,13 @@ interface TextEffectItem {
   mainText: string;
   spanText: string;
   link?: string;
+  isExternal?: boolean; // For external links like social media
 }
 
 const TextEffect = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRefs = useRef<(HTMLHeadingElement | null)[]>([]);
 
-  // Yuni Pakistan focused messaging
   const textItems: TextEffectItem[] = [
     { mainText: "YUNI PAKISTAN", spanText: "INNOVATION" },
     { mainText: "TECH SOLUTIONS", spanText: "FOR TOMORROW" },
@@ -115,7 +116,8 @@ const TextEffect = () => {
           pointer-events: auto;
         }
 
-        .text a {
+        .text a,
+        .text .nav-link {
           text-decoration: none;
           color: inherit;
           display: block;
@@ -138,7 +140,7 @@ const TextEffect = () => {
 
       <div className="text-effect-container" ref={containerRef}>
         {textItems.map((item, index) => (
-          <h1 
+          <h1
             key={index}
             className={`text ${item.link ? 'has-link' : ''}`}
             ref={(el) => { textRefs.current[index] = el; }}
@@ -146,9 +148,15 @@ const TextEffect = () => {
             {item.mainText}
             <span>
               {item.link ? (
-                <a href={item.link} target={item.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
-                  {item.spanText}
-                </a>
+                item.link.startsWith('http') ? (
+                  <a href={item.link} target="_blank" rel="noopener noreferrer">
+                    {item.spanText}
+                  </a>
+                ) : (
+                  <Link to={item.link} className="nav-link">
+                    {item.spanText}
+                  </Link>
+                )
               ) : (
                 item.spanText
               )}
