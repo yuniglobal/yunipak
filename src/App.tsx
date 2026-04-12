@@ -7,6 +7,7 @@ import About from './pages/Aboutus';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
 import Careers from './pages/Careers';
+import Events from './pages/Events';
 import './styles.css';
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/careers" element={<Careers />} />
+        <Route path="/events" element={<Events />} />
+
       </Routes>
       {/* Footer shown everywhere except About & Contact page */}
       {(location.pathname !== '/about' && location.pathname !== '/contact') && <Footer />}
