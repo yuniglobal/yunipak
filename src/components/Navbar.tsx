@@ -32,6 +32,12 @@ export default function Navbar() {
             Services
           </Link>
           <Link
+            to="/events"
+            className={location.pathname === '/events' ? 'active' : ''}
+          >
+            Events
+          </Link>
+          <Link
             to="/contact"
             className={location.pathname === '/contact' ? 'active' : ''}
           >
