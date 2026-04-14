@@ -64,7 +64,7 @@ const XIcon = () => (
   </svg>
 );
 
-// Simple Logo Placeholder (replace with your own)
+// Simple Logo Placeholder
 const Logo = () => (
   <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
     <circle cx="20" cy="20" r="18" fill="#0ae448" />
@@ -83,6 +83,11 @@ const GetInTouch: React.FC = () => {
     agree: false,
   });
 
+  const [status, setStatus] = useState<{ type: 'idle' | 'loading' | 'success' | 'error', message: string }>({
+    type: 'idle',
+    message: '',
+  });
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -94,10 +99,57 @@ const GetInTouch: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    alert("Message sent! (demo)");
+
+    // Validate required fields
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.message) {
+      setStatus({ type: 'error', message: 'Please fill in all required fields (First name, Last name, Email, Message).' });
+      return;
+    }
+
+    if (!formData.agree) {
+      setStatus({ type: 'error', message: 'You must agree to the Privacy Policy.' });
+      return;
+    }
+
+    setStatus({ type: 'loading', message: 'Sending message...' });
+
+    try {
+      const response = await fetch('/api/send-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          message: formData.message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus({ type: 'success', message: '✅ Message sent successfully! We\'ll get back to you soon.' });
+        // Reset form
+        setFormData({
+          firstName: "",
+          lastName: "",
+          company: "",
+          email: "",
+          phone: "",
+          message: "",
+          agree: false,
+        });
+      } else {
+        setStatus({ type: 'error', message: `❌ ${data.error || 'Something went wrong. Please try again.'}` });
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+      setStatus({ type: 'error', message: '❌ Network error – please check your connection and try again.' });
+    }
   };
 
   const rainbowDivs = Array.from({ length: 25 }, (_, i) => (
@@ -120,7 +172,6 @@ const GetInTouch: React.FC = () => {
         <div className="contact-container">
           {/* Left Column – Contact Info */}
           <div className="contact-info">
-            {/* Logo / Brand */}
             <div className="logo-wrapper">
               <Logo />
               <span className="brand-name">Yunipakistan</span>
@@ -176,7 +227,7 @@ const GetInTouch: React.FC = () => {
           <form onSubmit={handleSubmit} className="contact-form">
             <div className="form-row">
               <div className="form-group">
-                <label htmlFor="firstName">First Name</label>
+                <label htmlFor="firstName">First Name *</label>
                 <input
                   type="text"
                   id="firstName"
@@ -184,10 +235,11 @@ const GetInTouch: React.FC = () => {
                   value={formData.firstName}
                   onChange={handleChange}
                   placeholder="John"
+                  required
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="lastName">Last Name</label>
+                <label htmlFor="lastName">Last Name *</label>
                 <input
                   type="text"
                   id="lastName"
@@ -195,6 +247,7 @@ const GetInTouch: React.FC = () => {
                   value={formData.lastName}
                   onChange={handleChange}
                   placeholder="Doe"
+                  required
                 />
               </div>
             </div>
@@ -212,7 +265,7 @@ const GetInTouch: React.FC = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">Email *</label>
               <input
                 type="email"
                 id="email"
@@ -220,6 +273,7 @@ const GetInTouch: React.FC = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="john@example.com"
+                required
               />
             </div>
 
@@ -236,7 +290,7 @@ const GetInTouch: React.FC = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="message">Message</label>
+              <label htmlFor="message">Message *</label>
               <textarea
                 id="message"
                 name="message"
@@ -244,6 +298,7 @@ const GetInTouch: React.FC = () => {
                 value={formData.message}
                 onChange={handleChange}
                 placeholder="Tell us what we can help you with"
+                required
               />
             </div>
 
@@ -254,6 +309,7 @@ const GetInTouch: React.FC = () => {
                 name="agree"
                 checked={formData.agree}
                 onChange={handleChange}
+                required
               />
               <label htmlFor="agree">
                 I'd like to receive more information about company. I understand
@@ -261,18 +317,24 @@ const GetInTouch: React.FC = () => {
               </label>
             </div>
 
-            <button type="submit" className="submit-btn">
-              Send Message
+            {/* Status message */}
+            {status.type !== 'idle' && (
+              <div className={`status-message ${status.type}`}>
+                {status.message}
+              </div>
+            )}
+
+            <button type="submit" className="submit-btn" disabled={status.type === 'loading'}>
+              {status.type === 'loading' ? 'Sending...' : 'Send Message'}
             </button>
           </form>
         </div>
       </section>
 
       <style>{`
-        /* Import modern font */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-        /* ===== Rainbow Background ===== */
+        /* Rainbow Background */
         .rainbow-background {
           position: fixed;
           top: 0;
@@ -319,7 +381,7 @@ const GetInTouch: React.FC = () => {
 
         ${generateRainbowCSS()}
 
-        /* ===== Main Content ===== */
+        /* Main Content */
         .get-in-touch {
           position: relative;
           z-index: 10;
@@ -350,7 +412,7 @@ const GetInTouch: React.FC = () => {
           }
         }
 
-        /* ===== Contact Info Card ===== */
+        /* Contact Info Card */
         .contact-info {
           display: flex;
           flex-direction: column;
@@ -426,7 +488,7 @@ const GetInTouch: React.FC = () => {
           transform: translateY(-2px);
         }
 
-        /* ===== Contact Form Card ===== */
+        /* Contact Form Card */
         .contact-form {
           display: flex;
           flex-direction: column;
@@ -520,6 +582,31 @@ const GetInTouch: React.FC = () => {
           text-decoration: underline;
         }
 
+        .status-message {
+          padding: 0.75rem 1rem;
+          border-radius: 0.75rem;
+          font-size: 0.9rem;
+          margin-top: 0.5rem;
+        }
+
+        .status-message.success {
+          background: rgba(10, 228, 72, 0.2);
+          border: 1px solid #0ae448;
+          color: #0ae448;
+        }
+
+        .status-message.error {
+          background: rgba(255, 80, 80, 0.2);
+          border: 1px solid #ff5555;
+          color: #ff8888;
+        }
+
+        .status-message.loading {
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid #aaa;
+          color: #ddd;
+        }
+
         .submit-btn {
           background-color: #0ae448;
           color: #000000;
@@ -534,10 +621,15 @@ const GetInTouch: React.FC = () => {
           width: fit-content;
         }
 
-        .submit-btn:hover {
+        .submit-btn:hover:not(:disabled) {
           background-color: #0a3d20;
           color: #ffffff;
           box-shadow: 0 4px 12px rgba(10, 228, 72, 0.3);
+        }
+
+        .submit-btn:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
         }
       `}</style>
     </>
