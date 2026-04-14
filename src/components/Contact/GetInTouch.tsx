@@ -64,7 +64,6 @@ const XIcon = () => (
   </svg>
 );
 
-// Simple Logo Placeholder
 const Logo = () => (
   <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
     <circle cx="20" cy="20" r="18" fill="#0ae448" />
@@ -88,10 +87,34 @@ const GetInTouch: React.FC = () => {
     message: '',
   });
 
+  // Validation helpers
+  const validateName = (value: string): boolean => /^[A-Za-z\s\-']{0,50}$/.test(value);
+  const validatePhone = (value: string): boolean => /^\d{0,15}$/.test(value);
+  const validateEmail = (value: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length <= 100;
+  const validateCompany = (value: string): boolean => value.length <= 100;
+  const validateMessage = (value: string): boolean => value.length <= 1000;
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value, type } = e.target;
+    switch (name) {
+      case 'firstName':
+      case 'lastName':
+        if (!validateName(value)) return;
+        break;
+      case 'phone':
+        if (!validatePhone(value)) return;
+        break;
+      case 'company':
+        if (!validateCompany(value)) return;
+        break;
+      case 'message':
+        if (!validateMessage(value)) return;
+        break;
+      default:
+        break;
+    }
     const checked = (e.target as HTMLInputElement).checked;
     setFormData((prev) => ({
       ...prev,
@@ -102,12 +125,30 @@ const GetInTouch: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate required fields
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.message) {
-      setStatus({ type: 'error', message: 'Please fill in all required fields (First name, Last name, Email, Message).' });
+    if (!formData.firstName || !validateName(formData.firstName)) {
+      setStatus({ type: 'error', message: 'First name must contain only letters, spaces, hyphens or apostrophes (max 50 characters).' });
       return;
     }
-
+    if (!formData.lastName || !validateName(formData.lastName)) {
+      setStatus({ type: 'error', message: 'Last name must contain only letters, spaces, hyphens or apostrophes (max 50 characters).' });
+      return;
+    }
+    if (!formData.email || !validateEmail(formData.email)) {
+      setStatus({ type: 'error', message: 'Please enter a valid email address (max 100 characters).' });
+      return;
+    }
+    if (formData.phone && !validatePhone(formData.phone)) {
+      setStatus({ type: 'error', message: 'Phone number must contain only digits (max 15).' });
+      return;
+    }
+    if (formData.company && !validateCompany(formData.company)) {
+      setStatus({ type: 'error', message: 'Company name must not exceed 100 characters.' });
+      return;
+    }
+    if (!formData.message || !validateMessage(formData.message)) {
+      setStatus({ type: 'error', message: 'Message must not exceed 1000 characters.' });
+      return;
+    }
     if (!formData.agree) {
       setStatus({ type: 'error', message: 'You must agree to the Privacy Policy.' });
       return;
@@ -132,8 +173,7 @@ const GetInTouch: React.FC = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setStatus({ type: 'success', message: '✅ Message sent successfully! We\'ll get back to you soon.' });
-        // Reset form
+        setStatus({ type: 'success', message: 'Message sent successfully! We will get back to you soon.' });
         setFormData({
           firstName: "",
           lastName: "",
@@ -144,11 +184,11 @@ const GetInTouch: React.FC = () => {
           agree: false,
         });
       } else {
-        setStatus({ type: 'error', message: `❌ ${data.error || 'Something went wrong. Please try again.'}` });
+        setStatus({ type: 'error', message: `${data.error || 'Something went wrong. Please try again.'}` });
       }
     } catch (error) {
       console.error('Network error:', error);
-      setStatus({ type: 'error', message: '❌ Network error – please check your connection and try again.' });
+      setStatus({ type: 'error', message: 'Network error – please check your connection and try again.' });
     }
   };
 
@@ -158,172 +198,80 @@ const GetInTouch: React.FC = () => {
 
   return (
     <>
-      {/* Rainbow Background */}
       <div className="rainbow-background">
         {rainbowDivs}
         <div className="h" />
         <div className="v" />
       </div>
 
-      {/* Main Content */}
       <section className="get-in-touch">
         <h1 className="page-title">Get in touch</h1>
 
         <div className="contact-container">
-          {/* Left Column – Contact Info */}
+          {/* Left column – Contact info */}
           <div className="contact-info">
             <div className="logo-wrapper">
               <Logo />
               <span className="brand-name">Yunipakistan</span>
             </div>
-
             <div className="info-block">
               <h2>Visit us</h2>
-              <p>
-                Come say hello at our office HQ.
-                <br />
-                67 Wisteria Way Croydon South VIC 3136 AU
-              </p>
+              <p>67 Wisteria Way Croydon South VIC 3136 AU</p>
             </div>
-
             <div className="info-block">
               <h2>Chat to us</h2>
-              <p>
-                Our friendly team is here to help.
-                <br />
-                <a href="mailto:hello@paysphere.com">hello@paysphere.com</a>
-              </p>
+              <p><a href="mailto:hello@paysphere.com">hello@paysphere.com</a></p>
             </div>
-
             <div className="info-block">
               <h2>Call us</h2>
-              <p>
-                Mon-Fri from 8am to 5pm
-                <br />
-                <a href="tel:+995555555555">(+995) 555-55-55-55</a>
-              </p>
+              <p>Mon-Fri from 8am to 5pm<br /><a href="tel:+995555555555">(+995) 555-55-55-55</a></p>
             </div>
-
             <div className="info-block">
               <h2>Follow us</h2>
               <div className="social-icons">
-                <a href="#" aria-label="Instagram" className="social-link">
-                  <InstagramIcon />
-                </a>
-                <a href="#" aria-label="GitHub" className="social-link">
-                  <GithubIcon />
-                </a>
-                <a href="#" aria-label="LinkedIn" className="social-link">
-                  <LinkedInIcon />
-                </a>
-                <a href="#" aria-label="X (Twitter)" className="social-link">
-                  <XIcon />
-                </a>
+                <a href="#" aria-label="Instagram" className="social-link"><InstagramIcon /></a>
+                <a href="#" aria-label="GitHub" className="social-link"><GithubIcon /></a>
+                <a href="#" aria-label="LinkedIn" className="social-link"><LinkedInIcon /></a>
+                <a href="#" aria-label="X" className="social-link"><XIcon /></a>
               </div>
             </div>
           </div>
 
-          {/* Right Column – Contact Form */}
+          {/* Right column – Contact Form */}
           <form onSubmit={handleSubmit} className="contact-form">
             <div className="form-row">
               <div className="form-group">
                 <label htmlFor="firstName">First Name *</label>
-                <input
-                  type="text"
-                  id="firstName"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  placeholder="John"
-                  required
-                />
+                <input type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} placeholder="John" required maxLength={50} />
               </div>
               <div className="form-group">
                 <label htmlFor="lastName">Last Name *</label>
-                <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  placeholder="Doe"
-                  required
-                />
+                <input type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Doe" required maxLength={50} />
               </div>
             </div>
-
             <div className="form-group">
               <label htmlFor="company">Company Name</label>
-              <input
-                type="text"
-                id="company"
-                name="company"
-                value={formData.company}
-                onChange={handleChange}
-                placeholder="Acme Inc."
-              />
+              <input type="text" id="company" name="company" value={formData.company} onChange={handleChange} placeholder="Acme Inc." maxLength={100} />
             </div>
-
             <div className="form-group">
               <label htmlFor="email">Email *</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="john@example.com"
-                required
-              />
+              <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} placeholder="john@example.com" required maxLength={100} />
             </div>
-
             <div className="form-group">
               <label htmlFor="phone">Phone Number</label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="+1 (555) 000-0000"
-              />
+              <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} placeholder="1234567890" maxLength={15} />
+              <small>Digits only, up to 15</small>
             </div>
-
             <div className="form-group">
               <label htmlFor="message">Message *</label>
-              <textarea
-                id="message"
-                name="message"
-                rows={4}
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Tell us what we can help you with"
-                required
-              />
+              <textarea id="message" name="message" rows={4} value={formData.message} onChange={handleChange} placeholder="Tell us what we can help you with" required maxLength={1000} />
+              <small>{formData.message.length}/1000 characters</small>
             </div>
-
             <div className="checkbox-group">
-              <input
-                type="checkbox"
-                id="agree"
-                name="agree"
-                checked={formData.agree}
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="agree">
-                I'd like to receive more information about company. I understand
-                and agree to the <a href="#">Privacy Policy</a>
-              </label>
+              <input type="checkbox" id="agree" name="agree" checked={formData.agree} onChange={handleChange} required />
+              <label htmlFor="agree">I'd like to receive more information about company. I understand and agree to the <a href="#">Privacy Policy</a></label>
             </div>
-
-            {/* Status message */}
-            {status.type !== 'idle' && (
-              <div className={`status-message ${status.type}`}>
-                {status.message}
-              </div>
-            )}
-
+            {status.type !== 'idle' && <div className={`status-message ${status.type}`}>{status.message}</div>}
             <button type="submit" className="submit-btn" disabled={status.type === 'loading'}>
               {status.type === 'loading' ? 'Sending...' : 'Send Message'}
             </button>
@@ -334,13 +282,16 @@ const GetInTouch: React.FC = () => {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-        /* Rainbow Background */
+        * {
+          box-sizing: border-box;
+        }
+
         .rainbow-background {
           position: fixed;
           top: 0;
           left: 0;
-          width: 100vw;
-          height: 100vh;
+          width: 100%;
+          height: 100%;
           overflow: hidden;
           z-index: 0;
           pointer-events: none;
@@ -381,141 +332,143 @@ const GetInTouch: React.FC = () => {
 
         ${generateRainbowCSS()}
 
-        /* Main Content */
         .get-in-touch {
           position: relative;
           z-index: 10;
           max-width: 1200px;
           margin: 0 auto;
-          padding: 6rem 1.5rem 3rem;
+          padding: 2rem 1rem;
           font-family: 'Inter', sans-serif;
           background: transparent;
         }
 
+        /* Extra top padding for laptops/desktops to clear fixed navbar */
+        @media (min-width: 1024px) {
+          .get-in-touch {
+            padding-top: 5rem;
+          }
+        }
+
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .get-in-touch {
+            padding-top: 3rem;
+          }
+        }
+
         .page-title {
-          font-size: 2.5rem;
+          font-size: 2rem;
           font-weight: 700;
-          margin-bottom: 2.5rem;
+          margin-bottom: 1.5rem;
           color: #ffffff;
-          text-shadow: 0 0 15px rgba(0,0,0,0.7);
+          text-shadow: 0 0 10px rgba(0,0,0,0.5);
+          text-align: center;
+        }
+
+        @media (min-width: 768px) {
+          .page-title {
+            text-align: left;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+          }
         }
 
         .contact-container {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 2rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
         }
 
         @media (min-width: 768px) {
           .contact-container {
-            grid-template-columns: 1fr 1fr;
+            flex-direction: row;
+            gap: 2rem;
+          }
+          .contact-info {
+            flex: 1;
+          }
+          .contact-form {
+            flex: 1.2;
           }
         }
 
-        /* Contact Info Card */
         .contact-info {
-          display: flex;
-          flex-direction: column;
-          gap: 1.75rem;
-          background: rgba(20, 20, 20, 0.75);
+          background: rgba(20, 20, 20, 0.85);
           backdrop-filter: blur(8px);
-          padding: 2rem;
-          border-radius: 1.5rem;
-          box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+          padding: 1.5rem;
+          border-radius: 1.25rem;
           border: 1px solid rgba(10, 228, 72, 0.25);
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .contact-info:hover {
-          box-shadow: 0 12px 40px rgba(0,0,0,0.8);
-          border-color: rgba(10, 228, 72, 0.4);
+          transition: all 0.2s;
         }
 
         .logo-wrapper {
           display: flex;
           align-items: center;
           gap: 12px;
-          margin-bottom: 0.5rem;
+          margin-bottom: 1.5rem;
         }
 
         .brand-name {
-          font-size: 1.75rem;
+          font-size: 1.5rem;
           font-weight: 700;
           color: #0ae448;
-          letter-spacing: -0.5px;
         }
 
+        .info-block {
+          margin-bottom: 1.5rem;
+        }
+        .info-block:last-child {
+          margin-bottom: 0;
+        }
         .info-block h2 {
-          font-size: 1.25rem;
+          font-size: 1.1rem;
           font-weight: 600;
           margin-bottom: 0.5rem;
           color: #ffffff;
         }
-
         .info-block p {
-          color: #ffffff;
-          line-height: 1.6;
-          margin: 0;
+          color: #e0e0e0;
+          line-height: 1.5;
+          font-size: 0.9rem;
         }
-
         .info-block a {
           color: #0ae448;
           text-decoration: none;
-          transition: color 0.15s;
+          word-break: break-word;
         }
-
-        .info-block a:hover {
-          color: #ffffff;
-          text-decoration: underline;
-        }
-
         .social-icons {
           display: flex;
-          gap: 1.5rem;
-          margin-top: 0.25rem;
+          gap: 1rem;
+          margin-top: 0.5rem;
         }
-
         .social-link {
           color: #0ae448;
-          transition: color 0.15s, transform 0.15s;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
+          transition: color 0.15s;
         }
-
         .social-link:hover {
           color: #ffffff;
-          transform: translateY(-2px);
         }
 
-        /* Contact Form Card */
         .contact-form {
-          display: flex;
-          flex-direction: column;
-          gap: 1.25rem;
-          background: rgba(20, 20, 20, 0.75);
+          background: rgba(20, 20, 20, 0.85);
           backdrop-filter: blur(8px);
-          padding: 2rem;
-          border-radius: 1.5rem;
-          box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+          padding: 1.5rem;
+          border-radius: 1.25rem;
           border: 1px solid rgba(10, 228, 72, 0.25);
-          transition: box-shadow 0.2s ease;
-        }
-
-        .contact-form:hover {
-          box-shadow: 0 12px 40px rgba(0,0,0,0.8);
-          border-color: rgba(10, 228, 72, 0.4);
+          transition: all 0.2s;
         }
 
         .form-row {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1.25rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
         }
-
         @media (min-width: 640px) {
           .form-row {
-            grid-template-columns: 1fr 1fr;
+            flex-direction: row;
+            gap: 1rem;
+          }
+          .form-row .form-group {
+            flex: 1;
           }
         }
 
@@ -523,113 +476,113 @@ const GetInTouch: React.FC = () => {
           display: flex;
           flex-direction: column;
           gap: 0.5rem;
+          margin-bottom: 0.5rem;
         }
-
         .form-group label {
           font-weight: 500;
           color: #ffffff;
+          font-size: 0.9rem;
         }
-
         .form-group input,
         .form-group textarea {
-          padding: 0.875rem 1rem;
-          border: 1px solid #333;
+          padding: 0.75rem 1rem;
+          border: 1px solid #444;
           border-radius: 0.75rem;
           font-family: inherit;
           font-size: 1rem;
           background: rgba(30, 30, 30, 0.9);
           color: #ffffff;
           transition: border-color 0.2s, box-shadow 0.2s;
+          -webkit-appearance: none;
+          width: 100%;
         }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-          color: #aaaaaa;
-        }
-
         .form-group input:focus,
         .form-group textarea:focus {
           outline: none;
           border-color: #0ae448;
-          box-shadow: 0 0 0 3px rgba(10, 228, 72, 0.25);
+          box-shadow: 0 0 0 3px rgba(10, 228, 72, 0.2);
         }
-
+        small {
+          color: #aaa;
+          font-size: 0.7rem;
+          margin-top: 0.25rem;
+        }
         .checkbox-group {
           display: flex;
           align-items: flex-start;
           gap: 0.75rem;
-          margin-top: 0.25rem;
+          margin: 0.5rem 0;
         }
-
         .checkbox-group input {
           margin-top: 0.2rem;
           accent-color: #0ae448;
+          flex-shrink: 0;
         }
-
         .checkbox-group label {
-          font-size: 0.9rem;
-          color: #ffffff;
-          line-height: 1.5;
+          font-size: 0.85rem;
+          color: #e0e0e0;
+          line-height: 1.4;
         }
-
-        .checkbox-group a {
-          color: #0ae448;
-          text-decoration: none;
-        }
-
-        .checkbox-group a:hover {
-          color: #ffffff;
-          text-decoration: underline;
-        }
-
         .status-message {
-          padding: 0.75rem 1rem;
+          padding: 0.75rem;
           border-radius: 0.75rem;
-          font-size: 0.9rem;
-          margin-top: 0.5rem;
+          font-size: 0.85rem;
+          text-align: center;
         }
-
         .status-message.success {
-          background: rgba(10, 228, 72, 0.2);
+          background: rgba(10, 228, 72, 0.15);
           border: 1px solid #0ae448;
           color: #0ae448;
         }
-
         .status-message.error {
-          background: rgba(255, 80, 80, 0.2);
+          background: rgba(255, 80, 80, 0.15);
           border: 1px solid #ff5555;
           color: #ff8888;
         }
-
         .status-message.loading {
           background: rgba(255, 255, 255, 0.1);
           border: 1px solid #aaa;
           color: #ddd;
         }
-
         .submit-btn {
           background-color: #0ae448;
           color: #000000;
           font-weight: 600;
-          padding: 0.875rem 2rem;
+          padding: 0.85rem 1.5rem;
           border: none;
           border-radius: 0.75rem;
           font-size: 1rem;
           cursor: pointer;
-          transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+          transition: all 0.2s;
+          width: 100%;
           margin-top: 0.5rem;
-          width: fit-content;
         }
-
         .submit-btn:hover:not(:disabled) {
           background-color: #0a3d20;
           color: #ffffff;
-          box-shadow: 0 4px 12px rgba(10, 228, 72, 0.3);
+          transform: translateY(-1px);
         }
-
         .submit-btn:disabled {
           opacity: 0.6;
           cursor: not-allowed;
+        }
+
+        @media (max-width: 480px) {
+          .get-in-touch {
+            padding: 1rem;
+          }
+          .contact-info, .contact-form {
+            padding: 1.25rem;
+          }
+          .page-title {
+            font-size: 1.75rem;
+          }
+          .brand-name {
+            font-size: 1.3rem;
+          }
+          .submit-btn {
+            padding: 0.75rem 1rem;
+          }
         }
       `}</style>
     </>

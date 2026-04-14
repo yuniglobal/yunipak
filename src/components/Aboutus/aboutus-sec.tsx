@@ -25,6 +25,7 @@ const Experience3D: React.FC = () => {
   const scrollTargetRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollPromptRef = useRef<HTMLDivElement>(null);
+  const blurOverlayRef = useRef<HTMLDivElement>(null); // NEW: reference for blur overlay
 
   // Refs for simple text sections
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -40,7 +41,7 @@ const Experience3D: React.FC = () => {
   const lightRef = useRef<THREE.PointLight | null>(null);
   const particleSystemsRef = useRef<THREE.Points[]>([]);
   const pathRef = useRef<THREE.CatmullRomCurve3 | null>(null);
-  const animationIdRef = useRef<number | null>(null); // Fixed: provide initial value
+  const animationIdRef = useRef<number | null>(null);
   const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
 
   const cameraTargetPercent = useRef(0);
@@ -169,13 +170,12 @@ const Experience3D: React.FC = () => {
       lightRef.current.position.set(p2.x, p2.y, p2.z);
     };
 
-    // Update text and scroll prompt opacity based on scroll progress
+    // Update text, scroll prompt, and blur overlay opacity based on scroll progress
     const updateUI = (progress: number) => {
       const p = progress / 0.96; // normalize 0..1
 
-      // Fade out scroll prompt quickly as soon as user scrolls
+      // Fade out scroll prompt quickly
       if (scrollPromptRef.current) {
-        // Fixed: ensure opacity is assigned as string
         const opacityValue = p < 0.05 ? 1 - p / 0.05 : 0;
         scrollPromptRef.current.style.opacity = String(opacityValue);
         scrollPromptRef.current.style.pointerEvents = p < 0.05 ? 'auto' : 'none';
@@ -189,6 +189,7 @@ const Experience3D: React.FC = () => {
         { el: sectionRefs.current[4], in: [0.78, 0.84], out: [0.94, 1.00] },
       ];
 
+      let maxTextOpacity = 0;
       sections.forEach(({ el, in: [in0, in1], out: [out0, out1] }) => {
         if (!el) return;
         let opacity = 0;
@@ -197,7 +198,14 @@ const Experience3D: React.FC = () => {
         else if (p >= out0 && p < out1) opacity = 1 - (p - out0) / (out1 - out0);
         el.style.opacity = String(opacity);
         el.style.pointerEvents = 'none';
+        if (opacity > maxTextOpacity) maxTextOpacity = opacity;
       });
+
+      // Apply blur overlay opacity based on max text opacity
+      if (blurOverlayRef.current) {
+        blurOverlayRef.current.style.opacity = String(maxTextOpacity);
+        blurOverlayRef.current.style.pointerEvents = 'none';
+      }
     };
 
     scrollTriggerRef.current = ScrollTrigger.create({
@@ -285,7 +293,7 @@ const Experience3D: React.FC = () => {
     };
   }, []);
 
-  // Polished text style
+  // Enhanced text container style with glassmorphism
   const textContainerStyle: React.CSSProperties = {
     position: 'fixed',
     left: '50%',
@@ -299,39 +307,52 @@ const Experience3D: React.FC = () => {
     opacity: 0,
     transition: 'opacity 0.25s ease-out',
     pointerEvents: 'none',
-    textShadow: '0 0 40px rgba(0,0,0,0.7), 0 0 80px rgba(0,0,0,0.4)',
+    padding: '2.5rem 2rem',
+    borderRadius: '24px',
+    background: 'rgba(10, 25, 20, 0.25)',
+    backdropFilter: 'blur(12px)',
+    WebkitBackdropFilter: 'blur(12px)',
+    border: '1px solid rgba(255, 255, 255, 0.15)',
+    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05) inset',
   };
 
   const headingStyle: React.CSSProperties = {
-    fontSize: 'clamp(2.5rem, 8vw, 4.5rem)',
+    fontSize: 'clamp(2.8rem, 8vw, 5rem)',
     fontWeight: 800,
-    marginBottom: '1.5rem',
+    marginBottom: '1.2rem',
     letterSpacing: '-0.02em',
     lineHeight: 1.1,
     textTransform: 'uppercase',
+    background: 'linear-gradient(135deg, #ffffff 0%, #e0f0e0 100%)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    textShadow: '0 2px 10px rgba(0,0,0,0.3)',
   };
 
   const subheadingStyle: React.CSSProperties = {
-    fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
+    fontSize: 'clamp(1.4rem, 4vw, 2rem)',
     fontWeight: 500,
     marginBottom: '2rem',
     letterSpacing: '0.1em',
-    opacity: 0.9,
+    opacity: 0.95,
+    color: '#d0e8d0',
   };
 
   const paragraphStyle: React.CSSProperties = {
-    fontSize: 'clamp(1rem, 3.5vw, 1.3rem)',
+    fontSize: 'clamp(1.1rem, 3.5vw, 1.4rem)',
     lineHeight: 1.7,
     fontWeight: 400,
     marginBottom: '1.2rem',
+    textShadow: '0 2px 5px rgba(0,0,0,0.2)',
   };
 
   const strongStyle: React.CSSProperties = {
     fontWeight: 700,
-    color: '#e0f0e0',
+    color: '#b8f0b8',
+    textShadow: '0 0 8px rgba(100,255,100,0.3)',
   };
 
-  // Scroll prompt style
+  // Scroll prompt style (unchanged)
   const scrollPromptStyle: React.CSSProperties = {
     position: 'fixed',
     bottom: '30px',
@@ -354,6 +375,22 @@ const Experience3D: React.FC = () => {
     gap: '8px',
   };
 
+  // Blur overlay style
+  const blurOverlayStyle: React.CSSProperties = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100vh',
+    zIndex: 15, // between canvas (2) and text (20)
+    pointerEvents: 'none',
+    backdropFilter: 'blur(16px)',
+    WebkitBackdropFilter: 'blur(16px)',
+    backgroundColor: 'rgba(0, 10, 5, 0.2)',
+    opacity: 0,
+    transition: 'opacity 0.4s ease-out',
+  };
+
   return (
     <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100vh' }}>
       <style>{`
@@ -374,6 +411,9 @@ const Experience3D: React.FC = () => {
 
       <canvas ref={canvasRef} className="experience" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100vh', zIndex: 2 }} />
       <div ref={scrollTargetRef} className="scrollTarget" style={{ position: 'absolute', height: '1000vh', width: '100%', top: 0, zIndex: 0, pointerEvents: 'none' }} />
+
+      {/* Blur overlay – becomes visible when any text section is active */}
+      <div ref={blurOverlayRef} style={blurOverlayStyle} />
 
       {/* Scroll Down Prompt */}
       <div ref={scrollPromptRef} style={scrollPromptStyle}>
