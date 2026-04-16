@@ -15,14 +15,18 @@ export default function Hero() {
   const scaleTweenRef = useRef<gsap.core.Tween | null>(null);
   const rotateTweenRef = useRef<gsap.core.Tween | null>(null);
 
-  // State to control globe visibility based on viewport width
-  const [isGlobeVisible, setIsGlobeVisible] = useState(() => window.innerWidth > 1024);
+  // Helper to determine globe visibility based on viewport dimensions
+  const isViewportLargeEnough = () => {
+    return window.innerWidth >= 1205 && window.innerHeight >= 900;
+  };
 
-  // Handle resize to show/hide globe on mobile/tablet vs desktop
+  // State to control globe visibility
+  const [isGlobeVisible, setIsGlobeVisible] = useState(isViewportLargeEnough);
+
+  // Handle resize to show/hide globe based on width AND height
   useEffect(() => {
     const handleResize = () => {
-      const visible = window.innerWidth > 1024;
-      setIsGlobeVisible(visible);
+      setIsGlobeVisible(isViewportLargeEnough());
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -129,11 +133,11 @@ export default function Hero() {
 
     window.addEventListener('mousemove', onMouseMove);
 
-    const animProps = { scale: 1, xRot: 0, yRot: 0 };
+    const animProps = { scale: 0.85, xRot: 0, yRot: 0 };
 
     scaleTweenRef.current = gsap.to(animProps, {
       duration: 10,
-      scale: 1.35,
+      scale: 1,
       repeat: -1,
       yoyo: true,
       ease: 'sine.inOut',
@@ -345,8 +349,8 @@ export default function Hero() {
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          width: 150%;
-          height: 150%;
+          width: 180%;
+          height: 180%;
           overflow: visible;
           pointer-events: none;
         }

@@ -22,10 +22,10 @@ export default function HalfOverlayNavbar() {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
     }
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
     };
   }, [isOpen]);
 
@@ -144,7 +144,7 @@ export default function HalfOverlayNavbar() {
           position: absolute;
           width: 28px;
           height: 2px;
-          background-color: #0ae448;
+          background-color: #fdfdfd;
           border-radius: 2px;
           transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
         }
@@ -177,7 +177,9 @@ export default function HalfOverlayNavbar() {
         /* ----- Side Drawer (right side) ----- */
         .side-drawer {
           width: min(400px, 85vw);
+          max-width: 100%;
           height: 100%;
+          max-height: 100vh;
           background: rgba(8, 8, 12, 0.96);
           backdrop-filter: blur(16px);
           box-shadow: -8px 0 32px rgba(0, 0, 0, 0.5);
@@ -185,6 +187,7 @@ export default function HalfOverlayNavbar() {
           display: flex;
           flex-direction: column;
           padding: 2rem 1.75rem;
+          overflow-x: hidden;
           overflow-y: auto;
           animation: slideInRight 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
@@ -203,6 +206,7 @@ export default function HalfOverlayNavbar() {
           margin-bottom: 2rem;
           border-bottom: 1px solid rgba(10, 228, 72, 0.25);
           padding-bottom: 1rem;
+          flex-shrink: 0;
         }
         .drawer-brand {
           font-family: 'Inter', 'Oswald', sans-serif;
@@ -225,6 +229,7 @@ export default function HalfOverlayNavbar() {
         /* Navigation Links */
         .drawer-nav {
           margin-bottom: 1.5rem;
+          flex-shrink: 0;
         }
         .nav-links {
           list-style: none;
@@ -250,16 +255,18 @@ export default function HalfOverlayNavbar() {
           transform: translateX(6px);
         }
 
-        /* Dividers */
+        /* Dividers - FIXED: removed huge margin */
         .drawer-divider {
           height: 1px;
           background: linear-gradient(to right, transparent, rgba(10, 228, 72, 0.4), transparent);
-          margin: 10rem 0 1.25rem 0;
+          margin: 1.5rem 0;
+          flex-shrink: 0;
         }
 
         /* Contact & Social Section (Redesigned) */
         .contact-social-section {
-          margin: 0.5rem 0;
+          margin: 0 0 1rem 0;
+          flex-shrink: 0;
         }
         .section-title {
           font-family: 'Inter', 'Lato', sans-serif;
@@ -282,6 +289,7 @@ export default function HalfOverlayNavbar() {
           border-radius: 48px;
           padding: 0.6rem 1.2rem;
           margin-bottom: 1.5rem;
+          max-width: 100%;
           width: fit-content;
           transition: all 0.2s ease;
           border: 1px solid transparent;
@@ -302,6 +310,7 @@ export default function HalfOverlayNavbar() {
           font-size: 0.9rem;
           transition: color 0.2s;
           word-break: break-all;
+          overflow-wrap: break-word;
         }
         .email-link-modern:hover {
           color: #0ae448;
@@ -348,10 +357,11 @@ export default function HalfOverlayNavbar() {
           transform: scale(1.05);
         }
 
-        /* Legal Section - Single line row */
+        /* Legal Section - Single line row, now properly positioned */
         .legal-section {
           margin-top: auto;
-          padding-top: 0.5rem;
+          padding-top: 1rem;
+          flex-shrink: 0;
         }
         .legal-row {
           display: flex;
@@ -432,7 +442,7 @@ export default function HalfOverlayNavbar() {
         @media (max-width: 480px) {
           .side-drawer {
             width: 100vw;
-            border-radius: 0;
+            padding: 1.25rem;
           }
           .drawer-brand {
             font-size: 1.4rem;
@@ -449,6 +459,7 @@ export default function HalfOverlayNavbar() {
           }
           .legal-links a {
             font-size: 0.7rem;
+            white-space: normal;
           }
           .copyright {
             font-size: 0.6rem;
