@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-// Helper to generate the 25 rainbow nth-child rules
+// Helper to generate the 25 rainbow nth-child rules (unchanged for desktop)
 const generateRainbowCSS = (): string => {
   const black = "#000000";
   const darkGreen = "#0a3d20";
@@ -567,21 +567,68 @@ const GetInTouch: React.FC = () => {
           cursor: not-allowed;
         }
 
-        @media (max-width: 480px) {
-          .get-in-touch {
-            padding: 1rem;
+        /* ---------- MOBILE PERFORMANCE OPTIMIZATIONS ---------- */
+        /* These overrides apply only to tablets and smaller, leaving desktop unchanged */
+        @media (max-width: 1023px) {
+          /* Reduce number of visible rainbows (hide half of them) */
+          .rainbow:nth-child(n+13) {
+            display: none !important;
           }
-          .contact-info, .contact-form {
-            padding: 1.25rem;
+
+          /* Use transform instead of 'right' for smoother animation */
+          @keyframes slide {
+            from { transform: translateX(-25vw); }
+            to { transform: translateX(125vw); }
           }
-          .page-title {
-            font-size: 1.75rem;
+
+          /* Simplify box-shadows on mobile for better performance */
+          .rainbow {
+            right: auto !important;
+            left: 0;
+            animation-name: slide-mobile !important;
+            will-change: transform;
           }
-          .brand-name {
-            font-size: 1.3rem;
+
+          /* Override the nth-child generated box-shadows with lighter ones */
+          .rainbow:nth-child(n) {
+            box-shadow: -50px 0 40px 20px #0a0a0a,
+                        0 0 30px 15px #0e5a2c,
+                        50px 0 40px 20px #0a0a0a !important;
           }
-          .submit-btn {
-            padding: 0.75rem 1rem;
+
+          /* Keyframe for transform-based animation */
+          @keyframes slide-mobile {
+            from { transform: translateX(-50vw); }
+            to { transform: translateX(150vw); }
+          }
+
+          /* Keep the overlay darkening the edges */
+          .h {
+            box-shadow: 0 0 50vh 30vh #0a0a0a;
+          }
+          .v {
+            box-shadow: 0 0 35vw 20vw #0a0a0a;
+          }
+        }
+
+        /* Small phones – further reduce */
+        @media (max-width: 600px) {
+          .rainbow:nth-child(n+8) {
+            display: none !important;
+          }
+
+          .rainbow:nth-child(n) {
+            box-shadow: -30px 0 30px 15px #0a0a0a,
+                        0 0 20px 10px #0e5a2c,
+                        30px 0 30px 15px #0a0a0a !important;
+          }
+        }
+
+        /* Fallback for reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+          .rainbow {
+            animation: none !important;
+            opacity: 0.2;
           }
         }
       `}</style>

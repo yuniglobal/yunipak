@@ -564,6 +564,71 @@ const Events: React.FC = () => {
           color: #000;
           box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
         }
+
+        /* ---------- MOBILE PERFORMANCE OPTIMIZATIONS ---------- */
+        /* These overrides apply only to tablets and smaller, leaving desktop unchanged */
+        @media (max-width: 1023px) {
+          /* Reduce number of visible rainbows (hide half of them) */
+          .rainbow:nth-child(n+13) {
+            display: none !important;
+          }
+
+          /* Use transform instead of 'right' for smoother animation */
+          @keyframes slide {
+            from { transform: translateX(-25vw); }
+            to { transform: translateX(125vw); }
+          }
+
+          /* Simplify box-shadows on mobile for better performance */
+          .rainbow {
+            right: auto !important;
+            left: 0;
+            animation-name: slide-mobile !important;
+            will-change: transform;
+          }
+
+          /* Override the nth-child generated box-shadows with lighter ones */
+          .rainbow:nth-child(n) {
+            box-shadow: -50px 0 40px 20px #0a0a0a,
+                        0 0 30px 15px #0e5a2c,
+                        50px 0 40px 20px #0a0a0a !important;
+          }
+
+          /* Keyframe for transform-based animation */
+          @keyframes slide-mobile {
+            from { transform: translateX(-50vw); }
+            to { transform: translateX(150vw); }
+          }
+
+          /* Keep the overlay darkening the edges */
+          .h {
+            box-shadow: 0 0 50vh 30vh #0a0a0a;
+          }
+          .v {
+            box-shadow: 0 0 35vw 20vw #0a0a0a;
+          }
+        }
+
+        /* Small phones – further reduce */
+        @media (max-width: 600px) {
+          .rainbow:nth-child(n+8) {
+            display: none !important;
+          }
+
+          .rainbow:nth-child(n) {
+            box-shadow: -30px 0 30px 15px #0a0a0a,
+                        0 0 20px 10px #0e5a2c,
+                        30px 0 30px 15px #0a0a0a !important;
+          }
+        }
+
+        /* Fallback for reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+          .rainbow {
+            animation: none !important;
+            opacity: 0.2;
+          }
+        }
       `}</style>
     </>
   );

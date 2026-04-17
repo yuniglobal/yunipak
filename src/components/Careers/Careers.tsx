@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-// Helper to generate the 25 rainbow nth-child rules
+// Helper to generate the 25 rainbow nth-child rules (unchanged for desktop)
 const generateRainbowCSS = (): string => {
   const black = "#000000";
   const darkGreen = "#0a3d20";
@@ -47,7 +47,7 @@ interface Position {
   location: string;
   type: "Full-time" | "Part-time" | "Contract" | "Internship";
   description: string;
-  imageUrl: string; // Photo URL (JPG/WebP)
+  imageUrl: string;
 }
 
 // Dummy data with Unsplash placeholder images relevant to each role
@@ -59,7 +59,7 @@ const jobs: Position[] = [
     location: "Remote / Pakistan",
     type: "Full-time",
     description: "We're looking for an experienced React/TypeScript developer to lead our frontend initiatives.",
-    imageUrl: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=400&h=300&fit=crop&auto=format", // Developer working on laptop
+    imageUrl: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=400&h=300&fit=crop&auto=format",
   },
   {
     id: "job-2",
@@ -68,7 +68,7 @@ const jobs: Position[] = [
     location: "Lahore, PK (Hybrid)",
     type: "Full-time",
     description: "Design and build scalable APIs using Node.js and PostgreSQL.",
-    imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop&auto=format", // Server/backend image
+    imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop&auto=format",
   },
   {
     id: "job-3",
@@ -77,7 +77,7 @@ const jobs: Position[] = [
     location: "Remote",
     type: "Contract",
     description: "Create intuitive and beautiful interfaces for our web and mobile products.",
-    imageUrl: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=400&h=300&fit=crop&auto=format", // Designer sketching
+    imageUrl: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=400&h=300&fit=crop&auto=format",
   },
   {
     id: "job-4",
@@ -86,7 +86,7 @@ const jobs: Position[] = [
     location: "Karachi, PK",
     type: "Full-time",
     description: "Coordinate cross-functional teams to deliver high-quality software on time.",
-    imageUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop&auto=format", // Team meeting
+    imageUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop&auto=format",
   },
 ];
 
@@ -98,7 +98,7 @@ const internships: Position[] = [
     location: "Remote",
     type: "Internship",
     description: "Work alongside senior developers on real projects using React and TypeScript.",
-    imageUrl: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=300&fit=crop&auto=format", // Young developer learning
+    imageUrl: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=300&fit=crop&auto=format",
   },
   {
     id: "intern-2",
@@ -107,7 +107,7 @@ const internships: Position[] = [
     location: "Lahore, PK (Hybrid)",
     type: "Internship",
     description: "Assist in user research, wireframing, and prototyping for new features.",
-    imageUrl: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=400&h=300&fit=crop&auto=format", // UI/UX design work
+    imageUrl: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=400&h=300&fit=crop&auto=format",
   },
   {
     id: "intern-3",
@@ -116,7 +116,7 @@ const internships: Position[] = [
     location: "Remote",
     type: "Internship",
     description: "Help grow our online presence through content creation and social media.",
-    imageUrl: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=400&h=300&fit=crop&auto=format", // Social media marketing
+    imageUrl: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=400&h=300&fit=crop&auto=format",
   },
   {
     id: "intern-4",
@@ -125,7 +125,7 @@ const internships: Position[] = [
     location: "Karachi, PK",
     type: "Internship",
     description: "Learn to build robust APIs and work with databases in a production environment.",
-    imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop&auto=format", // Code on screen
+    imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop&auto=format",
   },
 ];
 
@@ -211,7 +211,7 @@ const Careers: React.FC = () => {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-        /* ===== Rainbow Background ===== */
+        /* ===== Rainbow Background (unchanged for desktop) ===== */
         .rainbow-background {
           position: fixed;
           top: 0;
@@ -258,7 +258,7 @@ const Careers: React.FC = () => {
 
         ${generateRainbowCSS()}
 
-        /* ===== Careers Page ===== */
+        /* ===== Careers Page (unchanged) ===== */
         .careers {
           position: relative;
           z-index: 10;
@@ -473,6 +473,71 @@ const Careers: React.FC = () => {
         .spontaneous-cta a:hover {
           text-decoration: underline;
           color: #ffffff;
+        }
+
+        /* ---------- MOBILE PERFORMANCE OPTIMIZATIONS ---------- */
+        /* These overrides apply only to tablets and smaller, leaving desktop unchanged */
+        @media (max-width: 1023px) {
+          /* Reduce number of visible rainbows (hide half of them) */
+          .rainbow:nth-child(n+13) {
+            display: none !important;
+          }
+
+          /* Use transform instead of 'right' for smoother animation */
+          @keyframes slide {
+            from { transform: translateX(-25vw); }
+            to { transform: translateX(125vw); }
+          }
+
+          /* Simplify box-shadows on mobile for better performance */
+          .rainbow {
+            right: auto !important;
+            left: 0;
+            animation-name: slide-mobile !important;
+            will-change: transform;
+          }
+
+          /* Override the nth-child generated box-shadows with lighter ones */
+          .rainbow:nth-child(n) {
+            box-shadow: -50px 0 40px 20px #0a0a0a,
+                        0 0 30px 15px #0e5a2c,
+                        50px 0 40px 20px #0a0a0a !important;
+          }
+
+          /* Keyframe for transform-based animation */
+          @keyframes slide-mobile {
+            from { transform: translateX(-50vw); }
+            to { transform: translateX(150vw); }
+          }
+
+          /* Keep the overlay darkening the edges */
+          .h {
+            box-shadow: 0 0 50vh 30vh #0a0a0a;
+          }
+          .v {
+            box-shadow: 0 0 35vw 20vw #0a0a0a;
+          }
+        }
+
+        /* Small phones – further reduce */
+        @media (max-width: 600px) {
+          .rainbow:nth-child(n+8) {
+            display: none !important;
+          }
+
+          .rainbow:nth-child(n) {
+            box-shadow: -30px 0 30px 15px #0a0a0a,
+                        0 0 20px 10px #0e5a2c,
+                        30px 0 30px 15px #0a0a0a !important;
+          }
+        }
+
+        /* Fallback for reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+          .rainbow {
+            animation: none !important;
+            opacity: 0.2;
+          }
         }
       `}</style>
     </>
