@@ -143,10 +143,12 @@ export default function IntroAnimation({ onComplete }: IntroAnimationProps) {
 
         .intro-overlay .jakarta-sans-font {
           font-family: "Plus Jakarta Sans", sans-serif;
+          font-weight: 700;
         }
 
         .intro-overlay .zen-dots-font {
           font-family: "Zen Dots", cursive;
+          font-weight: 400;
         }
 
         .intro-overlay #green-filter {
@@ -198,6 +200,7 @@ export default function IntroAnimation({ onComplete }: IntroAnimationProps) {
           height: 100vh;
           justify-content: center;
           width: 100vw;
+          /* Removed scale transform to keep font sizes consistent */
         }
 
         .intro-overlay #logo {
@@ -225,24 +228,50 @@ export default function IntroAnimation({ onComplete }: IntroAnimationProps) {
         .intro-overlay #logo-text {
           position: relative;
           z-index: 3;
+          text-align: center;
         }
 
         .intro-overlay #hulu-text {
           color: rgb(27, 219, 124);
-          font-size: 8em;
-          height: 120px;
-          line-height: 120px;
+          /* Use clamp to keep size readable on all devices */
+          font-size: clamp(4rem, 15vw, 8rem);
+          line-height: 1.2;
+          white-space: nowrap;
         }
 
         .intro-overlay #originals-text {
           color: white;
-          font-size: 3em;
+          /* Fixed size that doesn't scale too small */
+          font-size: clamp(1.8rem, 6vw, 3rem);
           letter-spacing: 0.12em;
+          white-space: nowrap;
         }
 
-        @media (max-width: 800px) {
-          .intro-overlay #logo-wrapper {
-            transform: scale(0.7);
+        /* Ensure fonts stay crisp on all screens */
+        .intro-overlay #hulu-text span,
+        .intro-overlay #originals-text span {
+          display: inline-block;
+          white-space: pre;
+          transform: translateZ(0); /* improves rendering */
+        }
+
+        /* Small screens: keep font sizes readable without scaling container */
+        @media (max-width: 600px) {
+          .intro-overlay #hulu-text {
+            font-size: 4.5rem; /* fallback if clamp not supported */
+          }
+          .intro-overlay #originals-text {
+            font-size: 2rem;
+          }
+        }
+
+        /* For very small devices, slightly reduce but still readable */
+        @media (max-width: 380px) {
+          .intro-overlay #hulu-text {
+            font-size: 3.8rem;
+          }
+          .intro-overlay #originals-text {
+            font-size: 1.6rem;
           }
         }
       `}</style>
@@ -255,8 +284,8 @@ export default function IntroAnimation({ onComplete }: IntroAnimationProps) {
           <div id="logo-border" className="absolute-centered"></div>
           <div id="logo-border-inner" className="absolute-centered"></div>
           <div id="logo-text">
-                      <div id="hulu-text" className="zen-dots-font">yuni</div>
-                      <br></br>
+            <div id="hulu-text" className="zen-dots-font">yuni</div>
+            <br />
             <div id="originals-text" className="jakarta-sans-font">PAKISTAN</div>
           </div>
         </div>
