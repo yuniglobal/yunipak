@@ -265,7 +265,7 @@ export default function Hero() {
         .hero-label {
           display: inline-block;
           color: var(--primary);
-          font-size: 0.875rem;
+          font-size: 1.875rem;
           font-weight: 700;
           letter-spacing: 0.05em;
           text-transform: uppercase;
@@ -391,7 +391,10 @@ export default function Hero() {
         <div className="hero-container">
           <div className="hero-grid">
             <div className="hero-content">
-              <span className="hero-label">Welcome to Yunipakistan</span>
+              <span className="hero-label">
+                Welcome to <span style={{ color: '#ffffff' }}>Yuni</span>
+                <span style={{ color: 'var(--primary)' }}>pakistan</span>
+              </span>
               <h1 className="hero-title">
                 Pakistan's Premier <span>Tech Ecosystem</span>
               </h1>

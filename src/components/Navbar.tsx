@@ -46,7 +46,10 @@ export default function HalfOverlayNavbar() {
           <div className="side-drawer" onClick={(e) => e.stopPropagation()}>
             {/* Drawer Header with Brand */}
             <div className="drawer-header">
-              <div className="drawer-brand">Yunipakistan</div>
+              <div className="drawer-brand">
+                <span style={{ color: '#ffffff' }}>Yuni</span>
+                <span style={{ color: 'var(--primary)' }}>pakistan</span>
+              </div>
               <div className="drawer-menu-label">Menu</div>
             </div>
 
@@ -58,6 +61,8 @@ export default function HalfOverlayNavbar() {
                 <li><Link to="/services" onClick={closeMenu}>Services</Link></li>
                 <li><Link to="/events" onClick={closeMenu}>Events</Link></li>
                 <li><Link to="/contact" onClick={closeMenu}>Contact</Link></li>
+                <li><Link to="/pricing" onClick={closeMenu}>Pricing</Link></li>
+
               </ul>
             </nav>
 
@@ -65,12 +70,11 @@ export default function HalfOverlayNavbar() {
 
             {/* Redesigned Contact & Social Section */}
             <div className="contact-social-section">
-              <h3 className="section-title">Connect</h3>
-              
+
               {/* Email Block - Modern & Clean */}
               <div className="email-block">
                 <svg className="email-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
                 </svg>
                 <a href="mailto:hello@yunipakistan.com" className="email-link-modern">
                   hello@yunipakistan.com

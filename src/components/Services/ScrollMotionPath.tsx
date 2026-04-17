@@ -155,7 +155,7 @@ const ScrollMotionPath = () => {
           box-sizing: border-box;
         }
 
-        /* Desktop layout (unchanged) */
+        /* Desktop layout */
         .scroll-motion-root .main {
           position: relative;
           height: 700vh;
@@ -338,16 +338,30 @@ const ScrollMotionPath = () => {
             height: auto;
             display: flex;
             flex-direction: column;
-            padding: 5rem 1.5rem;
-            gap: 2.5rem;
+            padding: 2rem 1.5rem 4rem;
+            gap: 2rem;
           }
-          /* Hide animation elements */
+
+          /* Hide desktop-only elements */
           #overlay,
           .dot,
           .container {
             display: none !important;
           }
-          /* Convert text blocks into clean cards */
+
+          /* Move title to the top */
+          .custom-title {
+            position: relative !important;
+            top: auto !important;
+            left: auto !important;
+            text-align: center;
+            margin: 0 0 0.5rem 0;
+            font-size: 2.8rem;
+            order: -1; /* ensures it's first */
+            width: 100%;
+          }
+
+          /* Convert text blocks into modern cards */
           .text-block {
             position: relative !important;
             top: auto !important;
@@ -356,41 +370,95 @@ const ScrollMotionPath = () => {
             bottom: auto !important;
             transform: none !important;
             width: 100%;
-            max-width: 700px;
+            max-width: 600px;
             margin: 0 auto;
-            border-radius: 24px;
-            border-left: none;
+            border-radius: 28px;
+            border: 1px solid rgba(74, 222, 128, 0.2);
             border-top: 4px solid #4ade80;
-            background: rgba(20, 30, 25, 0.9);
+            background: rgba(18, 28, 23, 0.9);
             backdrop-filter: blur(16px);
-            padding: 2rem;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
           }
-          .custom-title {
-            position: relative;
-            top: 0;
-            left: 0;
-            text-align: center;
-            margin-bottom: 1rem;
-            font-size: 3rem;
+
+          .text-block:hover {
+            transform: translateY(-4px) !important;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+            border-color: rgba(74, 222, 128, 0.4);
+          }
+
+          .text-block-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+          }
+
+          .text-block-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+          }
+
+          .text-block h3 {
+            font-size: 1.6rem;
+            line-height: 1.3;
+          }
+
+          .text-block p {
+            font-size: 1.05rem;
+            margin-bottom: 1.25rem;
+          }
+
+          .text-block li {
+            font-size: 0.95rem;
+            margin-bottom: 0.6rem;
+          }
+
+          .learn-more {
+            font-size: 1rem;
+            padding-bottom: 4px;
           }
         }
 
-        /* Fine-tune for smaller phones */
+        /* Small phones (≤ 600px) */
         @media (max-width: 600px) {
           .scroll-motion-root .main {
-            padding: 3rem 1rem;
+            padding: 1.5rem 1rem 3rem;
+            gap: 1.5rem;
           }
-          .text-block {
-            padding: 1.5rem;
-          }
-          .text-block h3 {
-            font-size: 1.5rem;
-          }
-          .text-block p {
-            font-size: 1rem;
-          }
+
           .custom-title {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
+            margin-bottom: 0.25rem;
+          }
+
+          .text-block {
+            padding: 1.5rem 1.2rem;
+            border-radius: 24px;
+          }
+
+          .text-block-header {
+            gap: 0.5rem;
+          }
+
+          .text-block-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+          }
+
+          .text-block h3 {
+            font-size: 1.4rem;
+          }
+
+          .text-block p {
+            font-size: 0.95rem;
+          }
+
+          .text-block li {
+            font-size: 0.9rem;
           }
         }
       `}</style>
