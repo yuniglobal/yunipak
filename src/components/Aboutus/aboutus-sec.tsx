@@ -1,5 +1,5 @@
 // src/components/Aboutus/aboutus-sec.tsx
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
@@ -20,15 +20,54 @@ const Mathutils = {
   },
 };
 
-const TUBE_END_PROGRESS = 0.96; // end of cylinder path
+const TUBE_END_PROGRESS = 0.96;
 
-const Experience3D: React.FC = () => {
+// Helper for mobile rainbow background (same as Events/Courses)
+const generateRainbowCSS = (): string => {
+  const black = "#000000";
+  const darkGreen = "#0a3d20";
+  const tealGreen = "#0e5a2c";
+
+  const permutations = [
+    [black, darkGreen, tealGreen],
+    [black, tealGreen, darkGreen],
+    [darkGreen, black, tealGreen],
+    [darkGreen, tealGreen, black],
+    [tealGreen, black, darkGreen],
+    [tealGreen, darkGreen, black],
+  ];
+
+  let css = "";
+  const length = 25;
+  const animationTime = 45;
+
+  for (let i = 1; i <= length; i++) {
+    const colors = permutations[(i - 1) % permutations.length];
+    const delay = -(i / length) * animationTime;
+    const duration = animationTime - (animationTime / length / 2) * i;
+
+    css += `
+      .rainbow-mobile:nth-child(${i}) {
+        box-shadow: -130px 0 80px 40px #0a0a0a,
+                    -50px 0 50px 25px ${colors[0]},
+                    0 0 50px 25px ${colors[1]},
+                    50px 0 50px 25px ${colors[2]},
+                    130px 0 80px 40px #0a0a0a;
+        animation: slide-mobile ${duration}s linear infinite;
+        animation-delay: ${delay}s;
+      }
+    `;
+  }
+  return css;
+};
+
+// ==================== DESKTOP 3D EXPERIENCE ====================
+const DesktopExperience: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const scrollTargetRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollPromptRef = useRef<HTMLDivElement>(null);
   const blurOverlayRef = useRef<HTMLDivElement>(null);
-
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -51,7 +90,6 @@ const Experience3D: React.FC = () => {
   useEffect(() => {
     if (!canvasRef.current || !scrollTargetRef.current || !containerRef.current) return;
 
-    // --- Setup Scene, Camera, Renderer (unchanged) ---
     const ww = window.innerWidth;
     const wh = window.innerHeight;
 
@@ -170,7 +208,6 @@ const Experience3D: React.FC = () => {
       const tubeEnd = TUBE_END_PROGRESS;
 
       if (rawProgress <= tubeEnd) {
-        // Inside the tube
         const p = rawProgress;
         const p1 = pathRef.current.getPointAt(p);
         const p2 = pathRef.current.getPointAt(Math.min(p + 0.03, 1));
@@ -178,7 +215,6 @@ const Experience3D: React.FC = () => {
         cameraGroupRef.current.lookAt(p2);
         lightRef.current.position.set(p2.x, p2.y, p2.z);
 
-        // Fade objects back to full opacity if they were faded
         const fade = 1;
         if (tubeRef.current) (tubeRef.current.material as THREE.MeshPhongMaterial).opacity = fade;
         if (wireframeRef.current) (wireframeRef.current.material as THREE.LineBasicMaterial).opacity = 0.2 * fade;
@@ -187,25 +223,17 @@ const Experience3D: React.FC = () => {
         });
         lightRef.current.intensity = 0.35 * fade;
       } else {
-        // Beyond the tube – zoom into the void
-        const extra = (rawProgress - tubeEnd) / (1 - tubeEnd); // 0→1
-
-        // Get final position and tangent at the end of the tube
+        const extra = (rawProgress - tubeEnd) / (1 - tubeEnd);
         const endPos = pathRef.current.getPointAt(1);
         const tangent = pathRef.current.getTangent(1).normalize();
-
-        // Move camera forward along tangent
-        const zoomDistance = 30 * extra; // how far to push into the darkness
+        const zoomDistance = 30 * extra;
         const newPos = endPos.clone().add(tangent.multiplyScalar(zoomDistance));
-
         cameraGroupRef.current.position.copy(newPos);
-        // Look further ahead
         const lookAhead = newPos.clone().add(tangent.clone().multiplyScalar(10));
         cameraGroupRef.current.lookAt(lookAhead);
         lightRef.current.position.copy(lookAhead);
 
-        // Fade out all 3D objects
-        const fade = Math.max(0, 1 - extra * 1.5); // fade out faster
+        const fade = Math.max(0, 1 - extra * 1.5);
         if (tubeRef.current) (tubeRef.current.material as THREE.MeshPhongMaterial).opacity = fade;
         if (wireframeRef.current) (wireframeRef.current.material as THREE.LineBasicMaterial).opacity = 0.2 * fade;
         particleSystemsRef.current.forEach(sys => {
@@ -213,7 +241,6 @@ const Experience3D: React.FC = () => {
         });
         lightRef.current.intensity = 0.35 * fade;
 
-        // Shrink fog to increase darkness (type‑safe check)
         if (scene.fog && scene.fog instanceof THREE.Fog) {
           scene.fog.far = 100 - extra * 80;
         }
@@ -221,16 +248,14 @@ const Experience3D: React.FC = () => {
     };
 
     const updateUI = (rawProgress: number) => {
-      const normalized = rawProgress / TUBE_END_PROGRESS; // 0..1 during tube phase
+      const normalized = rawProgress / TUBE_END_PROGRESS;
 
-      // Scroll prompt fades out quickly
       if (scrollPromptRef.current) {
         const opacityValue = rawProgress < 0.05 ? 1 - rawProgress / 0.05 : 0;
         scrollPromptRef.current.style.opacity = String(opacityValue);
         scrollPromptRef.current.style.pointerEvents = rawProgress < 0.05 ? 'auto' : 'none';
       }
 
-      // Existing 5 sections (only relevant during tube phase)
       const sections = [
         { el: sectionRefs.current[0], in: [0.00, 0.05], out: [0.12, 0.18] },
         { el: sectionRefs.current[1], in: [0.18, 0.24], out: [0.32, 0.38] },
@@ -243,7 +268,7 @@ const Experience3D: React.FC = () => {
       sections.forEach(({ el, in: [in0, in1], out: [out0, out1] }) => {
         if (!el) return;
         let opacity = 0;
-        const p = normalized; // use normalized for these ranges
+        const p = normalized;
         if (p >= in0 && p < in1) opacity = (p - in0) / (in1 - in0);
         else if (p >= in1 && p < out0) opacity = 1;
         else if (p >= out0 && p < out1) opacity = 1 - (p - out0) / (out1 - out0);
@@ -252,21 +277,18 @@ const Experience3D: React.FC = () => {
         if (opacity > maxTextOpacity) maxTextOpacity = opacity;
       });
 
-      // Final "beyond the tube" section (index 5)
       const finalSection = sectionRefs.current[5];
       if (finalSection) {
-        const extra = (rawProgress - TUBE_END_PROGRESS) / (1 - TUBE_END_PROGRESS); // 0→1
-        // Fade in after tube ends
+        const extra = (rawProgress - TUBE_END_PROGRESS) / (1 - TUBE_END_PROGRESS);
         let opacity = 0;
         if (rawProgress >= TUBE_END_PROGRESS) {
-          opacity = Math.min(1, extra * 2); // quick fade in
+          opacity = Math.min(1, extra * 2);
         }
         finalSection.style.opacity = String(opacity);
         finalSection.style.pointerEvents = 'none';
         if (opacity > maxTextOpacity) maxTextOpacity = opacity;
       }
 
-      // Update blur overlay based on max text opacity
       if (blurOverlayRef.current) {
         blurOverlayRef.current.style.opacity = String(maxTextOpacity);
         blurOverlayRef.current.style.pointerEvents = 'none';
@@ -279,7 +301,7 @@ const Experience3D: React.FC = () => {
       end: 'bottom 100%',
       scrub: false,
       onUpdate: (self) => {
-        const rawProgress = self.progress; // 0 to 1
+        const rawProgress = self.progress;
         cameraTargetPercent.current = rawProgress;
         updateUI(rawProgress);
       },
@@ -358,7 +380,6 @@ const Experience3D: React.FC = () => {
     };
   }, []);
 
-  // --- Professional Card Styles (Enhanced) ---
   const textContainerStyle: React.CSSProperties = {
     position: 'fixed',
     left: '50%',
@@ -471,29 +492,16 @@ const Experience3D: React.FC = () => {
     <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100vh' }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap');
-        body {
-          margin: 0;
-          overflow-x: hidden;
-        }
+        body { margin: 0; overflow-x: hidden; }
         @keyframes bounce {
           0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
           40% { transform: translateY(-10px); }
           60% { transform: translateY(-5px); }
         }
-        .scroll-arrow {
-          animation: bounce 2s infinite;
-        }
-        .text-card::-webkit-scrollbar {
-          width: 5px;
-        }
-        .text-card::-webkit-scrollbar-track {
-          background: rgba(0, 0, 0, 0.15);
-          border-radius: 10px;
-        }
-        .text-card::-webkit-scrollbar-thumb {
-          background: rgba(180, 240, 180, 0.5);
-          border-radius: 10px;
-        }
+        .scroll-arrow { animation: bounce 2s infinite; }
+        .text-card::-webkit-scrollbar { width: 5px; }
+        .text-card::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.15); border-radius: 10px; }
+        .text-card::-webkit-scrollbar-thumb { background: rgba(180, 240, 180, 0.5); border-radius: 10px; }
       `}</style>
 
       <canvas ref={canvasRef} className="experience" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100vh', zIndex: 2 }} />
@@ -508,7 +516,7 @@ const Experience3D: React.FC = () => {
         </svg>
       </div>
 
-      {/* Existing Sections (unchanged content) */}
+      {/* Sections */}
       <div ref={(el) => { sectionRefs.current[0] = el; }} style={textContainerStyle} className="text-card">
         <h1 style={headingStyle}>Yuni Pakistan</h1>
         <div style={subheadingStyle}>Re‑Building The 21st Century Shaheen 🦅</div>
@@ -588,7 +596,6 @@ const Experience3D: React.FC = () => {
         </p>
       </div>
 
-      {/* NEW: Final Section – Appears after the tube ends */}
       <div ref={(el) => { sectionRefs.current[5] = el; }} style={textContainerStyle} className="text-card">
         <h2 style={headingStyle}>The Journey Continues</h2>
         <div style={subheadingStyle}>Beyond the Horizon</div>
@@ -617,7 +624,6 @@ const Experience3D: React.FC = () => {
         </p>
       </div>
 
-      {/* Vignette effect for depth */}
       <div className="vignette-radial" style={{ position: 'fixed', zIndex: 11, top: 0, left: 0, height: '100vh', width: '100%', pointerEvents: 'none' }}>
         <style>{`
           .vignette-radial:after {
@@ -631,6 +637,224 @@ const Experience3D: React.FC = () => {
       </div>
     </div>
   );
+};
+
+// ==================== MOBILE ABOUT (CARDS + RAINBOW) ====================
+const MobileAbout: React.FC = () => {
+  const rainbowDivs = Array.from({ length: 25 }, (_, i) => (
+    <div key={i} className="rainbow-mobile" />
+  ));
+
+  const cardStyle: React.CSSProperties = {
+    background: 'rgba(20, 20, 20, 0.75)',
+    backdropFilter: 'blur(8px)',
+    borderRadius: '1.5rem',
+    border: '1px solid rgba(10, 228, 72, 0.25)',
+    padding: '2rem',
+    color: '#ffffff',
+    fontFamily: "'Inter', 'Montserrat', sans-serif",
+    boxShadow: '0 8px 32px rgba(0,0,0,0.6)',
+    marginBottom: '2rem',
+  };
+
+  const headingStyle: React.CSSProperties = {
+    fontSize: 'clamp(1.8rem, 6vw, 2.8rem)',
+    fontWeight: 800,
+    marginBottom: '1rem',
+    color: '#ffffff',
+    borderBottom: '2px solid #0ae448',
+    paddingBottom: '0.5rem',
+    display: 'inline-block',
+  };
+
+  const subheadingStyle: React.CSSProperties = {
+    fontSize: '1.2rem',
+    fontWeight: 600,
+    color: '#0ae448',
+    marginBottom: '1.5rem',
+    textTransform: 'uppercase',
+    letterSpacing: '0.1em',
+  };
+
+  const paragraphStyle: React.CSSProperties = {
+    fontSize: '1rem',
+    lineHeight: 1.7,
+    color: '#e0e0e0',
+    marginBottom: '1rem',
+  };
+
+  const strongStyle: React.CSSProperties = {
+    color: '#0ae448',
+    fontWeight: 700,
+  };
+
+  return (
+    <>
+      {/* Rainbow Background */}
+      <div className="rainbow-background-mobile">
+        {rainbowDivs}
+        <div className="h-mobile" />
+        <div className="v-mobile" />
+      </div>
+
+      {/* Content */}
+      <section style={{
+        position: 'relative',
+        zIndex: 10,
+        maxWidth: '1000px',
+        margin: '0 auto',
+        padding: '6rem 1.5rem 4rem',
+      }}>
+        <h1 style={{
+          fontSize: 'clamp(2.5rem, 8vw, 4rem)',
+          fontWeight: 800,
+          color: '#ffffff',
+          textShadow: '0 0 15px rgba(0,0,0,0.7)',
+          marginBottom: '0.5rem',
+        }}>Yuni Pakistan</h1>
+        <p style={{
+          fontSize: '1.25rem',
+          color: '#0ae448',
+          marginBottom: '2.5rem',
+          textShadow: '0 0 8px rgba(0,0,0,0.5)',
+        }}>Re‑Building The 21st Century Shaheen 🦅</p>
+
+        <div style={cardStyle}>
+          <h2 style={headingStyle}>Our Ideology</h2>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Khudi (Self‑Realization)</span> — Every young Pakistani carries untapped strength.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Knowledge as Power</span> — A strong nation is built on intellect.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Economic Independence</span> — Yuni fosters freelancing, startups, and digital skills.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Unity & Ethical Leadership</span> — Beyond divisions, we cultivate leaders.
+          </p>
+        </div>
+
+        <div style={cardStyle}>
+          <h2 style={headingStyle}>The Yuni Ecosystem</h2>
+          <p style={paragraphStyle}><span style={strongStyle}>Yuni-Buddy</span> — Connectivity, earning opportunities, jobs.</p>
+          <p style={paragraphStyle}><span style={strongStyle}>Yuni-Courses</span> — Practical courses with internships.</p>
+          <p style={paragraphStyle}><span style={strongStyle}>Yuni-Coworking</span> — Collaborative spaces for innovation.</p>
+          <p style={paragraphStyle}><span style={strongStyle}>Yuni-Tech & Marketing</span> — Digital presence, AI, e‑commerce.</p>
+          <p style={paragraphStyle}><span style={strongStyle}>Business Consultation</span> — Guiding entrepreneurs.</p>
+        </div>
+
+        <div style={cardStyle}>
+          <h2 style={headingStyle}>Yuni-Buddy & Yuni-Courses</h2>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Parwaaz‑e‑Uqabi</span> — "Sitaron se aage jahan aur bhi hain"<br/>
+            Connectivity across Pakistan, internships, leadership & community.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Umeed‑e‑Sahar</span> — "Khudi ko kar buland itna…"<br/>
+            Project‑based courses taught by industry leaders. Course + Internship guarantee.
+          </p>
+        </div>
+
+        <div style={cardStyle}>
+          <h2 style={headingStyle}>Taqat‑e‑Parwaaz & Yuni‑Anjuman</h2>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Yuni-Tech & Marketing</span> — Boosting Pakistan's digital presence.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Yuni-Coworking</span> — Collaborative spaces for innovation and events.
+          </p>
+          <p style={{ ...paragraphStyle, marginTop: '1.5rem', fontStyle: 'italic' }}>
+            "Yaqeen Muhkam, Amal Paiham, Mohabbat Fateh‑e‑Alam"
+          </p>
+        </div>
+
+        <div style={cardStyle}>
+          <h2 style={headingStyle}>The Journey Continues</h2>
+          <p style={paragraphStyle}>
+            You've traversed the path of Yuni's vision. The darkness is potential—the unwritten future of Pakistan's youth.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Join the movement.</span> Become a Shaheen. Rise with Yuni.
+          </p>
+          <p style={{ textAlign: 'center', marginTop: '2rem' }}>
+            <span style={{
+              display: 'inline-block',
+              padding: '0.8rem 2rem',
+              background: 'rgba(10, 228, 72, 0.15)',
+              border: '1px solid #0ae448',
+              borderRadius: '50px',
+              fontWeight: 600,
+              color: '#0ae448',
+            }}>
+              Coming Soon
+            </span>
+          </p>
+        </div>
+      </section>
+
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        .rainbow-background-mobile {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          overflow: hidden;
+          z-index: 0;
+          pointer-events: none;
+          background-color: #000000;
+        }
+        .rainbow-mobile {
+          height: 100vh;
+          width: 0;
+          top: 0;
+          position: absolute;
+          transform: rotate(10deg);
+          transform-origin: top right;
+        }
+        .h-mobile {
+          box-shadow: 0 0 50vh 40vh #0a0a0a;
+          width: 100vw;
+          height: 0;
+          bottom: 0;
+          left: 0;
+          position: absolute;
+        }
+        .v-mobile {
+          box-shadow: 0 0 35vw 25vw #0a0a0a;
+          width: 0;
+          height: 100vh;
+          bottom: 0;
+          left: 0;
+          position: absolute;
+        }
+        @keyframes slide-mobile {
+          from { right: -25vw; }
+          to { right: 125vw; }
+        }
+        ${generateRainbowCSS()}
+      `}</style>
+    </>
+  );
+};
+
+// ==================== MAIN COMPONENT ====================
+const Experience3D: React.FC = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreen = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkScreen();
+    window.addEventListener('resize', checkScreen);
+    return () => window.removeEventListener('resize', checkScreen);
+  }, []);
+
+  return isMobile ? <MobileAbout /> : <DesktopExperience />;
 };
 
 export default Experience3D;
