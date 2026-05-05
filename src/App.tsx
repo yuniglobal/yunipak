@@ -1,10 +1,9 @@
-// src/App.tsx
 import { useLayoutEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import About from './pages/Aboutus';
+// import About from './pages/Aboutus';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
 import Careers from './pages/Careers';
@@ -14,6 +13,32 @@ import './styles.css';
 
 function App() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // Handle navigation
+  const handleNavigate = (page: string) => {
+    let route = '';
+    switch (page) {
+      case 'home':
+        route = '/';
+        break;
+      case 'trainings':
+        route = '/Programs';
+        break;
+      case 'blog':
+        route = '/events';
+        break;
+      case 'careers':
+        route = '/careers';
+        break;
+      case 'contact':
+        route = '/contact';
+        break;
+      default:
+        route = `/${page}`;
+    }
+    navigate(route);
+  };
 
   // Disable browser's automatic scroll restoration
   useLayoutEffect(() => {
@@ -29,21 +54,25 @@ function App() {
     }
   }, [location.pathname]);
 
+  // Define pages where footer should be hidden
+  const hideFooterPages = ['/about', '/contact'];
+  const shouldShowFooter = !hideFooterPages.includes(location.pathname);
+
   return (
     <div className="app-wrapper">
-      <Navbar />
+      <Navbar onNavigate={handleNavigate} />
       <main className="page-content">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
+          {/* <Route path="/about" element={<About />} /> */}
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/courses" element={<CoursesPage />} />
+          <Route path="/Programs" element={<CoursesPage />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/events" element={<Events />} />
         </Routes>
       </main>
-      {(location.pathname !== '/about' && location.pathname !== '/contact') && <Footer />}
+      {shouldShowFooter && <Footer />}
     </div>
   );
 }

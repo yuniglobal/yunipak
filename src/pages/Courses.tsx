@@ -1,9 +1,9 @@
-import Cources from "../components/Courses/cources";
+import Programs from "../components/Courses/cources";
 
 export default function CoursesPage() {
   return (
     <main>
-      <Cources />
+      <Programs />
     </main>
   );
 }
