@@ -172,7 +172,7 @@ export default function Home() {
           font-weight: 900;
           margin-bottom: 0.5rem;
           line-height: 1.2;
-          background: linear-gradient(135deg, #10b981, #34d399);
+          background: linear-gradient(135deg, #d5e8e2, #34d399);
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
@@ -185,21 +185,21 @@ export default function Home() {
         }
 
         .stat-number.brand {
-          background: linear-gradient(135deg, #10b981, #34d399);
+          background: linear-gradient(135deg, #d5e8e2, #34d399);
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
         }
 
         .stat-number.blue {
-          background: linear-gradient(135deg, #10b981, #34d399);
+          background: linear-gradient(135deg, #d5e8e2, #34d399);
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
         }
 
         .stat-number.purple {
-          background: linear-gradient(135deg, #10b981, #34d399);
+          background: linear-gradient(135deg, #d5e8e2, #34d399);
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;

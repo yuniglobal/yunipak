@@ -1,45 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 
-// Helper to generate the 25 rainbow nth-child rules (same as other pages)
-const generateRainbowCSS = (): string => {
-  const black = "#000000";
-  const darkGreen = "#0a3d20";
-  const tealGreen = "#0e5a2c";
-
-  const permutations = [
-    [black, darkGreen, tealGreen],
-    [black, tealGreen, darkGreen],
-    [darkGreen, black, tealGreen],
-    [darkGreen, tealGreen, black],
-    [tealGreen, black, darkGreen],
-    [tealGreen, darkGreen, black],
-  ];
-
-  let css = "";
-  const length = 25;
-  const animationTime = 45;
-
-  for (let i = 1; i <= length; i++) {
-    const colors = permutations[(i - 1) % permutations.length];
-    const delay = -(i / length) * animationTime;
-    const duration = animationTime - (animationTime / length / 2) * i;
-
-    css += `
-      .rainbow:nth-child(${i}) {
-        box-shadow: -130px 0 80px 40px #0a0a0a,
-                    -50px 0 50px 25px ${colors[0]},
-                    0 0 50px 25px ${colors[1]},
-                    50px 0 50px 25px ${colors[2]},
-                    130px 0 80px 40px #0a0a0a;
-        animation: slide ${duration}s linear infinite;
-        animation-delay: ${delay}s;
-      }
-    `;
-  }
-  return css;
-};
-
 // Course type definition
 interface CourseItem {
   id: string;
@@ -47,112 +8,127 @@ interface CourseItem {
   instructor: string;
   duration: string;
   level: "Beginner" | "Intermediate" | "Advanced";
-  category: "Development" | "Data Science" | "Cloud" | "Cybersecurity" | "AI/ML";
+  category: "Tech" | "Cybersecurity" | "AI" | "E-Commerce" | "Code" | "Communications";
   description: string;
   imageUrl: string;
   isCertification: boolean;
   enrollmentLink?: string;
+  price?: string;
 }
 
 // Sample courses data
 const coursesData: CourseItem[] = [
   {
     id: "course-1",
-    title: "Full-Stack Web Development Bootcamp",
-    instructor: "Ahmed Raza",
-    duration: "12 weeks • 6 hrs/week",
-    level: "Beginner",
-    category: "Development",
-    description:
-      "Master HTML, CSS, JavaScript, React, Node.js, and MongoDB. Build real-world projects and graduate with a portfolio-ready capstone.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=600&h=400&fit=crop&auto=format",
-    isCertification: true,
-    enrollmentLink: "#enroll",
-  },
-  {
-    id: "course-2",
-    title: "Data Science with Python",
-    instructor: "Dr. Fatima Khalid",
-    duration: "10 weeks • 5 hrs/week",
-    level: "Intermediate",
-    category: "Data Science",
-    description:
-      "Learn pandas, NumPy, Matplotlib, scikit-learn, and SQL. Work on real datasets and build predictive models from scratch.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&auto=format",
-    isCertification: false,
-    enrollmentLink: "#enroll",
-  },
-  {
-    id: "course-3",
-    title: "AWS Cloud Practitioner",
-    instructor: "Zain Malik",
-    duration: "6 weeks • 4 hrs/week",
-    level: "Beginner",
-    category: "Cloud",
-    description:
-      "Prepare for the AWS Certified Cloud Practitioner exam. Hands-on labs with EC2, S3, IAM, and billing fundamentals.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1569428034239-f7005e5e7585?w=600&h=400&fit=crop&auto=format",
-    isCertification: true,
-    enrollmentLink: "#enroll",
-  },
-  {
-    id: "course-4",
-    title: "Ethical Hacking & Network Defense",
-    instructor: "Omar Shah",
+    title: "Cybersecurity Fundamentals",
+    instructor: "Security Expert",
     duration: "8 weeks • 5 hrs/week",
     level: "Intermediate",
     category: "Cybersecurity",
     description:
-      "Learn penetration testing, vulnerability assessment, and defensive strategies. Includes virtual lab access and capture-the-flag challenges.",
+      "Learn the foundations of cybersecurity including threat detection, risk assessment, and security protocols. Get hands-on experience with real security tools.",
     imageUrl:
-      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop&auto=format",
+      "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop&auto=format",
+    isCertification: true,
+    enrollmentLink: "#enroll",
+    price: "Rs. 15,000",
+  },
+  {
+    id: "course-2",
+    title: "Ethical Hacking Masterclass",
+    instructor: "White Hat Expert",
+    duration: "10 weeks • 6 hrs/week",
+    level: "Advanced",
+    category: "Tech",
+    description:
+      "Master ethical hacking techniques including penetration testing, vulnerability scanning, and network security. Includes hands-on lab sessions.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop&auto=format",
     isCertification: false,
     enrollmentLink: "#enroll",
+    price: "Rs. 18,000",
+  },
+  {
+    id: "course-3",
+    title: "Prompt Engineering & AI",
+    instructor: "AI Specialist",
+    duration: "6 weeks • 4 hrs/week",
+    level: "Beginner",
+    category: "AI",
+    description:
+      "Learn the art of prompt engineering for AI models. Create effective prompts for ChatGPT, DALL-E, and other AI tools. No coding experience required.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop&auto=format",
+    isCertification: false,
+    enrollmentLink: "#enroll",
+    price: "Rs. 10,000",
+  },
+  {
+    id: "course-4",
+    title: "Amazon Mastery: FBA & E-Commerce",
+    instructor: "E-Commerce Guru",
+    duration: "8 weeks • 5 hrs/week",
+    level: "Beginner",
+    category: "E-Commerce",
+    description:
+      "Complete Amazon FBA course covering product research, listing optimization, PPC advertising, and scaling your e-commerce business to 7 figures.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop&auto=format",
+    isCertification: true,
+    enrollmentLink: "#enroll",
+    price: "Rs. 15,000",
   },
   {
     id: "course-5",
-    title: "Machine Learning Engineering",
-    instructor: "Dr. Ali Hassan",
-    duration: "14 weeks • 7 hrs/week",
-    level: "Advanced",
-    category: "AI/ML",
+    title: "Full-Stack Web Development",
+    instructor: "Senior Developer",
+    duration: "12 weeks • 7 hrs/week",
+    level: "Beginner",
+    category: "Code",
     description:
-      "Deep dive into neural networks, MLOps, and model deployment. Prerequisite: strong Python and linear algebra.",
+      "Master HTML, CSS, JavaScript, React, Node.js, and databases. Build complete web applications from scratch with real-world projects.",
     imageUrl:
-      "https://images.unsplash.com/photo-1677442135136-5c2b0d9f1b6f?w=600&h=400&fit=crop&auto=format",
+      "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=600&h=400&fit=crop&auto=format",
     isCertification: true,
     enrollmentLink: "#enroll",
+    price: "Rs. 25,000",
   },
   {
     id: "course-6",
-    title: "UI/UX Design Fundamentals",
-    instructor: "Sana Tariq",
+    title: "IELTS & PTE Preparation",
+    instructor: "Language Expert",
     duration: "6 weeks • 4 hrs/week",
     level: "Beginner",
-    category: "Development",
+    category: "Communications",
     description:
-      "Learn user research, wireframing, prototyping in Figma, and usability testing. Create a complete case study for your portfolio.",
+      "Comprehensive IELTS and PTE preparation course covering all modules - Speaking, Writing, Reading, and Listening. Get your target band score.",
     imageUrl:
-      "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=600&h=400&fit=crop&auto=format",
+      "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop&auto=format",
     isCertification: false,
     enrollmentLink: "#enroll",
+    price: "Rs. 8,000",
   },
 ];
 
+type View = "trainings" | "course-detail" | "checkout";
+
 const Courses: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<"all" | "certifications">("all");
+  const [currentView, setCurrentView] = useState<View>("trainings");
+  const [selectedCourse, setSelectedCourse] = useState<CourseItem | null>(null);
+  const [filter, setFilter] = useState<"all" | "tech" | "ecom">("all");
   const studentsCountRef = useRef<HTMLSpanElement>(null);
 
-  const rainbowDivs = Array.from({ length: 25 }, (_, i) => (
-    <div key={i} className="rainbow" />
-  ));
-
-  const filteredCourses = coursesData.filter((course) =>
-    activeTab === "all" ? true : course.isCertification
-  );
+  // Filter courses based on category
+  const filteredCourses = coursesData.filter((course) => {
+    if (filter === "all") return true;
+    if (filter === "tech") {
+      return ["Tech", "Cybersecurity", "AI", "Code"].includes(course.category);
+    }
+    if (filter === "ecom") {
+      return course.category === "E-Commerce";
+    }
+    return true;
+  });
 
   // Animate the students counter
   useEffect(() => {
@@ -166,573 +142,767 @@ const Courses: React.FC = () => {
     }
   }, []);
 
-  const CourseCard: React.FC<{ course: CourseItem }> = ({ course }) => (
-    <div className="course-card">
-      <div className="course-image">
-        <img src={course.imageUrl} alt={course.title} loading="lazy" />
-        <span className="course-level-badge">{course.level}</span>
-        {course.isCertification && (
-          <span className="certification-badge">🎓 Certificate</span>
-        )}
-      </div>
-      <div className="course-content">
-        <h3 className="course-title">{course.title}</h3>
-        <div className="course-meta">
-          <span className="course-instructor">👤 {course.instructor}</span>
-          <span className="course-duration">⏱️ {course.duration}</span>
+  const handleViewCourse = (course: CourseItem) => {
+    setSelectedCourse(course);
+    setCurrentView("course-detail");
+  };
+
+  const handleEnroll = (course: CourseItem) => {
+    setSelectedCourse(course);
+    setCurrentView("checkout");
+  };
+
+  const handleBackToHub = () => {
+    setCurrentView("trainings");
+    setSelectedCourse(null);
+  };
+
+  const handleCompleteCheckout = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert("Registration submitted! You will receive login details via email.");
+    // In a real app, you would send data to backend
+  };
+
+  // Render Training Hub View
+  const renderTrainingsView = () => (
+    <div className="trainings-view">
+      <div className="trainings-container">
+        <h2 className="page-title">Select Your Weapon.</h2>
+        
+        {/* Filters */}
+        <div className="filters-container">
+          <button 
+            onClick={() => setFilter("all")} 
+            className={`filter-btn ${filter === "all" ? "active" : ""}`}
+          >
+            All Programs
+          </button>
+          <button 
+            onClick={() => setFilter("tech")} 
+            className={`filter-btn ${filter === "tech" ? "active" : ""}`}
+          >
+            Tech & Cyber
+          </button>
+          <button 
+            onClick={() => setFilter("ecom")} 
+            className={`filter-btn ${filter === "ecom" ? "active" : ""}`}
+          >
+            E-Commerce
+          </button>
         </div>
-        <p className="course-description">{course.description}</p>
-        <a
-          href={course.enrollmentLink || "#enroll"}
-          className="enroll-btn"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Enroll Now →
-        </a>
+
+        {/* Course Grid */}
+        <div className="course-grid">
+          {filteredCourses.map((course) => (
+            <div key={course.id} className="course-card-hub">
+              <div className="course-card-image">
+                <img src={course.imageUrl} alt={course.title} />
+                {course.isCertification && <span className="cert-badge">🎓 Certificate</span>}
+              </div>
+              <div className="course-card-content">
+                <h3>{course.title}</h3>
+                <p className="instructor">{course.instructor}</p>
+                <p className="description">{course.description.substring(0, 100)}...</p>
+                <div className="card-footer">
+                  <span className="price">{course.price}</span>
+                  <button onClick={() => handleViewCourse(course)} className="view-btn">
+                    View Weapon <i className="arrow">→</i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  // Render Course Detail View
+  const renderCourseDetailView = () => (
+    <div className="detail-view">
+      <div className="detail-container">
+        <button onClick={handleBackToHub} className="back-btn">
+          <i className="back-arrow">←</i> Back to Hub
+        </button>
+        
+        <div className="detail-panel">
+          <div className="detail-left">
+            <img src={selectedCourse?.imageUrl} alt={selectedCourse?.title} className="detail-image" />
+            <div className="detail-stats">
+              <div className="stat">
+                <span className="stat-value">{selectedCourse?.duration}</span>
+                <span className="stat-label">Duration</span>
+              </div>
+              <div className="stat">
+                <span className="stat-value">{selectedCourse?.level}</span>
+                <span className="stat-label">Level</span>
+              </div>
+              <div className="stat">
+                <span className="stat-value">{selectedCourse?.price}</span>
+                <span className="stat-label">Investment</span>
+              </div>
+            </div>
+            {selectedCourse?.isCertification && (
+              <div className="cert-notice">
+                🎓 Includes Official Certificate
+              </div>
+            )}
+          </div>
+          
+          <div className="detail-right">
+            <h2>{selectedCourse?.title}</h2>
+            <p className="instructor-detail">👤 {selectedCourse?.instructor}</p>
+            <p className="description-detail">{selectedCourse?.description}</p>
+            
+            <h3>What You'll Learn</h3>
+            <ul className="learn-list">
+              <li>✅ Hands-on projects and real-world applications</li>
+              <li>✅ Expert-led live sessions and mentorship</li>
+              <li>✅ Community access and networking opportunities</li>
+              <li>✅ Lifetime access to course materials</li>
+            </ul>
+            
+            <button onClick={() => selectedCourse && handleEnroll(selectedCourse)} className="enroll-now-btn">
+              Enroll Now → 
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Render Checkout View
+  const renderCheckoutView = () => (
+    <div className="checkout-view">
+      <div className="checkout-container">
+        <button onClick={handleBackToHub} className="cancel-btn">
+          ← Cancel
+        </button>
+        <h2 className="checkout-title">Secure Registration</h2>
+        
+        <div className="checkout-grid">
+          {/* Left Column - Payment Info */}
+          <div className="payment-info">
+            <h3>1. Transfer Payment</h3>
+            <div className="payment-methods">
+              <div className="payment-card bank-card">
+                <h4><i className="icon-bank"></i> Bank Transfer (Meezan Bank)</h4>
+                <p>Title: YUNI Education</p>
+                <div className="account-number">0123-4567-8910</div>
+              </div>
+              <div className="payment-card easypaisa-card">
+                <h4><i className="icon-mobile"></i> Easypaisa / SadaPay</h4>
+                <p>Title: YUNI Official</p>
+                <div className="account-number">0300-1234567</div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Right Column - Student Form */}
+          <div className="student-form">
+            <h3>2. Student Details & Proof</h3>
+            <form onSubmit={handleCompleteCheckout} className="checkout-form">
+              <input type="text" placeholder="Full Name" required />
+              <input type="email" placeholder="Email Address" required />
+              <select required defaultValue="">
+                <option value="" disabled>Select Course...</option>
+                {coursesData.map(course => (
+                  <option key={course.id} value={course.id} selected={selectedCourse?.id === course.id}>
+                    {course.title} - {course.price}
+                  </option>
+                ))}
+              </select>
+              
+              <div className="upload-area">
+                <i className="upload-icon">📤</i>
+                <p className="upload-text">Upload Screenshot (Required)</p>
+                <input type="file" accept="image/*" className="file-input" />
+              </div>
+              
+              <button type="submit" className="submit-btn">
+                Confirm & Enter LMS 🔒
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );
 
   return (
-    <>
-      {/* Rainbow Background */}
-      <div className="rainbow-background">
-        {rainbowDivs}
-        <div className="h" />
-        <div className="v" />
-      </div>
-
-      {/* Main Content */}
-      <section className="courses">
-        <div className="courses-header">
-          <div className="header-text">
-            <h1 className="page-title">Courses & Training</h1>
-            <p className="page-subtitle">
-              Expand your skills with expert-led programs and hands‑on projects.
-            </p>
-          </div>
-
-          {/* Stats Banner */}
-          <div className="stats-banner">
-            <div className="stat-item">
-              <span className="stat-number" ref={studentsCountRef}>0</span>
-              <span className="stat-label">STUDENTS ENROLLED</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Tab Switcher */}
-        <div className="tab-container">
-          <button
-            className={`tab-btn ${activeTab === "all" ? "active" : ""}`}
-            onClick={() => setActiveTab("all")}
-          >
-            All Courses
-          </button>
-          <button
-            className={`tab-btn ${activeTab === "certifications" ? "active" : ""}`}
-            onClick={() => setActiveTab("certifications")}
-          >
-            Certifications
-          </button>
-        </div>
-
-        {/* Courses Grid */}
-        <div className="courses-grid">
-          {filteredCourses.length > 0 ? (
-            filteredCourses.map((course) => (
-              <CourseCard key={course.id} course={course} />
-            ))
-          ) : (
-            <p className="no-courses">No courses available in this category.</p>
-          )}
-        </div>
-
-        {/* Suggest a Course CTA */}
-        <div className="suggest-cta">
-          <h2>Don't see what you're looking for?</h2>
-          <p>
-            We regularly add new courses based on community demand. Let us know what
-            you'd like to learn next.
-          </p>
-          <a href="mailto:courses@nastp.gov.pk" className="suggest-btn">
-            Suggest a Course
-          </a>
-        </div>
-      </section>
+    <div className="courses-app">
+      {currentView === "trainings" && renderTrainingsView()}
+      {currentView === "course-detail" && renderCourseDetailView()}
+      {currentView === "checkout" && renderCheckoutView()}
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Condensed:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
-        /* ===== Rainbow Background ===== */
-        .rainbow-background {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          overflow: hidden;
-          z-index: 0;
-          pointer-events: none;
-          background-color: #000000;
+        /* Global Reset & Base */
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
         }
 
-        .rainbow {
-          height: 100vh;
-          width: 0;
-          top: 0;
-          position: absolute;
-          transform: rotate(10deg);
-          transform-origin: top right;
-        }
-
-        .h {
-          box-shadow: 0 0 50vh 40vh #0a0a0a;
-          width: 100vw;
-          height: 0;
-          bottom: 0;
-          left: 0;
-          position: absolute;
-        }
-
-        .v {
-          box-shadow: 0 0 35vw 25vw #0a0a0a;
-          width: 0;
-          height: 100vh;
-          bottom: 0;
-          left: 0;
-          position: absolute;
-        }
-
-        @keyframes slide {
-          from { right: -25vw; }
-          to { right: 125vw; }
-        }
-
-        ${generateRainbowCSS()}
-
-        /* ===== Courses Page ===== */
-        .courses {
-          position: relative;
-          z-index: 10;
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 6rem 1.5rem 4rem;
+        .courses-app {
+          background: #000000;
+          min-height: 100vh;
           font-family: 'Inter', sans-serif;
-          background: transparent;
+          color: #ffffff;
         }
 
-        /* Header area with flex for side-by-side layout */
-        .courses-header {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-between;
-          align-items: flex-start;
-          margin-bottom: 2rem;
-        }
-
-        .header-text {
-          flex: 1 1 auto;
+        /* ===== TRAININGS HUB VIEW ===== */
+        .trainings-view {
+          padding: 8rem 1.5rem 5rem;
+          max-width: 1280px;
+          margin: 0 auto;
         }
 
         .page-title {
-          font-size: 3rem;
-          font-weight: 700;
-          margin-bottom: 0.5rem;
-          color: #ffffff;
-          text-shadow: 0 0 15px rgba(0,0,0,0.7);
-        }
-
-        .page-subtitle {
-          font-size: 1.25rem;
-          color: #0ae448;
-          margin-bottom: 0;
-          text-shadow: 0 0 8px rgba(0,0,0,0.5);
-        }
-
-        /* ===== Stats Banner ===== */
-        .stats-banner {
-          display: flex;
-          justify-content: flex-end;
-          flex-shrink: 0;
-          margin-left: 2rem;
-        }
-
-        .stat-item {
-          padding: 1.2rem 3rem;
-          text-align: center;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        
-
-        .stat-number {
-          font-family: 'Roboto Condensed', sans-serif;
-          font-size: 4.5rem;
-          font-weight: 700;
-          color: #0ae448;
-          line-height: 1.2;
-          display: block;
-          text-shadow: 0 0 20px rgba(10, 228, 72, 0.5);
-          letter-spacing: 2px;
-        }
-
-        .stat-label {
-          font-family: 'Inter', sans-serif;
-          font-size: 1.1rem;
-          font-weight: 600;
-          color: #ffffff;
+          font-size: 4rem;
+          font-weight: 900;
+          letter-spacing: -0.02em;
           text-transform: uppercase;
-          letter-spacing: 0.3em;
-          opacity: 0.9;
-          display: block;
-          margin-top: 0.3rem;
-        }
-
-        /* Tab Switcher */
-        .tab-container {
-          display: flex;
-          gap: 0.5rem;
-          margin-bottom: 2.5rem;
-          border-bottom: 1px solid rgba(10, 228, 72, 0.2);
-          padding-bottom: 0.5rem;
-        }
-
-        .tab-btn {
-          background: transparent;
-          border: none;
-          color: #aaa;
-          font-size: 1.25rem;
-          font-weight: 600;
-          padding: 0.75rem 1.5rem;
-          cursor: pointer;
-          transition: all 0.2s;
-          border-radius: 0.5rem 0.5rem 0 0;
-          font-family: inherit;
-        }
-
-        .tab-btn:hover {
-          color: #ffffff;
-          background: rgba(10, 228, 72, 0.1);
-        }
-
-        .tab-btn.active {
-          color: #0ae448;
-          background: rgba(10, 228, 72, 0.15);
-          border-bottom: 2px solid #0ae448;
-        }
-
-        /* Courses Grid */
-        .courses-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 2rem;
-          margin-bottom: 3rem;
+          text-align: center;
+          margin-bottom: 2rem;
+          background: linear-gradient(135deg, #ffffff 0%, #0ae448 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
         }
 
         @media (min-width: 768px) {
-          .courses-grid {
+          .page-title {
+            font-size: 5rem;
+          }
+        }
+
+        /* Filters */
+        .filters-container {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 0.75rem;
+          margin: 2rem 0 3rem;
+        }
+
+        .filter-btn {
+          background: transparent;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          color: rgba(255, 255, 255, 0.6);
+          padding: 0.6rem 1.5rem;
+          border-radius: 9999px;
+          font-weight: 700;
+          font-size: 0.875rem;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          font-family: inherit;
+        }
+
+        .filter-btn:hover {
+          border-color: #0ae448;
+          color: #0ae448;
+        }
+
+        .filter-btn.active {
+          background: #0ae448;
+          border-color: #0ae448;
+          color: #000000;
+        }
+
+        /* Course Grid */
+        .course-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+          .course-grid {
             grid-template-columns: repeat(2, 1fr);
           }
         }
 
-        /* Course Card */
-        .course-card {
-          background: rgba(20, 20, 20, 0.75);
+        @media (min-width: 1024px) {
+          .course-grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
+
+        .course-card-hub {
+          background: rgba(20, 20, 20, 0.8);
           backdrop-filter: blur(8px);
           border-radius: 1.5rem;
-          box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-          border: 1px solid rgba(10, 228, 72, 0.25);
-          transition: all 0.2s ease;
-          display: flex;
-          flex-direction: column;
+          border: 1px solid rgba(10, 228, 72, 0.2);
           overflow: hidden;
+          transition: all 0.3s ease;
         }
 
-        .course-card:hover {
-          box-shadow: 0 12px 40px rgba(0,0,0,0.8);
-          border-color: rgba(10, 228, 72, 0.4);
-          transform: translateY(-3px);
+        .course-card-hub:hover {
+          transform: translateY(-4px);
+          border-color: rgba(10, 228, 72, 0.5);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
 
-        .course-image {
+        .course-card-image {
           position: relative;
           width: 100%;
           height: 200px;
           overflow: hidden;
         }
 
-        .course-image img {
+        .course-card-image img {
           width: 100%;
           height: 100%;
           object-fit: cover;
           transition: transform 0.3s ease;
         }
 
-        .course-card:hover .course-image img {
+        .course-card-hub:hover .course-card-image img {
           transform: scale(1.05);
         }
 
-        .course-level-badge {
-          position: absolute;
-          top: 1rem;
-          left: 1rem;
-          background: rgba(0, 0, 0, 0.7);
-          backdrop-filter: blur(4px);
-          color: #0ae448;
-          padding: 0.3rem 1rem;
-          border-radius: 2rem;
-          font-size: 0.75rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-          border: 1px solid rgba(10, 228, 72, 0.3);
-        }
-
-        .certification-badge {
+        .cert-badge {
           position: absolute;
           top: 1rem;
           right: 1rem;
-          background: rgba(10, 228, 72, 0.9);
+          background: #0ae448;
           color: #000;
-          padding: 0.3rem 1rem;
-          border-radius: 2rem;
-          font-size: 0.75rem;
+          padding: 0.25rem 0.75rem;
+          border-radius: 9999px;
+          font-size: 0.7rem;
           font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
         }
 
-        .course-content {
-          padding: 1.75rem;
-          flex: 1;
+        .course-card-content {
+          padding: 1.5rem;
+        }
+
+        .course-card-content h3 {
+          font-size: 1.25rem;
+          font-weight: 700;
+          margin-bottom: 0.5rem;
+          color: #fff;
+        }
+
+        .instructor {
+          color: #0ae448;
+          font-size: 0.875rem;
+          margin-bottom: 0.75rem;
+        }
+
+        .description {
+          color: #aaa;
+          font-size: 0.875rem;
+          line-height: 1.5;
+          margin-bottom: 1rem;
+        }
+
+        .card-footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 0.5rem;
+        }
+
+        .price {
+          font-weight: 800;
+          font-size: 1.25rem;
+          color: #0ae448;
+        }
+
+        .view-btn {
+          background: transparent;
+          border: 1px solid #0ae448;
+          color: #0ae448;
+          padding: 0.5rem 1rem;
+          border-radius: 9999px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s;
+          font-family: inherit;
+        }
+
+        .view-btn:hover {
+          background: #0ae448;
+          color: #000;
+        }
+
+        .arrow {
+          margin-left: 0.25rem;
+          transition: transform 0.2s;
+        }
+
+        .view-btn:hover .arrow {
+          transform: translateX(4px);
+        }
+
+        /* ===== COURSE DETAIL VIEW ===== */
+        .detail-view {
+          padding: 8rem 1.5rem 5rem;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        .back-btn {
+          background: transparent;
+          border: none;
+          color: rgba(255, 255, 255, 0.6);
+          font-weight: 700;
+          font-size: 1rem;
+          cursor: pointer;
+          margin-bottom: 2rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          transition: color 0.2s;
+          font-family: inherit;
+        }
+
+        .back-btn:hover {
+          color: #0ae448;
+        }
+
+        .back-arrow {
+          transition: transform 0.2s;
+        }
+
+        .back-btn:hover .back-arrow {
+          transform: translateX(-4px);
+        }
+
+        .detail-panel {
+          background: rgba(20, 20, 20, 0.6);
+          backdrop-filter: blur(8px);
+          border-radius: 2rem;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          overflow: hidden;
           display: flex;
           flex-direction: column;
         }
 
-        .course-title {
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: #ffffff;
-          margin-bottom: 1rem;
-          line-height: 1.3;
+        @media (min-width: 768px) {
+          .detail-panel {
+            flex-direction: row;
+          }
         }
 
-        .course-meta {
+        .detail-left {
+          width: 100%;
+          padding: 2rem;
+          background: rgba(0, 0, 0, 0.3);
+          border-right: 1px solid rgba(255, 255, 255, 0.05);
           display: flex;
-          flex-wrap: wrap;
-          gap: 1rem;
-          margin-bottom: 0.75rem;
-          color: #0ae448;
-          font-size: 0.9rem;
-          font-weight: 500;
+          flex-direction: column;
+          justify-content: space-between;
         }
 
-        .course-description {
-          color: #ddd;
+        @media (min-width: 768px) {
+          .detail-left {
+            width: 33.333%;
+          }
+          .detail-right {
+            width: 66.666%;
+          }
+        }
+
+        .detail-image {
+          width: 100%;
+          border-radius: 1rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .detail-stats {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .stat {
+          display: flex;
+          justify-content: space-between;
+          padding: 0.75rem 0;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-value {
+          font-weight: 700;
+          color: #0ae448;
+        }
+
+        .stat-label {
+          color: rgba(255, 255, 255, 0.5);
+          font-size: 0.875rem;
+        }
+
+        .cert-notice {
+          background: rgba(10, 228, 72, 0.1);
+          border: 1px solid rgba(10, 228, 72, 0.3);
+          padding: 0.75rem;
+          border-radius: 0.75rem;
+          text-align: center;
+          font-weight: 600;
+          color: #0ae448;
+        }
+
+        .detail-right {
+          width: 100%;
+          padding: 2rem;
+        }
+
+        .detail-right h2 {
+          font-size: 2rem;
+          font-weight: 800;
+          margin-bottom: 0.5rem;
+        }
+
+        .instructor-detail {
+          color: #0ae448;
+          margin-bottom: 1rem;
+        }
+
+        .description-detail {
+          color: #ccc;
           line-height: 1.6;
           margin-bottom: 1.5rem;
-          flex: 1;
         }
 
-        .enroll-btn {
-          background: transparent;
-          border: 1px solid #0ae448;
-          color: #0ae448;
-          font-weight: 600;
-          padding: 0.6rem 1.2rem;
-          border-radius: 2rem;
-          font-size: 0.95rem;
-          cursor: pointer;
-          transition: all 0.2s;
-          align-self: flex-start;
-          text-decoration: none;
-          display: inline-block;
+        .detail-right h3 {
+          font-size: 1.25rem;
+          margin: 1.5rem 0 1rem;
         }
 
-        .enroll-btn:hover {
+        .learn-list {
+          list-style: none;
+          margin-bottom: 2rem;
+        }
+
+        .learn-list li {
+          padding: 0.5rem 0;
+          color: #ddd;
+        }
+
+        .enroll-now-btn {
           background: #0ae448;
           color: #000;
-          box-shadow: 0 4px 12px rgba(10, 228, 72, 0.3);
+          border: none;
+          padding: 0.875rem 2rem;
+          border-radius: 9999px;
+          font-weight: 800;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: all 0.2s;
+          font-family: inherit;
         }
 
-        .no-courses {
-          color: #aaa;
+        .enroll-now-btn:hover {
+          background: #fff;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(10, 228, 72, 0.3);
+        }
+
+        /* ===== CHECKOUT VIEW ===== */
+        .checkout-view {
+          padding: 8rem 1.5rem 5rem;
+          max-width: 900px;
+          margin: 0 auto;
+        }
+
+        .cancel-btn {
+          background: transparent;
+          border: none;
+          color: rgba(255, 255, 255, 0.6);
+          font-weight: 700;
+          margin-bottom: 1.5rem;
+          cursor: pointer;
+          transition: color 0.2s;
+          font-family: inherit;
+        }
+
+        .cancel-btn:hover {
+          color: #0ae448;
+        }
+
+        .checkout-title {
+          font-size: 3rem;
+          font-weight: 900;
+          text-transform: uppercase;
+          margin-bottom: 2rem;
+        }
+
+        .checkout-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        @media (min-width: 1024px) {
+          .checkout-grid {
+            grid-template-columns: 1fr 1fr;
+          }
+        }
+
+        .payment-info h3, .student-form h3 {
           font-size: 1.25rem;
-          text-align: center;
-          padding: 3rem;
-        }
-
-        /* Suggest CTA */
-        .suggest-cta {
-          margin-top: 2rem;
-          padding: 2.5rem;
-          background: rgba(20, 20, 20, 0.6);
-          backdrop-filter: blur(8px);
-          border-radius: 1.5rem;
-          border: 1px solid rgba(10, 228, 72, 0.2);
-          text-align: center;
-        }
-
-        .suggest-cta h2 {
-          color: #ffffff;
-          font-size: 2rem;
           font-weight: 700;
           margin-bottom: 1rem;
         }
 
-        .suggest-cta p {
-          color: #ccc;
-          font-size: 1.1rem;
-          max-width: 700px;
-          margin: 0 auto 2rem;
-          line-height: 1.6;
+        .payment-methods {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
         }
 
-        .suggest-btn {
+        .payment-card {
+          background: rgba(20, 20, 20, 0.6);
+          backdrop-filter: blur(8px);
+          padding: 1.25rem;
+          border-radius: 1rem;
+          border-left: 4px solid;
+        }
+
+        .bank-card {
+          border-left-color: #3b82f6;
+        }
+
+        .easypaisa-card {
+          border-left-color: #22c55e;
+        }
+
+        .payment-card h4 {
+          margin-bottom: 0.5rem;
+          font-size: 1rem;
+        }
+
+        .payment-card p {
+          color: rgba(255, 255, 255, 0.5);
+          font-size: 0.875rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .account-number {
+          background: rgba(0, 0, 0, 0.5);
+          padding: 0.5rem;
+          border-radius: 0.5rem;
+          text-align: center;
+          font-family: monospace;
+          letter-spacing: 2px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .student-form {
+          background: rgba(20, 20, 20, 0.6);
+          backdrop-filter: blur(8px);
+          padding: 1.5rem;
+          border-radius: 1.5rem;
+        }
+
+        .checkout-form {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .checkout-form input,
+        .checkout-form select {
+          width: 100%;
+          background: transparent;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 0.75rem;
+          padding: 0.75rem 1rem;
+          color: #fff;
+          font-family: inherit;
+          outline: none;
+          transition: border-color 0.2s;
+        }
+
+        .checkout-form input:focus,
+        .checkout-form select:focus {
+          border-color: #0ae448;
+        }
+
+        .checkout-form input::placeholder {
+          color: rgba(255, 255, 255, 0.4);
+        }
+
+        .upload-area {
+          border: 2px dashed rgba(10, 228, 72, 0.5);
+          background: rgba(10, 228, 72, 0.05);
+          border-radius: 0.75rem;
+          padding: 1.5rem;
+          text-align: center;
+          cursor: pointer;
+          transition: all 0.2s;
+          position: relative;
+        }
+
+        .upload-area:hover {
+          background: rgba(10, 228, 72, 0.1);
+          border-color: #0ae448;
+        }
+
+        .upload-icon {
+          font-size: 1.5rem;
+          display: block;
+          margin-bottom: 0.5rem;
+        }
+
+        .upload-text {
+          font-size: 0.875rem;
+          font-weight: 700;
+          color: #0ae448;
+        }
+
+        .file-input {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          cursor: pointer;
+        }
+
+        .submit-btn {
           background: #0ae448;
           color: #000;
-          font-weight: 700;
-          padding: 0.875rem 2rem;
-          border-radius: 2rem;
-          font-size: 1rem;
-          text-decoration: none;
-          display: inline-block;
+          border: none;
+          padding: 0.875rem;
+          border-radius: 0.75rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          cursor: pointer;
           transition: all 0.2s;
+          font-family: inherit;
+          margin-top: 0.5rem;
         }
 
-        .suggest-btn:hover {
-          background: #ffffff;
-          color: #000;
-          box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        .submit-btn:hover {
+          background: #fff;
+          transform: translateY(-2px);
         }
 
-        /* Responsive adjustments (existing, unchanged) */
+        /* Responsive */
         @media (max-width: 768px) {
-          .courses {
-            padding: 5rem 1rem 3rem;
+          .trainings-view, .detail-view, .checkout-view {
+            padding: 6rem 1rem 3rem;
           }
-
-          .courses-header {
-            flex-direction: column;
-            align-items: flex-start;
-          }
-
-          .stats-banner {
-            margin-left: 0;
-            margin-top: 1.5rem;
-            width: 100%;
-            justify-content: center;
-          }
-
-          .stat-item {
-            padding: 1rem 2rem;
-          }
-
-          .stat-number {
-            font-size: 3.5rem;
-          }
-
-          .stat-label {
-            font-size: 0.9rem;
-            letter-spacing: 0.2em;
-          }
-
           .page-title {
             font-size: 2.5rem;
           }
-        }
-
-        @media (max-width: 480px) {
-          .stat-item {
-            padding: 0.8rem 1.5rem;
-          }
-
-          .stat-number {
-            font-size: 2.8rem;
-          }
-
-          .stat-label {
-            font-size: 0.8rem;
-            letter-spacing: 0.15em;
-          }
-
-          .page-title {
+          .checkout-title {
             font-size: 2rem;
           }
-
-          .page-subtitle {
-            font-size: 1rem;
-          }
-        }
-
-        /* ---------- MOBILE PERFORMANCE OPTIMIZATIONS ---------- */
-        /* These overrides apply only to tablets and smaller, leaving desktop unchanged */
-        @media (max-width: 1023px) {
-          /* Reduce number of visible rainbows (hide half of them) */
-          .rainbow:nth-child(n+13) {
-            display: none !important;
-          }
-
-          /* Use transform instead of 'right' for smoother animation */
-          @keyframes slide {
-            from { transform: translateX(-25vw); }
-            to { transform: translateX(125vw); }
-          }
-
-          /* Simplify box-shadows on mobile for better performance */
-          .rainbow {
-            right: auto !important;
-            left: 0;
-            animation-name: slide-mobile !important;
-            will-change: transform;
-          }
-
-          /* Override the nth-child generated box-shadows with lighter ones */
-          .rainbow:nth-child(n) {
-            box-shadow: -50px 0 40px 20px #0a0a0a,
-                        0 0 30px 15px #0e5a2c,
-                        50px 0 40px 20px #0a0a0a !important;
-          }
-
-          /* Keyframe for transform-based animation */
-          @keyframes slide-mobile {
-            from { transform: translateX(-50vw); }
-            to { transform: translateX(150vw); }
-          }
-
-          /* Keep the overlay darkening the edges */
-          .h {
-            box-shadow: 0 0 50vh 30vh #0a0a0a;
-          }
-          .v {
-            box-shadow: 0 0 35vw 20vw #0a0a0a;
-          }
-        }
-
-        /* Small phones – further reduce */
-        @media (max-width: 600px) {
-          .rainbow:nth-child(n+8) {
-            display: none !important;
-          }
-
-          .rainbow:nth-child(n) {
-            box-shadow: -30px 0 30px 15px #0a0a0a,
-                        0 0 20px 10px #0e5a2c,
-                        30px 0 30px 15px #0a0a0a !important;
-          }
-        }
-
-        /* Fallback for reduced motion preference */
-        @media (prefers-reduced-motion: reduce) {
-          .rainbow {
-            animation: none !important;
-            opacity: 0.2;
+          .detail-right h2 {
+            font-size: 1.5rem;
           }
         }
       `}</style>
-    </>
+    </div>
   );
 };
 

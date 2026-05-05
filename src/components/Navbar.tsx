@@ -15,10 +15,6 @@ const Navbar = ({ onNavigate }: NavbarProps): ReactElement => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    // Check for saved theme or system preference
-
-   
-
     // Handle scroll effect
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -26,8 +22,6 @@ const Navbar = ({ onNavigate }: NavbarProps): ReactElement => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  
 
   const handleNavigate = (page: string) => {
     if (onNavigate) {
@@ -93,16 +87,21 @@ const Navbar = ({ onNavigate }: NavbarProps): ReactElement => {
           padding-top: 80px;
         }
 
+        /* Transparent blur effect - glass morphism */
         .glass-panel {
-          background: rgba(0, 0, 0, 0.95);
+          background: rgba(255, 255, 255, 0.08);
           backdrop-filter: blur(12px);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+          box-shadow: none;
+          transition: all 0.3s ease;
         }
 
+        /* Slightly more opaque when scrolled for better readability */
         .glass-panel-scrolled {
-          background: rgba(0, 0, 0, 0.98);
+          background: rgba(0, 0, 0, 0.4);
           backdrop-filter: blur(16px);
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .fixed-nav {
@@ -156,7 +155,7 @@ const Navbar = ({ onNavigate }: NavbarProps): ReactElement => {
           color: var(--brand-400);
         }
 
-        /* Desktop Navigation - Always visible */
+        /* Desktop Navigation - Glass effect */
         .desktop-nav {
           display: flex;
           align-items: center;
@@ -164,7 +163,8 @@ const Navbar = ({ onNavigate }: NavbarProps): ReactElement => {
           background: rgba(255, 255, 255, 0.05);
           padding: 0.5rem 2rem;
           border-radius: 9999px;
-          border: 1px solid rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(4px);
         }
 
         .nav-link {
@@ -175,17 +175,19 @@ const Navbar = ({ onNavigate }: NavbarProps): ReactElement => {
           font-size: 0.75rem;
           letter-spacing: 0.1em;
           padding: 0.5rem 0;
-          color: #9ca3af;
-          transition: color 0.2s ease;
+          color: rgba(255, 255, 255, 0.7);
+          transition: all 0.2s ease;
           text-transform: uppercase;
         }
 
         .nav-link:hover {
           color: var(--brand-400);
+          transform: translateY(-1px);
         }
 
         .nav-link.active {
           color: var(--brand-400);
+          text-shadow: 0 0 8px rgba(52, 211, 153, 0.3);
         }
 
         /* Desktop Actions */
@@ -204,14 +206,16 @@ const Navbar = ({ onNavigate }: NavbarProps): ReactElement => {
           font-size: 0.875rem;
           border: none;
           cursor: pointer;
-          transition: transform 0.2s ease;
+          transition: all 0.2s ease;
+          box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
         }
 
         .enroll-btn:hover {
           transform: translateY(-2px);
+          box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
         }
 
-        /* Mobile Menu Button - Hidden on desktop */
+        /* Mobile Menu Button */
         .mobile-menu-btn {
           display: none;
           flex-direction: column;
@@ -228,7 +232,7 @@ const Navbar = ({ onNavigate }: NavbarProps): ReactElement => {
         .mobile-menu-btn span {
           width: 100%;
           height: 3px;
-          background-color: white;
+          background-color: rgba(255, 255, 255, 0.9);
           border-radius: 3px;
           transition: all 0.3s ease;
         }
@@ -245,14 +249,14 @@ const Navbar = ({ onNavigate }: NavbarProps): ReactElement => {
           transform: translateY(-9px) rotate(-45deg);
         }
 
-        /* Mobile Menu */
+        /* Mobile Menu with transparent blur */
         .mobile-menu {
           position: fixed;
           top: 5rem;
           left: 0;
           right: 0;
-          background: rgba(0, 0, 0, 0.95);
-          backdrop-filter: blur(12px);
+          background: rgba(0, 0, 0, 0.6);
+          backdrop-filter: blur(20px);
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           transform: translateY(-100%);
           opacity: 0;
@@ -280,8 +284,8 @@ const Navbar = ({ onNavigate }: NavbarProps): ReactElement => {
           font-weight: 600;
           text-transform: uppercase;
           letter-spacing: 0.05em;
-          color: #9ca3af;
-          transition: color 0.2s ease;
+          color: rgba(255, 255, 255, 0.8);
+          transition: all 0.2s ease;
           background: none;
           border: none;
           cursor: pointer;
@@ -291,6 +295,7 @@ const Navbar = ({ onNavigate }: NavbarProps): ReactElement => {
         .mobile-nav-link:hover,
         .mobile-nav-link.active {
           color: var(--brand-400);
+          transform: translateX(5px);
         }
 
         .mobile-menu-actions {
@@ -312,10 +317,14 @@ const Navbar = ({ onNavigate }: NavbarProps): ReactElement => {
           text-align: center;
           border: none;
           cursor: pointer;
-          transition: transform 0.2s ease;
+          transition: all 0.2s ease;
         }
 
-        /* Mobile styles */
+        .mobile-enroll-btn:hover {
+          transform: translateY(-2px);
+        }
+
+        /* Mobile responsive */
         @media (max-width: 768px) {
           .desktop-nav {
             display: none;
@@ -337,6 +346,10 @@ const Navbar = ({ onNavigate }: NavbarProps): ReactElement => {
         .hover-trigger {
           transition: all 0.2s ease;
         }
+
+        .hover-trigger:hover {
+          transform: scale(1.02);
+        }
       `}</style>
 
       <nav
@@ -348,12 +361,12 @@ const Navbar = ({ onNavigate }: NavbarProps): ReactElement => {
           <div
             className="font-black text-3xl cursor-pointer hover-trigger"
             onClick={() => handleNavigate('home')}
-            style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}
+            style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", color: 'white' }}
           >
             YUNI<span className="text-brand-400">.</span>
           </div>
 
-          {/* Desktop Navigation - Always visible on desktop */}
+          {/* Desktop Navigation */}
           <div className="desktop-nav">
             {navLinks.map((link) => (
               <button

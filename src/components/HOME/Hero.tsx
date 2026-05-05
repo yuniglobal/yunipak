@@ -17,7 +17,37 @@ export default function Hero() {
 
   // Helper to determine globe visibility based on viewport dimensions
   const isViewportLargeEnough = () => {
-    return window.innerWidth >= 1205 && window.innerHeight >= 900;
+    return window.innerWidth >= 1024 && window.innerHeight >= 700;
+  };
+
+  // Get scale range based on viewport size
+  const getScaleRange = () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    
+    // For smaller screens (laptops with 1366x768, tablets, etc.)
+    if (width <= 1366 || height <= 768) {
+      return { min: 0.45, max: 0.65 };
+    }
+    // For medium screens (1440x900, 1536x864)
+    if (width <= 1536 || height <= 900) {
+      return { min: 0.55, max: 0.75 };
+    }
+    // For 1080p and above
+    if (width <= 1920 || height <= 1080) {
+      return { min: 0.7, max: 0.9 };
+    }
+    // For large/2K+ screens
+    return { min: 0.85, max: 1.0 };
+  };
+
+  // Get particle size based on viewport
+  const getParticleSize = () => {
+    const width = window.innerWidth;
+    if (width <= 1366) return 1.4;
+    if (width <= 1536) return 1.8;
+    if (width <= 1920) return 2.0;
+    return 2.2;
   };
 
   // State to control globe visibility
@@ -67,6 +97,8 @@ export default function Hero() {
     const container = containerRef.current;
     const width = container.clientWidth;
     const height = container.clientHeight;
+    const scaleRange = getScaleRange();
+    const particleSize = getParticleSize();
 
     const scene = new THREE.Scene();
     sceneRef.current = scene;
@@ -77,12 +109,16 @@ export default function Hero() {
 
     const renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Cap pixel ratio for performance
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
-    const radius = 110;
-    const particlesCount = 1600;
+    // Adjust radius based on screen size
+    const baseRadius = 110;
+    const scaleFactor = window.innerWidth <= 1366 ? 0.7 : window.innerWidth <= 1536 ? 0.85 : 1;
+    const radius = baseRadius * scaleFactor;
+    
+    const particlesCount = window.innerWidth <= 1366 ? 1000 : window.innerWidth <= 1536 ? 1300 : 1600;
     const positions = new Float32Array(particlesCount * 3);
 
     for (let i = 0; i < particlesCount; i++) {
@@ -103,7 +139,7 @@ export default function Hero() {
 
     const material = new THREE.PointsMaterial({
       color: 0x0ae448,
-      size: 2.2,
+      size: particleSize,
       transparent: true,
       opacity: 0.9,
     });
@@ -115,7 +151,20 @@ export default function Hero() {
     renderingParent.add(particles);
     renderingParentRef.current = renderingParent;
 
+    // Set initial scale
+    renderingParent.scale.set(scaleRange.min, scaleRange.min, scaleRange.min);
+
     scene.add(renderingParent);
+
+    // Reduce mouse sensitivity on smaller screens
+    const getMouseSensitivity = () => {
+      const width = window.innerWidth;
+      if (width <= 1366) return 0.5;
+      if (width <= 1536) return 0.65;
+      return 0.8;
+    };
+
+    const mouseSensitivity = getMouseSensitivity();
 
     const onMouseMove = (event: MouseEvent) => {
       if (mouseTweenRef.current) mouseTweenRef.current.kill();
@@ -125,19 +174,19 @@ export default function Hero() {
 
       mouseTweenRef.current = gsap.to(particles.rotation, {
         duration: 0.1,
-        x: mouseY * 0.8,
-        y: mouseX * 0.8,
+        x: mouseY * mouseSensitivity,
+        y: mouseX * mouseSensitivity,
         overwrite: true,
       });
     };
 
     window.addEventListener('mousemove', onMouseMove);
 
-    const animProps = { scale: 0.85, xRot: 0, yRot: 0 };
+    const animProps = { scale: scaleRange.min, xRot: 0, yRot: 0 };
 
     scaleTweenRef.current = gsap.to(animProps, {
       duration: 10,
-      scale: 1,
+      scale: scaleRange.max,
       repeat: -1,
       yoyo: true,
       ease: 'sine.inOut',
@@ -264,32 +313,39 @@ export default function Hero() {
 
         .hero-label {
           display: inline-block;
-          color: var(--primary);
-          font-size: 1.875rem;
-          font-weight: 700;
-          letter-spacing: 0.05em;
+          font-size: 1rem;
+          font-weight: 600;
+          letter-spacing: 0.1em;
           text-transform: uppercase;
+          background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
         }
 
         .hero-title {
-          font-size: 3.5rem;
-          font-weight: 700;
+          font-size: 4rem;
+          font-weight: 800;
           line-height: 1.2;
+          color: #ffffff;
         }
 
         @media (min-width: 768px) {
           .hero-title {
-            font-size: 4.5rem;
+            font-size: 5rem;
           }
         }
 
         .hero-title span {
-          color: var(--primary);
+          background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
         }
 
         .hero-description {
-          font-size: 1.25rem;
-          color: var(--text-gray);
+          font-size: 1.125rem;
+          color: rgba(255, 255, 255, 0.7);
           line-height: 1.6;
           max-width: 90%;
         }
@@ -301,38 +357,53 @@ export default function Hero() {
           padding-top: 1rem;
         }
 
+        /* Button Styles */
         .btn-primary {
           background-color: var(--primary);
-          color: var(--primary-dark);
+          color: #000000;
           padding: 0.875rem 2rem;
-          border-radius: 0.5rem;
-          font-weight: 600;
-          transition: background-color 0.3s ease;
+          border-radius: 9999px;
+          font-weight: 800;
+          font-size: 1rem;
+          transition: all 0.3s ease;
           cursor: pointer;
           border: none;
           font-family: 'Inter', sans-serif;
-          font-size: 1rem;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.75rem;
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         .btn-primary:hover {
           background-color: var(--primary-light);
+          transform: translateY(-2px);
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
         .btn-secondary {
-          border: 2px solid var(--primary);
-          color: var(--primary);
+          backdrop-filter: blur(8px);
+          background-color: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          color: #ffffff;
           padding: 0.875rem 2rem;
-          border-radius: 0.5rem;
-          font-weight: 600;
-          transition: background-color 0.3s ease;
-          background-color: transparent;
+          border-radius: 9999px;
+          font-weight: 700;
+          font-size: 1rem;
+          transition: all 0.3s ease;
           cursor: pointer;
           font-family: 'Inter', sans-serif;
-          font-size: 1rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.75rem;
         }
 
         .btn-secondary:hover {
-          background-color: rgba(153, 213, 162, 0.1);
+          background-color: rgba(255, 255, 255, 0.15);
+          transform: translateY(-2px);
+          border-color: rgba(255, 255, 255, 0.2);
         }
 
         .hero-visual {
@@ -363,10 +434,25 @@ export default function Hero() {
           overflow: visible;
         }
 
-        /* On mobile/tablet, reduce min-height when globe is hidden */
+        /* Tablet and small laptop adjustments */
+        @media (max-width: 1366px) {
+          .hero-visual {
+            min-height: 380px;
+          }
+          .canvas-wrapper {
+            width: 150%;
+            height: 150%;
+          }
+        }
+
+        /* iPad and touch laptops */
         @media (max-width: 1024px) {
           .hero-visual {
             min-height: 0;
+          }
+          .canvas-wrapper {
+            width: 130%;
+            height: 130%;
           }
         }
 
@@ -384,6 +470,10 @@ export default function Hero() {
           .hero-visual {
             min-height: 0;
           }
+          .btn-primary, .btn-secondary {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+          }
         }
       `}</style>
 
@@ -392,18 +482,21 @@ export default function Hero() {
           <div className="hero-grid">
             <div className="hero-content">
               <span className="hero-label">
-                Welcome to <span style={{ color: '#ffffff' }}>Yuni</span>
-                <span style={{ color: 'var(--primary)' }}>pakistan</span>
+                Welcome to YUNIPAKISTAN
               </span>
               <h1 className="hero-title">
-                Pakistan's Premier <span>Tech Ecosystem</span>
+                Architecting <span>The Future.</span>
               </h1>
               <p className="hero-description">
-                Building innovation, driving excellence, and empowering technology leaders across Pakistan. Transform your vision into reality with our world-class infrastructure and expert guidance.
+                Pakistan's premier tech ecosystem. We empower leaders to transform vision into digital reality through elite education.
               </p>
               <div className="hero-buttons">
-                <button className="btn-primary">Explore More</button>
-                <button className="btn-secondary">Learn More</button>
+                <button className="btn-primary">
+                  Explore Courses <i className="fas fa-rocket"></i>
+                </button>
+                <button className="btn-secondary">
+                  Free Consultation
+                </button>
               </div>
             </div>
 
