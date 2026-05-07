@@ -21,12 +21,11 @@ const TextEffect = () => {
     { mainText: "YUNI PAKISTAN", spanText: "INNOVATION" },
     { mainText: "TECH SOLUTIONS", spanText: "FOR TOMORROW" },
     { mainText: "EMPOWERING", spanText: "DIGITAL PAKISTAN" },
-    { mainText: "OUR SERVICES", spanText: "VIEW ALL", link: "/services" },
+    { mainText: "BUILD THE FUTURE", spanText: "EXPLORE PROGRAMS"},
     { mainText: "JOIN THE MOVEMENT", spanText: "CAREERS", link: "/careers" }
   ];
 
   useEffect(() => {
-    // Refresh ScrollTrigger after layout is stable
     const refresh = () => ScrollTrigger.refresh();
     window.addEventListener('resize', refresh);
     
@@ -39,7 +38,7 @@ const TextEffect = () => {
             trigger: text,
             start: 'center 80%',
             end: 'center 20%',
-            scrub: 0.5, // smoother on mobile
+            scrub: 0.5,
             invalidateOnRefresh: true,
           },
         });
@@ -52,16 +51,12 @@ const TextEffect = () => {
     };
   }, []);
 
-  // Handle tap for mobile devices to simulate hover
   const handleTouchStart = (_e: React.TouchEvent, index: number) => {
-    // Only on mobile devices (max-width: 768px)
     if (window.innerWidth > 768) return;
     const textEl = textRefs.current[index];
     if (textEl && !textEl.classList.contains('active-touch')) {
-      // Remove active class from all others
       textRefs.current.forEach(el => el?.classList.remove('active-touch'));
       textEl.classList.add('active-touch');
-      // Auto-remove after 1 second? Or keep until next tap? We'll keep until next tap on any
     }
   };
 
@@ -77,7 +72,6 @@ const TextEffect = () => {
   return (
     <>
       <style>{`
-        /* Base Styles */
         body {
           margin: 0;
           padding: 0;
@@ -118,7 +112,6 @@ const TextEffect = () => {
           padding: 0.25rem 0;
         }
 
-        /* Span (reveal layer) */
         .text span {
           position: absolute;
           width: 100%;
@@ -130,19 +123,34 @@ const TextEffect = () => {
           transition: clip-path 0.4s cubic-bezier(.1, .5, .5, 1);
           display: flex;
           flex-direction: column;
+          align-items: flex-start;
           justify-content: center;
           pointer-events: none;
           top: 0;
           left: 0;
-          padding-left: inherit;
+          padding-left: 0;
+          font-size: inherit;
+          letter-spacing: inherit;
+          line-height: inherit;
+          font-weight: inherit;
         }
 
-        /* Hover effect for desktop */
+        .text span a,
+        .text span .nav-link {
+          width: 100%;
+          display: flex;
+          align-items: flex-start;
+          justify-content: flex-start;
+          font-size: inherit;
+          letter-spacing: inherit;
+          line-height: inherit;
+          font-weight: inherit;
+        }
+
         .text:hover span {
           clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
         }
 
-        /* Touch active class for mobile (simulates hover on tap) */
         .text.active-touch span {
           clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
         }
@@ -159,17 +167,18 @@ const TextEffect = () => {
         .text .nav-link {
           text-decoration: none;
           color: inherit;
-          display: block;
-          width: 100%;
-          height: 100%;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: flex-start;
-          padding-left: 0;
+          width: 100%;
+          height: 100%;
+          font-size: inherit;
+          letter-spacing: inherit;
+          line-height: inherit;
+          font-weight: inherit;
         }
 
-        /* Tablet Styles (768px - 1024px) */
         @media (min-width: 768px) and (max-width: 1024px) {
           .text-effect-container {
             padding: 6% 8%;
@@ -180,7 +189,6 @@ const TextEffect = () => {
           }
         }
 
-        /* Mobile Styles (max-width: 767px) */
         @media (max-width: 767px) {
           .text-effect-container {
             padding: 10% 6%;
@@ -192,18 +200,15 @@ const TextEffect = () => {
             line-height: 1.3;
             padding: 0.5rem 0;
           }
-          /* Larger tap area for links */
           .text a,
           .text .nav-link {
             padding: 0.5rem 0;
           }
-          /* Disable hover on mobile to avoid stuck state, use active-touch instead */
           .text:hover span {
             clip-path: polygon(0 50%, 100% 50%, 100% 50%, 0 50%);
           }
         }
 
-        /* Small phones (≤ 480px) */
         @media (max-width: 480px) {
           .text-effect-container {
             padding: 12% 5%;
@@ -213,7 +218,6 @@ const TextEffect = () => {
           }
         }
 
-        /* Landscape orientation on mobile */
         @media (max-width: 767px) and (orientation: landscape) {
           .text-effect-container {
             min-height: auto;
@@ -224,7 +228,6 @@ const TextEffect = () => {
           }
         }
 
-        /* Accessibility: reduce motion if user prefers */
         @media (prefers-reduced-motion: reduce) {
           .text span {
             transition: none;

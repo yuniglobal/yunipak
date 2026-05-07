@@ -46,9 +46,9 @@ const InstagramIcon = () => (
   </svg>
 );
 
-const GithubIcon = () => (
+const FacebookIcon = () => (
   <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-    <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.03-2.682-.103-.253-.447-1.27.098-2.646 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.547 1.376.203 2.393.1 2.646.64.698 1.028 1.591 1.028 2.682 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
   </svg>
 );
 
@@ -67,7 +67,7 @@ const XIcon = () => (
 const Logo = () => (
   <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
     <circle cx="20" cy="20" r="18" fill="#0ae448" />
-    <text x="20" y="27" fontSize="20" fontWeight="bold" fill="#000" textAnchor="middle" fontFamily="Inter, sans-serif">P</text>
+    <text x="20" y="27" fontSize="18" fontWeight="bold" fill="#000" textAnchor="middle" fontFamily="Inter, sans-serif">Y</text>
   </svg>
 );
 
@@ -75,9 +75,9 @@ const GetInTouch: React.FC = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    company: "",
     email: "",
     phone: "",
+    subject: "",
     message: "",
     agree: false,
   });
@@ -91,11 +91,11 @@ const GetInTouch: React.FC = () => {
   const validateName = (value: string): boolean => /^[A-Za-z\s\-']{0,50}$/.test(value);
   const validatePhone = (value: string): boolean => /^\d{0,15}$/.test(value);
   const validateEmail = (value: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length <= 100;
-  const validateCompany = (value: string): boolean => value.length <= 100;
+  const validateSubject = (value: string): boolean => value.length <= 200;
   const validateMessage = (value: string): boolean => value.length <= 1000;
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value, type } = e.target;
     switch (name) {
@@ -106,8 +106,8 @@ const GetInTouch: React.FC = () => {
       case 'phone':
         if (!validatePhone(value)) return;
         break;
-      case 'company':
-        if (!validateCompany(value)) return;
+      case 'subject':
+        if (!validateSubject(value)) return;
         break;
       case 'message':
         if (!validateMessage(value)) return;
@@ -141,8 +141,8 @@ const GetInTouch: React.FC = () => {
       setStatus({ type: 'error', message: 'Phone number must contain only digits (max 15).' });
       return;
     }
-    if (formData.company && !validateCompany(formData.company)) {
-      setStatus({ type: 'error', message: 'Company name must not exceed 100 characters.' });
+    if (formData.subject && !validateSubject(formData.subject)) {
+      setStatus({ type: 'error', message: 'Subject must not exceed 200 characters.' });
       return;
     }
     if (!formData.message || !validateMessage(formData.message)) {
@@ -165,7 +165,7 @@ const GetInTouch: React.FC = () => {
           lastName: formData.lastName,
           email: formData.email,
           phone: formData.phone,
-          company: formData.company,
+          subject: formData.subject,
           message: formData.message,
         }),
       });
@@ -177,9 +177,9 @@ const GetInTouch: React.FC = () => {
         setFormData({
           firstName: "",
           lastName: "",
-          company: "",
           email: "",
           phone: "",
+          subject: "",
           message: "",
           agree: false,
         });
@@ -205,34 +205,38 @@ const GetInTouch: React.FC = () => {
       </div>
 
       <section className="get-in-touch">
-        <h1 className="page-title">Get in touch</h1>
+        <h1 className="page-title">Get in Touch</h1>
 
         <div className="contact-container">
           {/* Left column – Contact info */}
           <div className="contact-info">
             <div className="logo-wrapper">
               <Logo />
-              <span className="brand-name">Yunipakistan</span>
+              <span className="brand-name">YUNI Pakistan</span>
             </div>
+            
             <div className="info-block">
               <h2>Visit us</h2>
-              <p>67 Wisteria Way Croydon South VIC 3136 AU</p>
+              <p>NASTP (National Aerospace Science & Technology Park)<br />Islamabad, Pakistan</p>
             </div>
+            
             <div className="info-block">
               <h2>Chat to us</h2>
-              <p><a href="mailto:hello@paysphere.com">hello@paysphere.com</a></p>
+              <p><a href="mailto:hello@yunipakistan.com">hello@yunipakistan.com</a></p>
             </div>
+            
             <div className="info-block">
               <h2>Call us</h2>
-              <p>Mon-Fri from 8am to 5pm<br /><a href="tel:+995555555555">(+995) 555-55-55-55</a></p>
+              <p>Mon-Fri from 9am to 6pm (PKT)<br /><a href="tel:+923001234567">+92 300 1234567</a></p>
             </div>
+            
             <div className="info-block">
               <h2>Follow us</h2>
               <div className="social-icons">
-                <a href="#" aria-label="Instagram" className="social-link"><InstagramIcon /></a>
-                <a href="#" aria-label="GitHub" className="social-link"><GithubIcon /></a>
-                <a href="#" aria-label="LinkedIn" className="social-link"><LinkedInIcon /></a>
-                <a href="#" aria-label="X" className="social-link"><XIcon /></a>
+                <a href="https://www.facebook.com/yunipakistan" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="social-link"><FacebookIcon /></a>
+                <a href="https://www.instagram.com/yunipakistan" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-link"><InstagramIcon /></a>
+                <a href="https://www.linkedin.com/company/yunipakistan" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="social-link"><LinkedInIcon /></a>
+                <a href="https://twitter.com/yunipakistan" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="social-link"><XIcon /></a>
               </div>
             </div>
           </div>
@@ -249,29 +253,45 @@ const GetInTouch: React.FC = () => {
                 <input type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Doe" required maxLength={50} />
               </div>
             </div>
-            <div className="form-group">
-              <label htmlFor="company">Company Name</label>
-              <input type="text" id="company" name="company" value={formData.company} onChange={handleChange} placeholder="Acme Inc." maxLength={100} />
-            </div>
+
             <div className="form-group">
               <label htmlFor="email">Email *</label>
               <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} placeholder="john@example.com" required maxLength={100} />
             </div>
+
             <div className="form-group">
               <label htmlFor="phone">Phone Number</label>
-              <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} placeholder="1234567890" maxLength={15} />
+              <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} placeholder="03001234567" maxLength={15} />
               <small>Digits only, up to 15</small>
             </div>
+
+            <div className="form-group">
+              <label htmlFor="subject">Subject</label>
+              <select id="subject" name="subject" value={formData.subject} onChange={handleChange}>
+                <option value="">Select a topic...</option>
+                <option value="courses">Course Inquiry</option>
+                <option value="cybersecurity">Cybersecurity Training</option>
+                <option value="development">Web Development</option>
+                <option value="ai">AI & Prompt Engineering</option>
+                <option value="freelancing">Freelancing & E-Commerce</option>
+                <option value="partnership">Partnership Opportunity</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
             <div className="form-group">
               <label htmlFor="message">Message *</label>
               <textarea id="message" name="message" rows={4} value={formData.message} onChange={handleChange} placeholder="Tell us what we can help you with" required maxLength={1000} />
               <small>{formData.message.length}/1000 characters</small>
             </div>
+
             <div className="checkbox-group">
               <input type="checkbox" id="agree" name="agree" checked={formData.agree} onChange={handleChange} required />
-              <label htmlFor="agree">I'd like to receive more information about company. I understand and agree to the <a href="#">Privacy Policy</a></label>
+              <label htmlFor="agree">I agree to the <a href="/privacy-policy">Privacy Policy</a> and consent to YUNI Pakistan contacting me about my inquiry.</label>
             </div>
+
             {status.type !== 'idle' && <div className={`status-message ${status.type}`}>{status.message}</div>}
+            
             <button type="submit" className="submit-btn" disabled={status.type === 'loading'}>
               {status.type === 'loading' ? 'Sending...' : 'Send Message'}
             </button>
@@ -484,7 +504,8 @@ const GetInTouch: React.FC = () => {
           font-size: 0.9rem;
         }
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
           padding: 0.75rem 1rem;
           border: 1px solid #444;
           border-radius: 0.75rem;
@@ -496,8 +517,20 @@ const GetInTouch: React.FC = () => {
           -webkit-appearance: none;
           width: 100%;
         }
+        .form-group select {
+          cursor: pointer;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%230ae448' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 1rem center;
+          padding-right: 2.5rem;
+        }
+        .form-group select option {
+          background: #1a1a1a;
+          color: #ffffff;
+        }
         .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group textarea:focus,
+        .form-group select:focus {
           outline: none;
           border-color: #0ae448;
           box-shadow: 0 0 0 3px rgba(10, 228, 72, 0.2);
@@ -568,20 +601,16 @@ const GetInTouch: React.FC = () => {
         }
 
         /* ---------- MOBILE PERFORMANCE OPTIMIZATIONS ---------- */
-        /* These overrides apply only to tablets and smaller, leaving desktop unchanged */
         @media (max-width: 1023px) {
-          /* Reduce number of visible rainbows (hide half of them) */
           .rainbow:nth-child(n+13) {
             display: none !important;
           }
 
-          /* Use transform instead of 'right' for smoother animation */
           @keyframes slide {
             from { transform: translateX(-25vw); }
             to { transform: translateX(125vw); }
           }
 
-          /* Simplify box-shadows on mobile for better performance */
           .rainbow {
             right: auto !important;
             left: 0;
@@ -589,20 +618,17 @@ const GetInTouch: React.FC = () => {
             will-change: transform;
           }
 
-          /* Override the nth-child generated box-shadows with lighter ones */
           .rainbow:nth-child(n) {
             box-shadow: -50px 0 40px 20px #0a0a0a,
                         0 0 30px 15px #0e5a2c,
                         50px 0 40px 20px #0a0a0a !important;
           }
 
-          /* Keyframe for transform-based animation */
           @keyframes slide-mobile {
             from { transform: translateX(-50vw); }
             to { transform: translateX(150vw); }
           }
 
-          /* Keep the overlay darkening the edges */
           .h {
             box-shadow: 0 0 50vh 30vh #0a0a0a;
           }
@@ -611,7 +637,6 @@ const GetInTouch: React.FC = () => {
           }
         }
 
-        /* Small phones – further reduce */
         @media (max-width: 600px) {
           .rainbow:nth-child(n+8) {
             display: none !important;
@@ -624,7 +649,6 @@ const GetInTouch: React.FC = () => {
           }
         }
 
-        /* Fallback for reduced motion preference */
         @media (prefers-reduced-motion: reduce) {
           .rainbow {
             animation: none !important;

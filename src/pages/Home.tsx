@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState} from 'react';
 import type { ReactElement } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -9,7 +9,6 @@ import FeaturesReveal from '../components/HOME/FeaturesReveal';
 import CTA from '../components/HOME/CTA';
 import TextEffect from '../components/HOME/TextEffect';
 import Slider from '../components/HOME/Slider';
-import IntroAnimation from '../components/IntroAnimation';
 
 // Register ScrollTrigger once
 if (typeof window !== 'undefined') {
@@ -17,27 +16,7 @@ if (typeof window !== 'undefined') {
 }
 
 export default function Home() {
-  const [showIntro, setShowIntro] = useState(true);
-  const [mainKey, setMainKey] = useState(0);
-
-  useEffect(() => {
-    const hasShownIntro = sessionStorage.getItem('introShown');
-    if (hasShownIntro) {
-      setShowIntro(false);
-      setMainKey(prev => prev + 1);
-    } else {
-      setShowIntro(true);
-    }
-  }, []);
-
-  const handleIntroComplete = useCallback(() => {
-    sessionStorage.setItem('introShown', 'true');
-    setShowIntro(false);
-    setMainKey(prev => prev + 1);
-    setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 100);
-  }, []);
+  const [mainKey] = useState(0);
 
   const logoImages = [
     'https://picsum.photos/id/100/100/100',
@@ -53,8 +32,18 @@ export default function Home() {
   ];
 
   const team = [
-    { name: 'Abdul Moiz', role: 'Founder', icon: '👔', desc: 'Driving the macro-vision of YUNI to build an unparalleled educational empire.' },
-    { name: 'Sahaf', role: 'Co-Founder & COO', icon: '🚀', desc: 'Architecting premium product experiences and overseeing operational excellence.' }
+    { 
+      name: 'Abdul Moiz', 
+      role: 'Founder', 
+      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face&auto=format', 
+      desc: 'Driving the macro-vision of YUNI to build an unparalleled educational empire.' 
+    },
+    { 
+      name: 'Sahaf', 
+      role: 'Co-Founder & COO', 
+      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face&auto=format', 
+      desc: 'Architecting premium product experiences and overseeing operational excellence.' 
+    }
   ];
 
   const testimonials = [
@@ -93,9 +82,7 @@ export default function Home() {
     return stars;
   };
 
-  if (showIntro) {
-    return <IntroAnimation onComplete={handleIntroComplete} />;
-  }
+ 
 
   return (
     <>
@@ -390,7 +377,7 @@ export default function Home() {
           }
         }
 
-        /* Card Styles */
+        /* Team Card Styles */
         .team-card {
           background: rgba(255, 255, 255, 0.03);
           backdrop-filter: blur(2px);
@@ -398,6 +385,7 @@ export default function Home() {
           border-radius: 2rem;
           padding: 2rem;
           transition: all 0.3s ease;
+          text-align: center;
         }
 
         .team-card:hover {
@@ -407,10 +395,30 @@ export default function Home() {
           box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
         }
 
-        .team-icon {
-          font-size: 3rem;
-          margin-bottom: 1rem;
-          display: inline-block;
+        .team-image-container {
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          overflow: hidden;
+          margin: 0 auto 1.5rem;
+          border: 3px solid rgba(16, 185, 129, 0.3);
+          transition: all 0.3s ease;
+        }
+
+        .team-card:hover .team-image-container {
+          border-color: #10b981;
+          box-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .team-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.3s ease;
+        }
+
+        .team-card:hover .team-image {
+          transform: scale(1.1);
         }
 
         .team-name {
@@ -606,6 +614,11 @@ export default function Home() {
             padding-top: 4rem;
             padding-bottom: 4rem;
           }
+
+          .team-image-container {
+            width: 100px;
+            height: 100px;
+          }
         }
 
         /* Dark mode support */
@@ -684,7 +697,14 @@ export default function Home() {
             <div className="team-grid">
               {team.map((member, index) => (
                 <div key={index} className="team-card">
-                  <div className="team-icon">{member.icon}</div>
+                  <div className="team-image-container">
+                    <img 
+                      src={member.image} 
+                      alt={member.name}
+                      className="team-image"
+                      loading="lazy"
+                    />
+                  </div>
                   <div className="team-name">{member.name}</div>
                   <div className="team-role">{member.role}</div>
                   <div className="team-desc">{member.desc}</div>
