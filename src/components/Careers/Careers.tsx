@@ -70,31 +70,7 @@ const positions: Position[] = [
     department: "Engineering",
     location: "NASTP, Pakistan",
     type: "Full-time, On-Site",
-    description: "React, Next.js, Tailwind. Full-time, On-Site.",
-  },
-  {
-    id: "pos-2",
-    title: "Instructor (Cybersecurity)",
-    department: "Cybersecurity",
-    location: "NASTP, Pakistan",
-    type: "Part-time, Hybrid",
-    description: "Industry expert. Part-time, Hybrid.",
-  },
-  {
-    id: "pos-3",
-    title: "Ethical Hacking Specialist",
-    department: "Tech",
-    location: "NASTP, Pakistan",
-    type: "Full-time, On-Site",
-    description: "Penetration testing & security assessments. Full-time, On-Site.",
-  },
-  {
-    id: "pos-4",
-    title: "AI/ML Prompt Engineer",
-    department: "AI",
-    location: "NASTP, Pakistan",
-    type: "Contract, Remote",
-    description: "Design and optimize AI prompts. Contract, Remote.",
+    description: "React, Next.js, Tailwind. Join our engineering team at NASTP to build cutting-edge web applications.",
   },
 ];
 
@@ -102,7 +78,6 @@ const positions: Position[] = [
 const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbx-jQckKH2mPOTX8W_8D2ZNv8kAzMFUr5LgtDQXMZnH9HNbNOlSNxukuOL1R_ZUUnfKmQ/exec';
 
 const Careers: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<"positions" | "internships">("positions");
   const [showForm, setShowForm] = useState(false);
   const [selectedPosition, setSelectedPosition] = useState<Position | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -295,22 +270,6 @@ const Careers: React.FC = () => {
         <p className="careers-subtitle">
           We are looking for disruptors to join our HQ at NASTP.
         </p>
-
-        {/* Tab Switcher */}
-        <div className="tab-container">
-          <button
-            className={`tab-btn ${activeTab === "positions" ? "active" : ""}`}
-            onClick={() => setActiveTab("positions")}
-          >
-            Open Positions
-          </button>
-          <button
-            className={`tab-btn ${activeTab === "internships" ? "active" : ""}`}
-            onClick={() => setActiveTab("internships")}
-          >
-            Internships
-          </button>
-        </div>
 
         {/* Positions List */}
         <div className="positions-list">
@@ -513,12 +472,12 @@ const Careers: React.FC = () => {
                   <div className="form-grid">
                     <div className="form-field full-width">
                       <label>Technical Skills * (comma-separated)</label>
-                      <textarea name="technicalSkills" rows={3} placeholder="React, Python, SQL, AWS, etc." value={formData.technicalSkills} onChange={handleInputChange} required></textarea>
+                      <textarea name="technicalSkills" rows={3} placeholder="React, Next.js, TypeScript, Tailwind CSS, etc." value={formData.technicalSkills} onChange={handleInputChange} required></textarea>
                     </div>
 
                     <div className="form-field full-width">
                       <label>Certifications</label>
-                      <textarea name="certifications" rows={2} placeholder="List any relevant certifications (e.g., AWS Certified, CISSP, etc.)" value={formData.certifications} onChange={handleInputChange}></textarea>
+                      <textarea name="certifications" rows={2} placeholder="List any relevant certifications (e.g., AWS Certified, React Certification, etc.)" value={formData.certifications} onChange={handleInputChange}></textarea>
                     </div>
 
                     <div className="form-field full-width">
@@ -665,49 +624,6 @@ const Careers: React.FC = () => {
           margin-bottom: 4rem;
           font-size: 1.125rem;
           line-height: 1.75rem;
-        }
-
-        .tab-container {
-          display: flex;
-          justify-content: center;
-          gap: 0.5rem;
-          margin-bottom: 3rem;
-          border-bottom: 1px solid rgba(10, 228, 72, 0.2);
-          padding-bottom: 0.5rem;
-        }
-
-        .tab-btn {
-          background: transparent;
-          border: none;
-          color: #9ca3af;
-          font-size: 1.125rem;
-          font-weight: 600;
-          padding: 0.75rem 1.5rem;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          border-radius: 0.5rem 0.5rem 0 0;
-          font-family: inherit;
-          position: relative;
-        }
-
-        .tab-btn:hover {
-          color: #ffffff;
-          background: rgba(10, 228, 72, 0.08);
-        }
-
-        .tab-btn.active {
-          color: #0ae448;
-          background: rgba(10, 228, 72, 0.12);
-        }
-
-        .tab-btn.active::after {
-          content: '';
-          position: absolute;
-          bottom: -0.5rem;
-          left: 0;
-          width: 100%;
-          height: 2px;
-          background: #0ae448;
         }
 
         .positions-list {

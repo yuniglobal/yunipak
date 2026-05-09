@@ -56,7 +56,7 @@ const Navbar = ({ onNavigate }: NavbarProps): ReactElement => {
   const navLinks = [
     { id: 'home', label: 'Home', route: '/' },
     { id: 'trainings', label: 'Programs', route: '/Programs' },
-    { id: 'blog', label: 'Intel', route: '/events' },
+    { id: 'blog', label: 'News', route: '/events' },
     { id: 'careers', label: 'Careers', route: '/careers' },
     { id: 'contact', label: 'Contact', route: '/contact' },
   ];

@@ -6,11 +6,11 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Hero from '../components/HOME/Hero';
 import FeaturesReveal from '../components/HOME/FeaturesReveal';
-// Removed unused CTA import
+import CTA from '../components/HOME/CTA';
+
 import TextEffect from '../components/HOME/TextEffect';
 // Removed unused Slider import
 import FAQ from '../components/Services/FAQ';
-import Newsletter from '../components/HOME/Newsletter';
 
 // Register ScrollTrigger once
 if (typeof window !== 'undefined') {
@@ -712,7 +712,7 @@ export default function Home() {
           </div>
           
 
-        <Newsletter />
+        <CTA />
       </div>
     </>
   );
