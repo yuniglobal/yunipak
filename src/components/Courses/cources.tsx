@@ -492,7 +492,7 @@ const Courses: React.FC = () => {
 
       <div className="trainings-container">
         <div className="title-wrapper">
-          <AnimatedTitle>Professional Training Programs</AnimatedTitle>
+          <AnimatedTitle>Professional Trainings</AnimatedTitle>
           <p className="subtitle-tech">Master the technologies of the future with our industry-leading certification paths.</p>
         </div>
 

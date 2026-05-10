@@ -21,7 +21,7 @@ const TextEffect = () => {
     { mainText: "YUNI PAKISTAN", spanText: "INNOVATION" },
     { mainText: "TECH SOLUTIONS", spanText: "FOR TOMORROW" },
     { mainText: "EMPOWERING", spanText: "DIGITAL PAKISTAN" },
-    { mainText: "BUILD THE FUTURE", spanText: "EXPLORE PROGRAMS"},
+    { mainText: "BUILD THE FUTURE", spanText: "EXPLORE TRAININGS"},
     { mainText: "JOIN THE MOVEMENT", spanText: "CAREERS", link: "/careers" }
   ];
 

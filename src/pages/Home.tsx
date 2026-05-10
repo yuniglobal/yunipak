@@ -299,7 +299,7 @@ export default function Home() {
           </div>
           <div className="stat-item">
             <div className="stat-number">50+</div>
-            <div className="stat-label">Programs</div>
+            <div className="stat-label">Trainings</div>
           </div>
           <div className="stat-item">
             <div className="stat-number">98%</div>
@@ -347,7 +347,7 @@ export default function Home() {
       </section>
 
       <section className="section-container" ref={partnersRef}>
-        <AnimatedTitle className="section-title">Community Partners & Registrations</AnimatedTitle>
+        <AnimatedTitle className="section-title">Partners & Registrations</AnimatedTitle>
         <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '3rem', maxWidth: '800px', margin: '0 auto' }}>
           We are officially partnered and registered with top industry and government entities to ensure our trainings meet the highest standards.
         </p>

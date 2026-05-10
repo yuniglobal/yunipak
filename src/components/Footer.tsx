@@ -32,7 +32,7 @@ const Footer = () => {
 
   const footerLinks = [
     { title: 'Nexus', links: [
-      { name: 'Training', path: '/Programs' },
+      { name: 'Trainings', path: '/Programs' },
       { name: 'Events', path: '/events' },
       { name: 'Careers', path: '/careers' },
       { name: 'About', path: '/Aboutus' }

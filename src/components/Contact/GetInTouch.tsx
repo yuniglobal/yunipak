@@ -270,7 +270,7 @@ const GetInTouch: React.FC = () => {
                     <label>Inquiry Subject</label>
                     <select name="subject" value={formData.subject} onChange={handleChange}>
                       <option value="">Select Domain</option>
-                      <option value="courses">Educational Programs</option>
+                      <option value="trainings">Educational Trainings</option>
                       <option value="cybersecurity">Cybersecurity Intel</option>
                       <option value="partnership">Strategic Partnership</option>
                       <option value="other">General Inquiry</option>

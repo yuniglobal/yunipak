@@ -385,8 +385,8 @@ const Blog: React.FC = () => {
           align-items: center;
           gap: 0.6rem;
           backdrop-filter: blur(12px);
-          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-          border: 1px solid rgba(255,255,255,0.1);
+          box-shadow: 0 8px 20px var(--glass-shadow);
+          border: 1px solid var(--glass-border);
         }
 
         .blog-card-content {

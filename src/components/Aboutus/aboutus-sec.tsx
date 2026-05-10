@@ -401,7 +401,7 @@ const DesktopExperience: React.FC = () => {
     overflowY: 'auto',
     color: 'var(--text-primary)',
     fontFamily: "'Montserrat', 'Segoe UI', sans-serif",
-    textAlign: 'left',
+    textAlign: 'center',
     zIndex: 20,
     opacity: 0,
     transition: 'opacity 0.3s cubic-bezier(0.2, 0.9, 0.4, 1)',
@@ -434,6 +434,8 @@ const DesktopExperience: React.FC = () => {
     textShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
     borderBottom: '2px solid rgba(180, 240, 180, 0.25)',
     paddingBottom: '0.6rem',
+    margin: '0 auto 0.8rem',
+    display: 'inline-block',
   };
 
   const subheadingStyle: React.CSSProperties = {
@@ -587,7 +589,7 @@ const DesktopExperience: React.FC = () => {
             <span style={strongStyle}>Yuni-Buddy</span> (Parwaaz‑e‑Uqabi) — Neural network of connectivity, high-value internships, and global resource access.
           </p>
           <p style={paragraphStyle}>
-            <span style={strongStyle}>Yuni-Courses</span> (Umeed‑e‑Sahar) — Intensive, project-driven training modules taught by industry commanders.
+            <span style={strongStyle}>Yuni-Trainings</span> (Umeed‑e‑Sahar) — Intensive, project-driven training modules taught by industry commanders.
           </p>
           <p style={paragraphStyle}>
             <span style={strongStyle}>Yuni-Coworking</span> (Yuni‑Anjuman) — Physical hubs for collaboration and strategic innovation at NASTP.
@@ -766,7 +768,7 @@ const MobileAbout: React.FC = () => {
         <div style={cardStyle} className="card-glow-border" onMouseMove={handleMouseMove}>
           <h2 style={headingStyle}>Ecosystem</h2>
           <p style={paragraphStyle}><span style={strongStyle}>Yuni-Buddy</span> — Elite connectivity nodes.</p>
-          <p style={paragraphStyle}><span style={strongStyle}>Yuni-Courses</span> — Tactical skill acquisition.</p>
+          <p style={paragraphStyle}><span style={strongStyle}>Yuni-Trainings</span> — Tactical skill acquisition.</p>
           <p style={paragraphStyle}><span style={strongStyle}>Yuni-Coworking</span> — Innovation strongholds.</p>
         </div>
 

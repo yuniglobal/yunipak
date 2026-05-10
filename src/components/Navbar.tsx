@@ -40,7 +40,7 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', path: '/', icon: Home },
     { name: 'About', path: '/Aboutus', icon: Info },
-    { name: 'Programs', path: '/Programs', icon: BookOpen },
+    { name: 'Trainings', path: '/Programs', icon: BookOpen },
     { name: 'Events', path: '/events', icon: Calendar },
     { name: 'Careers', path: '/careers', icon: Briefcase },
     { name: 'Contact', path: '/contact', icon: Mail }
@@ -72,9 +72,9 @@ const Navbar = () => {
           align-items: center;
           justify-content: space-between;
           padding: 0.75rem 1.5rem;
-          background: rgba(20, 20, 20, 0.15);
+          background: var(--glass-bg);
           backdrop-filter: blur(25px) saturate(200%);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          border: 1px solid var(--glass-border);
           border-radius: 100px;
           transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
           box-shadow: 0 10px 40px rgba(0,0,0,0.2);
@@ -87,15 +87,15 @@ const Navbar = () => {
         }
 
         .scrolled .navbar-container {
-          background: rgba(10, 10, 10, 0.5);
-          box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+          background: var(--glass-bg-heavy);
+          box-shadow: 0 20px 50px var(--glass-shadow);
         }
 
         /* --- Contracted State Styles --- */
         .contracted .navbar-container {
           max-width: max-content;
           padding: 0.5rem 1.5rem;
-          background: rgba(10, 10, 10, 0.6);
+          background: var(--glass-bg-heavy);
         }
 
         .contracted .nav-logo {
@@ -317,7 +317,7 @@ const Navbar = () => {
           </div>
           
           <button className="btn-enroll" onClick={() => navigate('/Programs')}>
-            Enroll Now
+            Trainings
           </button>
 
           <div className="mobile-toggle" onClick={() => setIsOpen(true)}>
