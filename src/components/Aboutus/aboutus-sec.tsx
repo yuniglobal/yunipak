@@ -382,6 +382,15 @@ const DesktopExperience: React.FC = () => {
     };
   }, []);
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
+    const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
+    card.style.setProperty('--mouse-x', `${x}%`);
+    card.style.setProperty('--mouse-y', `${y}%`);
+  };
+
   const textContainerStyle: React.CSSProperties = {
     position: 'fixed',
     left: '50%',
@@ -492,207 +501,232 @@ const DesktopExperience: React.FC = () => {
   };
 
   return (
-    <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100vh' }}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap');
-        body { margin: 0; overflow-x: hidden; }
-        @keyframes bounce {
-          0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-          40% { transform: translateY(-10px); }
-          60% { transform: translateY(-5px); }
-        }
-        .scroll-arrow { animation: bounce 2s infinite; }
-        .text-card::-webkit-scrollbar { width: 5px; }
-        .text-card::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.15); border-radius: 10px; }
-        .text-card::-webkit-scrollbar-thumb { background: rgba(180, 240, 180, 0.5); border-radius: 10px; }
-      `}</style>
+    <>
+      {/* Background Light Orbs */}
+      <div className="gradient-orb" style={{ top: '10%', left: '5%', width: '400px', height: '400px' }}></div>
+      <div className="gradient-orb" style={{ bottom: '15%', right: '5%', background: 'radial-gradient(circle, var(--pk-green-bright) 0%, transparent 70%)', width: '500px', height: '500px' }}></div>
 
-      <canvas ref={canvasRef} className="experience" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100vh', zIndex: 2 }} />
-      <div ref={scrollTargetRef} className="scrollTarget" style={{ position: 'absolute', height: '1000vh', width: '100%', top: 0, zIndex: 0, pointerEvents: 'none' }} />
-
-      <div ref={blurOverlayRef} style={blurOverlayStyle} />
-
-      <div ref={scrollPromptRef} style={scrollPromptStyle}>
-        <span>Scroll Down</span>
-        <svg className="scroll-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0 0 10px rgba(0,0,0,0.5))' }}>
-          <polyline points="6 9 12 15 18 9"></polyline>
-        </svg>
-      </div>
-
-      {/* Sections */}
-      <div ref={(el) => { sectionRefs.current[0] = el; }} style={textContainerStyle} className="text-card">
-        <h1 style={headingStyle}>Yuni Pakistan</h1>
-        <div style={subheadingStyle}>Re‑Building The 21st Century Shaheen 🦅</div>
-        <p style={paragraphStyle}>
-          Yuni exists to <span style={strongStyle}>awaken the youth</span> of Pakistan, 
-          transform knowledge into power, and build a nation of thinkers, creators, and leaders.
-        </p>
-        <p style={paragraphStyle}>
-          Inspired by the vision of <span style={strongStyle}>Muhammad Iqbal</span>, 
-          we are a 360° ecosystem empowering students to rise through skill, innovation, and unity.
-        </p>
-      </div>
-
-      <div ref={(el) => { sectionRefs.current[1] = el; }} style={textContainerStyle} className="text-card">
-        <h2 style={headingStyle}>Our Ideology</h2>
-        <p style={paragraphStyle}>
-          <span style={strongStyle}>Khudi (Self‑Realization)</span> — Every young Pakistani carries untapped 
-          strength. Through education, discipline, and skill, they become agents of change.
-        </p>
-        <p style={paragraphStyle}>
-          <span style={strongStyle}>Knowledge as Power</span> — A strong nation is built on intellect. 
-          We promote learning in tech, leadership, and entrepreneurship.
-        </p>
-        <p style={paragraphStyle}>
-          <span style={strongStyle}>Economic Independence</span> — Financial dependency weakens us. 
-          Yuni fosters freelancing, startups, and digital skills for global earning.
-        </p>
-        <p style={paragraphStyle}>
-          <span style={strongStyle}>Unity & Ethical Leadership</span> — Beyond divisions, we cultivate 
-          leaders grounded in integrity and service.
-        </p>
-      </div>
-
-      <div ref={(el) => { sectionRefs.current[2] = el; }} style={textContainerStyle} className="text-card">
-        <h2 style={headingStyle}>The Yuni Ecosystem</h2>
-        <p style={paragraphStyle}>
-          <span style={strongStyle}>Yuni-Buddy</span> (Parwaaz‑e‑Uqabi) — Connectivity, earning opportunities, jobs, and global access.
-        </p>
-        <p style={paragraphStyle}>
-          <span style={strongStyle}>Yuni-Courses</span> (Umeed‑e‑Sahar) — Practical courses taught by industry leaders, project‑based, with internships.
-        </p>
-        <p style={paragraphStyle}>
-          <span style={strongStyle}>Yuni-Coworking</span> (Yuni‑Anjuman) — Collaborative spaces fostering innovation and community.
-        </p>
-        <p style={paragraphStyle}>
-          <span style={strongStyle}>Yuni-Tech & Marketing</span> (Taqat‑e‑Parwaaz) — Boosting digital presence, AI, and e‑commerce enablement.
-        </p>
-        <p style={paragraphStyle}>
-          <span style={strongStyle}>Business Consultation</span> (Momin‑e‑Sana'at) — Guiding entrepreneurs with faith and action.
-        </p>
-      </div>
-
-      <div ref={(el) => { sectionRefs.current[3] = el; }} style={textContainerStyle} className="text-card">
-        <h2 style={headingStyle}>Yuni-Buddy & Yuni-Courses</h2>
-        <p style={paragraphStyle}>
-          <span style={strongStyle}>Parwaaz‑e‑Uqabi</span> — "Sitaron se aage jahan aur bhi hain"<br/>
-          Connectivity across Pakistan, earning opportunities & internships, leadership & community building, global opportunities & study resources.
-        </p>
-        <p style={paragraphStyle}>
-          <span style={strongStyle}>Umeed‑e‑Sahar</span> — "Khudi ko kar buland itna…"<br/>
-          Practical, project‑based courses taught by CEOs, COOs, Founders. Portfolio building & job security. No certification without passing final projects. Course + Internship guarantee.
-        </p>
-      </div>
-
-      <div ref={(el) => { sectionRefs.current[4] = el; }} style={textContainerStyle} className="text-card">
-        <h2 style={headingStyle}>Taqat‑e‑Parwaaz & Yuni‑Anjuman</h2>
-        <p style={paragraphStyle}>
-          <span style={strongStyle}>Yuni-Tech & Marketing</span> — Boosting Pakistan's digital presence with AI, 
-          automation, e‑commerce, and global branding. Empowering businesses to soar with tech.
-        </p>
-        <p style={paragraphStyle}>
-          <span style={strongStyle}>Yuni-Coworking</span> — Collaborative spaces for innovation, mentorship, 
-          and events. Where <em>Shaheens</em> gather to build the future.
-        </p>
-        <p style={{ ...paragraphStyle, marginTop: '2rem', fontStyle: 'italic' }}>
-          "Yaqeen Muhkam, Amal Paiham, Mohabbat Fateh‑e‑Alam"
-        </p>
-      </div>
-
-      <div ref={(el) => { sectionRefs.current[5] = el; }} style={textContainerStyle} className="text-card">
-        <h2 style={headingStyle}>The Journey Continues</h2>
-        <div style={subheadingStyle}>Beyond the Horizon</div>
-        <p style={paragraphStyle}>
-          You've traversed the path of Yuni's vision. But the story doesn't end here.
-        </p>
-        <p style={paragraphStyle}>
-          The darkness you see is not emptiness—it's <span style={strongStyle}>potential</span>. 
-          It's the unwritten future of Pakistan's youth, waiting to be shaped by those who dare to dream.
-        </p>
-        <p style={paragraphStyle}>
-          <span style={strongStyle}>Join the movement.</span> Become a Shaheen. Rise with Yuni.
-        </p>
-        <p style={{ ...paragraphStyle, marginTop: '2rem', textAlign: 'center' }}>
-          <span style={{ 
-            display: 'inline-block',
-            padding: '0.8rem 2rem',
-            background: 'rgba(180, 240, 180, 0.15)',
-            border: '1px solid rgba(180, 240, 180, 0.3)',
-            borderRadius: '50px',
-            fontWeight: 600,
-            letterSpacing: '0.1em',
-          }}>
-            Coming Soon
-          </span>
-        </p>
-      </div>
-
-      <div className="vignette-radial" style={{ position: 'fixed', zIndex: 11, top: 0, left: 0, height: '100vh', width: '100%', pointerEvents: 'none' }}>
+      <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
         <style>{`
-          .vignette-radial:after {
-            pointer-events: none;
-            content: ' ';
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: radial-gradient(circle, transparent 60%, black 150%);
+          @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap');
+          body { margin: 0; overflow-x: hidden; background: var(--bg-primary); }
+          @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
           }
+          .scroll-arrow { animation: bounce 2s infinite; }
+          .text-card::-webkit-scrollbar { width: 5px; }
+          .text-card::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.15); border-radius: 10px; }
+          .text-card::-webkit-scrollbar-thumb { background: rgba(180, 240, 180, 0.5); border-radius: 10px; }
+          
+          .text-card-premium {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 3rem;
+            padding: 4rem;
+            box-shadow: 0 40px 100px var(--glass-shadow);
+            transition: all 0.6s var(--transition-smooth);
+            position: relative;
+            z-index: 20;
+          }
+
+          .text-card-premium::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 230, 118, 0.1) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+            border-radius: inherit;
+          }
+
+          .text-card-premium:hover::before { opacity: 1; }
         `}</style>
+
+        <canvas ref={canvasRef} className="experience" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100vh', zIndex: 2 }} />
+        <div ref={scrollTargetRef} className="scrollTarget" style={{ position: 'absolute', height: '1000vh', width: '100%', top: 0, zIndex: 0, pointerEvents: 'none' }} />
+
+        <div ref={blurOverlayRef} style={blurOverlayStyle} />
+
+        <div ref={scrollPromptRef} style={scrollPromptStyle}>
+          <span>Initiate Journey</span>
+          <svg className="scroll-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0 0 10px var(--pk-green-glow))' }}>
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+
+        {/* Sections */}
+        <div ref={(el) => { sectionRefs.current[0] = el; }} style={textContainerStyle} className="text-card-premium card-glow-border" onMouseMove={handleMouseMove}>
+          <h1 style={headingStyle}>Yuni Intelligence</h1>
+          <div style={subheadingStyle}>Re‑Building The 21st Century Shaheen 🦅</div>
+          <p style={paragraphStyle}>
+            Yuni exists to <span style={strongStyle}>awaken the youth</span> of Pakistan, 
+            transforming raw data into operational power, and building a nation of sovereign thinkers.
+          </p>
+          <p style={paragraphStyle}>
+            Inspired by the meta-philosophies of <span style={strongStyle}>Dr. Allama Iqbal</span>, 
+            we provide a 360° tactical ecosystem empowering students to transcend their limits.
+          </p>
+        </div>
+
+        <div ref={(el) => { sectionRefs.current[1] = el; }} style={textContainerStyle} className="text-card-premium card-glow-border" onMouseMove={handleMouseMove}>
+          <h2 style={headingStyle}>Core Ideology</h2>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Khudi (Self‑Realization)</span> — Every Pakistani student carries an infinite signal. Through education and discipline, they become agents of evolution.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Knowledge as Power</span> — Intellectual sovereignty is the foundation of a strong state. We specialize in deep-tech, leadership, and economic strategy.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Economic Autonomy</span> — Financial independence is a national security priority. Yuni fosters global earning through advanced digital proficiencies.
+          </p>
+        </div>
+
+        <div ref={(el) => { sectionRefs.current[2] = el; }} style={textContainerStyle} className="text-card-premium card-glow-border" onMouseMove={handleMouseMove}>
+          <h2 style={headingStyle}>The Ecosystem</h2>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Yuni-Buddy</span> (Parwaaz‑e‑Uqabi) — Neural network of connectivity, high-value internships, and global resource access.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Yuni-Courses</span> (Umeed‑e‑Sahar) — Intensive, project-driven training modules taught by industry commanders.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Yuni-Coworking</span> (Yuni‑Anjuman) — Physical hubs for collaboration and strategic innovation at NASTP.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Tech & Marketing</span> (Taqat‑e‑Parwaaz) — Advanced AI automation and digital scaling protocols.
+          </p>
+        </div>
+
+        <div ref={(el) => { sectionRefs.current[3] = el; }} style={textContainerStyle} className="text-card-premium card-glow-border" onMouseMove={handleMouseMove}>
+          <h2 style={headingStyle}>Operational Nodes</h2>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Parwaaz‑e‑Uqabi</span> — "Sitaron se aage jahan aur bhi hain"<br/>
+            Nationwide connectivity, inter-city hubs, and global scholarship pathways.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Umeed‑e‑Sahar</span> — "Khudi ko kar buland itna…"<br/>
+            Real-world project implementation. We don't just issue certificates; we validate expertise through results.
+          </p>
+        </div>
+
+        <div ref={(el) => { sectionRefs.current[4] = el; }} style={textContainerStyle} className="text-card-premium card-glow-border" onMouseMove={handleMouseMove}>
+          <h2 style={headingStyle}>Strategic Hubs</h2>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Taqat‑e‑Parwaaz</span> — Elevating Pakistan's digital footprint via high-tech AI infrastructure and international e-commerce standards.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Yuni‑Anjuman</span> — Premium coworking environments designed for peak focus and collaborative breakthroughs.
+          </p>
+          <p style={{ ...paragraphStyle, marginTop: '2rem', fontStyle: 'italic', color: 'var(--pk-green)' }}>
+            "Yaqeen Muhkam, Amal Paiham, Mohabbat Fateh‑e‑Alam"
+          </p>
+        </div>
+
+        <div ref={(el) => { sectionRefs.current[5] = el; }} style={textContainerStyle} className="text-card-premium card-glow-border" onMouseMove={handleMouseMove}>
+          <h2 style={headingStyle}>Future Horizon</h2>
+          <div style={subheadingStyle}>The Signal Continues</div>
+          <p style={paragraphStyle}>
+            You have witnessed the architecture of our vision. The void ahead is not empty—it is <span style={strongStyle}>latency</span>.
+          </p>
+          <p style={paragraphStyle}>
+            It represents the unwritten future of Pakistan's digital age, waiting for those with the courage to initialize.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Deploy your potential.</span> Evolve into a Shaheen.
+          </p>
+          <p style={{ ...paragraphStyle, marginTop: '2rem', textAlign: 'center' }}>
+            <span className="premium-tag">System Ready</span>
+          </p>
+        </div>
+
+        <div className="vignette-radial" style={{ position: 'fixed', zIndex: 11, top: 0, left: 0, height: '100vh', width: '100%', pointerEvents: 'none' }}>
+          <style>{`
+            .vignette-radial:after {
+              pointer-events: none;
+              content: ' ';
+              position: absolute;
+              top: 0; left: 0; bottom: 0; right: 0;
+              background: radial-gradient(circle, transparent 60%, black 150%);
+            }
+            .premium-tag {
+              display: inline-block;
+              padding: 0.8rem 2.5rem;
+              background: rgba(0, 230, 118, 0.1);
+              border: 1px solid var(--pk-green);
+              border-radius: 50px;
+              font-weight: 800;
+              letter-spacing: 0.2em;
+              color: var(--pk-green);
+              text-transform: uppercase;
+              box-shadow: 0 0 20px var(--pk-green-glow);
+            }
+          `}</style>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
 // ==================== MOBILE ABOUT (CARDS + RAINBOW) ====================
 const MobileAbout: React.FC = () => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
+    const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
+    card.style.setProperty('--mouse-x', `${x}%`);
+    card.style.setProperty('--mouse-y', `${y}%`);
+  };
+
   const rainbowDivs = Array.from({ length: 25 }, (_, i) => (
     <div key={i} className="rainbow-mobile" />
   ));
 
   const cardStyle: React.CSSProperties = {
-    background: 'rgba(20, 20, 20, 0.75)',
-    backdropFilter: 'blur(8px)',
-    borderRadius: '1.5rem',
-    border: '1px solid rgba(10, 228, 72, 0.25)',
-    padding: '2rem',
+    background: 'var(--glass-bg)',
+    backdropFilter: 'blur(15px)',
+    borderRadius: '2.5rem',
+    border: '1px solid var(--glass-border)',
+    padding: '2.5rem',
     color: '#ffffff',
-    fontFamily: "'Inter', 'Montserrat', sans-serif",
-    boxShadow: '0 8px 32px rgba(0,0,0,0.6)',
-    marginBottom: '2rem',
+    fontFamily: "'Inter', sans-serif",
+    boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
+    marginBottom: '2.5rem',
+    position: 'relative',
+    overflow: 'hidden',
   };
 
   const headingStyle: React.CSSProperties = {
-    fontSize: 'clamp(1.8rem, 6vw, 2.8rem)',
-    fontWeight: 800,
-    marginBottom: '1rem',
-    color: '#ffffff',
-    borderBottom: '2px solid #0ae448',
-    paddingBottom: '0.5rem',
-    display: 'inline-block',
+    fontSize: '1.8rem',
+    fontWeight: 900,
+    marginBottom: '1.5rem',
+    color: 'var(--pk-green)',
+    letterSpacing: '-0.02em',
+    textTransform: 'uppercase',
   };
 
-  // const subheadingStyle: React.CSSProperties = {
-  //   fontSize: '1.2rem',
-  //   fontWeight: 600,
-  //   color: '#0ae448',
-  //   marginBottom: '1.5rem',
-  //   textTransform: 'uppercase',
-  //   letterSpacing: '0.1em',
-  // };
-
   const paragraphStyle: React.CSSProperties = {
-    fontSize: '1rem',
-    lineHeight: 1.7,
-    color: '#e0e0e0',
-    marginBottom: '1rem',
+    fontSize: '1.05rem',
+    lineHeight: 1.8,
+    color: 'rgba(255,255,255,0.8)',
+    marginBottom: '1.2rem',
   };
 
   const strongStyle: React.CSSProperties = {
-    color: '#0ae448',
-    fontWeight: 700,
+    color: 'var(--pk-green-bright)',
+    fontWeight: 800,
   };
 
   return (
     <>
+      {/* Background Light Orbs */}
+      <div className="gradient-orb" style={{ top: '5%', left: '10%' }}></div>
+      <div className="gradient-orb" style={{ bottom: '10%', right: '5%', background: 'radial-gradient(circle, var(--pk-green-bright) 0%, transparent 70%)' }}></div>
+
       {/* Rainbow Background */}
       <div className="rainbow-background-mobile">
         {rainbowDivs}
@@ -706,98 +740,71 @@ const MobileAbout: React.FC = () => {
         zIndex: 10,
         maxWidth: '1000px',
         margin: '0 auto',
-        padding: '6rem 1.5rem 4rem',
+        padding: '10rem 1.5rem 6rem',
       }}>
         <h1 style={{
-          fontSize: 'clamp(2.5rem, 8vw, 4rem)',
-          fontWeight: 800,
+          fontSize: 'clamp(2.5rem, 10vw, 4.5rem)',
+          fontWeight: 900,
           color: '#ffffff',
-          textShadow: '0 0 15px rgba(0,0,0,0.7)',
-          marginBottom: '0.5rem',
-        }}>Yuni Pakistan</h1>
+          marginBottom: '0.8rem',
+          letterSpacing: '-0.03em',
+          lineHeight: 1,
+        }}>YUNI</h1>
         <p style={{
-          fontSize: '1.25rem',
-          color: '#0ae448',
-          marginBottom: '2.5rem',
-          textShadow: '0 0 8px rgba(0,0,0,0.5)',
-        }}>Re‑Building The 21st Century Shaheen 🦅</p>
+          fontSize: '1.4rem',
+          color: 'var(--pk-green)',
+          marginBottom: '4rem',
+          fontWeight: 700,
+          opacity: 0.9,
+        }}>Establish Dominance. 🦅</p>
 
-        <div style={cardStyle}>
-          <h2 style={headingStyle}>Our Ideology</h2>
+        <div style={cardStyle} className="card-glow-border" onMouseMove={handleMouseMove}>
+          <h2 style={headingStyle}>Ideology</h2>
           <p style={paragraphStyle}>
-            <span style={strongStyle}>Khudi (Self‑Realization)</span> — Every young Pakistani carries untapped strength.
+            <span style={strongStyle}>Khudi</span> — Self-realization is the ignition.
           </p>
           <p style={paragraphStyle}>
-            <span style={strongStyle}>Knowledge as Power</span> — A strong nation is built on intellect.
+            <span style={strongStyle}>Knowledge</span> — Information is the ammunition.
           </p>
           <p style={paragraphStyle}>
-            <span style={strongStyle}>Economic Independence</span> — Yuni fosters freelancing, startups, and digital skills.
-          </p>
-          <p style={paragraphStyle}>
-            <span style={strongStyle}>Unity & Ethical Leadership</span> — Beyond divisions, we cultivate leaders.
+            <span style={strongStyle}>Independence</span> — Economic sovereignty is the objective.
           </p>
         </div>
 
-        <div style={cardStyle}>
-          <h2 style={headingStyle}>The Yuni Ecosystem</h2>
-          <p style={paragraphStyle}><span style={strongStyle}>Yuni-Buddy</span> — Connectivity, earning opportunities, jobs.</p>
-          <p style={paragraphStyle}><span style={strongStyle}>Yuni-Courses</span> — Practical courses with internships.</p>
-          <p style={paragraphStyle}><span style={strongStyle}>Yuni-Coworking</span> — Collaborative spaces for innovation.</p>
-          <p style={paragraphStyle}><span style={strongStyle}>Yuni-Tech & Marketing</span> — Digital presence, AI, e‑commerce.</p>
-          <p style={paragraphStyle}><span style={strongStyle}>Business Consultation</span> — Guiding entrepreneurs.</p>
+        <div style={cardStyle} className="card-glow-border" onMouseMove={handleMouseMove}>
+          <h2 style={headingStyle}>Ecosystem</h2>
+          <p style={paragraphStyle}><span style={strongStyle}>Yuni-Buddy</span> — Elite connectivity nodes.</p>
+          <p style={paragraphStyle}><span style={strongStyle}>Yuni-Courses</span> — Tactical skill acquisition.</p>
+          <p style={paragraphStyle}><span style={strongStyle}>Yuni-Coworking</span> — Innovation strongholds.</p>
         </div>
 
-        <div style={cardStyle}>
-          <h2 style={headingStyle}>Yuni-Buddy & Yuni-Courses</h2>
+        <div style={cardStyle} className="card-glow-border" onMouseMove={handleMouseMove}>
+          <h2 style={headingStyle}>Future State</h2>
           <p style={paragraphStyle}>
-            <span style={strongStyle}>Parwaaz‑e‑Uqabi</span> — "Sitaron se aage jahan aur bhi hain"<br/>
-            Connectivity across Pakistan, internships, leadership & community.
-          </p>
-          <p style={paragraphStyle}>
-            <span style={strongStyle}>Umeed‑e‑Sahar</span> — "Khudi ko kar buland itna…"<br/>
-            Project‑based courses taught by industry leaders. Course + Internship guarantee.
-          </p>
-        </div>
-
-        <div style={cardStyle}>
-          <h2 style={headingStyle}>Taqat‑e‑Parwaaz & Yuni‑Anjuman</h2>
-          <p style={paragraphStyle}>
-            <span style={strongStyle}>Yuni-Tech & Marketing</span> — Boosting Pakistan's digital presence.
+            The current system is obsolete. Yuni is the upgrade.
           </p>
           <p style={paragraphStyle}>
-            <span style={strongStyle}>Yuni-Coworking</span> — Collaborative spaces for innovation and events.
+            <span style={strongStyle}>Initialize deployment.</span> Rise as a Shaheen.
           </p>
-          <p style={{ ...paragraphStyle, marginTop: '1.5rem', fontStyle: 'italic' }}>
-            "Yaqeen Muhkam, Amal Paiham, Mohabbat Fateh‑e‑Alam"
-          </p>
-        </div>
-
-        <div style={cardStyle}>
-          <h2 style={headingStyle}>The Journey Continues</h2>
-          <p style={paragraphStyle}>
-            You've traversed the path of Yuni's vision. The darkness is potential—the unwritten future of Pakistan's youth.
-          </p>
-          <p style={paragraphStyle}>
-            <span style={strongStyle}>Join the movement.</span> Become a Shaheen. Rise with Yuni.
-          </p>
-          <p style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <span style={{
-              display: 'inline-block',
-              padding: '0.8rem 2rem',
-              background: 'rgba(10, 228, 72, 0.15)',
-              border: '1px solid #0ae448',
-              borderRadius: '50px',
-              fontWeight: 600,
-              color: '#0ae448',
-            }}>
-              Coming Soon
-            </span>
-          </p>
+          <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+            <span className="premium-tag">Coming Soon</span>
+          </div>
         </div>
       </section>
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        .premium-tag {
+          display: inline-block;
+          padding: 0.8rem 2rem;
+          background: rgba(0, 230, 118, 0.1);
+          border: 1px solid var(--pk-green);
+          border-radius: 50px;
+          font-weight: 800;
+          color: var(--pk-green);
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
         
         .rainbow-background-mobile {
           position: fixed;

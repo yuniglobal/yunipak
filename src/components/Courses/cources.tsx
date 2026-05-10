@@ -432,7 +432,34 @@ const Courses: React.FC = () => {
         }
       );
     }
-  }, [filter]); // Re-run when filter changes to animate new cards
+  }, [filter]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+    try {
+      await fetch(GOOGLE_SHEETS_API, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      setSubmitStatus({ type: 'success', message: 'Enrollment data transmitted successfully! Our tactical team will contact you soon.' });
+    } catch (error) {
+      setSubmitStatus({ type: 'error', message: 'Data sync failed. Please check your connection and retry.' });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handleViewCourse = (course: CourseItem) => {
     setSelectedCourse(course);
@@ -457,114 +484,72 @@ const Courses: React.FC = () => {
     setSubmitStatus(null);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target;
-    const checked = (e.target as HTMLInputElement).checked;
-    setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.fullName || !formData.cnic || !formData.email || !formData.phoneNumber) {
-      setSubmitStatus({ type: 'error', message: 'Please fill all required fields (*)' });
-      return;
-    }
-    const cnicRegex = /^[0-9]{5}-[0-9]{7}-[0-9]$/;
-    if (!cnicRegex.test(formData.cnic)) {
-      setSubmitStatus({ type: 'error', message: 'Please enter valid CNIC format (XXXXX-XXXXXXX-X)' });
-      return;
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setSubmitStatus({ type: 'error', message: 'Please enter valid email address' });
-      return;
-    }
-    if (!formData.paymentMethod) {
-      setSubmitStatus({ type: 'error', message: 'Please select payment method' });
-      return;
-    }
-    if (!formData.transactionId || !formData.transactionAmount) {
-      setSubmitStatus({ type: 'error', message: 'Please provide transaction details' });
-      return;
-    }
-    if (!formData.declaration) {
-      setSubmitStatus({ type: 'error', message: 'Please accept the declaration' });
-      return;
-    }
-    setIsSubmitting(true);
-    try {
-      const submitData = new URLSearchParams();
-      Object.entries(formData).forEach(([key, value]) => { submitData.append(key, String(value)); });
-      const response = await fetch(GOOGLE_SHEETS_API, {
-        method: 'POST', mode: 'cors',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: submitData,
-      });
-      let result;
-      try { result = await response.json(); } catch { result = { success: response.ok }; }
-      if (response.ok && result.success !== false) {
-        setSubmitStatus({ type: 'success', message: `Registration submitted successfully for ${selectedCourse?.title}! We will contact you within 24-48 hours.` });
-        setTimeout(() => {
-          setCurrentView("trainings");
-          setSelectedCourse(null);
-          setSubmitStatus(null);
-          setFormData({
-            fullName: "", fatherName: "", cnic: "", dateOfBirth: "", gender: "",
-            email: "", phoneNumber: "", alternatePhone: "", currentAddress: "",
-            city: "", province: "Punjab", highestQualification: "", institution: "",
-            yearOfCompletion: "", percentage: "", courseId: "", courseTitle: "",
-            coursePrice: "", paymentMethod: "", bankName: "", bankAccountTitle: "",
-            bankAccountNumber: "", transactionId: "", transactionDate: "",
-            transactionAmount: "", currentEmployment: "", organization: "",
-            designation: "", hearAboutUs: "", referralCode: "", whyJoin: "",
-            declaration: false, timestamp: new Date().toISOString(), status: "pending",
-          });
-        }, 3000);
-      } else {
-        throw new Error(result.message || 'Submission failed');
-      }
-    } catch (error) {
-      console.error('Submission error:', error);
-      setSubmitStatus({ type: 'error', message: 'Error submitting registration. Please try again or contact support.' });
-    } finally {
-      setIsSubmitting(false);
-    }
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
+    const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
+    card.style.setProperty('--mouse-x', `${x}%`);
+    card.style.setProperty('--mouse-y', `${y}%`);
   };
 
   const renderTrainingsView = () => (
     <div className="trainings-view">
+      <div className="gradient-orb" style={{ top: '10%', left: '5%' }}></div>
+      <div className="gradient-orb" style={{ bottom: '20%', right: '10%', animationDelay: '-5s' }}></div>
+      <div className="gradient-orb" style={{ top: '40%', right: '5%', animationDelay: '-10s', background: 'radial-gradient(circle, var(--cyber-blue) 0%, transparent 70%)' }}></div>
+
       <div className="trainings-container">
         <div className="title-wrapper">
           <AnimatedTitle>Professional Training Programs</AnimatedTitle>
+          <p className="subtitle-tech">Master the technologies of the future with our industry-leading certification paths.</p>
         </div>
+        
         <div className="filters-container">
-          <button onClick={() => setFilter("all")} className={`filter-btn ${filter === "all" ? "active" : ""}`}>All Programs</button>
-          <button onClick={() => setFilter("cybersecurity")} className={`filter-btn ${filter === "cybersecurity" ? "active" : ""}`}>Cyber Security</button>
-          <button onClick={() => setFilter("ai")} className={`filter-btn ${filter === "ai" ? "active" : ""}`}>AI & Data Science</button>
-          <button onClick={() => setFilter("web")} className={`filter-btn ${filter === "web" ? "active" : ""}`}>Web Development</button>
-          <button onClick={() => setFilter("digital")} className={`filter-btn ${filter === "digital" ? "active" : ""}`}>Digital Strategy</button>
-          <button onClick={() => setFilter("ecommerce")} className={`filter-btn ${filter === "ecommerce" ? "active" : ""}`}>E-Commerce</button>
-          <button onClick={() => setFilter("communications")} className={`filter-btn ${filter === "communications" ? "active" : ""}`}>Communications</button>
+          {["all", "cybersecurity", "ai", "web", "digital", "ecommerce", "communications"].map((cat) => (
+            <button 
+              key={cat}
+              onClick={() => setFilter(cat as any)} 
+              className={`filter-btn-premium ${filter === cat ? "active" : ""}`}
+            >
+              {cat.charAt(0).toUpperCase() + cat.slice(1).replace('cybersecurity', 'Cyber Security')}
+            </button>
+          ))}
         </div>
+
         <div className="course-grid">
           {filteredCourses.length === 0 ? (
-            <div style={{ color: '#666', textAlign: 'center', padding: '4rem', gridColumn: '1/-1' }}>
-              No courses found in this category.
+            <div className="no-results-premium">
+              <div className="no-results-icon">🔍</div>
+              <p>No sequences found in this sector. Try another protocol.</p>
             </div>
           ) : (
             filteredCourses.map((course) => (
-              <div key={course.id} className="course-card-hub">
-                <div className="course-card-image">
-                  <img src={course.imageUrl} alt={course.title} />
-                  {course.isCertification && <span className="cert-badge">Certificate Included</span>}
-                </div>
-                <div className="course-card-content">
-                  <h3>{course.title}</h3>
-                  <p className="instructor">{course.instructor}</p>
-                  <p className="description">{course.description.substring(0, 100)}...</p>
-                  <div className="card-footer">
-                    <span className="price">{course.price}</span>
-                    <button onClick={() => handleViewCourse(course)} className="view-btn">View Details →</button>
+              <div 
+                key={course.id} 
+                className="course-card-premium"
+                onMouseMove={handleMouseMove}
+              >
+                <div className="card-inner-tech">
+                  <div className="course-card-image">
+                    <img src={course.imageUrl} alt={course.title} />
+                    <div className="image-overlay-tech"></div>
+                    {course.isCertification && <span className="cert-badge-premium">Official Cert.</span>}
+                  </div>
+                  <div className="course-card-content">
+                    <div className="category-label">{course.category}</div>
+                    <h3 className="course-title-tech">{course.title}</h3>
+                    <p className="instructor-tech">By {course.instructor}</p>
+                    <div className="card-meta-tech">
+                      <span>⏱ {course.duration.split('•')[0]}</span>
+                      <span>📊 {course.level}</span>
+                    </div>
+                    <div className="card-footer-premium">
+                      <span className="price-tag-tech">{course.price}</span>
+                      <button onClick={() => handleViewCourse(course)} className="view-btn-tech">
+                        Access <span className="arrow-tech">→</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -577,30 +562,59 @@ const Courses: React.FC = () => {
 
   const renderCourseDetailView = () => (
     <div className="detail-view">
+      <div className="gradient-orb" style={{ top: '20%', left: '10%' }}></div>
       <div className="detail-container">
-        <button onClick={handleBackToHub} className="back-btn">← Back to Programs</button>
-        <div className="detail-panel">
-          <div className="detail-left">
-            <img src={selectedCourse?.imageUrl} alt={selectedCourse?.title} className="detail-image" />
-            <div className="detail-stats">
-              <div className="stat"><span className="stat-value">{selectedCourse?.duration}</span><span className="stat-label">Duration</span></div>
-              <div className="stat"><span className="stat-value">{selectedCourse?.level}</span><span className="stat-label">Level</span></div>
-              <div className="stat"><span className="stat-value">{selectedCourse?.price}</span><span className="stat-label">Investment</span></div>
+        <button onClick={handleBackToHub} className="back-btn-tech">
+          <span className="icon">←</span> Back to Protocol Hub
+        </button>
+        <div className="detail-panel-premium">
+          <div className="detail-left-premium">
+            <div className="detail-image-wrapper">
+              <img src={selectedCourse?.imageUrl} alt={selectedCourse?.title} className="detail-image-tech" />
+              <div className="image-glow-tech"></div>
             </div>
-            {selectedCourse?.isCertification && <div className="cert-notice">✓ Official Certificate Included Upon Completion</div>}
+            <div className="detail-stats-premium">
+              <div className="stat-card">
+                <span className="stat-value">{selectedCourse?.duration}</span>
+                <span className="stat-label">Timeline</span>
+              </div>
+              <div className="stat-card">
+                <span className="stat-value">{selectedCourse?.level}</span>
+                <span className="stat-label">Expertise</span>
+              </div>
+              <div className="stat-card">
+                <span className="stat-value">{selectedCourse?.price}</span>
+                <span className="stat-label">Investment</span>
+              </div>
+            </div>
           </div>
-          <div className="detail-right">
-            <h2>{selectedCourse?.title}</h2>
-            <p className="instructor-detail">Instructor: {selectedCourse?.instructor}</p>
-            <p className="description-detail">{selectedCourse?.description}</p>
-            <h3>Key Learning Outcomes</h3>
-            <ul className="learn-list">
-              <li>✓ Hands-on projects and real-world applications</li>
-              <li>✓ Expert-led live sessions and mentorship</li>
-              <li>✓ Professional community access and networking opportunities</li>
-              <li>✓ Lifetime access to course materials and updates</li>
-            </ul>
-            <button onClick={() => selectedCourse && handleEnroll(selectedCourse)} className="enroll-now-btn">Enroll Now →</button>
+          <div className="detail-right-premium">
+            <span className="detail-category-tag">{selectedCourse?.category}</span>
+            <h2 className="detail-title-tech">{selectedCourse?.title}</h2>
+            <p className="instructor-line-tech">Senior Architect: <span>{selectedCourse?.instructor}</span></p>
+            <div className="description-box-tech">
+              <p>{selectedCourse?.description}</p>
+            </div>
+            
+            <div className="outcomes-tech">
+              <h3>Strategic Outcomes</h3>
+              <div className="outcomes-grid">
+                {[
+                  "Hands-on architectural implementation",
+                  "Expert-led deep dive sessions",
+                  "Exclusive industry ecosystem access",
+                  "Lifetime resource repository"
+                ].map((item, idx) => (
+                  <div key={idx} className="outcome-item">
+                    <span className="check">✦</span> {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <button onClick={() => selectedCourse && handleEnroll(selectedCourse)} className="enroll-btn-premium">
+              Initialize Enrollment <span className="btn-glow-tech"></span>
+            </button>
           </div>
         </div>
       </div>
@@ -609,159 +623,93 @@ const Courses: React.FC = () => {
 
   const renderCheckoutView = () => (
     <div className="checkout-view">
-      <div className="checkout-container">
-        <button onClick={handleBackToHub} className="cancel-btn">← Cancel Registration</button>
-        <h2 className="checkout-title">Complete Registration</h2>
-        {submitStatus && <div className={`status-message ${submitStatus.type}`}>{submitStatus.message}</div>}
-        <form onSubmit={handleSubmit} className="checkout-form-full">
-          <div className="form-section">
-            <h3>Banking Information</h3>
-            <div className="bank-details-card">
-              <div className="bank-card meezan">
-                <h4>Meezan Bank (Recommended)</h4>
-                <p><strong>Account Title:</strong> YUNI Education Systems</p>
-                <p><strong>Account Number:</strong> 1234-567890-12-3</p>
-                <p><strong>IBAN:</strong> PK36MEZN0012345678901234</p>
-                <p><strong>Branch Code:</strong> 0123</p>
-              </div>
-              <div className="bank-card easypaisa">
-                <h4>Easypaisa / JazzCash</h4>
-                <p><strong>Account Title:</strong> Muhammad Ali</p>
-                <p><strong>Mobile Number:</strong> 0300 1234567</p>
-                <p><strong>CNIC (for verification):</strong> 12345-1234567-1</p>
-              </div>
-            </div>
+      <div className="checkout-container-premium">
+        <button onClick={handleBackToHub} className="cancel-btn-tech">Aborted Session</button>
+        <h2 className="checkout-title-tech">Secure <span className="text-gradient">Transaction</span> Gateway</h2>
+        
+        {submitStatus && (
+          <div className={`status-banner-tech ${submitStatus.type}`}>
+            <span className="icon">{submitStatus.type === 'success' ? '✓' : '⚠'}</span>
+            {submitStatus.message}
           </div>
-          <div className="form-section">
-            <h3>Payment Details</h3>
-            <div className="form-grid">
-              <div className="form-field">
-                <label>Payment Method *</label>
-                <select name="paymentMethod" value={formData.paymentMethod} onChange={handleInputChange} required>
-                  <option value="">Select Payment Method</option>
-                  <option value="bank">Bank Transfer (Meezan Bank)</option>
-                  <option value="easypaisa">Easypaisa / JazzCash</option>
-                </select>
-              </div>
-              <div className="form-field">
-                <label>Transaction ID / Reference Number *</label>
-                <input type="text" name="transactionId" placeholder="e.g., TXN123456789" value={formData.transactionId} onChange={handleInputChange} required />
-              </div>
-              <div className="form-field">
-                <label>Transaction Date *</label>
-                <input type="date" name="transactionDate" value={formData.transactionDate} onChange={handleInputChange} required />
-              </div>
-              <div className="form-field">
-                <label>Transaction Amount *</label>
-                <input type="text" name="transactionAmount" placeholder={selectedCourse?.price} value={formData.transactionAmount} onChange={handleInputChange} required />
-              </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="checkout-form-premium">
+          <div className="form-grid-premium">
+            <div className="form-left-col">
+              <section className="form-section-tech">
+                <h3 className="section-header-tech">1. Payment Protocol</h3>
+                <div className="payment-nodes">
+                  <div className="payment-node-card">
+                    <h4>Meezan Alpha</h4>
+                    <div className="node-details">
+                      <p><span>Title:</span> YUNI Education Systems</p>
+                      <p><span>Account:</span> 1234-567890-12-3</p>
+                      <p><span>IBAN:</span> PK36MEZN0012345678901234</p>
+                    </div>
+                  </div>
+                  <div className="payment-node-card">
+                    <h4>Digital Wallet</h4>
+                    <div className="node-details">
+                      <p><span>Title:</span> Muhammad Ali</p>
+                      <p><span>Mobile:</span> 0300 1234567</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="input-group-tech">
+                  <div className="field-tech">
+                    <label>Network</label>
+                    <select name="paymentMethod" value={formData.paymentMethod} onChange={handleInputChange} required>
+                      <option value="">Select Gateway</option>
+                      <option value="bank">Direct Bank (Meezan)</option>
+                      <option value="easypaisa">Easypaisa / JazzCash</option>
+                    </select>
+                  </div>
+                  <div className="field-tech">
+                    <label>Hash / TXN ID</label>
+                    <input type="text" name="transactionId" placeholder="Enter RefID" value={formData.transactionId} onChange={handleInputChange} required />
+                  </div>
+                  <div className="field-tech">
+                    <label>Timestamp</label>
+                    <input type="date" name="transactionDate" value={formData.transactionDate} onChange={handleInputChange} required />
+                  </div>
+                  <div className="field-tech">
+                    <label>Total Credits</label>
+                    <input type="text" name="transactionAmount" placeholder={selectedCourse?.price} value={formData.transactionAmount} onChange={handleInputChange} required />
+                  </div>
+                </div>
+              </section>
             </div>
-          </div>
-          <div className="form-section">
-            <h3>Personal Information</h3>
-            <div className="form-grid">
-              <div className="form-field"><label>Full Name (as per CNIC) *</label><input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} required /></div>
-              <div className="form-field"><label>Father's Name *</label><input type="text" name="fatherName" value={formData.fatherName} onChange={handleInputChange} required /></div>
-              <div className="form-field"><label>CNIC Number (XXXXX-XXXXXXX-X) *</label><input type="text" name="cnic" placeholder="12345-1234567-1" value={formData.cnic} onChange={handleInputChange} required /></div>
-              <div className="form-field"><label>Date of Birth *</label><input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleInputChange} required /></div>
-              <div className="form-field">
-                <label>Gender *</label>
-                <select name="gender" value={formData.gender} onChange={handleInputChange} required>
-                  <option value="">Select Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-              <div className="form-field"><label>Email Address *</label><input type="email" name="email" value={formData.email} onChange={handleInputChange} required /></div>
-              <div className="form-field"><label>Phone Number (WhatsApp) *</label><input type="tel" name="phoneNumber" placeholder="03XXXXXXXXX" value={formData.phoneNumber} onChange={handleInputChange} required /></div>
-              <div className="form-field"><label>Alternate Phone Number</label><input type="tel" name="alternatePhone" value={formData.alternatePhone} onChange={handleInputChange} /></div>
-              <div className="form-field"><label>City *</label><input type="text" name="city" value={formData.city} onChange={handleInputChange} required /></div>
-              <div className="form-field">
-                <label>Province *</label>
-                <select name="province" value={formData.province} onChange={handleInputChange} required>
-                  <option value="Punjab">Punjab</option>
-                  <option value="Sindh">Sindh</option>
-                  <option value="Khyber Pakhtunkhwa">Khyber Pakhtunkhwa</option>
-                  <option value="Balochistan">Balochistan</option>
-                  <option value="Islamabad">Islamabad</option>
-                  <option value="Gilgit-Baltistan">Gilgit-Baltistan</option>
-                  <option value="Azad Kashmir">Azad Kashmir</option>
-                </select>
-              </div>
-              <div className="form-field full-width"><label>Current Address *</label><textarea name="currentAddress" rows={2} value={formData.currentAddress} onChange={handleInputChange} required></textarea></div>
+
+            <div className="form-right-col">
+              <section className="form-section-tech">
+                <h3 className="section-header-tech">2. Identity Sync</h3>
+                <div className="input-group-tech">
+                  <div className="field-tech full"><label>Full Legal Name</label><input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} required /></div>
+                  <div className="field-tech"><label>CNIC (Verified)</label><input type="text" name="cnic" placeholder="XXXXX-XXXXXXX-X" value={formData.cnic} onChange={handleInputChange} required /></div>
+                  <div className="field-tech"><label>Birth Date</label><input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleInputChange} required /></div>
+                  <div className="field-tech"><label>Email Address</label><input type="email" name="email" value={formData.email} onChange={handleInputChange} required /></div>
+                  <div className="field-tech"><label>Comms (WhatsApp)</label><input type="tel" name="phoneNumber" placeholder="03XXXXXXXXX" value={formData.phoneNumber} onChange={handleInputChange} required /></div>
+                </div>
+              </section>
+
+              <section className="form-section-tech">
+                <h3 className="section-header-tech">3. Validation</h3>
+                <div className="declaration-tech">
+                  <label className="checkbox-tech">
+                    <input type="checkbox" name="declaration" checked={formData.declaration} onChange={handleInputChange} required />
+                    <span className="checkmark-tech"></span>
+                    I confirm that the provided data is accurate and the transaction is complete.
+                  </label>
+                </div>
+                <div className="form-actions-tech">
+                  <button type="submit" className="submit-btn-premium" disabled={isSubmitting}>
+                    {isSubmitting ? 'Syncing...' : 'Confirm Enrollment'}
+                  </button>
+                </div>
+              </section>
             </div>
-          </div>
-          <div className="form-section">
-            <h3>Educational Background</h3>
-            <div className="form-grid">
-              <div className="form-field">
-                <label>Highest Qualification *</label>
-                <select name="highestQualification" value={formData.highestQualification} onChange={handleInputChange} required>
-                  <option value="">Select Qualification</option>
-                  <option value="Matriculation">Matriculation</option>
-                  <option value="Intermediate">Intermediate</option>
-                  <option value="Bachelor's">Bachelor's (14/16 years)</option>
-                  <option value="Master's">Master's (16/18 years)</option>
-                  <option value="MS/MPhil">MS/MPhil</option>
-                  <option value="PhD">PhD</option>
-                </select>
-              </div>
-              <div className="form-field"><label>Institution/University *</label><input type="text" name="institution" value={formData.institution} onChange={handleInputChange} required /></div>
-              <div className="form-field"><label>Year of Completion *</label><input type="text" name="yearOfCompletion" placeholder="YYYY" value={formData.yearOfCompletion} onChange={handleInputChange} required /></div>
-              <div className="form-field"><label>Percentage/CGPA *</label><input type="text" name="percentage" placeholder="e.g., 85% or 3.5/4.0" value={formData.percentage} onChange={handleInputChange} required /></div>
-            </div>
-          </div>
-          <div className="form-section">
-            <h3>Professional Information</h3>
-            <div className="form-grid">
-              <div className="form-field">
-                <label>Current Employment Status</label>
-                <select name="currentEmployment" value={formData.currentEmployment} onChange={handleInputChange}>
-                  <option value="">Select Status</option>
-                  <option value="Student">Student</option>
-                  <option value="Employed Full-time">Employed Full-time</option>
-                  <option value="Employed Part-time">Employed Part-time</option>
-                  <option value="Freelancer">Freelancer</option>
-                  <option value="Unemployed">Unemployed</option>
-                  <option value="Business Owner">Business Owner</option>
-                </select>
-              </div>
-              <div className="form-field"><label>Organization/Company</label><input type="text" name="organization" value={formData.organization} onChange={handleInputChange} /></div>
-              <div className="form-field"><label>Designation/Role</label><input type="text" name="designation" value={formData.designation} onChange={handleInputChange} /></div>
-            </div>
-          </div>
-          <div className="form-section">
-            <h3>Additional Information</h3>
-            <div className="form-grid">
-              <div className="form-field">
-                <label>How did you hear about us? *</label>
-                <select name="hearAboutUs" value={formData.hearAboutUs} onChange={handleInputChange} required>
-                  <option value="">Select Option</option>
-                  <option value="Facebook">Facebook</option>
-                  <option value="Instagram">Instagram</option>
-                  <option value="LinkedIn">LinkedIn</option>
-                  <option value="Friend/Colleague">Friend/Colleague</option>
-                  <option value="Search Engine">Search Engine</option>
-                  <option value="Newspaper">Newspaper</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-              <div className="form-field"><label>Referral Code (if any)</label><input type="text" name="referralCode" value={formData.referralCode} onChange={handleInputChange} /></div>
-              <div className="form-field full-width"><label>Why do you want to join this course? *</label><textarea name="whyJoin" rows={3} placeholder="Tell us about your goals and expectations..." value={formData.whyJoin} onChange={handleInputChange} required></textarea></div>
-            </div>
-          </div>
-          <div className="form-section">
-            <div className="declaration">
-              <label>
-                <input type="checkbox" name="declaration" checked={formData.declaration} onChange={handleInputChange} required />
-                I declare that all the information provided is true and correct. I understand that any false information may lead to cancellation of registration. I have made the payment and provided correct transaction details.
-              </label>
-            </div>
-          </div>
-          <div className="form-actions">
-            <button type="button" className="cancel-reg-btn" onClick={handleBackToHub}>Cancel</button>
-            <button type="submit" className="submit-reg-btn" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit Registration'}</button>
           </div>
         </form>
       </div>
@@ -769,98 +717,194 @@ const Courses: React.FC = () => {
   );
 
   return (
-    <div className="courses-app">
+    <div className="courses-app-premium">
       {currentView === "trainings" && renderTrainingsView()}
       {currentView === "course-detail" && renderCourseDetailView()}
       {currentView === "checkout" && renderCheckoutView()}
 
       <style>{`
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        .courses-app { background: transparent; min-height: 100vh; font-family: 'Space Grotesk', system-ui, sans-serif; color: var(--text-primary); position: relative; z-index: 1; }
-        .trainings-view { padding: 10rem 1.5rem 5rem; max-width: 1280px; margin: 0 auto; }
-        .title-wrapper { margin-bottom: 3rem; text-align: center; }
-        .page-title { display: none; } /* Replaced by AnimatedTitle */
-        .filters-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin: 2rem 0 3rem; }
-        .filter-btn { background: var(--bg-tertiary); border: 1px solid var(--border-light); color: var(--text-secondary); padding: 0.6rem 1.5rem; border-radius: 9999px; font-weight: 600; font-size: 0.875rem; cursor: pointer; transition: all 0.3s ease; font-family: inherit; }
-        .filter-btn:hover { border-color: var(--pk-green); color: var(--pk-green); }
-        .filter-btn.active { background: var(--pk-green); border-color: var(--pk-green); color: #ffffff; box-shadow: 0 4px 15px var(--pk-green-glow); }
-        .course-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        @media (min-width: 768px) { .course-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (min-width: 1024px) { .course-grid { grid-template-columns: repeat(3, 1fr); } }
-        .course-card-hub { background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 2rem; border: 1px solid var(--glass-border); overflow: hidden; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
-        .course-card-hub::before { content: ''; position: absolute; inset: 0; border-radius: 2rem; padding: 1.5px; background: linear-gradient(135deg, rgba(0, 230, 118, 0.4), transparent, rgba(0, 230, 118, 0.4)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; opacity: 0; transition: opacity 0.4s; }
-        .course-card-hub:hover::before { opacity: 1; }
-        .course-card-hub:hover { transform: translateY(-12px) scale(1.02); border-color: var(--pk-green); box-shadow: 0 25px 50px rgba(17, 140, 79, 0.25); }
-        .course-card-image { position: relative; width: 100%; height: 220px; overflow: hidden; }
-        .course-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); filter: grayscale(20%); }
-        .course-card-hub:hover .course-card-image img { transform: scale(1.15); filter: grayscale(0%); }
-        .cert-badge { position: absolute; top: 1.25rem; right: 1.25rem; background: var(--pk-green); color: #ffffff; padding: 0.4rem 1rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); z-index: 2; }
-        .course-card-content { padding: 2rem; }
-        .course-card-content h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem; color: var(--text-primary); letter-spacing: -0.01em; }
-        .instructor { color: var(--pk-green); font-size: 0.9rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em; }
-        .description { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem; }
-        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border-light); }
-        .price { font-weight: 900; font-size: 1.25rem; color: var(--pk-green); }
-        .view-btn { background: rgba(0, 230, 118, 0.1); border: 1.5px solid var(--pk-green); color: var(--pk-green); padding: 0.6rem 1.5rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 800; cursor: pointer; transition: all 0.3s; font-family: inherit; text-transform: uppercase; letter-spacing: 0.05em; }
-        .view-btn:hover { background: var(--pk-green); color: #ffffff; box-shadow: 0 4px 15px var(--pk-green-glow); transform: translateX(5px); }
-        .detail-view { padding: 8rem 1.5rem 5rem; max-width: 1200px; margin: 0 auto; }
-        .back-btn { background: transparent; border: none; color: var(--text-secondary); font-weight: 700; font-size: 1rem; cursor: pointer; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: color 0.3s; font-family: inherit; }
-        .back-btn:hover { color: var(--pk-green); }
-        .detail-panel { background: var(--glass-bg); backdrop-filter: blur(12px); border-radius: 2rem; border: 1px solid var(--glass-border); overflow: hidden; display: flex; flex-direction: column; }
-        @media (min-width: 768px) { .detail-panel { flex-direction: row; } }
-        .detail-left { width: 100%; padding: 2rem; background: var(--bg-tertiary); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; justify-content: space-between; }
-        @media (min-width: 768px) { .detail-left { width: 33.333%; } .detail-right { width: 66.666%; } }
-        .detail-image { width: 100%; border-radius: 1rem; margin-bottom: 1.5rem; border: 1px solid var(--border-light); }
-        .detail-stats { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
-        .stat { display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid var(--border-light); }
-        .stat-value { font-weight: 700; color: var(--text-primary); }
-        .stat-label { color: var(--text-tertiary); font-size: 0.875rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em; }
-        .cert-notice { background: rgba(17, 140, 79, 0.1); border: 1px solid rgba(17, 140, 79, 0.3); padding: 1rem; border-radius: 0.75rem; text-align: center; font-weight: 700; color: var(--pk-green); }
-        .detail-right { width: 100%; padding: 2rem; }
-        .detail-right h2 { font-size: 2.5rem; font-weight: 900; margin-bottom: 0.5rem; color: var(--text-primary); }
-        .instructor-detail { color: var(--pk-green); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.5rem; }
-        .description-detail { color: var(--text-secondary); line-height: 1.7; margin-bottom: 2rem; font-size: 1.1rem; }
-        .detail-right h3 { font-size: 1.5rem; margin: 1.5rem 0 1rem; color: var(--text-primary); font-weight: 800; }
-        .learn-list { list-style: none; margin-bottom: 2.5rem; }
-        .learn-list li { padding: 0.75rem 0; color: var(--text-secondary); border-bottom: 1px dashed var(--border-light); font-size: 1.05rem; }
-        .learn-list li:last-child { border-bottom: none; }
-        .enroll-now-btn { background: var(--pk-green); color: #ffffff; border: none; padding: 1rem 2.5rem; border-radius: 9999px; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: all 0.3s; font-family: inherit; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 4px 15px var(--pk-green-glow); }
-        .enroll-now-btn:hover { background: var(--pk-green-light); transform: translateY(-2px); box-shadow: 0 8px 25px var(--pk-green-glow); }
-        .checkout-view { padding: 8rem 1.5rem 5rem; max-width: 1000px; margin: 0 auto; }
-        .cancel-btn { background: transparent; border: none; color: var(--text-secondary); font-weight: 700; margin-bottom: 1.5rem; cursor: pointer; transition: color 0.3s; font-family: inherit; }
-        .cancel-btn:hover { color: var(--text-primary); }
-        .checkout-title { font-size: 2.5rem; font-weight: 900; text-transform: uppercase; margin-bottom: 2rem; color: var(--text-primary); }
-        .status-message { padding: 1rem; border-radius: 0.75rem; margin-bottom: 1.5rem; text-align: center; font-weight: 600; }
-        .status-message.success { background: rgba(17, 140, 79, 0.1); border: 1px solid var(--pk-green); color: var(--pk-green); }
-        .status-message.error { background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #ef4444; }
-        .checkout-form-full { display: flex; flex-direction: column; gap: 2rem; }
-        .form-section { background: var(--glass-bg); backdrop-filter: blur(12px); border-radius: 1.5rem; padding: 2rem; border: 1px solid var(--glass-border); }
-        .form-section h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--pk-green); border-bottom: 1px solid var(--border-light); padding-bottom: 0.75rem; text-transform: uppercase; }
-        .bank-details-card { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-        @media (min-width: 768px) { .bank-details-card { grid-template-columns: 1fr 1fr; } }
-        .bank-card { background: var(--bg-tertiary); padding: 1.5rem; border-radius: 1rem; border-left: 4px solid; border-[1px] solid var(--border-light); }
-        .bank-card.meezan { border-left-color: #3b82f6; }
-        .bank-card.easypaisa { border-left-color: var(--pk-green); }
-        .bank-card h4 { margin-bottom: 1rem; font-size: 1.1rem; color: var(--text-primary); font-weight: 700; }
-        .bank-card p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
-        .form-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-        @media (min-width: 768px) { .form-grid { grid-template-columns: repeat(2, 1fr); } }
-        .form-field { display: flex; flex-direction: column; gap: 0.5rem; }
-        .form-field.full-width { grid-column: span 1; }
-        @media (min-width: 768px) { .form-field.full-width { grid-column: span 2; } }
-        .form-field label { font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); }
-        .form-field input, .form-field select, .form-field textarea { background: var(--bg-tertiary); border: 1.5px solid var(--border-light); border-radius: 0.75rem; padding: 0.75rem 1rem; color: var(--text-primary); font-family: inherit; font-size: 1rem; transition: all 0.3s; }
-        .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: none; border-color: var(--pk-green); box-shadow: 0 0 0 3px rgba(17, 140, 79, 0.15); background: var(--bg-primary); }
-        .declaration { padding: 1.5rem; background: rgba(17, 140, 79, 0.05); border-radius: 1rem; border: 1px solid rgba(17, 140, 79, 0.2); }
-        .declaration label { display: flex; align-items: flex-start; gap: 1rem; cursor: pointer; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; }
-        .declaration input[type="checkbox"] { width: 1.25rem; height: 1.25rem; cursor: pointer; margin-top: 0.1rem; accent-color: var(--pk-green); }
-        .form-actions { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1rem; }
-        .cancel-reg-btn { background: transparent; color: var(--text-primary); border: 1.5px solid var(--border-light); padding: 0.875rem 2rem; border-radius: 9999px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
-        .cancel-reg-btn:hover { border-color: var(--text-primary); background: var(--bg-tertiary); }
-        .submit-reg-btn { background: var(--pk-green); color: #ffffff; border: none; padding: 0.875rem 2.5rem; border-radius: 9999px; font-weight: 700; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 4px 15px var(--pk-green-glow); }
-        .submit-reg-btn:hover:not(:disabled) { background: var(--pk-green-light); transform: translateY(-2px); box-shadow: 0 8px 25px var(--pk-green-glow); }
-        .submit-reg-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
-        @media (max-width: 768px) { .trainings-view, .detail-view, .checkout-view { padding: 6rem 1rem 3rem; } .page-title { font-size: 2.2rem; } .checkout-title { font-size: 1.8rem; } .detail-right h2 { font-size: 1.8rem; } }
+        .courses-app-premium { 
+          background: transparent; 
+          min-height: 100vh; 
+          font-family: 'Inter', sans-serif; 
+          color: var(--text-primary); 
+          position: relative; 
+          z-index: 1; 
+          overflow-x: hidden;
+        }
+
+        /* --- Header Section --- */
+        .trainings-view { padding: 12rem 2rem 8rem; max-width: 1400px; margin: 0 auto; position: relative; }
+        .title-wrapper { margin-bottom: 5rem; text-align: center; }
+        .subtitle-tech { color: var(--text-secondary); font-size: 1.1rem; margin-top: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto; opacity: 0.8; }
+
+        /* --- Filters --- */
+        .filters-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 5rem; }
+        .filter-btn-premium { 
+          background: rgba(255, 255, 255, 0.03); 
+          border: 1px solid var(--border-light); 
+          color: var(--text-secondary); 
+          padding: 0.8rem 2rem; 
+          border-radius: 12px; 
+          font-weight: 600; 
+          font-size: 0.9rem; 
+          cursor: pointer; 
+          transition: all 0.4s var(--transition-smooth); 
+          backdrop-filter: blur(10px);
+        }
+        .filter-btn-premium:hover { border-color: var(--pk-green); color: var(--pk-green); background: rgba(0, 143, 76, 0.05); transform: translateY(-3px); }
+        .filter-btn-premium.active { 
+          background: var(--pk-green); 
+          border-color: var(--pk-green); 
+          color: #ffffff; 
+          box-shadow: 0 10px 25px var(--pk-green-glow); 
+        }
+
+        /* --- Grid & Cards --- */
+        .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 3rem; }
+        
+        .course-card-premium { 
+          background: var(--glass-bg); 
+          backdrop-filter: blur(20px); 
+          border-radius: 2.5rem; 
+          border: 1px solid var(--glass-border); 
+          overflow: hidden; 
+          transition: all 0.6s var(--transition-smooth); 
+          position: relative;
+        }
+
+        .card-inner-tech {
+          position: relative;
+          z-index: 2;
+          background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 230, 118, 0.15) 0%, transparent 80%);
+        }
+
+        .course-card-premium:hover { 
+          transform: translateY(-15px) scale(1.02); 
+          border-color: var(--pk-green); 
+          box-shadow: 0 40px 80px var(--glass-shadow), 0 0 20px var(--pk-green-glow-subtle); 
+        }
+
+        .course-card-image { position: relative; height: 260px; overflow: hidden; }
+        .course-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--transition-smooth); }
+        .course-card-premium:hover .course-card-image img { transform: scale(1.1); }
+        .image-overlay-tech { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.8)); }
+
+        .cert-badge-premium { 
+          position: absolute; top: 1.5rem; right: 1.5rem; background: var(--pk-green); color: #fff; 
+          padding: 0.5rem 1.2rem; border-radius: 10px; font-size: 0.75rem; font-weight: 800; 
+          text-transform: uppercase; letter-spacing: 0.1em; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+          animation: badgePulse 2s infinite alternate;
+        }
+        @keyframes badgePulse { from { transform: scale(1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); } to { transform: scale(1.05); box-shadow: 0 8px 25px var(--pk-green-glow); } }
+
+        .course-card-content { padding: 2.5rem; }
+        .category-label { color: var(--pk-green); font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem; }
+        .course-title-tech { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.75rem; line-height: 1.2; }
+        .instructor-tech { color: var(--text-tertiary); font-size: 0.95rem; margin-bottom: 1.5rem; font-weight: 500; }
+
+        .card-meta-tech { display: flex; gap: 1.5rem; color: var(--text-secondary); font-size: 0.9rem; font-weight: 600; margin-bottom: 2rem; }
+
+        .card-footer-premium { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-light); padding-top: 1.5rem; }
+        .price-tag-tech { font-size: 1.5rem; font-weight: 900; background: linear-gradient(135deg, var(--pk-green-light), var(--pk-green)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+        .view-btn-tech { 
+          background: transparent; border: none; color: var(--text-primary); font-weight: 700; cursor: pointer; 
+          display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; 
+        }
+        .view-btn-tech:hover { color: var(--pk-green); }
+        .view-btn-tech:hover .arrow-tech { transform: translateX(8px); }
+        .arrow-tech { transition: transform 0.3s ease; display: inline-block; }
+
+        /* --- Detail View --- */
+        .detail-view { padding: 12rem 2rem 8rem; }
+        .back-btn-tech { 
+          background: transparent; border: none; color: var(--text-secondary); font-weight: 600; 
+          cursor: pointer; margin-bottom: 3rem; display: flex; align-items: center; gap: 0.8rem;
+          transition: all 0.3s ease;
+        }
+        .back-btn-tech:hover { color: var(--pk-green); transform: translateX(-5px); }
+
+        .detail-panel-premium { 
+          display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; 
+          background: var(--glass-bg); backdrop-filter: blur(30px); border-radius: 3rem; 
+          padding: 4rem; border: 1px solid var(--glass-border); 
+        }
+
+        .detail-image-wrapper { position: relative; border-radius: 2rem; overflow: hidden; height: 450px; }
+        .detail-image-tech { width: 100%; height: 100%; object-fit: cover; }
+        .image-glow-tech { position: absolute; inset: 0; box-shadow: inset 0 0 100px rgba(0,0,0,0.5); }
+
+        .detail-stats-premium { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+        .stat-card { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 1.5rem; text-align: center; border: 1px solid var(--border-light); }
+        .stat-value { display: block; font-size: 1.1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.3rem; }
+        .stat-label { font-size: 0.75rem; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .detail-category-tag { color: var(--pk-green); font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.9rem; }
+        .detail-title-tech { font-size: 3.5rem; font-weight: 900; margin: 1rem 0 2rem; line-height: 1.1; }
+        .instructor-line-tech { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 2rem; }
+        .instructor-line-tech span { color: var(--pk-green); font-weight: 700; }
+
+        .description-box-tech { background: rgba(0, 143, 76, 0.03); border-left: 4px solid var(--pk-green); padding: 2rem; border-radius: 0 1.5rem 1.5rem 0; margin-bottom: 3rem; }
+        .description-box-tech p { font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary); }
+
+        .outcomes-tech h3 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+        .outcomes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 4rem; }
+        .outcome-item { color: var(--text-secondary); font-size: 1rem; display: flex; align-items: center; gap: 1rem; }
+        .outcome-item .check { color: var(--pk-green); font-weight: 900; }
+
+        .enroll-btn-premium { 
+          width: 100%; background: var(--pk-green); color: #fff; padding: 1.5rem; border-radius: 1.5rem; 
+          font-size: 1.2rem; font-weight: 800; border: none; cursor: pointer; transition: all 0.4s var(--transition-smooth);
+          position: relative; overflow: hidden;
+        }
+        .enroll-btn-premium:hover { transform: translateY(-5px); box-shadow: 0 20px 40px var(--pk-green-glow); background: var(--pk-green-light); }
+
+        /* --- Checkout Styles --- */
+        .checkout-view { padding: 12rem 2rem 8rem; max-width: 1200px; margin: 0 auto; }
+        .checkout-title-tech { font-size: 3rem; font-weight: 900; text-align: center; margin-bottom: 4rem; text-transform: uppercase; letter-spacing: -0.02em; }
+        .text-gradient { background: linear-gradient(135deg, var(--pk-green), var(--cyber-blue)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        
+        .checkout-form-premium { display: flex; flex-direction: column; gap: 2rem; }
+        .form-grid-premium { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        @media (max-width: 900px) { .form-grid-premium { grid-template-columns: 1fr; } }
+        
+        .form-section-tech { background: var(--glass-bg); backdrop-filter: blur(20px); border-radius: 2rem; padding: 2.5rem; border: 1px solid var(--glass-border); margin-bottom: 2rem; }
+        .section-header-tech { font-size: 1.2rem; font-weight: 800; color: var(--pk-green); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem; }
+        
+        .payment-nodes { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
+        .payment-node-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border-light); border-radius: 1.5rem; padding: 1.5rem; }
+        .payment-node-card h4 { color: var(--pk-green); margin-bottom: 1rem; font-weight: 800; }
+        .node-details p { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
+        .node-details p span { color: var(--text-tertiary); font-weight: 600; }
+        
+        .input-group-tech { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .field-tech { display: flex; flex-direction: column; gap: 0.6rem; }
+        .field-tech.full { grid-column: span 2; }
+        @media (max-width: 600px) { .field-tech { grid-column: span 2 !important; } }
+        
+        .field-tech label { font-size: 0.8rem; font-weight: 700; color: var(--text-tertiary); text-transform: uppercase; }
+        .field-tech input, .field-tech select { 
+          background: rgba(255,255,255,0.03); border: 1px solid var(--border-light); 
+          border-radius: 0.8rem; padding: 1rem; color: var(--text-primary); font-family: inherit;
+          transition: all 0.3s ease;
+        }
+        .field-tech input:focus, .field-tech select:focus { outline: none; border-color: var(--pk-green); background: rgba(255,255,255,0.06); }
+        
+        .submit-btn-premium { 
+          width: 100%; background: var(--pk-green); color: #fff; padding: 1.5rem; border-radius: 1.2rem; 
+          font-size: 1.1rem; font-weight: 800; border: none; cursor: pointer; transition: all 0.4s ease;
+          text-transform: uppercase; letter-spacing: 0.1em;
+        }
+        .submit-btn-premium:hover:not(:disabled) { background: var(--pk-green-light); transform: translateY(-3px); box-shadow: 0 15px 30px var(--pk-green-glow); }
+        .submit-btn-premium:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* --- Responsive --- */
+        @media (max-width: 1024px) {
+          .detail-panel-premium { grid-template-columns: 1fr; gap: 3rem; padding: 2.5rem; }
+          .detail-title-tech { font-size: 2.5rem; }
+          .course-grid { grid-template-columns: 1fr; }
+        }
       `}</style>
     </div>
   );

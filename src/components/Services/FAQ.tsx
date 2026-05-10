@@ -61,153 +61,187 @@ export default function FAQ() {
     setOpenIndex(openIndex === index ? null : index)
   }
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
+    const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
+    card.style.setProperty('--mouse-x', `${x}%`);
+    card.style.setProperty('--mouse-y', `${y}%`);
+  };
+
   return (
     <>
+      <section className="faq-premium-section">
+        {/* Background Light Orbs */}
+        <div className="gradient-orb" style={{ top: '20%', left: '10%' }}></div>
+        <div className="gradient-orb" style={{ bottom: '20%', right: '10%', background: 'radial-gradient(circle, var(--pk-green-bright) 0%, transparent 70%)' }}></div>
+
+        <div className="faq-container-premium">
+          <div className="faq-header-premium">
+            <AnimatedTitle>Frequented Queries.</AnimatedTitle>
+            <p className="faq-subtitle-premium">Everything you need to know about our tactical operations.</p>
+          </div>
+
+          <div className="faq-grid-premium">
+            {faqs.map((faq, index) => (
+              <div 
+                key={index} 
+                className={`faq-item-premium card-glow-border ${openIndex === index ? 'open' : ''}`}
+                onMouseMove={handleMouseMove}
+              >
+                <div className="faq-item-inner">
+                  <button
+                    className="faq-question-premium"
+                    onClick={() => toggle(index)}
+                  >
+                    <span className="question-text">{faq.question}</span>
+                    <span className={`faq-icon-premium ${openIndex === index ? 'open' : ''}`}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                      </svg>
+                    </span>
+                  </button>
+                  <div className={`faq-answer-premium ${openIndex === index ? 'open' : ''}`}>
+                    <p>{faq.answer}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <style>{`
-        .faq-section {
-          max-width: 1200px;
+        .faq-premium-section {
+          min-height: 100vh;
+          padding: 12rem 2rem 8rem;
+          position: relative;
+          z-index: 1;
+          overflow: hidden;
+          background: transparent;
+        }
+
+        .faq-container-premium {
+          max-width: 80rem;
           margin: 0 auto;
-          padding: 8rem 1.5rem;
         }
 
-        .faq-title {
-          font-size: clamp(1.8rem, 5vw, 2.8rem);
-          font-weight: 900;
+        .faq-header-premium {
           text-align: center;
-          color: #ffffff;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          margin-bottom: 4rem;
+          margin-bottom: 6rem;
         }
 
-        .faq-grid {
+        .faq-subtitle-premium {
+          color: var(--text-secondary);
+          font-size: 1.2rem;
+          margin-top: 1.5rem;
+          opacity: 0.8;
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .faq-grid-premium {
           display: grid;
-          grid-template-columns: repeat(1, 1fr);
-          gap: 1.5rem;
-          align-items: start;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 2rem;
         }
 
-        @media (min-width: 1024px) {
-          .faq-grid {
-            grid-template-columns: repeat(2, 1fr);
+        @media (max-width: 1024px) {
+          .faq-grid-premium {
+            grid-template-columns: 1fr;
           }
         }
 
-        .faq-item {
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 12px;
-          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-          background: rgba(255, 255, 255, 0.02);
-          position: relative;
-          z-index: 1;
+        .faq-item-premium {
+          background: var(--glass-bg);
+          backdrop-filter: blur(20px);
+          border: 1px solid var(--glass-border);
+          border-radius: 2rem;
+          transition: all 0.5s var(--transition-smooth);
+          height: fit-content;
         }
 
-        .faq-item:hover {
-          border-color: rgba(16, 185, 129, 0.3);
-          background: rgba(16, 185, 129, 0.02);
+        .faq-item-inner {
+          padding: 1.5rem 2rem;
+          background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 230, 118, 0.05) 0%, transparent 70%);
         }
 
-        /* Expanding pop-out effect */
-        .faq-item.open {
-          transform: scale(1.08) translateY(-5px);
-          z-index: 100;
-          background: #0a0a0a;
-          border-color: rgba(16, 185, 129, 0.4);
-          box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(16, 185, 129, 0.1);
-          border-radius: 12px 12px 0 0;
+        .faq-item-premium:hover {
+          transform: translateY(-5px);
+          border-color: var(--pk-green);
+          box-shadow: 0 30px 60px var(--glass-shadow);
         }
 
-        .faq-question {
+        .faq-item-premium.open {
+          border-color: var(--pk-green);
+          background: rgba(0, 230, 118, 0.03);
+          box-shadow: 0 0 40px var(--pk-green-glow);
+        }
+
+        .faq-question-premium {
           width: 100%;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 1.5rem;
-          background: transparent;
+          background: none;
           border: none;
-          color: #ffffff;
-          font-size: 1rem;
-          font-weight: 600;
-          text-align: left;
+          padding: 1rem 0;
           cursor: pointer;
-          gap: 1rem;
-          outline: none;
+          color: var(--text-primary);
+          text-align: left;
         }
 
-        .faq-icon {
-          width: 28px;
-          height: 28px;
-          border-radius: 50%;
-          border: 1.5px solid rgba(255, 255, 255, 0.2);
+        .question-text {
+          font-size: 1.15rem;
+          font-weight: 700;
+          letter-spacing: -0.01em;
+          line-height: 1.4;
+        }
+
+        .faq-icon-premium {
+          width: 3rem;
+          height: 3rem;
+          border-radius: 1rem;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid var(--border-light);
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 18px;
-          color: #ffffff;
+          color: var(--pk-green);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           flex-shrink: 0;
-          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .faq-icon.open {
-          border-color: #10b981;
-          color: #10b981;
-          transform: rotate(135deg);
+        .faq-icon-premium.open {
+          background: var(--pk-green);
+          color: #fff;
+          transform: rotate(45deg);
+          box-shadow: 0 0 20px var(--pk-green-glow);
         }
 
-        /* Absolute positioning prevents pushing the grid items down */
-        .faq-answer {
-          position: absolute;
-          top: 100%;
-          left: -1px;
-          right: -1px;
-          background: #0a0a0a;
-          border: 1px solid rgba(16, 185, 129, 0.6);
-          border-top: none;
-          border-radius: 0 0 12px 12px;
-          padding: 0 1.5rem;
-          color: #9ca3af;
-          font-size: 0.95rem;
-          line-height: 1.7;
-          
+        .faq-answer-premium {
+          max-height: 0;
+          overflow: hidden;
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
           opacity: 0;
-          visibility: hidden;
-          transform: translateY(-10px);
-          transition: all 0.3s ease;
-          box-shadow: 0 30px 50px rgba(0,0,0,0.7);
         }
 
-        .faq-answer.open {
+        .faq-answer-premium.open {
+          max-height: 500px;
           opacity: 1;
-          visibility: visible;
-          padding: 0 1.5rem 1.5rem;
-          transform: translateY(0);
+          padding: 1rem 0 1.5rem;
+        }
+
+        .faq-answer-premium p {
+          color: var(--text-secondary);
+          line-height: 1.7;
+          font-size: 1rem;
+          margin: 0;
         }
       `}</style>
-
-      <div className="faq-section">
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '4rem' }}>
-          <AnimatedTitle className="faq-title" style={{ marginBottom: 0 }}>Frequently Asked Questions</AnimatedTitle>
-        </div>
-
-        <div className="faq-grid">
-          {faqs.map((faq, index) => (
-            <div key={index} className={`faq-item ${openIndex === index ? 'open' : ''}`}>
-              <button
-                className="faq-question"
-                onClick={() => toggle(index)}
-              >
-                {faq.question}
-                <span className={`faq-icon ${openIndex === index ? 'open' : ''}`}>
-                  +
-                </span>
-              </button>
-              <div className={`faq-answer ${openIndex === index ? 'open' : ''}`}>
-                {faq.answer}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
     </>
-  )
-}
+  );
+}

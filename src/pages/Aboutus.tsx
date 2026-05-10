@@ -1,5 +1,5 @@
 // app/about/page.tsx
-'use client';
+
 
 import SmoothScrollingPage from '../components/Aboutus/aboutus-sec';
 

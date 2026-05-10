@@ -188,405 +188,259 @@ const GetInTouch: React.FC = () => {
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
+    const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
+    card.style.setProperty('--mouse-x', `${x}%`);
+    card.style.setProperty('--mouse-y', `${y}%`);
+  };
 
   return (
     <>
-      <section className="contact-section">
-        <div className="title-wrapper">
-          <AnimatedTitle>Get In Touch.</AnimatedTitle>
-        </div>
-        <p className="contact-subtitle">
-          Have a project in mind? Let's build something extraordinary together.
-        </p>
+      <section className="contact-premium-section">
+        {/* Background Light Orbs */}
+        <div className="gradient-orb" style={{ top: '15%', left: '5%' }}></div>
+        <div className="gradient-orb" style={{ bottom: '20%', right: '10%', background: 'radial-gradient(circle, var(--pk-green-bright) 0%, transparent 70%)' }}></div>
 
-        <div className="contact-container">
-          <div className="contact-info">
-            <div className="logo-wrapper">
-              <Logo />
-              <span className="brand-name">YUNI Pakistan</span>
+        <div className="contact-container-premium">
+          <div className="title-wrapper">
+            <AnimatedTitle>Establish Contact.</AnimatedTitle>
+            <p className="contact-subtitle-premium">
+              Ready to initiate a breakthrough? Reach out to our nerve center at NASTP.
+            </p>
+          </div>
+
+          <div className="contact-layout-premium">
+            {/* Left: Contact Info */}
+            <div className="contact-info-panel card-glow-border" onMouseMove={handleMouseMove}>
+              <div className="info-panel-inner">
+                <div className="brand-header-premium">
+                  <Logo />
+                  <span className="brand-text-premium">YUNI Intelligence</span>
+                </div>
+                
+                <div className="info-grid-premium">
+                  <div className="info-item-premium">
+                    <span className="info-label-premium">Headquarters</span>
+                    <p className="info-value-premium">NASTP (National Aerospace Science & Technology Park), Islamabad</p>
+                  </div>
+
+                  <div className="info-item-premium">
+                    <span className="info-label-premium">Secure Line</span>
+                    <p className="info-value-premium">
+                      <a href="tel:+923001234567">+92 300 1234567</a>
+                    </p>
+                  </div>
+
+                  <div className="info-item-premium">
+                    <span className="info-label-premium">Digital Drop</span>
+                    <p className="info-value-premium">
+                      <a href="mailto:hello@yunipakistan.com">hello@yunipakistan.com</a>
+                    </p>
+                  </div>
+
+                  <div className="info-item-premium">
+                    <span className="info-label-premium">Social Nodes</span>
+                    <div className="social-nodes-premium">
+                      <a href="#" className="social-node"><FacebookIcon /></a>
+                      <a href="#" className="social-node"><InstagramIcon /></a>
+                      <a href="#" className="social-node"><LinkedInIcon /></a>
+                      <a href="#" className="social-node"><XIcon /></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            
-            <div className="info-block">
-              <h2>Visit us</h2>
-              <p>NASTP (National Aerospace Science & Technology Park)<br />Islamabad, Pakistan</p>
-            </div>
-            
-            <div className="info-block">
-              <h2>Chat to us</h2>
-              <p><a href="mailto:hello@yunipakistan.com">hello@yunipakistan.com</a></p>
-            </div>
-            
-            <div className="info-block">
-              <h2>Call us</h2>
-              <p>Mon-Fri from 9am to 6pm (PKT)<br /><a href="tel:+923001234567">+92 300 1234567</a></p>
-            </div>
-            
-            <div className="info-block">
-              <h2>Follow us</h2>
-              <div className="social-icons">
-                <a href="https://www.facebook.com/yunipakistan" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="social-link"><FacebookIcon /></a>
-                <a href="https://www.instagram.com/yunipakistan" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-link"><InstagramIcon /></a>
-                <a href="https://www.linkedin.com/company/yunipakistan" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="social-link"><LinkedInIcon /></a>
-                <a href="https://twitter.com/yunipakistan" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="social-link"><XIcon /></a>
+
+            {/* Right: Contact Form */}
+            <div className="contact-form-panel card-glow-border" onMouseMove={handleMouseMove}>
+              <div className="form-panel-inner">
+                <form onSubmit={handleSubmit} className="premium-form">
+                  <div className="form-row-premium">
+                    <div className="form-field-premium">
+                      <label>First Designation *</label>
+                      <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} placeholder="First name" required />
+                    </div>
+                    <div className="form-field-premium">
+                      <label>Surname *</label>
+                      <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Last name" required />
+                    </div>
+                  </div>
+
+                  <div className="form-field-premium">
+                    <label>Digital Mail *</label>
+                    <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="email@address.com" required />
+                  </div>
+
+                  <div className="form-field-premium">
+                    <label>Inquiry Subject</label>
+                    <select name="subject" value={formData.subject} onChange={handleChange}>
+                      <option value="">Select Domain</option>
+                      <option value="courses">Educational Programs</option>
+                      <option value="cybersecurity">Cybersecurity Intel</option>
+                      <option value="partnership">Strategic Partnership</option>
+                      <option value="other">General Inquiry</option>
+                    </select>
+                  </div>
+
+                  <div className="form-field-premium">
+                    <label>Transmission Content *</label>
+                    <textarea name="message" rows={5} value={formData.message} onChange={handleChange} placeholder="Describe your objective..." required></textarea>
+                  </div>
+
+                  <div className="form-consent-premium">
+                    <label className="checkbox-container-premium">
+                      <input type="checkbox" name="agree" checked={formData.agree} onChange={handleChange} required />
+                      <span className="checkmark"></span>
+                      <p>I agree to the <a href="/privacy-policy">Privacy Protocol</a>.</p>
+                    </label>
+                  </div>
+
+                  {status.type !== 'idle' && (
+                    <div className={`status-banner-premium ${status.type}`}>
+                      {status.message}
+                    </div>
+                  )}
+
+                  <button type="submit" className="submit-btn-premium" disabled={status.type === 'loading'}>
+                    <span className="btn-text">{status.type === 'loading' ? 'Transmitting...' : 'Send Transmission'}</span>
+                    <div className="btn-glow"></div>
+                  </button>
+                </form>
               </div>
             </div>
           </div>
-
-          {/* Right column – Contact Form */}
-          <form onSubmit={handleSubmit} className="contact-form">
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="firstName">First Name *</label>
-                <input type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} placeholder="John" required maxLength={50} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="lastName">Last Name *</label>
-                <input type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Doe" required maxLength={50} />
-              </div>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="email">Email *</label>
-              <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} placeholder="john@example.com" required maxLength={100} />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="phone">Phone Number</label>
-              <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} placeholder="03001234567" maxLength={15} />
-              <small>Digits only, up to 15</small>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="subject">Subject</label>
-              <select id="subject" name="subject" value={formData.subject} onChange={handleChange}>
-                <option value="">Select a topic...</option>
-                <option value="courses">Course Inquiry</option>
-                <option value="cybersecurity">Cybersecurity Training</option>
-                <option value="development">Web Development</option>
-                <option value="ai">AI & Prompt Engineering</option>
-                <option value="freelancing">Freelancing & E-Commerce</option>
-                <option value="partnership">Partnership Opportunity</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="message">Message *</label>
-              <textarea id="message" name="message" rows={4} value={formData.message} onChange={handleChange} placeholder="Tell us what we can help you with" required maxLength={1000} />
-              <small>{formData.message.length}/1000 characters</small>
-            </div>
-
-            <div className="checkbox-group">
-              <input type="checkbox" id="agree" name="agree" checked={formData.agree} onChange={handleChange} required />
-              <label htmlFor="agree">I agree to the <a href="/privacy-policy">Privacy Policy</a> and consent to YUNI Pakistan contacting me about my inquiry.</label>
-            </div>
-
-            {status.type !== 'idle' && <div className={`status-message ${status.type}`}>{status.message}</div>}
-            
-            <button type="submit" className="submit-btn" disabled={status.type === 'loading'}>
-              {status.type === 'loading' ? 'Sending...' : 'Send Message'}
-            </button>
-          </form>
         </div>
       </section>
 
       <style>{`
-        .contact-section {
+        .contact-premium-section {
           min-height: 100vh;
           background: transparent;
-          font-family: 'Space Grotesk', system-ui, sans-serif;
+          font-family: 'Inter', sans-serif;
           color: var(--text-primary);
-          padding-top: 10rem;
+          padding-top: 12rem;
           padding-bottom: 8rem;
           position: relative;
           z-index: 1;
+          overflow-x: hidden;
         }
 
-        .contact-container {
-          max-width: 80rem;
+        .contact-container-premium {
+          max-width: 85rem;
           margin: 0 auto;
-          padding: 0 1.5rem;
-          display: flex;
-          flex-direction: column;
-          gap: 2.5rem;
+          padding: 0 2rem;
         }
 
-        .title-wrapper {
-          margin-bottom: 1.5rem;
-          text-align: center;
-        }
-
-        .contact-subtitle {
+        .contact-subtitle-premium {
           color: var(--text-secondary);
-          margin-bottom: 4rem;
-          font-size: 1.125rem;
-          text-align: center;
-          max-width: 40rem;
+          font-size: 1.15rem;
+          margin-top: 1.5rem;
+          opacity: 0.8;
+          max-width: 500px;
           margin-left: auto;
           margin-right: auto;
+          line-height: 1.7;
+          text-align: center;
         }
 
-        @media (min-width: 1024px) {
-          .contact-container {
-            flex-direction: row;
-            gap: 4rem;
-            align-items: stretch;
-          }
-          .contact-info { flex: 0.8; }
-          .contact-form { flex: 1.2; }
+        .contact-layout-premium {
+          display: grid;
+          grid-template-columns: 0.8fr 1.2fr;
+          gap: 4rem;
+          margin-top: 6rem;
         }
 
-        .contact-info {
+        /* --- Panels --- */
+        .contact-info-panel, .contact-form-panel {
           background: var(--glass-bg);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          padding: 3.5rem;
-          border-radius: 2.5rem;
-          border: 1px solid var(--glass-border);
-          position: relative;
+          backdrop-filter: blur(20px);
+          border-radius: 3rem;
           overflow: hidden;
-          transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+          border: 1px solid var(--glass-border);
+          transition: all 0.6s var(--transition-smooth);
         }
 
-        .contact-info::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 230, 118, 0.1) 0%, transparent 50%);
-          opacity: 0;
-          transition: opacity 0.3s;
-          pointer-events: none;
+        .info-panel-inner, .form-panel-inner {
+          padding: 4rem;
+          position: relative;
+          z-index: 2;
+          height: 100%;
+          background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 230, 118, 0.08) 0%, transparent 80%);
         }
 
-        .contact-info:hover::before { opacity: 1; }
-
-        .contact-info:hover {
-          transform: translateY(-8px) scale(1.01);
+        .contact-info-panel:hover, .contact-form-panel:hover {
+          transform: translateY(-10px);
           border-color: var(--pk-green);
-          box-shadow: 0 20px 60px rgba(0, 230, 118, 0.1);
+          box-shadow: 0 40px 80px var(--glass-shadow);
         }
 
-        .logo-wrapper {
+        /* --- Info Content --- */
+        .brand-header-premium {
           display: flex;
           align-items: center;
-          gap: 12px;
-          margin-bottom: 1.5rem;
+          gap: 1.5rem;
+          margin-bottom: 4rem;
         }
 
-        .brand-name {
-          font-size: 1.5rem;
-          font-weight: 700;
+        .brand-text-premium {
+          font-size: 1.8rem;
+          font-weight: 900;
           color: var(--pk-green);
+          letter-spacing: -0.02em;
         }
 
-        .info-block {
-          margin-bottom: 1.5rem;
+        .info-grid-premium { display: flex; flex-direction: column; gap: 3rem; }
+        .info-item-premium { display: flex; flex-direction: column; gap: 0.8rem; }
+        .info-label-premium { font-size: 0.75rem; font-weight: 900; color: var(--pk-green); text-transform: uppercase; letter-spacing: 0.2em; }
+        .info-value-premium { font-size: 1.1rem; color: var(--text-secondary); line-height: 1.6; margin: 0; font-weight: 600; }
+        .info-value-premium a { color: inherit; text-decoration: none; transition: color 0.3s; }
+        .info-value-premium a:hover { color: var(--pk-green); }
+
+        .social-nodes-premium { display: flex; gap: 1.5rem; margin-top: 1rem; }
+        .social-node { color: var(--pk-green); transition: all 0.3s; opacity: 0.7; }
+        .social-node:hover { transform: translateY(-5px) scale(1.2); opacity: 1; color: var(--pk-green-bright); }
+
+        /* --- Form Content --- */
+        .premium-form { display: flex; flex-direction: column; gap: 2rem; }
+        .form-row-premium { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .form-field-premium { display: flex; flex-direction: column; gap: 0.8rem; }
+        .form-field-premium label { font-size: 0.85rem; font-weight: 700; color: var(--text-tertiary); }
+        .form-field-premium input, .form-field-premium select, .form-field-premium textarea {
+          background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-light); 
+          padding: 1.2rem; border-radius: 1.2rem; color: #fff; font-size: 1rem; 
+          transition: all 0.3s; width: 100%;
         }
-        .info-block:last-child {
-          margin-bottom: 0;
-        }
-        .info-block h2 {
-          font-size: 1.1rem;
-          font-weight: 700;
-          margin-bottom: 0.5rem;
-          color: var(--text-primary);
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-        }
-        .info-block p {
-          color: var(--text-secondary);
-          line-height: 1.6;
-          font-size: 0.95rem;
-        }
-        .info-block a {
-          color: var(--pk-green);
-          text-decoration: none;
-          word-break: break-word;
-          font-weight: 600;
-        }
-        .social-icons {
-          display: flex;
-          gap: 1rem;
-          margin-top: 0.5rem;
-        }
-        .social-link {
-          color: var(--pk-green);
-          transition: color 0.2s;
-        }
-        .social-link:hover {
-          color: var(--pk-green-light);
+        .form-field-premium input:focus, .form-field-premium select:focus, .form-field-premium textarea:focus {
+          border-color: var(--pk-green); box-shadow: 0 0 20px var(--pk-green-glow); outline: none; background: rgba(0, 230, 118, 0.05);
         }
 
-        .contact-form {
-          background: var(--glass-bg);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          padding: 3.5rem;
-          border-radius: 2.5rem;
-          border: 1px solid var(--glass-border);
-          position: relative;
-          overflow: hidden;
-          transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        .form-consent-premium { margin-top: 1rem; }
+        .checkbox-container-premium { display: flex; align-items: center; gap: 1.5rem; cursor: pointer; }
+        .checkbox-container-premium p { font-size: 0.9rem; color: var(--text-tertiary); margin: 0; }
+        .checkbox-container-premium a { color: var(--pk-green); text-decoration: none; font-weight: 800; }
+
+        .status-banner-premium { padding: 1.2rem; border-radius: 1rem; font-size: 0.9rem; font-weight: 700; text-align: center; }
+        .status-banner-premium.success { background: rgba(0, 230, 118, 0.1); border: 1px solid var(--pk-green); color: var(--pk-green); }
+        .status-banner-premium.error { background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #ef4444; }
+
+        .submit-btn-premium { 
+          background: var(--pk-green); color: #fff; padding: 1.5rem; border-radius: 1.5rem; 
+          border: none; font-weight: 900; cursor: pointer; transition: all 0.3s;
+          box-shadow: 0 10px 30px var(--pk-green-glow); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.1em;
+        }
+        .submit-btn-premium:hover:not(:disabled) { transform: translateY(-5px); box-shadow: 0 20px 50px var(--pk-green-glow); }
+
+        @media (max-width: 1024px) {
+          .contact-layout-premium { grid-template-columns: 1fr; }
+          .info-panel-inner, .form-panel-inner { padding: 2.5rem; }
         }
 
-        .contact-form::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 230, 118, 0.1) 0%, transparent 50%);
-          opacity: 0;
-          transition: opacity 0.3s;
-          pointer-events: none;
+        @media (max-width: 640px) {
+          .form-row-premium { grid-template-columns: 1fr; }
         }
-
-        .contact-form:hover::before { opacity: 1; }
-
-        .contact-form:hover {
-          transform: translateY(-8px) scale(1.01);
-          border-color: var(--pk-green);
-          box-shadow: 0 20px 60px rgba(0, 230, 118, 0.1);
-        }
-
-        .form-row {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-        }
-        @media (min-width: 640px) {
-          .form-row {
-            flex-direction: row;
-            gap: 1rem;
-          }
-          .form-row .form-group {
-            flex: 1;
-          }
-        }
-
-        .form-group {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-          margin-bottom: 0.5rem;
-        }
-        .form-group label {
-          font-weight: 600;
-          color: var(--text-secondary);
-          font-size: 0.9rem;
-        }
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-          padding: 0.85rem 1rem;
-          border: 1.5px solid var(--border-light);
-          border-radius: 0.75rem;
-          font-family: inherit;
-          font-size: 1rem;
-          background: var(--bg-tertiary);
-          color: var(--text-primary);
-          transition: all 0.3s;
-          -webkit-appearance: none;
-          width: 100%;
-        }
-        .form-group select {
-          cursor: pointer;
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23118c4f' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
-          background-repeat: no-repeat;
-          background-position: right 1rem center;
-          padding-right: 2.5rem;
-        }
-        .form-group select option {
-          background: var(--bg-primary);
-          color: var(--text-primary);
-        }
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-          outline: none;
-          border-color: var(--pk-green);
-          box-shadow: 0 0 0 3px var(--pk-green-glow);
-          background: var(--bg-primary);
-        }
-        small {
-          color: var(--text-tertiary);
-          font-size: 0.75rem;
-          margin-top: 0.25rem;
-        }
-        .checkbox-group {
-          display: flex;
-          align-items: flex-start;
-          gap: 1rem;
-          margin: 1rem 0;
-        }
-        .checkbox-group input {
-          margin-top: 0.2rem;
-          accent-color: var(--pk-green);
-          flex-shrink: 0;
-          width: 1.125rem;
-          height: 1.125rem;
-          cursor: pointer;
-        }
-        .checkbox-group label {
-          font-size: 0.9rem;
-          color: var(--text-secondary);
-          line-height: 1.5;
-          cursor: pointer;
-        }
-        .checkbox-group label a {
-          color: var(--pk-green);
-          font-weight: 600;
-        }
-        .status-message {
-          padding: 1rem;
-          border-radius: 0.75rem;
-          font-size: 0.9rem;
-          font-weight: 600;
-          text-align: center;
-          margin-top: 1rem;
-        }
-        .status-message.success {
-          background: rgba(17, 140, 79, 0.1);
-          border: 1px solid var(--pk-green);
-          color: var(--pk-green);
-        }
-        .status-message.error {
-          background: rgba(239, 68, 68, 0.1);
-          border: 1px solid #ef4444;
-          color: #ef4444;
-        }
-        .status-message.loading {
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid var(--border-light);
-          color: var(--text-secondary);
-        }
-        .submit-btn {
-          background-color: var(--pk-green);
-          color: #ffffff;
-          font-weight: 800;
-          padding: 1rem 1.5rem;
-          border: none;
-          border-radius: 9999px;
-          font-size: 1.05rem;
-          cursor: pointer;
-          transition: all 0.3s;
-          width: 100%;
-          margin-top: 1rem;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          box-shadow: 0 4px 15px var(--pk-green-glow);
-        }
-        .submit-btn:hover:not(:disabled) {
-          background-color: var(--pk-green-light);
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px var(--pk-green-glow);
-        }
-        .submit-btn:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-          transform: none;
-          box-shadow: none;
-        }
-
-
       `}</style>
     </>
   );

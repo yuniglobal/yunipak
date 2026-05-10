@@ -289,765 +289,477 @@ const Careers: React.FC = () => {
     }
   };
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
+    const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
+    card.style.setProperty('--mouse-x', `${x}%`);
+    card.style.setProperty('--mouse-y', `${y}%`);
+  };
+
   return (
-    <section className="careers-section">
-      <div className="careers-container">
+    <section className="careers-premium-section">
+      {/* Background Light Orbs */}
+      <div className="gradient-orb" style={{ top: '10%', left: '5%' }}></div>
+      <div className="gradient-orb" style={{ bottom: '20%', right: '5%', background: 'radial-gradient(circle, var(--cyber-blue) 0%, transparent 70%)' }}></div>
+
+      <div className="careers-container-premium">
         {/* Header */}
         <div className="title-wrapper">
-          <AnimatedTitle>Join The Movement.</AnimatedTitle>
+          <AnimatedTitle>Forge The Future.</AnimatedTitle>
+          <p className="careers-subtitle-premium">
+            Join our elite squad at NASTP. We don't just hire employees; we recruit visionaries.
+          </p>
         </div>
-        <p className="careers-subtitle">
-          We are looking for disruptors to join our HQ at NASTP.
-        </p>
 
         {/* Positions List */}
-        <div className="positions-list">
+        <div className="positions-grid-premium">
           {positions.map((position) => (
-            <div key={position.id} className="position-panel">
-              <div className="position-info">
-                <h3 className="position-title">{position.title}</h3>
-                <p className="position-description">{position.description}</p>
+            <div 
+              key={position.id} 
+              className="position-card-premium card-glow-border"
+              onMouseMove={handleMouseMove}
+            >
+              <div className="position-card-inner">
+                <div className="position-meta-top">
+                  <span className="location-tag">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="3">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    {position.location}
+                  </span>
+                  <span className="type-tag">{position.type}</span>
+                </div>
+                
+                <h3 className="position-title-premium">{position.title}</h3>
+                <div className="department-tag">{position.department}</div>
+                
+                <p className="position-desc-premium">{position.description}</p>
+                
+                <div className="position-footer-premium">
+                  <button
+                    onClick={() => handleApply(position)}
+                    className="apply-btn-premium"
+                  >
+                    <span>Initiate Application</span>
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="3">
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </button>
+                </div>
               </div>
-              <button
-                onClick={() => handleApply(position)}
-                className="apply-button"
-              >
-                Apply
-              </button>
             </div>
           ))}
         </div>
 
-        {/* Application Form Modal */}
-        {showForm && selectedPosition && (
-          <div className="modal-overlay" onClick={() => setShowForm(false)}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <button className="modal-close" onClick={() => setShowForm(false)}>×</button>
-
-              <h2 className="form-title">Application for {selectedPosition.title}</h2>
-
-              {submitStatus && (
-                <div className={`status-message ${submitStatus.type}`}>
-                  {submitStatus.message}
-                </div>
-              )}
-
-              <form onSubmit={handleSubmit} className="application-form">
-                {/* Personal Information Section */}
-                <div className="form-section">
-                  <h3>Personal Information</h3>
-                  <div className="form-grid">
-                    <div className="form-field">
-                      <label>Full Name *</label>
-                      <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} required />
-                    </div>
-
-                    <div className="form-field">
-                      <label>CNIC (XXXXX-XXXXXXX-X) *</label>
-                      <input type="text" name="cnic" placeholder="12345-1234567-1" value={formData.cnic} onChange={handleInputChange} required />
-                    </div>
-
-                    <div className="form-field">
-                      <label>Father's Name *</label>
-                      <input type="text" name="fatherName" value={formData.fatherName} onChange={handleInputChange} required />
-                    </div>
-
-                    <div className="form-field">
-                      <label>Date of Birth *</label>
-                      <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleInputChange} required />
-                    </div>
-
-                    <div className="form-field">
-                      <label>Gender *</label>
-                      <select name="gender" value={formData.gender} onChange={handleInputChange} required>
-                        <option value="">Select</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
-
-                    <div className="form-field">
-                      <label>Phone Number *</label>
-                      <input type="tel" name="phoneNumber" placeholder="03XXXXXXXXX" value={formData.phoneNumber} onChange={handleInputChange} required />
-                    </div>
-
-                    <div className="form-field">
-                      <label>Alternate Phone</label>
-                      <input type="tel" name="alternatePhone" value={formData.alternatePhone} onChange={handleInputChange} />
-                    </div>
-
-                    <div className="form-field">
-                      <label>Email Address *</label>
-                      <input type="email" name="email" value={formData.email} onChange={handleInputChange} required />
-                    </div>
-
-                    <div className="form-field">
-                      <label>City *</label>
-                      <input type="text" name="city" value={formData.city} onChange={handleInputChange} required />
-                    </div>
-
-                    <div className="form-field">
-                      <label>Province *</label>
-                      <select name="province" value={formData.province} onChange={handleInputChange} required>
-                        <option value="Punjab">Punjab</option>
-                        <option value="Sindh">Sindh</option>
-                        <option value="Khyber Pakhtunkhwa">Khyber Pakhtunkhwa</option>
-                        <option value="Balochistan">Balochistan</option>
-                        <option value="Islamabad">Islamabad</option>
-                        <option value="Gilgit-Baltistan">Gilgit-Baltistan</option>
-                        <option value="Azad Kashmir">Azad Kashmir</option>
-                      </select>
-                    </div>
-
-                    <div className="form-field full-width">
-                      <label>Current Address *</label>
-                      <textarea name="currentAddress" rows={2} value={formData.currentAddress} onChange={handleInputChange} required></textarea>
-                    </div>
-
-                    <div className="form-field full-width">
-                      <label>Permanent Address</label>
-                      <textarea name="permanentAddress" rows={2} value={formData.permanentAddress} onChange={handleInputChange} placeholder="If different from current address"></textarea>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Professional Information */}
-                <div className="form-section">
-                  <h3>Professional Information</h3>
-                  <div className="form-grid">
-                    <div className="form-field">
-                      <label>Years of Experience *</label>
-                      <select name="experience" value={formData.experience} onChange={handleInputChange} required>
-                        <option value="">Select</option>
-                        <option value="Fresher">Fresher (No experience)</option>
-                        <option value="1-2 years">1-2 years</option>
-                        <option value="3-5 years">3-5 years</option>
-                        <option value="6-8 years">6-8 years</option>
-                        <option value="9+ years">9+ years</option>
-                      </select>
-                    </div>
-
-                    <div className="form-field">
-                      <label>Are you currently employed?</label>
-                      <select name="isCurrentlyEmployed" value={formData.isCurrentlyEmployed} onChange={handleInputChange}>
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                      </select>
-                    </div>
-
-                    <div className="form-field">
-                      <label>Current Salary (PKR/month)</label>
-                      <input type="text" name="currentSalary" placeholder="e.g., 100,000" value={formData.currentSalary} onChange={handleInputChange} />
-                    </div>
-
-                    <div className="form-field">
-                      <label>Expected Salary (PKR/month) *</label>
-                      <input type="text" name="expectedSalary" placeholder="e.g., 150,000" value={formData.expectedSalary} onChange={handleInputChange} required />
-                    </div>
-
-                    <div className="form-field">
-                      <label>Notice Period *</label>
-                      <select name="noticePeriod" value={formData.noticePeriod} onChange={handleInputChange} required>
-                        <option value="">Select</option>
-                        <option value="Immediate">Immediate</option>
-                        <option value="15 days">15 days</option>
-                        <option value="1 month">1 month</option>
-                        <option value="2 months">2 months</option>
-                        <option value="3 months">3 months</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Education Section */}
-                <div className="form-section">
-                  <h3>Education</h3>
-                  <div className="form-grid">
-                    <div className="form-field">
-                      <label>Highest Degree *</label>
-                      <select name="highestDegree" value={formData.highestDegree} onChange={handleInputChange} required>
-                        <option value="">Select</option>
-                        <option value="Matriculation">Matriculation</option>
-                        <option value="Intermediate">Intermediate</option>
-                        <option value="Bachelor's">Bachelor's (14/16 years)</option>
-                        <option value="Master's">Master's (16/18 years)</option>
-                        <option value="MS/MPhil">MS/MPhil</option>
-                        <option value="PhD">PhD</option>
-                      </select>
-                    </div>
-
-                    <div className="form-field">
-                      <label>University/Institute *</label>
-                      <input type="text" name="university" value={formData.university} onChange={handleInputChange} required />
-                    </div>
-
-                    <div className="form-field">
-                      <label>Year of Completion *</label>
-                      <input type="text" name="yearOfCompletion" placeholder="YYYY" value={formData.yearOfCompletion} onChange={handleInputChange} required />
-                    </div>
-
-                    <div className="form-field">
-                      <label>CGPA/Percentage *</label>
-                      <input type="text" name="cgpa" placeholder="3.5/4.0 or 85%" value={formData.cgpa} onChange={handleInputChange} required />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Skills Section */}
-                <div className="form-section">
-                  <h3>Skills & Certifications</h3>
-                  <div className="form-grid">
-                    <div className="form-field full-width">
-                      <label>Technical Skills * (comma-separated)</label>
-                      <textarea name="technicalSkills" rows={3} placeholder="React, Next.js, TypeScript, Tailwind CSS, etc." value={formData.technicalSkills} onChange={handleInputChange} required></textarea>
-                    </div>
-
-                    <div className="form-field full-width">
-                      <label>Certifications</label>
-                      <textarea name="certifications" rows={2} placeholder="List any relevant certifications (e.g., AWS Certified, React Certification, etc.)" value={formData.certifications} onChange={handleInputChange}></textarea>
-                    </div>
-
-                    <div className="form-field full-width">
-                      <label>Languages Spoken</label>
-                      <input type="text" name="languagesSpoken" placeholder="Urdu (Native), English (Fluent), etc." value={formData.languagesSpoken} onChange={handleInputChange} />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Professional Links */}
-                <div className="form-section">
-                  <h3>Professional Links</h3>
-                  <div className="form-grid">
-                    <div className="form-field">
-                      <label>LinkedIn Profile</label>
-                      <input type="url" name="linkedinProfile" placeholder="https://linkedin.com/in/username" value={formData.linkedinProfile} onChange={handleInputChange} />
-                    </div>
-
-                    <div className="form-field">
-                      <label>Portfolio/GitHub</label>
-                      <input type="url" name="portfolioUrl" placeholder="https://github.com/username" value={formData.portfolioUrl} onChange={handleInputChange} />
-                    </div>
-                  </div>
-                </div>
-
-                {/* References */}
-                <div className="form-section">
-                  <h3>Professional References</h3>
-                  <div className="form-grid">
-                    <div className="form-field">
-                      <label>Reference Name</label>
-                      <input type="text" name="referenceName" placeholder="Full name of reference" value={formData.referenceName} onChange={handleInputChange} />
-                    </div>
-
-                    <div className="form-field">
-                      <label>Reference Contact</label>
-                      <input type="text" name="referenceContact" placeholder="Phone number or email" value={formData.referenceContact} onChange={handleInputChange} />
-                    </div>
-
-                    <div className="form-field">
-                      <label>Reference Relation</label>
-                      <input type="text" name="referenceRelation" placeholder="Former Employer/Colleague/Professor" value={formData.referenceRelation} onChange={handleInputChange} />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Additional Info */}
-                <div className="form-section">
-                  <h3>Additional Information</h3>
-                  <div className="form-grid">
-                    <div className="form-field">
-                      <label>How did you hear about us?</label>
-                      <select name="hearAboutUs" value={formData.hearAboutUs} onChange={handleInputChange}>
-                        <option value="">Select</option>
-                        <option value="LinkedIn">LinkedIn</option>
-                        <option value="Indeed">Indeed</option>
-                        <option value="Rozee.pk">Rozee.pk</option>
-                        <option value="Company Website">Company Website</option>
-                        <option value="Friend/Colleague">Friend/Colleague</option>
-                        <option value="Social Media">Social Media</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
-
-                    <div className="form-field full-width">
-                      <label>Additional Information (optional)</label>
-                      <textarea name="additionalInfo" rows={3} placeholder="Any other relevant information you'd like to share (e.g., portfolio links, projects, achievements)" value={formData.additionalInfo} onChange={handleInputChange}></textarea>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Declaration */}
-                <div className="form-section">
-                  <div className="declaration">
-                    <label>
-                      <input type="checkbox" name="declaration" checked={formData.declaration} onChange={handleInputChange} required />
-                      I declare that all the information provided in this application is true and correct to the best of my knowledge. I understand that any false information may lead to disqualification or termination. I authorize YUNI Education to verify the information provided.
-                    </label>
-                  </div>
-                </div>
-
-                <div className="form-actions">
-                  <button type="button" className="cancel-btn" onClick={() => setShowForm(false)}>Cancel</button>
-                  <button type="submit" className="submit-btn" disabled={isSubmitting}>
-                    {isSubmitting ? 'Submitting...' : 'Submit Application'}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-
         {/* Bottom CTA */}
-        <div className="bottom-cta">
-          <h2>Don't see a perfect fit?</h2>
-          <p>
-            We're always looking for talented individuals. Send your resume to{" "}
-            <a href="mailto:careers@yunipakistan.com">careers@yunipakistan.com</a>
-          </p>
+        <div className="bottom-cta-premium card-glow-border">
+          <div className="cta-content">
+            <h2 className="cta-title">Passive Recruitment Active</h2>
+            <p className="cta-text">
+              Don't see your specific designation? Our talent pool is always open for exceptional minds.
+            </p>
+            <a href="mailto:careers@yunipakistan.com" className="cta-link-premium">
+              Transmit CV / Portfolio <span className="arrow">→</span>
+            </a>
+          </div>
         </div>
       </div>
 
+      {/* Application Form Modal */}
+      {showForm && selectedPosition && (
+        <div className="modal-overlay-premium" onClick={() => setShowForm(false)}>
+          <div className="modal-content-premium" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close-premium" onClick={() => setShowForm(false)}>×</button>
+
+            <div className="form-header-premium">
+              <span className="protocol-label">Application Protocol</span>
+              <h2 className="form-title-premium">Apply for {selectedPosition.title}</h2>
+              <div className="form-progress-bar"></div>
+            </div>
+
+            {submitStatus && (
+              <div className={`status-message-premium ${submitStatus.type}`}>
+                <span className="status-icon">{submitStatus.type === 'success' ? '✓' : '⚠'}</span>
+                {submitStatus.message}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="application-form-premium">
+              {/* Personal Information Section */}
+              <div className="form-section-premium">
+                <div className="section-title-wrapper">
+                  <span className="section-number">01</span>
+                  <h3>Personnel Profile</h3>
+                </div>
+                <div className="form-grid-premium">
+                  <div className="form-field-premium">
+                    <label>Legal Full Name *</label>
+                    <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} required placeholder="Enter full name" />
+                  </div>
+
+                  <div className="form-field-premium">
+                    <label>National ID (CNIC) *</label>
+                    <input type="text" name="cnic" placeholder="XXXXX-XXXXXXX-X" value={formData.cnic} onChange={handleInputChange} required />
+                  </div>
+
+                  <div className="form-field-premium">
+                    <label>Father's Designation *</label>
+                    <input type="text" name="fatherName" value={formData.fatherName} onChange={handleInputChange} required placeholder="Father's name" />
+                  </div>
+
+                  <div className="form-field-premium">
+                    <label>Date of Birth *</label>
+                    <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleInputChange} required />
+                  </div>
+
+                  <div className="form-field-premium">
+                    <label>Gender Identification *</label>
+                    <select name="gender" value={formData.gender} onChange={handleInputChange} required>
+                      <option value="">Select Protocol</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+
+                  <div className="form-field-premium">
+                    <label>Primary Comms (Phone) *</label>
+                    <input type="tel" name="phoneNumber" placeholder="03XXXXXXXXX" value={formData.phoneNumber} onChange={handleInputChange} required />
+                  </div>
+
+                  <div className="form-field-premium">
+                    <label>Digital Mail (Email) *</label>
+                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="email@address.com" />
+                  </div>
+
+                  <div className="form-field-premium">
+                    <label>Current Location (City) *</label>
+                    <input type="text" name="city" value={formData.city} onChange={handleInputChange} required placeholder="e.g. Islamabad" />
+                  </div>
+                </div>
+
+                <div className="form-field-premium full-width" style={{ marginTop: '1.5rem' }}>
+                  <label>Residential Coordinates (Address) *</label>
+                  <textarea name="currentAddress" rows={2} value={formData.currentAddress} onChange={handleInputChange} required placeholder="Current street address..."></textarea>
+                </div>
+              </div>
+
+              {/* Professional Information */}
+              <div className="form-section-premium">
+                <div className="section-title-wrapper">
+                  <span className="section-number">02</span>
+                  <h3>Professional Status</h3>
+                </div>
+                <div className="form-grid-premium">
+                  <div className="form-field-premium">
+                    <label>Service Duration *</label>
+                    <select name="experience" value={formData.experience} onChange={handleInputChange} required>
+                      <option value="">Select Level</option>
+                      <option value="Fresher">Entry Level (0 Exp)</option>
+                      <option value="1-2 years">1-2 years</option>
+                      <option value="3-5 years">3-5 years</option>
+                      <option value="6-8 years">6-8 years</option>
+                      <option value="9+ years">Senior (9+ years)</option>
+                    </select>
+                  </div>
+
+                  <div className="form-field-premium">
+                    <label>Expected Compensation (PKR/mo) *</label>
+                    <input type="text" name="expectedSalary" placeholder="e.g. 150,000" value={formData.expectedSalary} onChange={handleInputChange} required />
+                  </div>
+
+                  <div className="form-field-premium">
+                    <label>Redeployment Window (Notice) *</label>
+                    <select name="noticePeriod" value={formData.noticePeriod} onChange={handleInputChange} required>
+                      <option value="">Select Duration</option>
+                      <option value="Immediate">Instant Availability</option>
+                      <option value="15 days">15 Days</option>
+                      <option value="1 month">30 Days</option>
+                      <option value="2 months">60 Days</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Skills Section */}
+              <div className="form-section-premium">
+                <div className="section-title-wrapper">
+                  <span className="section-number">03</span>
+                  <h3>Technical Stack</h3>
+                </div>
+                <div className="form-field-premium full-width">
+                  <label>Core Technologies * (comma-separated)</label>
+                  <textarea name="technicalSkills" rows={3} placeholder="e.g. React, Node.js, GSAP, Python, Cybersecurity..." value={formData.technicalSkills} onChange={handleInputChange} required></textarea>
+                </div>
+
+                <div className="form-grid-premium" style={{ marginTop: '1.5rem' }}>
+                  <div className="form-field-premium">
+                    <label>LinkedIn Identity</label>
+                    <input type="url" name="linkedinProfile" placeholder="https://linkedin.com/in/username" value={formData.linkedinProfile} onChange={handleInputChange} />
+                  </div>
+
+                  <div className="form-field-premium">
+                    <label>Portfolio / Git Link</label>
+                    <input type="url" name="portfolioUrl" placeholder="https://github.com/username" value={formData.portfolioUrl} onChange={handleInputChange} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Declaration */}
+              <div className="form-section-premium declaration-wrapper-premium">
+                <label className="checkbox-container-premium">
+                  <input type="checkbox" name="declaration" checked={formData.declaration} onChange={handleInputChange} required />
+                  <span className="checkmark"></span>
+                  <p>I confirm that all transmitted data is authentic. I authorize YUNI Intelligence to perform verification protocols.</p>
+                </label>
+              </div>
+
+              <div className="form-actions-premium">
+                <button type="button" className="cancel-btn-premium" onClick={() => setShowForm(false)}>Abort</button>
+                <button type="submit" className="submit-btn-premium" disabled={isSubmitting}>
+                  <span className="btn-text">{isSubmitting ? 'Transmitting Data...' : 'Submit Application'}</span>
+                  <div className="btn-glow"></div>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       <style>{`
-        .careers-section {
+        .careers-premium-section {
           min-height: 100vh;
           background: transparent;
-          font-family: 'Space Grotesk', system-ui, sans-serif;
+          font-family: 'Inter', sans-serif;
           color: var(--text-primary);
-          padding-top: 10rem;
+          padding-top: 12rem;
           padding-bottom: 8rem;
           position: relative;
           z-index: 1;
+          overflow-x: hidden;
         }
 
-        .careers-container {
-          max-width: 65rem;
+        .careers-container-premium {
+          max-width: 80rem;
           margin: 0 auto;
-          padding: 0 1.5rem;
-          text-align: center;
+          padding: 0 2rem;
         }
 
-        .title-wrapper {
-          margin-bottom: 1.5rem;
-          text-align: center;
-        }
-
-        .careers-heading { display: none; }
-
-        @media (min-width: 768px) {
-          .careers-heading {
-            font-size: 4rem;
-          }
-        }
-
-        .careers-heading-highlight {
-          color: var(--pk-green);
-        }
-
-        .careers-subtitle {
+        .careers-subtitle-premium {
           color: var(--text-secondary);
-          margin-bottom: 4rem;
-          font-size: 1.125rem;
-          line-height: 1.75rem;
+          font-size: 1.15rem;
+          margin-top: 1.5rem;
+          opacity: 0.8;
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+          line-height: 1.7;
         }
 
-        .positions-list {
+        /* --- Grid --- */
+        .positions-grid-premium {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+          gap: 2.5rem;
+          margin-top: 5rem;
+          margin-bottom: 5rem;
+        }
+
+        /* --- Cards --- */
+        .position-card-premium {
+          background: var(--glass-bg);
+          backdrop-filter: blur(20px);
+          border-radius: 2.5rem;
+          overflow: hidden;
+          border: 1px solid var(--glass-border);
+          transition: all 0.6s var(--transition-smooth);
+        }
+
+        .position-card-inner {
+          padding: 3rem;
+          position: relative;
+          z-index: 2;
+          height: 100%;
           display: flex;
           flex-direction: column;
-          gap: 1.5rem;
-          margin-bottom: 3rem;
+          background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 230, 118, 0.08) 0%, transparent 80%);
         }
 
-        .position-panel {
-          background: var(--glass-bg);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          border-radius: 2rem;
-          padding: 2.5rem;
-          text-align: left;
+        .position-card-premium:hover {
+          transform: translateY(-12px);
+          border-color: var(--pk-green);
+          box-shadow: 0 40px 80px var(--glass-shadow);
+        }
+
+        .position-meta-top {
           display: flex;
           justify-content: space-between;
           align-items: center;
+          margin-bottom: 2rem;
+        }
+
+        .location-tag {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.75rem;
+          font-weight: 800;
+          color: var(--text-tertiary);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+        }
+
+        .type-tag {
+          background: rgba(0, 230, 118, 0.1);
+          color: var(--pk-green);
+          padding: 0.4rem 1rem;
+          border-radius: 99px;
+          font-size: 0.7rem;
+          font-weight: 900;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          border: 1px solid rgba(0, 230, 118, 0.2);
+        }
+
+        .position-title-premium {
+          font-size: 1.75rem;
+          font-weight: 900;
+          color: var(--text-primary);
+          margin-bottom: 0.5rem;
+          line-height: 1.2;
+        }
+
+        .department-tag {
+          font-size: 0.9rem;
+          font-weight: 700;
+          color: var(--pk-green);
+          margin-bottom: 1.5rem;
+          opacity: 0.8;
+        }
+
+        .position-desc-premium {
+          color: var(--text-secondary);
+          line-height: 1.8;
+          font-size: 1rem;
+          margin-bottom: 2.5rem;
+          flex-grow: 1;
+        }
+
+        .apply-btn-premium {
+          width: 100%;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid var(--border-light);
+          color: var(--text-primary);
+          padding: 1.2rem;
+          border-radius: 1.5rem;
+          font-weight: 800;
+          font-size: 0.95rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
+          cursor: pointer;
+          transition: all 0.4s var(--transition-smooth);
+        }
+
+        .apply-btn-premium:hover {
+          background: var(--pk-green);
+          border-color: var(--pk-green);
+          color: #fff;
+          transform: translateY(-5px);
+          box-shadow: 0 15px 30px var(--pk-green-glow);
+        }
+
+        /* --- Bottom CTA --- */
+        .bottom-cta-premium {
+          margin-top: 6rem;
+          background: var(--glass-bg);
+          backdrop-filter: blur(25px);
+          border-radius: 3rem;
+          padding: 4rem;
+          text-align: center;
           border: 1px solid var(--glass-border);
-          transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
           position: relative;
           overflow: hidden;
         }
 
-        .position-panel::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 4px;
-          height: 100%;
-          background: var(--pk-green);
-          transform: translateY(100%);
-          transition: transform 0.4s ease;
+        .cta-title { font-size: 2.5rem; font-weight: 900; margin-bottom: 1.5rem; }
+        .cta-text { color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto 2.5rem; line-height: 1.7; }
+        .cta-link-premium {
+          display: inline-flex; align-items: center; gap: 1rem; color: var(--pk-green);
+          font-size: 1.2rem; font-weight: 900; text-decoration: none; transition: all 0.3s ease;
+        }
+        .cta-link-premium:hover { transform: translateX(10px); color: var(--pk-green-light); }
+
+        /* --- Modal --- */
+        .modal-overlay-premium {
+          position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(15px);
+          z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 2rem;
         }
 
-        .position-panel:hover::before {
-          transform: translateY(0);
+        .modal-content-premium {
+          background: #080808; border: 1px solid var(--pk-green); border-radius: 3rem;
+          width: 100%; max-width: 950px; max-height: 90vh; overflow-y: auto; padding: 4rem;
+          position: relative; box-shadow: 0 0 100px rgba(0, 230, 118, 0.1);
         }
 
-        .position-panel:hover {
-          transform: translateX(10px) scale(1.01);
-          border-color: var(--pk-green);
-          box-shadow: 0 20px 50px rgba(17, 140, 79, 0.2);
+        .modal-close-premium {
+          position: absolute; top: 2rem; right: 2rem; background: none; border: none;
+          color: var(--text-tertiary); font-size: 2.5rem; cursor: pointer; transition: color 0.3s;
         }
+        .modal-close-premium:hover { color: #fff; }
 
-        @media (max-width: 768px) {
-          .position-panel {
-            flex-direction: column;
-            text-align: center;
-            padding: 1.75rem;
-          }
-          
-          .position-info {
-            margin-right: 0;
-            margin-bottom: 1.25rem;
-          }
+        .form-header-premium { margin-bottom: 4rem; }
+        .protocol-label { 
+          color: var(--pk-green); font-size: 0.75rem; font-weight: 900; 
+          text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 1rem; display: block;
         }
+        .form-title-premium { font-size: 2.5rem; font-weight: 900; margin: 0; line-height: 1.1; }
 
-
-
-        .position-info {
-          flex: 1;
-          margin-right: 2rem;
+        .form-section-premium { margin-bottom: 4rem; }
+        .section-title-wrapper { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2.5rem; }
+        .section-number { 
+          font-size: 1.5rem; font-weight: 900; color: transparent; 
+          -webkit-text-stroke: 1px var(--pk-green); font-family: 'Space Grotesk';
         }
+        .section-title-wrapper h3 { font-size: 1.3rem; font-weight: 800; margin: 0; color: var(--text-primary); }
 
-        .position-title {
-          font-weight: 800;
-          font-size: 1.5rem;
-          margin-bottom: 0.5rem;
-          color: var(--text-primary);
+        .form-grid-premium { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .form-field-premium { display: flex; flex-direction: column; gap: 0.8rem; }
+        .form-field-premium label { font-size: 0.85rem; font-weight: 700; color: var(--text-tertiary); }
+        .form-field-premium input, .form-field-premium select, .form-field-premium textarea {
+          background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-light); 
+          padding: 1.2rem; border-radius: 1.2rem; color: #fff; font-size: 1rem; 
+          transition: all 0.3s; width: 100%;
         }
+        .form-field-premium input:focus { border-color: var(--pk-green); box-shadow: 0 0 20px var(--pk-green-glow); outline: none; }
+        .full-width { grid-column: span 2; }
 
-        .position-description {
-          color: var(--text-secondary);
-          font-size: 0.875rem;
-          line-height: 1.6;
+        .declaration-wrapper-premium { padding: 2rem; background: rgba(0, 230, 118, 0.05); border-radius: 1.5rem; border: 1px solid rgba(0, 230, 118, 0.1); }
+        .checkbox-container-premium { display: flex; align-items: flex-start; gap: 1.5rem; cursor: pointer; }
+        .checkbox-container-premium p { font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin: 0; }
+
+        .form-actions-premium { display: flex; justify-content: flex-end; gap: 2rem; margin-top: 4rem; }
+        .cancel-btn-premium { background: none; border: none; color: var(--text-tertiary); font-weight: 700; cursor: pointer; font-size: 1rem; }
+        .submit-btn-premium { 
+          background: var(--pk-green); color: #fff; padding: 1.5rem 4rem; border-radius: 1.5rem; 
+          border: none; font-weight: 900; cursor: pointer; transition: all 0.3s;
+          box-shadow: 0 10px 30px var(--pk-green-glow); font-size: 1.1rem;
         }
+        .submit-btn-premium:hover { transform: translateY(-5px); box-shadow: 0 20px 50px var(--pk-green-glow); }
 
-        .apply-button {
-          background: var(--pk-green);
-          color: #ffffff;
-          font-weight: 800;
-          padding: 0.75rem 2rem;
-          border-radius: 9999px;
-          border: none;
-          font-size: 0.875rem;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          font-family: inherit;
-          white-space: nowrap;
-          flex-shrink: 0;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          box-shadow: 0 4px 15px var(--pk-green-glow);
-        }
-
-        .apply-button:hover {
-          background: var(--pk-green-light);
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px var(--pk-green-glow);
-        }
-
-        /* Modal Styles */
-        .modal-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0, 0, 0, 0.7);
-          backdrop-filter: blur(8px);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 1000;
-          padding: 2rem;
-          overflow-y: auto;
-        }
-
-        .modal-content {
-          background: #050505;
-          border-radius: 2.5rem;
-          max-width: 900px;
-          width: 100%;
-          max-height: 90vh;
-          overflow-y: auto;
-          position: relative;
-          border: 1px solid var(--pk-green);
-          padding: 3rem;
-          box-shadow: 0 0 100px rgba(0, 230, 118, 0.15);
+        @media (max-width: 1024px) {
+          .form-grid-premium { grid-template-columns: 1fr; }
+          .full-width { grid-column: span 1; }
+          .modal-content-premium { padding: 2rem; }
         }
 
         @media (max-width: 768px) {
-          .modal-content {
-            padding: 1.5rem;
-          }
-        }
-
-        .modal-close {
-          position: sticky;
-          top: 0;
-          float: right;
-          font-size: 2rem;
-          background: none;
-          border: none;
-          color: var(--text-secondary);
-          cursor: pointer;
-          font-weight: bold;
-          transition: color 0.2s;
-          z-index: 1;
-        }
-
-        .modal-close:hover {
-          color: var(--pk-green);
-        }
-
-        .form-title {
-          font-size: 1.75rem;
-          font-weight: 800;
-          margin-bottom: 2rem;
-          color: var(--text-primary);
-          text-align: center;
-          clear: both;
-        }
-
-        .status-message {
-          padding: 1rem;
-          border-radius: 0.75rem;
-          margin-bottom: 1.5rem;
-          text-align: center;
-          font-weight: 600;
-        }
-
-        .status-message.success {
-          background: rgba(17, 140, 79, 0.1);
-          border: 1px solid var(--pk-green);
-          color: var(--pk-green);
-        }
-
-        .status-message.error {
-          background: rgba(239, 68, 68, 0.1);
-          border: 1px solid #ef4444;
-          color: #ef4444;
-        }
-
-        .application-form {
-          display: flex;
-          flex-direction: column;
-          gap: 2.5rem;
-        }
-
-        .form-section {
-          background: var(--bg-secondary);
-          border-radius: 1.25rem;
-          padding: 2rem;
-          border: 1px solid var(--border-light);
-        }
-
-        .form-section h3 {
-          font-size: 1.25rem;
-          font-weight: 700;
-          margin-bottom: 1.5rem;
-          color: var(--pk-green);
-          border-bottom: 1px solid var(--border-light);
-          padding-bottom: 0.75rem;
-          text-transform: uppercase;
-        }
-
-        .form-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1.5rem;
-        }
-
-        @media (min-width: 768px) {
-          .form-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-        }
-
-        .form-field {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-        }
-
-        .form-field.full-width {
-          grid-column: span 1;
-        }
-
-        @media (min-width: 768px) {
-          .form-field.full-width {
-            grid-column: span 2;
-          }
-        }
-
-        .form-field label {
-          font-size: 0.875rem;
-          font-weight: 600;
-          color: var(--text-secondary);
-        }
-
-        .form-field input,
-        .form-field select,
-        .form-field textarea {
-          background: rgba(255, 255, 255, 0.03);
-          border: 1.5px solid var(--border-light);
-          border-radius: 1rem;
-          padding: 1rem 1.25rem;
-          color: var(--text-primary);
-          font-family: inherit;
-          font-size: 1rem;
-          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .form-field input:focus,
-        .form-field select:focus,
-        .form-field textarea:focus {
-          outline: none;
-          border-color: var(--pk-green);
-          background: rgba(0, 230, 118, 0.05);
-          box-shadow: 0 0 20px var(--pk-green-glow);
-          transform: translateY(-2px);
-        }
-
-        .form-field input::placeholder,
-        .form-field textarea::placeholder {
-          color: var(--text-tertiary);
-        }
-
-        .declaration {
-          padding: 1.5rem;
-          background: rgba(17, 140, 79, 0.05);
-          border-radius: 1rem;
-          border: 1px solid rgba(17, 140, 79, 0.2);
-        }
-
-        .declaration label {
-          display: flex;
-          align-items: flex-start;
-          gap: 1rem;
-          cursor: pointer;
-          color: var(--text-secondary);
-          font-size: 0.95rem;
-          line-height: 1.5;
-        }
-
-        .declaration input[type="checkbox"] {
-          width: 1.25rem;
-          height: 1.25rem;
-          cursor: pointer;
-          margin-top: 0.1rem;
-          flex-shrink: 0;
-          accent-color: var(--pk-green);
-        }
-
-        .form-actions {
-          display: flex;
-          gap: 1rem;
-          justify-content: flex-end;
-          margin-top: 1rem;
-        }
-
-        .cancel-btn {
-          background: transparent;
-          color: var(--text-primary);
-          border: 1.5px solid var(--border-light);
-          padding: 0.875rem 2rem;
-          border-radius: 9999px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.3s;
-        }
-
-        .cancel-btn:hover {
-          background: var(--bg-tertiary);
-        }
-
-        .submit-btn {
-          background: var(--pk-green);
-          color: #ffffff;
-          border: none;
-          padding: 0.875rem 2.5rem;
-          border-radius: 9999px;
-          font-weight: 800;
-          cursor: pointer;
-          transition: all 0.3s;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          box-shadow: 0 4px 15px var(--pk-green-glow);
-        }
-
-        .submit-btn:hover:not(:disabled) {
-          background: var(--pk-green-light);
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px var(--pk-green-glow);
-        }
-
-        .submit-btn:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-          transform: none;
-          box-shadow: none;
-        }
-
-        .bottom-cta {
-          margin-top: 4rem;
-          padding: 3rem;
-          background: var(--glass-bg);
-          backdrop-filter: blur(12px);
-          border-radius: 1.5rem;
-          border: 1px solid var(--glass-border);
-          text-align: center;
-        }
-
-        .bottom-cta h2 {
-          color: var(--text-primary);
-          font-size: 1.75rem;
-          font-weight: 800;
-          margin-bottom: 1rem;
-        }
-
-        .bottom-cta p {
-          color: var(--text-secondary);
-          font-size: 1.1rem;
-        }
-
-        .bottom-cta a {
-          color: var(--pk-green);
-          text-decoration: none;
-          font-weight: 700;
-          transition: color 0.2s ease;
-        }
-
-        .bottom-cta a:hover {
-          color: var(--pk-green-light);
-          text-decoration: underline;
-        }
-
-        /* Scrollbar Styling */
-        .modal-content::-webkit-scrollbar {
-          width: 8px;
-        }
-
-        .modal-content::-webkit-scrollbar-track {
-          background: var(--bg-secondary);
-          border-radius: 4px;
-        }
-
-        .modal-content::-webkit-scrollbar-thumb {
-          background: var(--pk-green);
-          border-radius: 4px;
-        }
-
-        .modal-content::-webkit-scrollbar-thumb:hover {
-          background: var(--pk-green-light);
+          .positions-grid-premium { grid-template-columns: 1fr; }
         }
       `}</style>
     </section>

@@ -32,6 +32,9 @@
   --mesh-opacity: 0.3;
   --card-radius: 2rem;
   --transition-smooth: cubic-bezier(0.2, 1, 0.2, 1);
+  --pk-green-bright: #00ff88;
+  --cyber-blue: #00d2ff;
+  --neon-purple: #9d50bb;
 }
 
 [data-theme="dark"] {
@@ -165,6 +168,167 @@ h1, h2, h3, h4 {
   transform: translateY(-10px);
   border-color: var(--pk-green);
   box-shadow: 0 30px 60px var(--glass-shadow);
+}
+
+/* --- Background Utilities --- */
+.gradient-orb {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--pk-green-glow) 0%, transparent 70%);
+  filter: blur(120px);
+  z-index: -2;
+  opacity: 0.4;
+  pointer-events: none;
+  animation: orb-float 20s infinite alternate ease-in-out;
+}
+
+@keyframes orb-float {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(100px, 50px) scale(1.1); }
+}
+
+.tech-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.15;
+}
+
+.noise-overlay {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 101;
+  animation: noise-move 0.2s infinite;
+}
+
+@keyframes noise-move {
+  0% { transform: translate(0,0); }
+  10% { transform: translate(-1%,-1%); }
+  20% { transform: translate(-2%,1%); }
+  30% { transform: translate(1%,-2%); }
+  40% { transform: translate(-1%,3%); }
+  50% { transform: translate(-2%,1%); }
+  60% { transform: translate(3%,0); }
+  70% { transform: translate(0,2%); }
+  80% { transform: translate(-3%,1%); }
+  90% { transform: translate(1%,3%); }
+  100% { transform: translate(1%,1%); }
+}
+
+/* --- Card Glow Border Effect --- */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.card-glow-border {
+  position: relative;
+}
+
+.card-glow-border::after, .card-glow-border::before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: conic-gradient(from var(--angle), transparent 70%, var(--pk-green), var(--pk-green-bright));
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: -1;
+  padding: 3px;
+  border-radius: inherit;
+  animation: 3s spin linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card-glow-border::before {
+  filter: blur(1.5rem);
+  opacity: 0;
+}
+
+.card-glow-border:hover::after, .card-glow-border:hover::before {
+  opacity: 0.6;
+}
+
+@keyframes spin {
+  from { --angle: 0deg; }
+  to { --angle: 360deg; }
+}
+
+/* --- Card Hover Spotlight --- */
+.card-glow-border:hover .card-glow-content::before {
+  opacity: 1;
+}
+
+.card-glow-content::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    800px circle at var(--mouse-x) var(--mouse-y),
+    rgba(0, 230, 118, 0.06),
+    transparent 40%
+  );
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.text-gradient-premium {
+  background: linear-gradient(135deg, #fff 0%, var(--pk-green-light) 50%, var(--pk-green) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 10px rgba(0, 230, 118, 0.3));
+}
+
+.card-glow-border {
+  position: relative;
+}
+
+.card-glow-border::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(var(--angle, 0deg), var(--pk-green), transparent, var(--pk-green-light));
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card-glow-border:hover::after {
+  opacity: 1;
+  animation: rotateAngle 3s linear infinite;
+}
+
+@keyframes rotateAngle {
+  0% { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
 }
 
 /* Button Refinement */
