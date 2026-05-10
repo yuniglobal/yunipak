@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { Menu, X, Sun, Moon, ChevronRight } from 'lucide-react';
-import gsap from 'gsap';
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

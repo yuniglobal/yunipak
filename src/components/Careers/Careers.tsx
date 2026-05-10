@@ -1,4 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import AnimatedTitle from "../AnimatedTitle";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Job/Internship type definition
 interface Position {
@@ -121,6 +126,30 @@ const Careers: React.FC = () => {
     timestamp: new Date().toISOString(),
     status: "pending",
   });
+
+  useEffect(() => {
+    const items = document.querySelectorAll('.position-panel');
+    if (items.length > 0) {
+      gsap.fromTo(items, 
+        { 
+          x: -50, 
+          opacity: 0,
+        },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.2,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: ".positions-list",
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    }
+  }, []);
 
   const handleApply = (position: Position) => {
     setSelectedPosition(position);
@@ -264,9 +293,9 @@ const Careers: React.FC = () => {
     <section className="careers-section">
       <div className="careers-container">
         {/* Header */}
-        <h2 className="careers-heading">
-          Join The <span className="careers-heading-highlight">Movement.</span>
-        </h2>
+        <div className="title-wrapper">
+          <AnimatedTitle>Join The Movement.</AnimatedTitle>
+        </div>
         <p className="careers-subtitle">
           We are looking for disruptors to join our HQ at NASTP.
         </p>
@@ -583,29 +612,28 @@ const Careers: React.FC = () => {
       <style>{`
         .careers-section {
           min-height: 100vh;
-          background: var(--bg-primary);
+          background: transparent;
           font-family: 'Space Grotesk', system-ui, sans-serif;
           color: var(--text-primary);
           padding-top: 10rem;
           padding-bottom: 8rem;
+          position: relative;
+          z-index: 1;
         }
 
         .careers-container {
-          max-width: 56rem;
+          max-width: 65rem;
           margin: 0 auto;
           padding: 0 1.5rem;
           text-align: center;
         }
 
-        .careers-heading {
-          font-family: 'Space Grotesk', system-ui, sans-serif;
-          font-size: 3rem;
-          font-weight: 900;
-          text-transform: uppercase;
+        .title-wrapper {
           margin-bottom: 1.5rem;
-          letter-spacing: -0.02em;
-          line-height: 1.1;
+          text-align: center;
         }
+
+        .careers-heading { display: none; }
 
         @media (min-width: 768px) {
           .careers-heading {
@@ -633,15 +661,40 @@ const Careers: React.FC = () => {
 
         .position-panel {
           background: var(--glass-bg);
-          backdrop-filter: blur(12px);
-          border-radius: 1.5rem;
-          padding: 2rem;
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border-radius: 2rem;
+          padding: 2.5rem;
           text-align: left;
           display: flex;
           justify-content: space-between;
           align-items: center;
           border: 1px solid var(--glass-border);
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .position-panel::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 4px;
+          height: 100%;
+          background: var(--pk-green);
+          transform: translateY(100%);
+          transition: transform 0.4s ease;
+        }
+
+        .position-panel:hover::before {
+          transform: translateY(0);
+        }
+
+        .position-panel:hover {
+          transform: translateX(10px) scale(1.01);
+          border-color: var(--pk-green);
+          box-shadow: 0 20px 50px rgba(17, 140, 79, 0.2);
         }
 
         @media (max-width: 768px) {
@@ -657,11 +710,7 @@ const Careers: React.FC = () => {
           }
         }
 
-        .position-panel:hover {
-          transform: translateY(-4px);
-          border-color: var(--pk-green);
-          box-shadow: 0 12px 40px rgba(17, 140, 79, 0.15);
-        }
+
 
         .position-info {
           flex: 1;
@@ -723,16 +772,16 @@ const Careers: React.FC = () => {
         }
 
         .modal-content {
-          background: var(--bg-primary);
-          border-radius: 2rem;
+          background: #050505;
+          border-radius: 2.5rem;
           max-width: 900px;
           width: 100%;
           max-height: 90vh;
           overflow-y: auto;
           position: relative;
-          border: 1px solid var(--border-light);
-          padding: 2.5rem;
-          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+          border: 1px solid var(--pk-green);
+          padding: 3rem;
+          box-shadow: 0 0 100px rgba(0, 230, 118, 0.15);
         }
 
         @media (max-width: 768px) {
@@ -848,14 +897,14 @@ const Careers: React.FC = () => {
         .form-field input,
         .form-field select,
         .form-field textarea {
-          background: var(--bg-tertiary);
+          background: rgba(255, 255, 255, 0.03);
           border: 1.5px solid var(--border-light);
-          border-radius: 0.75rem;
-          padding: 0.75rem 1rem;
+          border-radius: 1rem;
+          padding: 1rem 1.25rem;
           color: var(--text-primary);
           font-family: inherit;
           font-size: 1rem;
-          transition: all 0.3s;
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .form-field input:focus,
@@ -863,8 +912,9 @@ const Careers: React.FC = () => {
         .form-field textarea:focus {
           outline: none;
           border-color: var(--pk-green);
-          box-shadow: 0 0 0 3px rgba(17, 140, 79, 0.15);
-          background: var(--bg-primary);
+          background: rgba(0, 230, 118, 0.05);
+          box-shadow: 0 0 20px var(--pk-green-glow);
+          transform: translateY(-2px);
         }
 
         .form-field input::placeholder,

@@ -7,7 +7,7 @@ import gsap from 'gsap';
 export default function Hero() {
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
+
   const subRef = useRef<HTMLParagraphElement>(null);
   const btnsRef = useRef<HTMLDivElement>(null);
   

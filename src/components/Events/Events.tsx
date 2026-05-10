@@ -1,4 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import AnimatedTitle from "../AnimatedTitle";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Blog type definition
 interface BlogPost {
@@ -102,6 +107,34 @@ const Blog: React.FC = () => {
 
   const displayedPosts = filteredPosts.slice(0, visiblePosts);
 
+  useEffect(() => {
+    const cards = document.querySelectorAll('.blog-card');
+    if (cards.length > 0) {
+      gsap.fromTo(cards, 
+        { 
+          y: 80, 
+          opacity: 0,
+          scale: 0.9,
+          filter: "blur(10px)"
+        },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          filter: "blur(0px)",
+          duration: 1.2,
+          stagger: 0.2,
+          ease: "expo.out",
+          scrollTrigger: {
+            trigger: ".blog-grid",
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    }
+  }, [displayedPosts]);
+
   const getCategoryColor = (colorClass: string): string => {
     return colorClass === "brand" ? "var(--pk-green)" : "var(--pk-green-light)";
   };
@@ -122,9 +155,9 @@ const Blog: React.FC = () => {
     <section className="blog-section">
       <div className="blog-container">
         {/* Header */}
-        <h2 className="blog-heading">
-          News & <span className="blog-heading-highlight">Intel.</span>
-        </h2>
+        <div className="title-wrapper">
+          <AnimatedTitle>News & Intel.</AnimatedTitle>
+        </div>
 
         {/* Category Filters */}
         <div className="filter-container">
@@ -191,29 +224,27 @@ const Blog: React.FC = () => {
         /* ===== Blog Section ===== */
         .blog-section {
           min-height: 100vh;
-          background: var(--bg-primary);
+          background: transparent;
           font-family: 'Space Grotesk', system-ui, sans-serif;
           color: var(--text-primary);
           padding-top: 10rem;
           padding-bottom: 8rem;
+          position: relative;
+          z-index: 1;
         }
 
         .blog-container {
-          max-width: 80rem;
+          max-width: 85rem;
           margin: 0 auto;
           padding: 0 1.5rem;
         }
 
-        /* Heading */
-        .blog-heading {
-          font-size: 3rem;
-          font-weight: 900;
-          text-transform: uppercase;
+        .title-wrapper {
+          margin-bottom: 4rem;
           text-align: center;
-          margin-bottom: 3.5rem;
-          letter-spacing: -0.02em;
-          line-height: 1.1;
         }
+
+        .blog-heading { display: none; }
 
         @media (min-width: 768px) {
           .blog-heading {
@@ -285,24 +316,39 @@ const Blog: React.FC = () => {
           background: var(--glass-bg);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
-          border-radius: 1.5rem;
+          border-radius: 2rem;
           overflow: hidden;
           border: 1px solid var(--glass-border);
-          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
           display: flex;
           flex-direction: column;
+          position: relative;
+        }
+
+        .blog-card::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 2rem;
+          box-shadow: 0 0 40px var(--pk-green-glow);
+          opacity: 0;
+          transition: opacity 0.4s;
+          pointer-events: none;
         }
 
         .blog-card:hover {
-          transform: translateY(-8px);
+          transform: translateY(-12px) scale(1.02);
           border-color: var(--pk-green);
-          box-shadow: 0 20px 40px rgba(17, 140, 79, 0.15);
+        }
+
+        .blog-card:hover::after {
+          opacity: 0.15;
         }
 
         .blog-card-image {
           position: relative;
           width: 100%;
-          height: 240px;
+          height: 280px;
           overflow: hidden;
         }
 
@@ -310,11 +356,13 @@ const Blog: React.FC = () => {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+          filter: brightness(0.8) contrast(1.1);
         }
 
         .blog-card:hover .blog-card-image img {
-          transform: scale(1.1);
+          transform: scale(1.1) rotate(1deg);
+          filter: brightness(1) contrast(1.2);
         }
 
         .blog-category-badge {
@@ -422,25 +470,25 @@ const Blog: React.FC = () => {
         }
 
         .load-more-btn {
-          background: transparent;
-          border: 2.5px solid var(--pk-green);
+          background: rgba(0, 230, 118, 0.05);
+          border: 2px solid var(--pk-green);
           color: var(--pk-green);
           font-weight: 800;
-          padding: 1rem 2.5rem;
+          padding: 1.2rem 3rem;
           border-radius: 9999px;
-          font-size: 1rem;
+          font-size: 1.1rem;
           cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
           font-family: inherit;
           text-transform: uppercase;
-          letter-spacing: 0.05em;
+          letter-spacing: 0.1em;
         }
 
         .load-more-btn:hover {
           background: var(--pk-green);
           color: #ffffff;
-          box-shadow: 0 8px 25px var(--pk-green-glow);
-          transform: translateY(-2px);
+          box-shadow: 0 10px 30px var(--pk-green-glow);
+          transform: translateY(-4px) scale(1.05);
         }
 
         /* Responsive */

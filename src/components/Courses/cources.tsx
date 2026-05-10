@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import AnimatedTitle from "../AnimatedTitle";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface CourseItem {
   id: string;
@@ -403,7 +407,32 @@ const Courses: React.FC = () => {
         ease: "power2.out",
       });
     }
-  }, []);
+
+    // Grid reveal animation
+    const cards = document.querySelectorAll('.course-card-hub');
+    if (cards.length > 0) {
+      gsap.fromTo(cards, 
+        { 
+          y: 60, 
+          opacity: 0,
+          scale: 0.9
+        },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".course-grid",
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    }
+  }, [filter]); // Re-run when filter changes to animate new cards
 
   const handleViewCourse = (course: CourseItem) => {
     setSelectedCourse(course);
@@ -505,7 +534,9 @@ const Courses: React.FC = () => {
   const renderTrainingsView = () => (
     <div className="trainings-view">
       <div className="trainings-container">
-        <h2 className="page-title">Professional Training Programs</h2>
+        <div className="title-wrapper">
+          <AnimatedTitle>Professional Training Programs</AnimatedTitle>
+        </div>
         <div className="filters-container">
           <button onClick={() => setFilter("all")} className={`filter-btn ${filter === "all" ? "active" : ""}`}>All Programs</button>
           <button onClick={() => setFilter("cybersecurity")} className={`filter-btn ${filter === "cybersecurity" ? "active" : ""}`}>Cyber Security</button>
@@ -745,10 +776,10 @@ const Courses: React.FC = () => {
 
       <style>{`
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        .courses-app { background: var(--bg-primary); min-height: 100vh; font-family: 'Space Grotesk', system-ui, sans-serif; color: var(--text-primary); }
-        .trainings-view { padding: 8rem 1.5rem 5rem; max-width: 1280px; margin: 0 auto; }
-        .page-title { font-size: 3.5rem; font-weight: 900; letter-spacing: -0.02em; text-align: center; margin-bottom: 2rem; background: linear-gradient(135deg, var(--text-primary) 0%, var(--pk-green) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; text-transform: uppercase; }
-        @media (min-width: 768px) { .page-title { font-size: 4rem; } }
+        .courses-app { background: transparent; min-height: 100vh; font-family: 'Space Grotesk', system-ui, sans-serif; color: var(--text-primary); position: relative; z-index: 1; }
+        .trainings-view { padding: 10rem 1.5rem 5rem; max-width: 1280px; margin: 0 auto; }
+        .title-wrapper { margin-bottom: 3rem; text-align: center; }
+        .page-title { display: none; } /* Replaced by AnimatedTitle */
         .filters-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin: 2rem 0 3rem; }
         .filter-btn { background: var(--bg-tertiary); border: 1px solid var(--border-light); color: var(--text-secondary); padding: 0.6rem 1.5rem; border-radius: 9999px; font-weight: 600; font-size: 0.875rem; cursor: pointer; transition: all 0.3s ease; font-family: inherit; }
         .filter-btn:hover { border-color: var(--pk-green); color: var(--pk-green); }
@@ -756,20 +787,22 @@ const Courses: React.FC = () => {
         .course-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
         @media (min-width: 768px) { .course-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (min-width: 1024px) { .course-grid { grid-template-columns: repeat(3, 1fr); } }
-        .course-card-hub { background: var(--glass-bg); backdrop-filter: blur(12px); border-radius: 1.5rem; border: 1px solid var(--glass-border); overflow: hidden; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .course-card-hub:hover { transform: translateY(-8px); border-color: var(--pk-green); box-shadow: 0 20px 40px rgba(17, 140, 79, 0.15); }
-        .course-card-image { position: relative; width: 100%; height: 200px; overflow: hidden; }
-        .course-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-        .course-card-hub:hover .course-card-image img { transform: scale(1.05); }
-        .cert-badge { position: absolute; top: 1rem; right: 1rem; background: var(--pk-green); color: #ffffff; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
-        .course-card-content { padding: 1.5rem; }
-        .course-card-content h3 { font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-primary); }
-        .instructor { color: var(--pk-green); font-size: 0.875rem; font-weight: 600; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .description { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; margin-bottom: 1rem; }
-        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; }
-        .price { font-weight: 800; font-size: 1.125rem; color: var(--text-primary); }
-        .view-btn { background: transparent; border: 1.5px solid var(--border-light); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.3s; font-family: inherit; }
-        .view-btn:hover { border-color: var(--pk-green); color: var(--pk-green); background: rgba(17, 140, 79, 0.05); }
+        .course-card-hub { background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 2rem; border: 1px solid var(--glass-border); overflow: hidden; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
+        .course-card-hub::before { content: ''; position: absolute; inset: 0; border-radius: 2rem; padding: 1.5px; background: linear-gradient(135deg, rgba(0, 230, 118, 0.4), transparent, rgba(0, 230, 118, 0.4)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; opacity: 0; transition: opacity 0.4s; }
+        .course-card-hub:hover::before { opacity: 1; }
+        .course-card-hub:hover { transform: translateY(-12px) scale(1.02); border-color: var(--pk-green); box-shadow: 0 25px 50px rgba(17, 140, 79, 0.25); }
+        .course-card-image { position: relative; width: 100%; height: 220px; overflow: hidden; }
+        .course-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); filter: grayscale(20%); }
+        .course-card-hub:hover .course-card-image img { transform: scale(1.15); filter: grayscale(0%); }
+        .cert-badge { position: absolute; top: 1.25rem; right: 1.25rem; background: var(--pk-green); color: #ffffff; padding: 0.4rem 1rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); z-index: 2; }
+        .course-card-content { padding: 2rem; }
+        .course-card-content h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem; color: var(--text-primary); letter-spacing: -0.01em; }
+        .instructor { color: var(--pk-green); font-size: 0.9rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        .description { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border-light); }
+        .price { font-weight: 900; font-size: 1.25rem; color: var(--pk-green); }
+        .view-btn { background: rgba(0, 230, 118, 0.1); border: 1.5px solid var(--pk-green); color: var(--pk-green); padding: 0.6rem 1.5rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 800; cursor: pointer; transition: all 0.3s; font-family: inherit; text-transform: uppercase; letter-spacing: 0.05em; }
+        .view-btn:hover { background: var(--pk-green); color: #ffffff; box-shadow: 0 4px 15px var(--pk-green-glow); transform: translateX(5px); }
         .detail-view { padding: 8rem 1.5rem 5rem; max-width: 1200px; margin: 0 auto; }
         .back-btn { background: transparent; border: none; color: var(--text-secondary); font-weight: 700; font-size: 1rem; cursor: pointer; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: color 0.3s; font-family: inherit; }
         .back-btn:hover { color: var(--pk-green); }

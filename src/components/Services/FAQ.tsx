@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import AnimatedTitle from '../AnimatedTitle';
 
 const faqs = [
   {
@@ -184,7 +185,9 @@ export default function FAQ() {
       `}</style>
 
       <div className="faq-section">
-        <h2 className="faq-title">Frequently Asked Questions</h2>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '4rem' }}>
+          <AnimatedTitle className="faq-title" style={{ marginBottom: 0 }}>Frequently Asked Questions</AnimatedTitle>
+        </div>
 
         <div className="faq-grid">
           {faqs.map((faq, index) => (

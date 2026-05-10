@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import type { ReactElement } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Hero from '../components/HOME/Hero';
@@ -9,6 +8,8 @@ import FeaturesReveal from '../components/HOME/FeaturesReveal';
 import CTA from '../components/HOME/CTA';
 import TextEffect from '../components/HOME/TextEffect';
 import FAQ from '../components/Services/FAQ';
+import AnimatedTitle from '../components/AnimatedTitle';
+import AnimatedBackground from '../components/AnimatedBackground';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -67,7 +68,7 @@ export default function Home() {
     <div className="home-container">
       <style>{`
         .home-container {
-          background-color: var(--bg-primary);
+          background-color: transparent;
           transition: background-color 0.4s ease;
         }
 
@@ -214,6 +215,7 @@ export default function Home() {
         }
       `}</style>
 
+      <AnimatedBackground />
       <Hero />
 
       <section className="section-container" ref={statsRef}>
@@ -240,7 +242,7 @@ export default function Home() {
       <FeaturesReveal />
 
       <section className="section-container" ref={teamRef}>
-        <h2 className="section-title">The <span className="text-gradient">Core</span></h2>
+        <AnimatedTitle className="section-title">The Core</AnimatedTitle>
         <div className="team-grid">
           {team.map((member, i) => (
             <div key={i} className="mesh-card">
@@ -254,7 +256,7 @@ export default function Home() {
       </section>
 
       <section className="section-container" ref={testimonialsRef}>
-        <h2 className="section-title">Voices of <span className="text-gradient">Success</span></h2>
+        <AnimatedTitle className="section-title">Voices of Success</AnimatedTitle>
         <div className="testimonial-grid">
           {testimonials.map((t, i) => (
             <div key={i} className="testimonial-card">

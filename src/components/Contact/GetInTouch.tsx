@@ -1,43 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import AnimatedTitle from "../AnimatedTitle";
 
-// Helper to generate the 25 rainbow nth-child rules (unchanged for desktop)
-const generateRainbowCSS = (): string => {
-  const black = "var(--bg-primary)";
-  const darkGreen = "var(--bg-secondary)";
-  const tealGreen = "var(--pk-green-dark)";
+gsap.registerPlugin(ScrollTrigger);
 
-  const permutations = [
-    [black, darkGreen, tealGreen],
-    [black, tealGreen, darkGreen],
-    [darkGreen, black, tealGreen],
-    [darkGreen, tealGreen, black],
-    [tealGreen, black, darkGreen],
-    [tealGreen, darkGreen, black],
-  ];
 
-  let css = "";
-  const length = 25;
-  const animationTime = 45;
-
-  for (let i = 1; i <= length; i++) {
-    const colors = permutations[(i - 1) % permutations.length];
-    const delay = -(i / length) * animationTime;
-    const duration = animationTime - (animationTime / length / 2) * i;
-
-    css += `
-      .rainbow:nth-child(${i}) {
-        box-shadow: -130px 0 80px 40px var(--bg-primary),
-                    -50px 0 50px 25px ${colors[0]},
-                    0 0 50px 25px ${colors[1]},
-                    50px 0 50px 25px ${colors[2]},
-                    130px 0 80px 40px var(--bg-primary);
-        animation: slide ${duration}s linear infinite;
-        animation-delay: ${delay}s;
-      }
-    `;
-  }
-  return css;
-};
 
 // Social Media SVG Icons
 const InstagramIcon = () => (
@@ -192,23 +160,46 @@ const GetInTouch: React.FC = () => {
     }
   };
 
-  const rainbowDivs = Array.from({ length: 25 }, (_, i) => (
-    <div key={i} className="rainbow" />
-  ));
+  useEffect(() => {
+    // Entrance animation
+    const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+    
+    tl.fromTo(".contact-info", 
+      { x: -50, opacity: 0 }, 
+      { x: 0, opacity: 1, duration: 1.2 }
+    ).fromTo(".contact-form",
+      { x: 50, opacity: 0 },
+      { x: 0, opacity: 1, duration: 1.2 },
+      "-=0.8"
+    );
+
+    // Mouse spotlight effect for cards
+    const cards = document.querySelectorAll(".contact-info, .contact-form");
+    const handleMouseMove = (e: MouseEvent) => {
+      cards.forEach(card => {
+        const rect = (card as HTMLElement).getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        (card as HTMLElement).style.setProperty("--mouse-x", `${x}px`);
+        (card as HTMLElement).style.setProperty("--mouse-y", `${y}px`);
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   return (
     <>
-      <div className="rainbow-background">
-        {rainbowDivs}
-        <div className="h" />
-        <div className="v" />
-      </div>
-
-      <section className="get-in-touch">
-        <h1 className="page-title">Get in Touch</h1>
+      <section className="contact-section">
+        <div className="title-wrapper">
+          <AnimatedTitle>Get In Touch.</AnimatedTitle>
+        </div>
+        <p className="contact-subtitle">
+          Have a project in mind? Let's build something extraordinary together.
+        </p>
 
         <div className="contact-container">
-          {/* Left column – Contact info */}
           <div className="contact-info">
             <div className="logo-wrapper">
               <Logo />
@@ -300,128 +291,79 @@ const GetInTouch: React.FC = () => {
       </section>
 
       <style>{`
-        * {
-          box-sizing: border-box;
-        }
-
-        .rainbow-background {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-          z-index: 0;
-          pointer-events: none;
-          background-color: var(--bg-primary);
-        }
-
-        .rainbow {
-          height: 100vh;
-          width: 0;
-          top: 0;
-          position: absolute;
-          transform: rotate(10deg);
-          transform-origin: top right;
-        }
-
-        .h {
-          box-shadow: 0 0 50vh 40vh var(--bg-primary);
-          width: 100vw;
-          height: 0;
-          bottom: 0;
-          left: 0;
-          position: absolute;
-        }
-
-        .v {
-          box-shadow: 0 0 35vw 25vw var(--bg-primary);
-          width: 0;
-          height: 100vh;
-          bottom: 0;
-          left: 0;
-          position: absolute;
-        }
-
-        @keyframes slide {
-          from { right: -25vw; }
-          to { right: 125vw; }
-        }
-
-        \${generateRainbowCSS()}
-
-        .get-in-touch {
-          position: relative;
-          z-index: 10;
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 2rem 1rem;
-          font-family: 'Space Grotesk', system-ui, sans-serif;
+        .contact-section {
+          min-height: 100vh;
           background: transparent;
-        }
-
-        /* Extra top padding for laptops/desktops to clear fixed navbar */
-        @media (min-width: 1024px) {
-          .get-in-touch {
-            padding-top: 5rem;
-          }
-        }
-
-        @media (min-width: 768px) and (max-width: 1023px) {
-          .get-in-touch {
-            padding-top: 3rem;
-          }
-        }
-
-        .page-title {
-          font-size: 2rem;
-          font-weight: 900;
-          margin-bottom: 1.5rem;
+          font-family: 'Space Grotesk', system-ui, sans-serif;
           color: var(--text-primary);
-          text-shadow: 0 0 10px rgba(0,0,0,0.2);
-          text-align: center;
-          text-transform: uppercase;
-        }
-
-        @media (min-width: 768px) {
-          .page-title {
-            text-align: left;
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-          }
+          padding-top: 10rem;
+          padding-bottom: 8rem;
+          position: relative;
+          z-index: 1;
         }
 
         .contact-container {
+          max-width: 80rem;
+          margin: 0 auto;
+          padding: 0 1.5rem;
           display: flex;
           flex-direction: column;
-          gap: 1.5rem;
+          gap: 2.5rem;
         }
 
-        @media (min-width: 768px) {
+        .title-wrapper {
+          margin-bottom: 1.5rem;
+          text-align: center;
+        }
+
+        .contact-subtitle {
+          color: var(--text-secondary);
+          margin-bottom: 4rem;
+          font-size: 1.125rem;
+          text-align: center;
+          max-width: 40rem;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        @media (min-width: 1024px) {
           .contact-container {
             flex-direction: row;
-            gap: 2rem;
+            gap: 4rem;
+            align-items: stretch;
           }
-          .contact-info {
-            flex: 1;
-          }
-          .contact-form {
-            flex: 1.2;
-          }
+          .contact-info { flex: 0.8; }
+          .contact-form { flex: 1.2; }
         }
 
         .contact-info {
           background: var(--glass-bg);
-          backdrop-filter: blur(12px);
-          padding: 2rem;
-          border-radius: 1.5rem;
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          padding: 3.5rem;
+          border-radius: 2.5rem;
           border: 1px solid var(--glass-border);
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          position: relative;
+          overflow: hidden;
+          transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        .contact-info::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 230, 118, 0.1) 0%, transparent 50%);
+          opacity: 0;
+          transition: opacity 0.3s;
+          pointer-events: none;
+        }
+
+        .contact-info:hover::before { opacity: 1; }
+
         .contact-info:hover {
+          transform: translateY(-8px) scale(1.01);
           border-color: var(--pk-green);
-          box-shadow: 0 20px 40px rgba(17, 140, 79, 0.1);
+          box-shadow: 0 20px 60px rgba(0, 230, 118, 0.1);
         }
 
         .logo-wrapper {
@@ -477,16 +419,32 @@ const GetInTouch: React.FC = () => {
 
         .contact-form {
           background: var(--glass-bg);
-          backdrop-filter: blur(12px);
-          padding: 2rem;
-          border-radius: 1.5rem;
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          padding: 3.5rem;
+          border-radius: 2.5rem;
           border: 1px solid var(--glass-border);
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          position: relative;
+          overflow: hidden;
+          transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        .contact-form::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 230, 118, 0.1) 0%, transparent 50%);
+          opacity: 0;
+          transition: opacity 0.3s;
+          pointer-events: none;
+        }
+
+        .contact-form:hover::before { opacity: 1; }
+
         .contact-form:hover {
+          transform: translateY(-8px) scale(1.01);
           border-color: var(--pk-green);
-          box-shadow: 0 20px 40px rgba(17, 140, 79, 0.1);
+          box-shadow: 0 20px 60px rgba(0, 230, 118, 0.1);
         }
 
         .form-row {
@@ -628,61 +586,7 @@ const GetInTouch: React.FC = () => {
           box-shadow: none;
         }
 
-        /* ---------- MOBILE PERFORMANCE OPTIMIZATIONS ---------- */
-        @media (max-width: 1023px) {
-          .rainbow:nth-child(n+13) {
-            display: none !important;
-          }
 
-          @keyframes slide {
-            from { transform: translateX(-25vw); }
-            to { transform: translateX(125vw); }
-          }
-
-          .rainbow {
-            right: auto !important;
-            left: 0;
-            animation-name: slide-mobile !important;
-            will-change: transform;
-          }
-
-          .rainbow:nth-child(n) {
-            box-shadow: -50px 0 40px 20px var(--bg-primary),
-                        0 0 30px 15px var(--pk-green),
-                        50px 0 40px 20px var(--bg-primary) !important;
-          }
-
-          @keyframes slide-mobile {
-            from { transform: translateX(-50vw); }
-            to { transform: translateX(150vw); }
-          }
-
-          .h {
-            box-shadow: 0 0 50vh 30vh var(--bg-primary);
-          }
-          .v {
-            box-shadow: 0 0 35vw 20vw var(--bg-primary);
-          }
-        }
-
-        @media (max-width: 600px) {
-          .rainbow:nth-child(n+8) {
-            display: none !important;
-          }
-
-          .rainbow:nth-child(n) {
-            box-shadow: -30px 0 30px 15px var(--bg-primary),
-                        0 0 20px 10px var(--pk-green),
-                        30px 0 30px 15px var(--bg-primary) !important;
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .rainbow {
-            animation: none !important;
-            opacity: 0.2;
-          }
-        }
       `}</style>
     </>
   );

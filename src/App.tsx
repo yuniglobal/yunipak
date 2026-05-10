@@ -1,5 +1,5 @@
 import { useLayoutEffect } from 'react';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -14,32 +14,9 @@ import './styles.css';
 
 function App() {
   const location = useLocation();
-  const navigate = useNavigate();
 
-  // Handle navigation
-  const handleNavigate = (page: string) => {
-    let route = '';
-    switch (page) {
-      case 'home':
-        route = '/';
-        break;
-      case 'trainings':
-        route = '/Programs';
-        break;
-      case 'blog':
-        route = '/events';
-        break;
-      case 'careers':
-        route = '/careers';
-        break;
-      case 'contact':
-        route = '/contact';
-        break;
-      default:
-        route = `/${page}`;
-    }
-    navigate(route);
-  };
+
+
 
   // Disable browser's automatic scroll restoration
   useLayoutEffect(() => {
@@ -87,7 +64,7 @@ function App() {
     <div className="app-wrapper">
       <div className="custom-cursor"></div>
       <div className="custom-cursor-follower"></div>
-      <Navbar onNavigate={handleNavigate} />
+      <Navbar />
       <main className="page-content">
         <Routes>
           <Route path="/" element={<Home />} />
