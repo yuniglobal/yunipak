@@ -32,34 +32,13 @@ function App() {
     }
   }, [location.pathname]);
 
-  // Custom cursor logic
+  // Refresh ScrollTrigger on route changes to ensure animations are correctly calculated
   useLayoutEffect(() => {
-    const cursor = document.querySelector('.custom-cursor') as HTMLElement;
-    const follower = document.querySelector('.custom-cursor-follower') as HTMLElement;
-    
-    if (!cursor || !follower) return;
-
-    const onMouseMove = (e: MouseEvent) => {
-      gsap.to(cursor, {
-        x: e.clientX - 10,
-        y: e.clientY - 10,
-        duration: 0,
-      });
-      gsap.to(follower, {
-        x: e.clientX - 20,
-        y: e.clientY - 20,
-        duration: 0.15,
-      });
-    };
-
-    window.addEventListener('mousemove', onMouseMove);
-    return () => window.removeEventListener('mousemove', onMouseMove);
-  }, []);
+    ScrollTrigger.refresh();
+  }, [location.pathname]);
 
   return (
     <div className="app-wrapper">
-      <div className="custom-cursor"></div>
-      <div className="custom-cursor-follower"></div>
       <Navbar />
       <main className="page-content">
         <Routes>

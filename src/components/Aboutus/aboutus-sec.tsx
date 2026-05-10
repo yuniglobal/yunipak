@@ -506,7 +506,7 @@ const DesktopExperience: React.FC = () => {
       <div className="gradient-orb" style={{ top: '10%', left: '5%', width: '400px', height: '400px' }}></div>
       <div className="gradient-orb" style={{ bottom: '15%', right: '5%', background: 'radial-gradient(circle, var(--pk-green-bright) 0%, transparent 70%)', width: '500px', height: '500px' }}></div>
 
-      <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
+      <div ref={containerRef} style={{ position: 'relative', width: '100%' }}>
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap');
           body { margin: 0; overflow-x: hidden; background: var(--bg-primary); }

@@ -31,22 +31,27 @@ const TextEffect = () => {
     
     textRefs.current.forEach((text) => {
       if (text) {
+        gsap.set(text, { backgroundSize: '0% 100%' });
         gsap.to(text, {
-          backgroundSize: '100%',
+          backgroundSize: '100% 100%',
           ease: 'none',
           scrollTrigger: {
             trigger: text,
-            start: 'center 80%',
-            end: 'center 20%',
-            scrub: 0.5,
+            start: 'top 95%',
+            end: 'bottom 5%',
+            scrub: true,
             invalidateOnRefresh: true,
           },
         });
       }
     });
 
+    const refreshST = () => ScrollTrigger.refresh();
+    window.addEventListener('load', refreshST);
+    
     return () => {
       window.removeEventListener('resize', refresh);
+      window.removeEventListener('load', refreshST);
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
@@ -99,8 +104,8 @@ const TextEffect = () => {
           background: linear-gradient(to right, var(--text-primary), var(--text-primary)) no-repeat;
           -webkit-background-clip: text;
           background-clip: text;
-          background-size: 0%;
-          transition: background-size cubic-bezier(.1, .5, .5, 1) 0.5s;
+          background-clip: text;
+          background-size: 0% 100%;
           border-bottom: 1px solid #2a5a2a;
           display: flex;
           flex-direction: column;
