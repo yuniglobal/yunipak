@@ -353,11 +353,11 @@ export default function Home() {
         </p>
         <div className="partners-grid">
           <div className="partner-card">
-            <h3 style={{ fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: 'var(--pk-green)' }}>NICAT</h3>
+            <img src="/images/nicat.png" alt="NICAT" className="partner-logo" />
             <p style={{ color: 'var(--text-tertiary)', fontSize: '0.9rem' }}>Official Community Partner</p>
           </div>
           <div className="partner-card">
-            <h3 style={{ fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: 'var(--pk-green)' }}>NASTP</h3>
+            <img src="/images/nastp.png" alt="NASTP" className="partner-logo" />
             <p style={{ color: 'var(--text-tertiary)', fontSize: '0.9rem' }}>Official Registration Partner</p>
           </div>
           <div className="partner-card">

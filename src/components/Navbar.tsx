@@ -56,7 +56,7 @@ const Navbar = () => {
       <style>{`
         .navbar-wrapper {
           position: fixed;
-          top: var(--banner-height, 0px);
+          top: calc(var(--banner-height, 0px) + 12px);
           left: 0;
           width: 100%;
           z-index: 1000;

@@ -413,6 +413,11 @@ const GetInTouch: React.FC = () => {
           border-color: var(--pk-green); box-shadow: 0 0 20px var(--pk-green-glow); outline: none; background: rgba(0, 230, 118, 0.05);
         }
 
+        .form-field-premium select option {
+          background-color: var(--bg-elevated);
+          color: var(--text-primary);
+        }
+
         .form-consent-premium { margin-top: 1rem; }
         .checkbox-container-premium { display: flex; align-items: center; gap: 1.5rem; cursor: pointer; }
         .checkbox-container-premium p { font-size: 0.9rem; color: var(--text-tertiary); margin: 0; }
