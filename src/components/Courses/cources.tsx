@@ -412,9 +412,9 @@ const Courses: React.FC = () => {
     // Grid reveal animation
     const cards = document.querySelectorAll('.course-card-hub');
     if (cards.length > 0) {
-      gsap.fromTo(cards, 
-        { 
-          y: 60, 
+      gsap.fromTo(cards,
+        {
+          y: 60,
           opacity: 0,
           scale: 0.9
         },
@@ -495,12 +495,12 @@ const Courses: React.FC = () => {
           <AnimatedTitle>Professional Training Programs</AnimatedTitle>
           <p className="subtitle-tech">Master the technologies of the future with our industry-leading certification paths.</p>
         </div>
-        
+
         <div className="filters-container">
           {["all", "cybersecurity", "ai", "web", "digital", "ecommerce", "communications"].map((cat) => (
-            <button 
+            <button
               key={cat}
-              onClick={() => setFilter(cat as any)} 
+              onClick={() => setFilter(cat as any)}
               className={`filter-btn-premium ${filter === cat ? "active" : ""}`}
             >
               {cat.charAt(0).toUpperCase() + cat.slice(1).replace('cybersecurity', 'Cyber Security')}
@@ -516,8 +516,8 @@ const Courses: React.FC = () => {
             </div>
           ) : (
             filteredCourses.map((course) => (
-              <div 
-                key={course.id} 
+              <div
+                key={course.id}
                 className="course-card-premium"
               >
                 <div className="card-inner-tech">
@@ -585,7 +585,7 @@ const Courses: React.FC = () => {
             <div className="description-box-tech">
               <p>{selectedCourse?.description}</p>
             </div>
-            
+
             <div className="outcomes-tech">
               <h3>Strategic Outcomes</h3>
               <div className="outcomes-grid">
@@ -602,7 +602,7 @@ const Courses: React.FC = () => {
                 ))}
               </div>
             </div>
-            
+
             <button onClick={() => selectedCourse && handleEnroll(selectedCourse)} className="enroll-btn-premium">
               Initialize Enrollment <span className="btn-glow-tech"></span>
             </button>
@@ -617,7 +617,7 @@ const Courses: React.FC = () => {
       <div className="checkout-container-premium">
         <button onClick={handleBackToHub} className="cancel-btn-tech">Aborted Session</button>
         <h2 className="checkout-title-tech">Secure <span className="text-gradient">Transaction</span> Gateway</h2>
-        
+
         {submitStatus && (
           <div className={`status-banner-tech ${submitStatus.type}`}>
             <span className="icon">{submitStatus.type === 'success' ? '✓' : '⚠'}</span>
@@ -725,7 +725,7 @@ const Courses: React.FC = () => {
         }
 
         /* --- Header Section --- */
-        .trainings-view { padding: 12rem 2rem 8rem; max-width: 1400px; margin: 0 auto; position: relative; }
+        .trainings-view { padding: 8rem 2rem 8rem; max-width: 1400px; margin: 0 auto; position: relative; }
         .title-wrapper { margin-bottom: 5rem; text-align: center; }
         .subtitle-tech { color: var(--text-secondary); font-size: 1.1rem; margin-top: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto; opacity: 0.8; text-align: center; }
 
@@ -808,7 +808,7 @@ const Courses: React.FC = () => {
         .arrow-tech { transition: transform 0.3s ease; display: inline-block; }
 
         /* --- Detail View --- */
-        .detail-view { padding: 12rem 2rem 8rem; }
+        .detail-view { padding: 8rem 2rem 8rem; }
         .back-btn-tech { 
           background: transparent; border: none; color: var(--text-secondary); font-weight: 600; 
           cursor: pointer; margin-bottom: 3rem; display: flex; align-items: center; gap: 0.8rem;
@@ -852,7 +852,7 @@ const Courses: React.FC = () => {
         .enroll-btn-premium:hover { transform: translateY(-5px); box-shadow: 0 20px 40px var(--pk-green-glow); background: var(--pk-green-light); }
 
         /* --- Checkout Styles --- */
-        .checkout-view { padding: 12rem 2rem 8rem; max-width: 1200px; margin: 0 auto; }
+        .checkout-view { padding: 8rem 2rem 8rem; max-width: 1200px; margin: 0 auto; }
         .checkout-title-tech { font-size: 3rem; font-weight: 900; text-align: center; margin-bottom: 4rem; text-transform: uppercase; letter-spacing: -0.02em; }
         .text-gradient { background: linear-gradient(135deg, var(--pk-green), var(--cyber-blue)); -webkit-background-clip: text; background-clip: text; color: transparent; }
         

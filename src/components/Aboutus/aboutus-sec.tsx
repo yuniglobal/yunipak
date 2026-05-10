@@ -434,7 +434,6 @@ const DesktopExperience: React.FC = () => {
     textShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
     borderBottom: '2px solid rgba(180, 240, 180, 0.25)',
     paddingBottom: '0.6rem',
-    textAlign: 'center',
   };
 
   const subheadingStyle: React.CSSProperties = {
@@ -503,10 +502,6 @@ const DesktopExperience: React.FC = () => {
 
   return (
     <>
-      {/* Background Light Orbs */}
-      <div className="gradient-orb" style={{ top: '10%', left: '5%', width: '400px', height: '400px' }}></div>
-      <div className="gradient-orb" style={{ bottom: '15%', right: '5%', background: 'radial-gradient(circle, var(--pk-green-bright) 0%, transparent 70%)', width: '500px', height: '500px' }}></div>
-
       <div ref={containerRef} style={{ position: 'relative', width: '100%' }}>
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap');
@@ -708,7 +703,6 @@ const MobileAbout: React.FC = () => {
     color: 'var(--pk-green)',
     letterSpacing: '-0.02em',
     textTransform: 'uppercase',
-    textAlign: 'center',
   };
 
   const paragraphStyle: React.CSSProperties = {
@@ -725,10 +719,6 @@ const MobileAbout: React.FC = () => {
 
   return (
     <>
-      {/* Background Light Orbs */}
-      <div className="gradient-orb" style={{ top: '5%', left: '10%' }}></div>
-      <div className="gradient-orb" style={{ bottom: '10%', right: '5%', background: 'radial-gradient(circle, var(--pk-green-bright) 0%, transparent 70%)' }}></div>
-
       {/* Rainbow Background */}
       <div className="rainbow-background-mobile">
         {rainbowDivs}
@@ -751,7 +741,6 @@ const MobileAbout: React.FC = () => {
           marginBottom: '0.8rem',
           letterSpacing: '-0.03em',
           lineHeight: 1,
-          textAlign: 'center',
         }}>YUNI</h1>
         <p style={{
           fontSize: '1.4rem',
@@ -759,7 +748,6 @@ const MobileAbout: React.FC = () => {
           marginBottom: '4rem',
           fontWeight: 700,
           opacity: 0.9,
-          textAlign: 'center',
         }}>Establish Dominance. 🦅</p>
 
         <div style={cardStyle} className="card-glow-border" onMouseMove={handleMouseMove}>

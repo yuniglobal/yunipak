@@ -116,7 +116,7 @@ export default function FAQ() {
       <style>{`
         .faq-premium-section {
           min-height: 100vh;
-          padding: 12rem 2rem 8rem;
+          padding: 8rem 2rem 8rem;
           position: relative;
           z-index: 1;
           overflow: hidden;

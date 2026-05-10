@@ -102,8 +102,8 @@ const Blog: React.FC = () => {
   // Filter categories
   const categories = ["all", "Tech Conference", "CSR Initiative", "Education", "Industry Event", "Community", "Partnership"];
 
-  const filteredPosts = activeFilter === "all" 
-    ? blogPosts 
+  const filteredPosts = activeFilter === "all"
+    ? blogPosts
     : blogPosts.filter(post => post.category === activeFilter);
 
   const displayedPosts = filteredPosts.slice(0, visiblePosts);
@@ -111,9 +111,9 @@ const Blog: React.FC = () => {
   useEffect(() => {
     const cards = document.querySelectorAll('.blog-card');
     if (cards.length > 0) {
-      gsap.fromTo(cards, 
-        { 
-          y: 80, 
+      gsap.fromTo(cards,
+        {
+          y: 80,
           opacity: 0,
           scale: 0.9,
           filter: "blur(10px)"
@@ -185,8 +185,8 @@ const Blog: React.FC = () => {
         {/* Blog Grid */}
         <div className="blog-grid-premium">
           {displayedPosts.map((post) => (
-            <article 
-              key={post.id} 
+            <article
+              key={post.id}
               className="blog-card-premium card-glow-border"
             >
               <div className="blog-card-inner">
@@ -194,7 +194,7 @@ const Blog: React.FC = () => {
                   <img src={post.imageUrl} alt={post.title} loading="lazy" />
                   <div className="scanline-overlay"></div>
                   <div className="image-vignette"></div>
-                  <span 
+                  <span
                     className="blog-category-badge-premium"
                     style={{ background: getCategoryColor(post.colorClass) }}
                   >
@@ -228,7 +228,7 @@ const Blog: React.FC = () => {
         {/* Load More Button */}
         {filteredPosts.length > visiblePosts && (
           <div className="load-more-container-tech">
-            <button 
+            <button
               className="load-more-btn-premium"
               onClick={() => setVisiblePosts(prev => prev + 6)}
             >
@@ -244,7 +244,7 @@ const Blog: React.FC = () => {
           background: transparent;
           font-family: 'Inter', sans-serif;
           color: var(--text-primary);
-          padding-top: 12rem;
+          padding-top: 8rem;
           padding-bottom: 8rem;
           position: relative;
           z-index: 1;

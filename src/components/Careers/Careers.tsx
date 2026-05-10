@@ -527,7 +527,7 @@ const Careers: React.FC = () => {
           background: transparent;
           font-family: 'Inter', sans-serif;
           color: var(--text-primary);
-          padding-top: 12rem;
+          padding-top: 8rem;
           padding-bottom: 8rem;
           position: relative;
           z-index: 1;

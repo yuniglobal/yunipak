@@ -222,14 +222,14 @@ const GetInTouch: React.FC = () => {
                   <div className="info-item-premium">
                     <span className="info-label-premium">Secure Line</span>
                     <p className="info-value-premium">
-                      <a href="tel:+923001234567">+92 300 1234567</a>
+                      <a href="tel:+923215615401">+92 321 5615401</a>
                     </p>
                   </div>
 
                   <div className="info-item-premium">
                     <span className="info-label-premium">Digital Drop</span>
                     <p className="info-value-premium">
-                      <a href="mailto:hello@yunipakistan.com">hello@yunipakistan.com</a>
+                      <a href="mailto:Info@yunipakistan.com">Info@yunipakistan.com</a>
                     </p>
                   </div>
 
@@ -313,7 +313,7 @@ const GetInTouch: React.FC = () => {
           background: transparent;
           font-family: 'Inter', sans-serif;
           color: var(--text-primary);
-          padding-top: 12rem;
+          padding-top: 8rem;
           padding-bottom: 8rem;
           position: relative;
           z-index: 1;

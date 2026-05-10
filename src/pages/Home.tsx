@@ -34,7 +34,7 @@ export default function Home() {
         }
       );
     }
-    
+
     // Partners animation
     if (partnersRef.current) {
       gsap.fromTo(
@@ -50,11 +50,11 @@ export default function Home() {
   }, []);
 
   const team = [
-    { 
-      name: 'Abdul Moiz', 
-      role: 'Founder', 
-      image: '/images/moiz.jpeg', 
-      desc: 'Driving the macro-vision of YUNI to build an unparalleled educational empire.' 
+    {
+      name: 'Abdul Moiz',
+      role: 'Founder',
+      image: '/images/moiz.jpeg',
+      desc: 'Driving the macro-vision of YUNI to build an unparalleled educational empire.'
     }
   ];
 
@@ -298,7 +298,7 @@ export default function Home() {
             <div className="stat-label">Trained</div>
           </div>
           <div className="stat-item">
-            <div className="stat-number">12+</div>
+            <div className="stat-number">50+</div>
             <div className="stat-label">Programs</div>
           </div>
           <div className="stat-item">
@@ -322,7 +322,7 @@ export default function Home() {
               <img src={member.image} alt={member.name} className="team-image" />
               <div className="team-role">{member.role}</div>
               <div className="team-name">{member.name}</div>
-              <p className="team-desc" style={{color: 'var(--text-secondary)'}}>{member.desc}</p>
+              <p className="team-desc" style={{ color: 'var(--text-secondary)' }}>{member.desc}</p>
             </div>
           ))}
         </div>
@@ -334,11 +334,11 @@ export default function Home() {
           {testimonials.map((t, i) => (
             <div key={i} className="testimonial-card">
               <p className="quote">"{t.text}"</p>
-              <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 <div className="avatar">{t.letter}</div>
                 <div>
-                  <div style={{fontWeight: 800}}>{t.name}</div>
-                  <div style={{fontSize: '0.8rem', color: 'var(--text-tertiary)'}}>{t.course}</div>
+                  <div style={{ fontWeight: 800 }}>{t.name}</div>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-tertiary)' }}>{t.course}</div>
                 </div>
               </div>
             </div>
@@ -348,33 +348,33 @@ export default function Home() {
 
       <section className="section-container" ref={partnersRef}>
         <AnimatedTitle className="section-title">Community Partners & Registrations</AnimatedTitle>
-        <p style={{textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '3rem', maxWidth: '800px', margin: '0 auto'}}>
+        <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '3rem', maxWidth: '800px', margin: '0 auto' }}>
           We are officially partnered and registered with top industry and government entities to ensure our trainings meet the highest standards.
         </p>
         <div className="partners-grid">
           <div className="partner-card">
-            <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: 'var(--pk-green)'}}>NICAT</h3>
-            <p style={{color: 'var(--text-tertiary)', fontSize: '0.9rem'}}>Official Community Partner</p>
+            <h3 style={{ fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: 'var(--pk-green)' }}>NICAT</h3>
+            <p style={{ color: 'var(--text-tertiary)', fontSize: '0.9rem' }}>Official Community Partner</p>
           </div>
           <div className="partner-card">
-            <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: 'var(--pk-green)'}}>NASTP</h3>
-            <p style={{color: 'var(--text-tertiary)', fontSize: '0.9rem'}}>Official Registration Partner</p>
+            <h3 style={{ fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: 'var(--pk-green)' }}>NASTP</h3>
+            <p style={{ color: 'var(--text-tertiary)', fontSize: '0.9rem' }}>Official Registration Partner</p>
           </div>
           <div className="partner-card">
-            <div style={{fontSize: '3rem'}}>🎓</div>
-            <h3 style={{fontSize: '1.2rem', fontWeight: 'bold'}}>Dual Certification</h3>
-            <p style={{color: 'var(--text-tertiary)', fontSize: '0.9rem'}}>Graduates receive both a Training Certification and an Internship Certification.</p>
+            <div style={{ fontSize: '3rem' }}>🎓</div>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Dual Certification</h3>
+            <p style={{ color: 'var(--text-tertiary)', fontSize: '0.9rem' }}>Graduates receive both a Training Certification and an Internship Certification.</p>
           </div>
 
           <div className="certificate-card">
-            <div style={{flex: 1}}>
-              <h2 style={{fontSize: '2rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--text-primary)'}}>
+            <div style={{ flex: 1 }}>
+              <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--text-primary)' }}>
                 PSEB Certified Training Provider
               </h2>
-              <p style={{color: 'var(--text-secondary)', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '1.5rem'}}>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
                 YUNI Pakistan is officially registered with the Pakistan Software Export Board (PSEB). Our training programs are aligned with national standards, providing you with credentials recognized by top tech companies nationwide.
               </p>
-              <ul style={{color: 'var(--text-secondary)', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '0.8rem', listStyle: 'none', padding: 0}}>
+              <ul style={{ color: 'var(--text-secondary)', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '0.8rem', listStyle: 'none', padding: 0 }}>
                 <li>✓ Official Government Recognition</li>
                 <li>✓ Industry-Validated Curriculum</li>
                 <li>✓ Dual Certification Path (Training + Internship)</li>
@@ -387,7 +387,7 @@ export default function Home() {
 
       <FAQ />
 
-      <div style={{padding: '8rem 0'}}>
+      <div style={{ padding: '8rem 0' }}>
         <TextEffect />
       </div>
 
