@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AnimatedTitle from "../AnimatedTitle";
+import AnimatedBackground from "../AnimatedBackground";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -151,20 +152,11 @@ const Blog: React.FC = () => {
     return iconMap[icon] || "📰";
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
-    const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
-    card.style.setProperty('--mouse-x', `${x}%`);
-    card.style.setProperty('--mouse-y', `${y}%`);
-  };
 
   return (
     <section className="events-premium-section">
+      <AnimatedBackground />
       {/* Background Light Orbs */}
-      <div className="gradient-orb" style={{ top: '15%', right: '10%' }}></div>
-      <div className="gradient-orb" style={{ bottom: '15%', left: '5%', background: 'radial-gradient(circle, var(--neon-purple) 0%, transparent 70%)' }}></div>
 
       <div className="events-container">
         {/* Header */}
@@ -196,7 +188,6 @@ const Blog: React.FC = () => {
             <article 
               key={post.id} 
               className="blog-card-premium card-glow-border"
-              onMouseMove={handleMouseMove}
             >
               <div className="blog-card-inner">
                 <div className="blog-card-image">
@@ -335,10 +326,7 @@ const Blog: React.FC = () => {
         .blog-card-inner {
           position: relative;
           z-index: 2;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 230, 118, 0.1) 0%, transparent 80%);
+          background: transparent;
         }
 
         .blog-card-premium:hover {

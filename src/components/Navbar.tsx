@@ -1,30 +1,49 @@
 // src/components/Navbar.tsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { Menu, X, Sun, Moon, ChevronRight } from 'lucide-react';
-
+import { Menu, X, Sun, Moon, ChevronRight, Home, Info, BookOpen, Calendar, Briefcase, Mail } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isContracted, setIsContracted] = useState(false);
+  const lastScrollY = useRef(0);
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > 20);
+      
+      // Contract on scrolling down, expand on scrolling up
+      if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
+        setIsContracted(true); // contracted
+      } else if (currentScrollY < lastScrollY.current && currentScrollY > 50) {
+        setIsContracted(false); // expanded
+      }
+      
+      // Always expand at the very top
+      if (currentScrollY <= 50) {
+        setIsContracted(false);
+      }
+      
+      lastScrollY.current = currentScrollY;
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/Aboutus' },
-    { name: 'Programs', path: '/Programs' },
-    { name: 'Events', path: '/events' },
-    { name: 'Careers', path: '/careers' },
-    { name: 'Contact', path: '/contact' }
+    { name: 'Home', path: '/', icon: Home },
+    { name: 'About', path: '/Aboutus', icon: Info },
+    { name: 'Programs', path: '/Programs', icon: BookOpen },
+    { name: 'Events', path: '/events', icon: Calendar },
+    { name: 'Careers', path: '/careers', icon: Briefcase },
+    { name: 'Contact', path: '/contact', icon: Mail }
   ];
 
   const handleNavigate = (path: string) => {
@@ -33,7 +52,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`navbar-wrapper ${isScrolled ? 'scrolled' : ''}`}>
+    <nav className={`navbar-wrapper ${isScrolled ? 'scrolled' : ''} ${isContracted ? 'contracted' : ''}`}>
       <style>{`
         .navbar-wrapper {
           position: fixed;
@@ -42,7 +61,8 @@ const Navbar = () => {
           width: 100%;
           z-index: 1000;
           padding: 1.5rem 2rem;
-          transition: all 0.4s var(--transition-smooth);
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          pointer-events: none;
         }
 
         .navbar-container {
@@ -52,12 +72,14 @@ const Navbar = () => {
           align-items: center;
           justify-content: space-between;
           padding: 0.75rem 1.5rem;
-          background: var(--glass-bg);
-          backdrop-filter: blur(20px) saturate(180%);
-          border: 1px solid var(--glass-border);
+          background: rgba(20, 20, 20, 0.15);
+          backdrop-filter: blur(25px) saturate(200%);
+          border: 1px solid rgba(255, 255, 255, 0.1);
           border-radius: 100px;
-          transition: all 0.4s var(--transition-smooth);
-          box-shadow: 0 10px 40px var(--glass-shadow);
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+          pointer-events: auto;
+          overflow: hidden;
         }
 
         .scrolled .navbar-wrapper {
@@ -65,10 +87,46 @@ const Navbar = () => {
         }
 
         .scrolled .navbar-container {
-          background: var(--glass-bg-heavy);
-          padding: 0.5rem 1.5rem;
-          box-shadow: 0 20px 50px var(--glass-shadow);
+          background: rgba(10, 10, 10, 0.5);
+          box-shadow: 0 20px 50px rgba(0,0,0,0.3);
         }
+
+        /* --- Contracted State Styles --- */
+        .contracted .navbar-container {
+          max-width: max-content;
+          padding: 0.5rem 1.5rem;
+          background: rgba(10, 10, 10, 0.6);
+        }
+
+        .contracted .nav-logo {
+          max-width: 0;
+          opacity: 0;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+        }
+
+        .contracted .nav-link span {
+          max-width: 0;
+          opacity: 0;
+          overflow: hidden;
+          margin-left: 0;
+        }
+        
+        .contracted .nav-link {
+          gap: 0;
+          padding: 0.5rem;
+        }
+
+        .contracted .btn-enroll {
+          max-width: 0;
+          opacity: 0;
+          padding: 0;
+          margin: 0;
+          overflow: hidden;
+        }
+
+        /* ------------------------------- */
 
         .nav-logo {
           font-family: 'Space Grotesk', sans-serif;
@@ -79,6 +137,9 @@ const Navbar = () => {
           align-items: center;
           gap: 4px;
           cursor: pointer;
+          transition: all 0.4s ease;
+          max-width: 100px;
+          opacity: 1;
         }
 
         .nav-logo span {
@@ -87,12 +148,13 @@ const Navbar = () => {
 
         .nav-links {
           display: none;
-          gap: 2rem;
+          gap: 1.5rem;
         }
 
         @media (min-width: 1024px) {
           .nav-links {
             display: flex;
+            align-items: center;
           }
         }
 
@@ -100,19 +162,38 @@ const Navbar = () => {
           color: var(--text-secondary);
           font-weight: 600;
           font-size: 0.9rem;
-          transition: all 0.3s ease;
+          transition: all 0.4s ease;
           position: relative;
           cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.5rem;
+          border-radius: 100px;
         }
 
-        .nav-link:hover, .nav-link.active {
+        .nav-link:hover {
+          color: var(--text-primary);
+          background: rgba(255,255,255,0.05);
+        }
+
+        .nav-link.active {
           color: var(--pk-green);
+          background: rgba(0, 230, 118, 0.1);
+        }
+
+        .nav-link span {
+          transition: all 0.4s ease;
+          max-width: 100px;
+          opacity: 1;
+          white-space: nowrap;
         }
 
         .nav-actions {
           display: flex;
           align-items: center;
           gap: 1rem;
+          transition: all 0.4s ease;
         }
 
         .theme-toggle {
@@ -122,7 +203,7 @@ const Navbar = () => {
           align-items: center;
           justify-content: center;
           border-radius: 50%;
-          background: var(--bg-tertiary);
+          background: rgba(255,255,255,0.05);
           color: var(--text-primary);
           cursor: pointer;
           transition: all 0.3s ease;
@@ -142,7 +223,12 @@ const Navbar = () => {
           font-weight: 700;
           font-size: 0.8rem;
           text-transform: uppercase;
-          transition: all 0.3s ease;
+          transition: all 0.4s ease;
+          max-width: 150px;
+          opacity: 1;
+          white-space: nowrap;
+          border: none;
+          cursor: pointer;
         }
 
         @media (min-width: 640px) {
@@ -210,15 +296,19 @@ const Navbar = () => {
         </div>
 
         <div className="nav-links">
-          {navLinks.map((link) => (
-            <div 
-              key={link.path}
-              className={`nav-link ${location.pathname === link.path ? 'active' : ''}`}
-              onClick={() => handleNavigate(link.path)}
-            >
-              {link.name}
-            </div>
-          ))}
+          {navLinks.map((link) => {
+            const Icon = link.icon;
+            return (
+              <div 
+                key={link.path}
+                className={`nav-link ${location.pathname === link.path ? 'active' : ''}`}
+                onClick={() => handleNavigate(link.path)}
+              >
+                <Icon size={18} />
+                <span>{link.name}</span>
+              </div>
+            );
+          })}
         </div>
 
         <div className="nav-actions">

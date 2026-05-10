@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AnimatedTitle from "../AnimatedTitle";
+import AnimatedBackground from "../AnimatedBackground";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -188,21 +189,12 @@ const GetInTouch: React.FC = () => {
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
-    const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
-    card.style.setProperty('--mouse-x', `${x}%`);
-    card.style.setProperty('--mouse-y', `${y}%`);
-  };
 
   return (
     <>
       <section className="contact-premium-section">
+        <AnimatedBackground />
         {/* Background Light Orbs */}
-        <div className="gradient-orb" style={{ top: '15%', left: '5%' }}></div>
-        <div className="gradient-orb" style={{ bottom: '20%', right: '10%', background: 'radial-gradient(circle, var(--pk-green-bright) 0%, transparent 70%)' }}></div>
 
         <div className="contact-container-premium">
           <div className="title-wrapper">
@@ -214,7 +206,7 @@ const GetInTouch: React.FC = () => {
 
           <div className="contact-layout-premium">
             {/* Left: Contact Info */}
-            <div className="contact-info-panel card-glow-border" onMouseMove={handleMouseMove}>
+            <div className="contact-info-panel card-glow-border">
               <div className="info-panel-inner">
                 <div className="brand-header-premium">
                   <Logo />
@@ -255,7 +247,7 @@ const GetInTouch: React.FC = () => {
             </div>
 
             {/* Right: Contact Form */}
-            <div className="contact-form-panel card-glow-border" onMouseMove={handleMouseMove}>
+            <div className="contact-form-panel card-glow-border">
               <div className="form-panel-inner">
                 <form onSubmit={handleSubmit} className="premium-form">
                   <div className="form-row-premium">
@@ -368,7 +360,7 @@ const GetInTouch: React.FC = () => {
           position: relative;
           z-index: 2;
           height: 100%;
-          background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 230, 118, 0.08) 0%, transparent 80%);
+          background: transparent;
         }
 
         .contact-info-panel:hover, .contact-form-panel:hover {

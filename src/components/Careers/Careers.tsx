@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AnimatedTitle from "../AnimatedTitle";
+import AnimatedBackground from "../AnimatedBackground";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -289,20 +290,11 @@ const Careers: React.FC = () => {
     }
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
-    const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
-    card.style.setProperty('--mouse-x', `${x}%`);
-    card.style.setProperty('--mouse-y', `${y}%`);
-  };
 
   return (
     <section className="careers-premium-section">
+      <AnimatedBackground />
       {/* Background Light Orbs */}
-      <div className="gradient-orb" style={{ top: '10%', left: '5%' }}></div>
-      <div className="gradient-orb" style={{ bottom: '20%', right: '5%', background: 'radial-gradient(circle, var(--cyber-blue) 0%, transparent 70%)' }}></div>
 
       <div className="careers-container-premium">
         {/* Header */}
@@ -319,7 +311,6 @@ const Careers: React.FC = () => {
             <div 
               key={position.id} 
               className="position-card-premium card-glow-border"
-              onMouseMove={handleMouseMove}
             >
               <div className="position-card-inner">
                 <div className="position-meta-top">
@@ -583,10 +574,7 @@ const Careers: React.FC = () => {
           padding: 3rem;
           position: relative;
           z-index: 2;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 230, 118, 0.08) 0%, transparent 80%);
+          background: transparent;
         }
 
         .position-card-premium:hover {

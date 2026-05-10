@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AnimatedTitle from "../AnimatedTitle";
+import AnimatedBackground from "../AnimatedBackground";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -484,20 +485,10 @@ const Courses: React.FC = () => {
     setSubmitStatus(null);
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
-    const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
-    card.style.setProperty('--mouse-x', `${x}%`);
-    card.style.setProperty('--mouse-y', `${y}%`);
-  };
-
   const renderTrainingsView = () => (
     <div className="trainings-view">
-      <div className="gradient-orb" style={{ top: '10%', left: '5%' }}></div>
-      <div className="gradient-orb" style={{ bottom: '20%', right: '10%', animationDelay: '-5s' }}></div>
-      <div className="gradient-orb" style={{ top: '40%', right: '5%', animationDelay: '-10s', background: 'radial-gradient(circle, var(--cyber-blue) 0%, transparent 70%)' }}></div>
+      <AnimatedBackground />
+      {/* Background Light Orbs */}
 
       <div className="trainings-container">
         <div className="title-wrapper">
@@ -528,7 +519,6 @@ const Courses: React.FC = () => {
               <div 
                 key={course.id} 
                 className="course-card-premium"
-                onMouseMove={handleMouseMove}
               >
                 <div className="card-inner-tech">
                   <div className="course-card-image">
@@ -776,7 +766,7 @@ const Courses: React.FC = () => {
         .card-inner-tech {
           position: relative;
           z-index: 2;
-          background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 230, 118, 0.15) 0%, transparent 80%);
+          background: transparent;
         }
 
         .course-card-premium:hover { 
