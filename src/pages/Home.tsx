@@ -54,18 +54,12 @@ export default function Home() {
       role: 'Founder', 
       image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face&auto=format', 
       desc: 'Driving the macro-vision of YUNI to build an unparalleled educational empire.' 
-    },
-    { 
-      name: 'Sahaf', 
-      role: 'Co-Founder & COO', 
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face&auto=format', 
-      desc: 'Architecting premium product experiences and overseeing operational excellence.' 
     }
   ];
 
   const testimonials = [
     { name: 'Ahmed R.', course: 'Cybersecurity', text: 'The program at NASTP completely changed my trajectory. Landed a job immediately.', letter: 'A' },
-    { name: 'Fatima S.', course: 'Amazon Mastery', text: 'Sahaf and Moiz built an incredible ecosystem. We launched a real product during training.', letter: 'F' },
+    { name: 'Fatima S.', course: 'Amazon Mastery', text: 'The YUNI ecosystem is incredible. We launched a real product during our professional training.', letter: 'F' },
     { name: 'Usman K.', course: 'Prompt Engineering', text: 'The YUNI LMS is smoother than my university. The gamification kept me hooked.', letter: 'U' }
   ];
 

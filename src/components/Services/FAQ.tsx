@@ -64,7 +64,7 @@ export default function FAQ() {
     <>
       <style>{`
         .faq-section {
-          max-width: 720px;
+          max-width: 1200px;
           margin: 0 auto;
           padding: 8rem 1.5rem;
         }
@@ -76,20 +76,44 @@ export default function FAQ() {
           color: #ffffff;
           text-transform: uppercase;
           letter-spacing: 0.05em;
-          margin-bottom: 3rem;
+          margin-bottom: 4rem;
+        }
+
+        .faq-grid {
+          display: grid;
+          grid-template-columns: repeat(1, 1fr);
+          gap: 1.5rem;
+          align-items: start;
+        }
+
+        @media (min-width: 1024px) {
+          .faq-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
         }
 
         .faq-item {
           border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: 12px;
-          margin-bottom: 12px;
-          overflow: hidden;
-          transition: border-color 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           background: rgba(255, 255, 255, 0.02);
+          position: relative;
+          z-index: 1;
         }
 
         .faq-item:hover {
           border-color: rgba(16, 185, 129, 0.3);
+          background: rgba(16, 185, 129, 0.02);
+        }
+
+        /* Expanding pop-out effect */
+        .faq-item.open {
+          transform: scale(1.08) translateY(-5px);
+          z-index: 100;
+          background: #0a0a0a;
+          border-color: rgba(16, 185, 129, 0.4);
+          box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(16, 185, 129, 0.1);
+          border-radius: 12px 12px 0 0;
         }
 
         .faq-question {
@@ -97,7 +121,7 @@ export default function FAQ() {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 1.25rem 1.5rem;
+          padding: 1.5rem;
           background: transparent;
           border: none;
           color: #ffffff;
@@ -106,6 +130,7 @@ export default function FAQ() {
           text-align: left;
           cursor: pointer;
           gap: 1rem;
+          outline: none;
         }
 
         .faq-icon {
@@ -119,50 +144,66 @@ export default function FAQ() {
           font-size: 18px;
           color: #ffffff;
           flex-shrink: 0;
-          transition: all 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .faq-icon.open {
           border-color: #10b981;
           color: #10b981;
-          transform: rotate(45deg);
+          transform: rotate(135deg);
         }
 
+        /* Absolute positioning prevents pushing the grid items down */
         .faq-answer {
-          max-height: 0;
-          overflow: hidden;
-          transition: max-height 0.35s ease, padding 0.35s ease;
+          position: absolute;
+          top: 100%;
+          left: -1px;
+          right: -1px;
+          background: #0a0a0a;
+          border: 1px solid rgba(16, 185, 129, 0.6);
+          border-top: none;
+          border-radius: 0 0 12px 12px;
           padding: 0 1.5rem;
           color: #9ca3af;
           font-size: 0.95rem;
           line-height: 1.7;
+          
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(-10px);
+          transition: all 0.3s ease;
+          box-shadow: 0 30px 50px rgba(0,0,0,0.7);
         }
 
         .faq-answer.open {
-          max-height: 200px;
-          padding: 0 1.5rem 1.25rem;
+          opacity: 1;
+          visibility: visible;
+          padding: 0 1.5rem 1.5rem;
+          transform: translateY(0);
         }
       `}</style>
 
       <div className="faq-section">
         <h2 className="faq-title">Frequently Asked Questions</h2>
 
-        {faqs.map((faq, index) => (
-          <div key={index} className="faq-item">
-            <button
-              className="faq-question"
-              onClick={() => toggle(index)}
-            >
-              {faq.question}
-              <span className={`faq-icon ${openIndex === index ? 'open' : ''}`}>
-                +
-              </span>
-            </button>
-            <div className={`faq-answer ${openIndex === index ? 'open' : ''}`}>
-              {faq.answer}
+        <div className="faq-grid">
+          {faqs.map((faq, index) => (
+            <div key={index} className={`faq-item ${openIndex === index ? 'open' : ''}`}>
+              <button
+                className="faq-question"
+                onClick={() => toggle(index)}
+              >
+                {faq.question}
+                <span className={`faq-icon ${openIndex === index ? 'open' : ''}`}>
+                  +
+                </span>
+              </button>
+              <div className={`faq-answer ${openIndex === index ? 'open' : ''}`}>
+                {faq.answer}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </>
   )

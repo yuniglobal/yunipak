@@ -39,6 +39,10 @@ export default function Hero() {
     }
   };
 
+  // Interaction Refs
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const scrollRef = useRef(0);
+
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -76,10 +80,52 @@ export default function Hero() {
     particlesRef.current = particles;
     scene.add(particles);
 
+    let targetRotationX = 0;
+    let targetRotationY = 0;
+    let currentRotationX = 0;
+    let currentRotationY = 0;
+
+    const handleMouseMove = (event: MouseEvent) => {
+      // Normalize mouse coordinates from -1 to 1
+      mouseRef.current.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouseRef.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    };
+
+    const handleScroll = () => {
+      scrollRef.current = window.scrollY;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+
     const animate = () => {
       const id = requestAnimationFrame(animate);
-      particles.rotation.y += 0.0008;
-      particles.rotation.x += 0.0004;
+      
+      // Calculate target rotations based on mouse position
+      // Mouse Y controls rotation around X axis, Mouse X controls rotation around Y axis
+      targetRotationX = mouseRef.current.y * 0.8;
+      targetRotationY = mouseRef.current.x * 0.8;
+      
+      // Smoothly interpolate current rotation towards the target (fluidity)
+      currentRotationX += (targetRotationX - currentRotationX) * 0.05;
+      currentRotationY += (targetRotationY - currentRotationY) * 0.05;
+      
+      // Base continuous rotation based on time so it never completely stops
+      const time = Date.now() * 0.0001;
+
+      // Apply rotations to particles
+      // Scroll adds a slight tilt
+      particles.rotation.x = currentRotationX + scrollRef.current * 0.0005;
+      particles.rotation.y = currentRotationY + time;
+      
+      // Camera parallax effect for deeper 3D feel
+      const targetCameraX = mouseRef.current.x * 30;
+      const targetCameraY = mouseRef.current.y * 30;
+      
+      camera.position.x += (targetCameraX - camera.position.x) * 0.03;
+      camera.position.y += (targetCameraY - camera.position.y) * 0.03;
+      camera.lookAt(scene.position);
+
       renderer.render(scene, camera);
       return id;
     };
@@ -97,6 +143,8 @@ export default function Hero() {
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
       cancelAnimationFrame(animId);
       renderer.dispose();
       renderer.domElement.remove();
