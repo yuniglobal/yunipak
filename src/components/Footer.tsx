@@ -48,38 +48,58 @@ const Footer = () => {
     <footer className="footer-tech">
       <style>{`
         .footer-tech {
-          background: var(--bg-secondary);
-          border-top: 1px solid var(--border-light);
-          padding: 6rem 1.5rem 2rem;
+          background: var(--bg-primary);
           position: relative;
           overflow: hidden;
+          padding-top: 5rem;
         }
 
-        .footer-grid-tech {
+        /* Subtle glowing top border */
+        .footer-tech::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 5%;
+          right: 5%;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.3), transparent);
+        }
+
+        .footer-content {
           max-width: 1200px;
           margin: 0 auto;
-          display: grid;
-          grid-template-columns: 1fr;
+          padding: 0 1.5rem 2rem;
+          display: flex;
+          flex-direction: column;
           gap: 4rem;
         }
 
+        .footer-main {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          gap: 3rem;
+        }
+
         @media (min-width: 1024px) {
-          .footer-grid-tech {
-            grid-template-columns: 2fr 1fr 1fr;
+          .footer-main {
+            flex-direction: row;
           }
         }
 
-        .footer-brand-tech {
+        .footer-brand {
+          max-width: 400px;
           display: flex;
           flex-direction: column;
-          gap: 1.5rem;
+          gap: 1.2rem;
         }
 
         .footer-logo {
           font-family: 'Space Grotesk', sans-serif;
           font-weight: 900;
-          font-size: 2rem;
-          color: var(--text-primary);
+          font-size: 2.2rem;
+          color: #ffffff;
+          letter-spacing: -0.05em;
         }
 
         .footer-logo span {
@@ -87,123 +107,181 @@ const Footer = () => {
         }
 
         .footer-desc {
-          max-width: 350px;
           color: var(--text-secondary);
-          font-size: 0.95rem;
+          font-size: 1rem;
           line-height: 1.7;
         }
 
-        .footer-heading-tech {
-          font-family: 'Space Grotesk', sans-serif;
-          font-weight: 800;
-          text-transform: uppercase;
-          font-size: 0.9rem;
-          letter-spacing: 0.2em;
-          color: var(--text-primary);
-          margin-bottom: 2rem;
+        .footer-links-container {
+          display: flex;
+          gap: 4rem;
+          flex-wrap: wrap;
         }
 
-        .footer-links-tech {
+        .footer-link-group {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+
+        .footer-heading {
+          color: #ffffff;
+          font-weight: 700;
+          font-size: 1.05rem;
+          letter-spacing: 0.05em;
+        }
+
+        .footer-links {
           display: flex;
           flex-direction: column;
           gap: 1rem;
         }
 
-        .footer-link-tech {
+        .footer-link {
           color: var(--text-tertiary);
-          font-weight: 500;
-          font-size: 0.9rem;
-          transition: all 0.3s ease;
+          font-size: 0.95rem;
           cursor: pointer;
+          transition: all 0.3s ease;
+          display: inline-flex;
+          align-items: center;
         }
 
-        .footer-link-tech:hover {
+        .footer-link:hover {
           color: var(--pk-green);
           transform: translateX(5px);
         }
 
-        .footer-bottom-tech {
-          max-width: 1200px;
-          margin: 6rem auto 0;
-          padding-top: 2rem;
-          border-top: 1px solid var(--border-light);
+        .footer-divider {
+          height: 1px;
+          background: rgba(255, 255, 255, 0.05);
+          width: 100%;
+        }
+
+        .footer-bottom {
           display: flex;
           flex-direction: column;
-          gap: 1.5rem;
           align-items: center;
-          color: var(--text-tertiary);
-          font-size: 0.8rem;
-          font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
+          gap: 2rem;
+          text-align: center;
         }
 
         @media (min-width: 768px) {
-          .footer-bottom-tech {
+          .footer-bottom {
             flex-direction: row;
             justify-content: space-between;
+            text-align: left;
           }
+        }
+
+        .footer-copyright {
+          color: var(--text-tertiary);
+          font-size: 0.85rem;
+          font-weight: 500;
+          letter-spacing: 0.05em;
+        }
+
+        .footer-built {
+          color: var(--pk-green);
+          font-size: 0.85rem;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
         }
 
         .social-row {
           display: flex;
-          gap: 1.5rem;
+          gap: 1rem;
         }
 
         .social-icon {
           color: var(--text-tertiary);
           transition: all 0.3s ease;
           cursor: pointer;
+          width: 42px;
+          height: 42px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.05);
           display: flex;
           align-items: center;
+          justify-content: center;
         }
 
         .social-icon:hover {
           color: var(--pk-green);
+          background: rgba(16, 185, 129, 0.05);
+          border-color: rgba(16, 185, 129, 0.3);
           transform: translateY(-3px);
+          box-shadow: 0 5px 15px rgba(16, 185, 129, 0.15);
+        }
+
+        .footer-legal {
+          display: flex;
+          gap: 2rem;
+          color: var(--text-tertiary);
+          font-size: 0.85rem;
+        }
+
+        .footer-legal span {
+          cursor: pointer;
+          transition: color 0.3s ease;
+        }
+
+        .footer-legal span:hover {
+          color: var(--pk-green);
         }
       `}</style>
 
-      <div className="footer-grid-tech">
-        <div className="footer-brand-tech">
-          <div className="footer-logo">YUNI<span>.</span></div>
-          <p className="footer-desc">
-            The technical benchmark of Pakistan. Based at NASTP, 
-            we are architecting the next generation of engineers, 
-            creators, and digital sovereign leaders.
-          </p>
+      <div className="footer-content">
+        <div className="footer-main">
+          <div className="footer-brand">
+            <div className="footer-logo">YUNI<span>.</span></div>
+            <p className="footer-desc">
+              The technical benchmark of Pakistan. Based at NASTP, 
+              we are architecting the next generation of engineers, 
+              creators, and digital sovereign leaders.
+            </p>
+          </div>
+
+          <div className="footer-links-container">
+            {footerLinks.map((col, i) => (
+              <div key={i} className="footer-link-group">
+                <h4 className="footer-heading">{col.title}</h4>
+                <div className="footer-links">
+                  {col.links.map((link, j) => (
+                    <div 
+                      key={j} 
+                      className="footer-link"
+                      onClick={() => navigate(link.path)}
+                    >
+                      {link.name}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="footer-divider"></div>
+
+        <div className="footer-bottom">
+          <div className="footer-copyright">
+            © {year} YUNI PAKISTAN COLLECTIVE
+            <div className="footer-built" style={{ marginTop: '0.5rem' }}>BUILT AT NASTP ISLAMABAD</div>
+          </div>
+          
           <div className="social-row">
             <div className="social-icon"><LinkedInIcon /></div>
             <div className="social-icon"><XIcon /></div>
             <div className="social-icon"><FacebookIcon /></div>
             <div className="social-icon"><InstagramIcon /></div>
           </div>
-        </div>
 
-        {footerLinks.map((col, i) => (
-          <div key={i}>
-            <h4 className="footer-heading-tech">{col.title}</h4>
-            <div className="footer-links-tech">
-              {col.links.map((link, j) => (
-                <div 
-                  key={j} 
-                  className="footer-link-tech"
-                  onClick={() => navigate(link.path)}
-                >
-                  {link.name}
-                </div>
-              ))}
-            </div>
+          <div className="footer-legal">
+            <span onClick={() => navigate('/privacy')}>Privacy Policy</span>
+            <span onClick={() => navigate('/terms')}>Terms of Service</span>
           </div>
-        ))}
-      </div>
-
-      <div className="footer-bottom-tech">
-        <div>© {year} YUNI PAKISTAN COLLECTIVE</div>
-        <div style={{color: 'var(--pk-green)'}}>BUILT AT NASTP ISLAMABAD</div>
-        <div style={{display: 'flex', gap: '2rem'}}>
-          <span>PRIVACY</span>
-          <span>TERMS</span>
         </div>
       </div>
     </footer>
