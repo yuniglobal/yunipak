@@ -247,10 +247,19 @@ export default function Home() {
         }
 
         .partner-logo {
-          max-width: 150px;
+          max-width: 160px;
           height: auto;
           mix-blend-mode: multiply;
           border-radius: 8px;
+          transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] .partner-logo {
+          mix-blend-mode: normal;
+          background: #ffffff;
+          padding: 1.2rem;
+          border-radius: 1.5rem;
+          box-shadow: 0 0 30px rgba(0, 230, 118, 0.15);
         }
 
         .certificate-card {

@@ -44,7 +44,7 @@ function App() {
 
   return (
     <div className="app-wrapper">
-      <PromoBanner />
+      {location.pathname === '/' && <PromoBanner />}
       <Navbar />
       <SummerPromoPopup />
       <main className="page-content">
@@ -58,7 +58,7 @@ function App() {
           <Route path="/events" element={<Events />} />
         </Routes>
       </main>
-      <Footer />
+      {location.pathname !== '/Aboutus' && <Footer />}
     </div>
   );
 }

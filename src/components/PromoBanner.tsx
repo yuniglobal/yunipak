@@ -12,6 +12,10 @@ const PromoBanner: React.FC = () => {
     } else {
       document.documentElement.style.setProperty('--banner-height', '40px');
     }
+
+    return () => {
+      document.documentElement.style.setProperty('--banner-height', '0px');
+    };
   }, []);
 
   const handleDismiss = () => {
