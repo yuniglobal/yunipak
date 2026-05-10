@@ -272,240 +272,160 @@ export default function Hero() {
           padding: 0;
           overflow-x: hidden;
           overflow-y: auto;
-          background-color: var(--bg-dark);
+          background-color: #000000;
+          color: #ffffff;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
         }
-
+  
+        /* Announcement Bar */
+        .announcement-bar {
+          width: 100%;
+          background: #00c896;
+          overflow: hidden;
+          white-space: nowrap;
+          padding: 10px 0;
+          position: fixed;
+          top: 0;
+          z-index: 1000;
+        }
+  
+        .announcement-track {
+          display: inline-block;
+          animation: scroll-left 20s linear infinite;
+        }
+  
+        .announcement-track span {
+          margin-right: 60px;
+          font-size: 13px;
+          font-weight: 600;
+          color: #000000;
+          letter-spacing: 0.5px;
+        }
+  
+        @keyframes scroll-left {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+  
+        /* Hero */
         .hero {
-          padding-top: 12rem;
-          padding-bottom: 10rem;
+          min-height: 100vh;
+          padding-top: 100px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
           padding-left: 1.5rem;
           padding-right: 1.5rem;
           position: relative;
-          overflow: visible;
         }
-
-        .hero-container {
-          padding: 0 1.5rem;
-          overflow: visible;
-        }
-
-        .hero-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 4rem;
-          align-items: center;
-          overflow: visible;
-        }
-
-        @media (min-width: 1024px) {
-          .hero-grid {
-            grid-template-columns: 1fr 1fr;
-          }
-        }
-
-        .hero-content {
-          display: flex;
-          flex-direction: column;
-          gap: 2rem;
-          position: relative;
-          z-index: 2;
-        }
-
-        .hero-label {
+  
+        /* HQ Badge */
+        .hq-badge {
           display: inline-block;
-          font-size: 1rem;
+          border: 1px solid #444;
+          border-radius: 50px;
+          padding: 6px 18px;
+          font-size: 13px;
           font-weight: 600;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
+          color: #cccccc;
+          letter-spacing: 1px;
+          margin-bottom: 28px;
         }
-
+  
+        /* Main Title */
         .hero-title {
-          font-size: 4rem;
-          font-weight: 800;
-          line-height: 1.2;
-          color: #ffffff;
-        }
-
-        @media (min-width: 768px) {
-          .hero-title {
-            font-size: 5rem;
-          }
-        }
-
-        .hero-title span {
-          background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-        }
-
-        .hero-description {
-          font-size: 1.125rem;
-          color: rgba(255, 255, 255, 0.7);
-          line-height: 1.6;
-          max-width: 90%;
-        }
-
-        .hero-buttons {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 1rem;
-          padding-top: 1rem;
-        }
-
-        /* Button Styles */
-        .btn-primary {
-          background-color: var(--primary);
-          color: #000000;
-          padding: 0.875rem 2rem;
-          border-radius: 9999px;
-          font-weight: 800;
-          font-size: 1rem;
-          transition: all 0.3s ease;
-          cursor: pointer;
-          border: none;
-          font-family: 'Inter', sans-serif;
-          letter-spacing: 0.05em;
+          font-size: clamp(52px, 10vw, 120px);
+          font-weight: 900;
+          line-height: 1;
+          letter-spacing: -2px;
+          color: #00c8ff;
           text-transform: uppercase;
-          display: inline-flex;
-          align-items: center;
-          gap: 0.75rem;
-          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+          margin-bottom: 28px;
         }
-
-        .btn-primary:hover {
-          background-color: var(--primary-light);
-          transform: translateY(-2px);
-          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+        /* Subtitle */
+        .hero-sub {
+          font-size: clamp(15px, 2vw, 18px);
+          color: #888888;
+          max-width: 600px;
+          line-height: 1.7;
+          margin-bottom: 48px;
         }
-
-        .btn-secondary {
-          backdrop-filter: blur(8px);
-          background-color: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          color: #ffffff;
-          padding: 0.875rem 2rem;
-          border-radius: 9999px;
-          font-weight: 700;
-          font-size: 1rem;
-          transition: all 0.3s ease;
-          cursor: pointer;
-          font-family: 'Inter', sans-serif;
-          display: inline-flex;
-          align-items: center;
-          gap: 0.75rem;
-        }
-
-        .btn-secondary:hover {
-          background-color: rgba(255, 255, 255, 0.15);
-          transform: translateY(-2px);
-          border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .hero-visual {
-          position: relative;
+  
+        /* Buttons row */
+        .hero-btns {
           display: flex;
-          justify-content: center;
+          gap: 16px;
           align-items: center;
-          overflow: visible;
-          min-height: 500px;
+          justify-content: center;
+          flex-wrap: wrap;
         }
-
-        .canvas-wrapper {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 180%;
-          height: 180%;
-          overflow: visible;
-          pointer-events: none;
+  
+        .btn-primary {
+          background: #00c896;
+          color: #000000;
+          border: none;
+          border-radius: 50px;
+          padding: 16px 36px;
+          font-size: 15px;
+          font-weight: 700;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          transition: opacity 0.2s;
         }
-
-        .canvas-wrapper canvas {
-          display: block;
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-          overflow: visible;
+  
+        .btn-primary:hover { opacity: 0.85; }
+  
+        .btn-secondary {
+          background: transparent;
+          color: #ffffff;
+          border: 1.5px solid #444;
+          border-radius: 50px;
+          padding: 16px 36px;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: border-color 0.2s;
         }
-
-        /* Tablet and small laptop adjustments */
-        @media (max-width: 1366px) {
-          .hero-visual {
-            min-height: 380px;
-          }
-          .canvas-wrapper {
-            width: 150%;
-            height: 150%;
-          }
-        }
-
-        /* iPad and touch laptops */
-        @media (max-width: 1024px) {
-          .hero-visual {
-            min-height: 0;
-          }
-          .canvas-wrapper {
-            width: 130%;
-            height: 130%;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .hero {
-            padding-top: 8rem;
-            padding-bottom: 6rem;
-          }
-          .hero-title {
-            font-size: 2.5rem;
-          }
-          .hero-description {
-            font-size: 1rem;
-          }
-          .hero-visual {
-            min-height: 0;
-          }
-          .btn-primary, .btn-secondary {
-            padding: 0.75rem 1.5rem;
-            font-size: 0.875rem;
-          }
-        }
+  
+        .btn-secondary:hover { border-color: #00c896; color: #00c896; }
       `}</style>
-
-      <section className="hero">
-        <div className="hero-container">
-          <div className="hero-grid">
-            <div className="hero-content">
-              <span className="hero-label">
-                Welcome to YUNIPAKISTAN
-              </span>
-              <h1 className="hero-title">
-                Architecting <span>The Future.</span>
-              </h1>
-              <p className="hero-description">
-                Pakistan's premier tech ecosystem. We empower leaders to transform vision into digital reality through elite education.
-              </p>
-              <div className="hero-buttons">
-                <button className="btn-primary">
-                  Explore Courses <i className="fas fa-rocket"></i>
-                </button>
-                <button className="btn-secondary">
-                  Free Consultation
-                </button>
-              </div>
-            </div>
-
-            <div className="hero-visual">
-              {isGlobeVisible && <div className="canvas-wrapper" ref={containerRef} />}
-            </div>
-          </div>
+  
+      
+  
+      {/* Hero Section */}
+      <div className="hero">
+  
+        {/* HQ Badge */}
+        <div className="hq-badge">HQ: NASTP, PAKISTAN</div>
+  
+        {/* Title */}
+        <h1 className="hero-title">
+          ARCHITECTING<br />THE FUTURE.
+        </h1>
+  
+        {/* Subtitle */}
+        <p className="hero-sub">
+          Pakistan's premier tech ecosystem. We empower leaders to transform
+          vision into digital reality through elite education.
+        </p>
+  
+        {/* Buttons */}
+        <div className="hero-btns">
+          <button className="btn-primary">
+            EXPLORE COURSES 🚀
+          </button>
+          <button className="btn-secondary">
+            Free Consultation
+          </button>
         </div>
-      </section>
+  
+      </div>
     </>
-  );
-}
+  )}
