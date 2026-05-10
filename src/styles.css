@@ -35,6 +35,7 @@
   --pk-green-bright: #00ff88;
   --cyber-blue: #00d2ff;
   --neon-purple: #9d50bb;
+  --orb-blend-mode: multiply;
 }
 
 [data-theme="dark"] {
@@ -57,6 +58,7 @@
   --glass-shadow: rgba(0, 0, 0, 0.5);
 
   --mesh-opacity: 0.5;
+  --orb-blend-mode: screen;
 }
 
 * {
@@ -240,79 +242,22 @@ h1, h2, h3, h4 {
 
 .card-glow-border {
   position: relative;
-}
-
-.card-glow-border::after, .card-glow-border::before {
-  content: '';
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-image: conic-gradient(from var(--angle), transparent 70%, var(--pk-green), var(--pk-green-bright));
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
-  z-index: -1;
-  padding: 3px;
-  border-radius: inherit;
-  animation: 3s spin linear infinite;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.card-glow-border::before {
-  filter: blur(1.5rem);
-  opacity: 0;
-}
-
-.card-glow-border:hover::after, .card-glow-border:hover::before {
-  opacity: 0.6;
-}
-
-@keyframes spin {
-  from { --angle: 0deg; }
-  to { --angle: 360deg; }
-}
-
-/* --- Card Hover Spotlight --- */
-.card-glow-border:hover .card-glow-content::before {
-  opacity: 1;
-}
-
-.card-glow-content::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    800px circle at var(--mouse-x) var(--mouse-y),
-    rgba(0, 230, 118, 0.06),
-    transparent 40%
-  );
-  z-index: 3;
-  opacity: 0;
-  transition: opacity 0.5s;
-}
-
-.text-gradient-premium {
-  background: linear-gradient(135deg, #fff 0%, var(--pk-green-light) 50%, var(--pk-green) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 0 10px rgba(0, 230, 118, 0.3));
-}
-
-.card-glow-border {
-  position: relative;
+  z-index: 1;
 }
 
 .card-glow-border::after {
   content: '';
   position: absolute;
   inset: -1px;
-  background: linear-gradient(var(--angle, 0deg), var(--pk-green), transparent, var(--pk-green-light));
   border-radius: inherit;
+  background: conic-gradient(from var(--angle, 0deg), transparent 70%, var(--pk-green), var(--pk-green-light));
   z-index: -1;
   opacity: 0;
   transition: opacity 0.3s;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
 }
 
 .card-glow-border:hover::after {
@@ -325,10 +270,31 @@ h1, h2, h3, h4 {
   100% { --angle: 360deg; }
 }
 
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
+/* --- Card Hover Spotlight --- */
+.card-glow-content::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(0, 230, 118, 0.06),
+    transparent 40%
+  );
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.card-glow-border:hover .card-glow-content::before {
+  opacity: 1;
+}
+
+.text-gradient-premium {
+  background: linear-gradient(135deg, #fff 0%, var(--pk-green-light) 50%, var(--pk-green) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 10px rgba(0, 230, 118, 0.3));
 }
 
 /* Button Refinement */

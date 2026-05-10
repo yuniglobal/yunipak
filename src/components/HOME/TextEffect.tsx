@@ -76,7 +76,6 @@ const TextEffect = () => {
           margin: 0;
           padding: 0;
           font-family: 'Poppins', sans-serif;
-          background-color: #0D0D0D;
           overflow-x: hidden;
         }
 
@@ -96,8 +95,8 @@ const TextEffect = () => {
           line-height: 1.2;
           margin: 0;
           width: 100%;
-          color: rgba(255, 255, 255, 0.3);
-          background: linear-gradient(to right, #ffffff, #ffffff) no-repeat;
+          color: var(--text-tertiary);
+          background: linear-gradient(to right, var(--text-primary), var(--text-primary)) no-repeat;
           -webkit-background-clip: text;
           background-clip: text;
           background-size: 0%;
@@ -116,8 +115,8 @@ const TextEffect = () => {
           position: absolute;
           width: 100%;
           height: 100%;
-          background-color: #0ae448;
-          color: #0D0D0D;
+          background-color: var(--pk-green-light);
+          color: var(--bg-primary);
           clip-path: polygon(0 50%, 100% 50%, 100% 50%, 0 50%);
           transform-origin: center;
           transition: clip-path 0.4s cubic-bezier(.1, .5, .5, 1);

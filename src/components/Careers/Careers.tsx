@@ -690,7 +690,7 @@ const Careers: React.FC = () => {
         }
 
         .modal-content-premium {
-          background: #080808; border: 1px solid var(--pk-green); border-radius: 3rem;
+          background: var(--bg-elevated); border: 1px solid var(--pk-green); border-radius: 3rem;
           width: 100%; max-width: 950px; max-height: 90vh; overflow-y: auto; padding: 4rem;
           position: relative; box-shadow: 0 0 100px rgba(0, 230, 118, 0.1);
         }
@@ -699,7 +699,7 @@ const Careers: React.FC = () => {
           position: absolute; top: 2rem; right: 2rem; background: none; border: none;
           color: var(--text-tertiary); font-size: 2.5rem; cursor: pointer; transition: color 0.3s;
         }
-        .modal-close-premium:hover { color: #fff; }
+        .modal-close-premium:hover { color: var(--text-primary); }
 
         .form-header-premium { margin-bottom: 4rem; }
         .protocol-label { 
@@ -721,7 +721,7 @@ const Careers: React.FC = () => {
         .form-field-premium label { font-size: 0.85rem; font-weight: 700; color: var(--text-tertiary); }
         .form-field-premium input, .form-field-premium select, .form-field-premium textarea {
           background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-light); 
-          padding: 1.2rem; border-radius: 1.2rem; color: #fff; font-size: 1rem; 
+          padding: 1.2rem; border-radius: 1.2rem; color: var(--text-primary); font-size: 1rem; 
           transition: all 0.3s; width: 100%;
         }
         .form-field-premium input:focus { border-color: var(--pk-green); box-shadow: 0 0 20px var(--pk-green-glow); outline: none; }

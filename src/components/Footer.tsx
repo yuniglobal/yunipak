@@ -98,7 +98,7 @@ const Footer = () => {
           font-family: 'Space Grotesk', sans-serif;
           font-weight: 900;
           font-size: 2.2rem;
-          color: #ffffff;
+          color: var(--text-primary);
           letter-spacing: -0.05em;
         }
 
@@ -125,7 +125,7 @@ const Footer = () => {
         }
 
         .footer-heading {
-          color: #ffffff;
+          color: var(--text-primary);
           font-weight: 700;
           font-size: 1.05rem;
           letter-spacing: 0.05em;
@@ -153,7 +153,7 @@ const Footer = () => {
 
         .footer-divider {
           height: 1px;
-          background: rgba(255, 255, 255, 0.05);
+          background: var(--glass-border);
           width: 100%;
         }
 
@@ -200,8 +200,8 @@ const Footer = () => {
           width: 42px;
           height: 42px;
           border-radius: 50%;
-          background: rgba(255, 255, 255, 0.02);
-          border: 1px solid rgba(255, 255, 255, 0.05);
+          background: var(--bg-tertiary);
+          border: 1px solid var(--glass-border);
           display: flex;
           align-items: center;
           justify-content: center;

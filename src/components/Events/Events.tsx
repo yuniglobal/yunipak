@@ -300,7 +300,7 @@ const Blog: React.FC = () => {
         .filter-btn-events.active {
           background: var(--pk-green);
           border-color: var(--pk-green);
-          color: #ffffff;
+          color: var(--text-primary);
           box-shadow: 0 10px 25px var(--pk-green-glow);
         }
 
@@ -374,7 +374,7 @@ const Blog: React.FC = () => {
           position: absolute;
           top: 1.5rem;
           left: 1.5rem;
-          color: #ffffff;
+          color: var(--text-primary);
           padding: 0.6rem 1.2rem;
           border-radius: 12px;
           font-size: 0.8rem;

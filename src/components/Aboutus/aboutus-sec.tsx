@@ -399,7 +399,7 @@ const DesktopExperience: React.FC = () => {
     width: 'min(92vw, 860px)',
     maxHeight: '85vh',
     overflowY: 'auto',
-    color: '#ffffff',
+    color: 'var(--text-primary)',
     fontFamily: "'Montserrat', 'Segoe UI', sans-serif",
     textAlign: 'left',
     zIndex: 20,
@@ -428,7 +428,7 @@ const DesktopExperience: React.FC = () => {
     letterSpacing: '-0.02em',
     lineHeight: 1.1,
     textTransform: 'uppercase',
-    background: 'linear-gradient(135deg, #ffffff 0%, #d4f0d4 100%)',
+    background: 'linear-gradient(135deg, var(--text-primary) 0%, #d4f0d4 100%)',
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
     textShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
@@ -454,7 +454,7 @@ const DesktopExperience: React.FC = () => {
     fontWeight: 400,
     marginBottom: '1.2rem',
     textShadow: '0 2px 6px rgba(0,0,0,0.25)',
-    color: '#f0f8f0',
+    color: 'var(--text-secondary)',
   };
 
   const strongStyle: React.CSSProperties = {
@@ -468,7 +468,7 @@ const DesktopExperience: React.FC = () => {
     bottom: '30px',
     left: '50%',
     transform: 'translateX(-50%)',
-    color: '#ffffff',
+    color: 'var(--text-primary)',
     fontFamily: "'Montserrat', 'Segoe UI', sans-serif",
     fontSize: '0.9rem',
     fontWeight: 500,
@@ -692,7 +692,7 @@ const MobileAbout: React.FC = () => {
     borderRadius: '2.5rem',
     border: '1px solid var(--glass-border)',
     padding: '2.5rem',
-    color: '#ffffff',
+    color: 'var(--text-primary)',
     fontFamily: "'Inter', sans-serif",
     boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
     marginBottom: '2.5rem',
@@ -745,7 +745,7 @@ const MobileAbout: React.FC = () => {
         <h1 style={{
           fontSize: 'clamp(2.5rem, 10vw, 4.5rem)',
           fontWeight: 900,
-          color: '#ffffff',
+          color: 'var(--text-primary)',
           marginBottom: '0.8rem',
           letterSpacing: '-0.03em',
           lineHeight: 1,

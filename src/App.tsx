@@ -32,10 +32,6 @@ function App() {
     }
   }, [location.pathname]);
 
-  // Define pages where footer should be hidden
-  const hideFooterPages = ['/about', '/contact'];
-  const shouldShowFooter = !hideFooterPages.includes(location.pathname);
-
   // Custom cursor logic
   useLayoutEffect(() => {
     const cursor = document.querySelector('.custom-cursor') as HTMLElement;
@@ -76,7 +72,7 @@ function App() {
           <Route path="/events" element={<Events />} />
         </Routes>
       </main>
-      {shouldShowFooter && <Footer />}
+      <Footer />
     </div>
   );
 }

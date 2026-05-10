@@ -402,7 +402,7 @@ const GetInTouch: React.FC = () => {
         .form-field-premium label { font-size: 0.85rem; font-weight: 700; color: var(--text-tertiary); }
         .form-field-premium input, .form-field-premium select, .form-field-premium textarea {
           background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-light); 
-          padding: 1.2rem; border-radius: 1.2rem; color: #fff; font-size: 1rem; 
+          padding: 1.2rem; border-radius: 1.2rem; color: var(--text-primary); font-size: 1rem; 
           transition: all 0.3s; width: 100%;
         }
         .form-field-premium input:focus, .form-field-premium select:focus, .form-field-premium textarea:focus {

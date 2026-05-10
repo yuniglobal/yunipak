@@ -65,7 +65,7 @@ export default function AnimatedBackground() {
           width: 100vw;
           height: 100vh;
           z-index: -5;
-          background: #020402;
+          background: var(--bg-primary);
           overflow: hidden;
           pointer-events: none;
         }
@@ -81,7 +81,7 @@ export default function AnimatedBackground() {
           border-radius: 50%;
           filter: blur(120px);
           opacity: 0.4;
-          mix-blend-mode: screen;
+          mix-blend-mode: var(--orb-blend-mode);
           pointer-events: none;
           will-change: transform;
         }

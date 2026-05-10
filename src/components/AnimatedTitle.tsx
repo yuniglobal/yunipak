@@ -50,12 +50,12 @@ export default function AnimatedTitle({ children, className = '', style }: Anima
 
         [data-theme="dark"] .scroll-fill-title {
           color: rgba(255, 255, 255, 0.15);
-          background-image: linear-gradient(to right, #ffffff, #ffffff);
+          background-image: linear-gradient(to right, var(--text-primary), var(--text-primary));
         }
         
         [data-theme="light"] .scroll-fill-title {
           color: rgba(0, 0, 0, 0.15);
-          background-image: linear-gradient(to right, #000000, #000000);
+          background-image: linear-gradient(to right, var(--text-primary), var(--text-primary));
         }
 
         /* If there's a gradient span inside, it overrides the color but keeps the background-clip behavior if we're careful. 

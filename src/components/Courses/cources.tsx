@@ -746,7 +746,7 @@ const Courses: React.FC = () => {
         .filter-btn-premium.active { 
           background: var(--pk-green); 
           border-color: var(--pk-green); 
-          color: #ffffff; 
+          color: var(--text-primary); 
           box-shadow: 0 10px 25px var(--pk-green-glow); 
         }
 
