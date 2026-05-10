@@ -726,7 +726,7 @@ const Courses: React.FC = () => {
         /* --- Header Section --- */
         .trainings-view { padding: 12rem 2rem 8rem; max-width: 1400px; margin: 0 auto; position: relative; }
         .title-wrapper { margin-bottom: 5rem; text-align: center; }
-        .subtitle-tech { color: var(--text-secondary); font-size: 1.1rem; margin-top: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto; opacity: 0.8; }
+        .subtitle-tech { color: var(--text-secondary); font-size: 1.1rem; margin-top: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto; opacity: 0.8; text-align: center; }
 
         /* --- Filters --- */
         .filters-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 5rem; }

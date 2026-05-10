@@ -78,7 +78,7 @@ export default function FAQ() {
         <div className="gradient-orb" style={{ bottom: '20%', right: '10%', background: 'radial-gradient(circle, var(--pk-green-bright) 0%, transparent 70%)' }}></div>
 
         <div className="faq-container-premium">
-          <div className="faq-header-premium">
+          <div className="title-wrapper">
             <AnimatedTitle>Frequented Queries.</AnimatedTitle>
             <p className="faq-subtitle-premium">Everything you need to know about our tactical operations.</p>
           </div>
@@ -141,6 +141,7 @@ export default function FAQ() {
           max-width: 600px;
           margin-left: auto;
           margin-right: auto;
+          text-align: center;
         }
 
         .faq-grid-premium {
@@ -188,10 +189,18 @@ export default function FAQ() {
           align-items: center;
           background: none;
           border: none;
+          outline: none;
           padding: 1rem 0;
           cursor: pointer;
           color: var(--text-primary);
           text-align: left;
+        }
+
+        .faq-question-premium:focus,
+        .faq-question-premium:focus-visible {
+          outline: none;
+          border: none;
+          box-shadow: none;
         }
 
         .question-text {

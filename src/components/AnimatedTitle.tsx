@@ -45,6 +45,8 @@ export default function AnimatedTitle({ children, className = '', style }: Anima
           background-clip: text;
           background-size: 0% 100%;
           width: fit-content;
+          margin: 0 auto;
+          text-align: center;
           position: relative;
         }
 

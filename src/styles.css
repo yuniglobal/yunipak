@@ -8,13 +8,22 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  width: 100%;
-  overflow-x: hidden;
+  position: relative;
 }
 
 .page-content {
   flex: 1 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.title-wrapper {
   width: 100%;
+  max-width: 60rem;
+  margin: 0 auto 5rem;
+  text-align: center;
+  position: relative;
+  z-index: 5;
 }
 
 footer {
@@ -90,8 +99,21 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   transition: background-color 0.4s var(--transition-smooth), color 0.4s var(--transition-smooth);
+}
+
+/* Global Focus Reset */
+button:focus,
+button:focus-visible,
+.btn-tech:focus,
+.btn-tech:focus-visible,
+a:focus,
+a:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* Mesh Gradient Background */
@@ -268,7 +290,7 @@ h1, h2, h3, h4 {
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  background: conic-gradient(from var(--angle, 0deg), transparent 70%, var(--pk-green), var(--pk-green-light));
+  background: linear-gradient(135deg, var(--pk-green), var(--pk-green-light));
   z-index: -1;
   opacity: 0;
   transition: opacity 0.3s;
@@ -280,7 +302,7 @@ h1, h2, h3, h4 {
 
 .card-glow-border:hover::after {
   opacity: 1;
-  animation: rotateAngle 3s linear infinite;
+  box-shadow: 0 0 30px 2px var(--pk-green-glow-subtle);
 }
 
 @keyframes rotateAngle {

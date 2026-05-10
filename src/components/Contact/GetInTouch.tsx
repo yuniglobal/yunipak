@@ -324,6 +324,9 @@ const GetInTouch: React.FC = () => {
           max-width: 85rem;
           margin: 0 auto;
           padding: 0 2rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
 
         .contact-subtitle-premium {
@@ -343,6 +346,7 @@ const GetInTouch: React.FC = () => {
           grid-template-columns: 0.8fr 1.2fr;
           gap: 4rem;
           margin-top: 6rem;
+          width: 100%;
         }
 
         /* --- Panels --- */

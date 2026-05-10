@@ -549,6 +549,7 @@ const Careers: React.FC = () => {
           margin-left: auto;
           margin-right: auto;
           line-height: 1.7;
+          text-align: center;
         }
 
         /* --- Grid --- */

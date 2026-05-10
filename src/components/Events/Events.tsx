@@ -257,14 +257,16 @@ const Blog: React.FC = () => {
           padding: 0 2rem;
         }
 
-        .events-subtitle-tech {
+        .events-subtitle-premium {
           color: var(--text-secondary);
-          font-size: 1.1rem;
+          font-size: 1.15rem;
           margin-top: 1.5rem;
           opacity: 0.8;
-          max-width: 500px;
+          max-width: 600px;
           margin-left: auto;
           margin-right: auto;
+          line-height: 1.7;
+          text-align: center;
         }
 
         /* --- Filters --- */
