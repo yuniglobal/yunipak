@@ -9,7 +9,6 @@ import Contact from './pages/Contact';
 import Careers from './pages/Careers';
 import Events from './pages/Events';
 import CoursesPage from './pages/Courses';
-import Auth from './pages/Auth';
 import './styles.css';
 
 function App() {
@@ -56,16 +55,14 @@ function App() {
   }, [location.pathname]);
 
   // Define pages where footer should be hidden
-  const hideFooterPages = ['/about', '/contact', '/auth'];
+  const hideFooterPages = ['/about', '/contact'];
   const shouldShowFooter = !hideFooterPages.includes(location.pathname);
-  const isAuthPage = location.pathname === '/auth';
 
   return (
     <div className="app-wrapper">
-      {!isAuthPage && <Navbar onNavigate={handleNavigate} />}
+      <Navbar onNavigate={handleNavigate} />
       <main className="page-content">
         <Routes>
-          <Route path="/auth" element={<Auth />} />
           <Route path="/" element={<Home />} />
           {/* <Route path="/about" element={<About />} /> */}
           <Route path="/services" element={<Services />} />

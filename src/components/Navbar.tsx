@@ -194,7 +194,7 @@ const Navbar = ({ onNavigate }: NavbarProps): ReactElement => {
         .desktop-actions {
           display: flex;
           align-items: center;
-          gap: 1rem;
+          gap: 1.5rem;
         }
 
         .enroll-btn {
