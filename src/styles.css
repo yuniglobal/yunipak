@@ -24,6 +24,13 @@
   text-align: center;
   position: relative;
   z-index: 5;
+  padding: 0 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .title-wrapper {
+    margin-bottom: 3rem;
+  }
 }
 
 footer {
@@ -187,6 +194,13 @@ h1, h2, h3, h4 {
   position: relative;
   overflow: hidden;
   transition: all 0.5s var(--transition-smooth);
+}
+
+@media (max-width: 768px) {
+  .mesh-card {
+    padding: 2rem 1.5rem;
+    border-radius: 1.5rem;
+  }
 }
 
 .mesh-card::before {

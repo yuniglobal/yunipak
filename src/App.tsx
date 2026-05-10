@@ -11,6 +11,8 @@ import Contact from './pages/Contact';
 import Careers from './pages/Careers';
 import Events from './pages/Events';
 import CoursesPage from './pages/Courses';
+import PromoBanner from './components/PromoBanner';
+import SummerPromoPopup from './components/SummerPromoPopup';
 import './styles.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -42,7 +44,9 @@ function App() {
 
   return (
     <div className="app-wrapper">
+      <PromoBanner />
       <Navbar />
+      <SummerPromoPopup />
       <main className="page-content">
         <Routes>
           <Route path="/" element={<Home />} />
