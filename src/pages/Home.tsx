@@ -7,7 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Hero from '../components/HOME/Hero';
 import FeaturesReveal from '../components/HOME/FeaturesReveal';
 import CTA from '../components/HOME/CTA';
-
+import DisplayContent from '../components/DisplayContent';
 import TextEffect from '../components/HOME/TextEffect';
 // Removed unused Slider import
 import FAQ from '../components/Services/FAQ';
@@ -23,17 +23,17 @@ export default function Home() {
   // Removed unused logoImages array
 
   const team = [
-    { 
-      name: 'Abdul Moiz', 
-      role: 'Founder', 
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face&auto=format', 
-      desc: 'Driving the macro-vision of YUNI to build an unparalleled educational empire.' 
+    {
+      name: 'Abdul Moiz',
+      role: 'Founder',
+      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face&auto=format',
+      desc: 'Driving the macro-vision of YUNI to build an unparalleled educational empire.'
     },
-    { 
-      name: 'Sahaf', 
-      role: 'Co-Founder & COO', 
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face&auto=format', 
-      desc: 'Architecting premium product experiences and overseeing operational excellence.' 
+    {
+      name: 'Sahaf',
+      role: 'Co-Founder & COO',
+      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face&auto=format',
+      desc: 'Architecting premium product experiences and overseeing operational excellence.'
     }
   ];
 
@@ -47,7 +47,7 @@ export default function Home() {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
     const stars: ReactElement[] = [];
-    
+
     for (let i = 0; i < fullStars; i++) {
       stars.push(
         <svg key={`star-${i}`} className="star-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -55,7 +55,7 @@ export default function Home() {
         </svg>
       );
     }
-    
+
     if (hasHalfStar) {
       stars.push(
         <svg key="half-star" className="star-icon half-star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -68,7 +68,7 @@ export default function Home() {
         </svg>
       );
     }
-    
+
     return stars;
   };
 
@@ -571,20 +571,36 @@ export default function Home() {
         <div className="stats-section">
           <div className="stats-wrapper">
             <div className="stat-item">
-              <h3 className="stat-number brand">5000+</h3>
-              <p className="stat-label">Students Trained</p>
+              <h3 className="stat-number brand">
+                <DisplayContent id="stat-1-number" type="text" defaultValue="5000+" />
+              </h3>
+              <p className="stat-label">
+                <DisplayContent id="stat-1-label" type="text" defaultValue="Students Trained" />
+              </p>
             </div>
             <div className="stat-item">
-              <h3 className="stat-number blue">12+</h3>
-              <p className="stat-label">Premium Courses</p>
+              <h3 className="stat-number blue">
+                <DisplayContent id="stat-2-number" type="text" defaultValue="12+" />
+              </h3>
+              <p className="stat-label">
+                <DisplayContent id="stat-2-label" type="text" defaultValue="Premium Courses" />
+              </p>
             </div>
             <div className="stat-item">
-              <h3 className="stat-number purple">98%</h3>
-              <p className="stat-label">Satisfaction Rate</p>
+              <h3 className="stat-number purple">
+                <DisplayContent id="stat-3-number" type="text" defaultValue="98%" />
+              </h3>
+              <p className="stat-label">
+                <DisplayContent id="stat-3-label" type="text" defaultValue="Satisfaction Rate" />
+              </p>
             </div>
             <div className="stat-item">
-              <h3 className="stat-number brand">24h</h3>
-              <p className="stat-label">Support Turnaround</p>
+              <h3 className="stat-number brand">
+                <DisplayContent id="stat-4-number" type="text" defaultValue="24h" />
+              </h3>
+              <p className="stat-label">
+                <DisplayContent id="stat-4-label" type="text" defaultValue="Support Turnaround" />
+              </p>
             </div>
           </div>
 
@@ -592,52 +608,52 @@ export default function Home() {
             <div className="marquee-content">
               <div className="marquee-track">
                 <span className="marquee-item">
-                  <svg width="32" height="20" viewBox="0 0 80 32" fill="none"><path d="M22.9 13.8c0 1.1.1 2 .3 2.6.2.7.5 1.4.9 2.2.1.2.2.4.2.6 0 .3-.2.5-.5.7l-1.7 1.1c-.2.1-.5.2-.7.2-.3 0-.5-.1-.8-.4-.4-.4-.7-.9-1-1.4-.3-.5-.6-1.1-.9-1.8-2.2 2.6-5 3.9-8.3 3.9-2.4 0-4.3-.7-5.7-2-1.4-1.4-2.1-3.2-2.1-5.4 0-2.4.8-4.3 2.5-5.7 1.7-1.4 3.9-2.1 6.8-2.1.9 0 1.9.1 2.9.2 1 .1 2.1.3 3.2.6V5.3c0-2-.4-3.4-1.3-4.2-.9-.8-2.4-1.2-4.6-1.2-1 0-2 .1-3 .4-1 .2-2 .6-3 1-.4.2-.8.3-1 .3-.5 0-.7-.4-.7-1.1V-.1c0-.5.1-.9.3-1.1.2-.2.6-.5 1.1-.7 1-.5 2.2-.9 3.6-1.2 1.4-.3 2.9-.5 4.5-.5 3.4 0 5.9.8 7.5 2.3 1.6 1.5 2.4 3.9 2.4 7v9.1h.1zm-11.5 4.3c.9 0 1.8-.2 2.8-.5 1-.3 1.9-.9 2.6-1.8.4-.5.7-1.1.9-1.7.2-.7.3-1.5.3-2.4v-1.2c-.8-.2-1.6-.3-2.4-.4-.8-.1-1.6-.1-2.4-.1-1.7 0-2.9.3-3.8 1-.8.7-1.2 1.6-1.2 2.9 0 1.2.3 2 .9 2.6.7.4 1.5.6 2.3.6zm20.5 2.8c-.6 0-1-.1-1.2-.3-.2-.2-.5-.6-.7-1.2L24 1.9c-.2-.6-.3-1 .1-1.3.2-.2.6-.3 1.1-.3h2.2c.6 0 1 .1 1.2.3.2.2.4.6.6 1.2l5.2 20.4 4.8-20.4c.2-.7.4-1 .6-1.2.2-.2.7-.3 1.2-.3h1.8c.6 0 1 .1 1.2.3.2.2.5.6.6 1.2l4.9 20.7L54 1.8c.2-.6.4-1 .6-1.2.2-.2.6-.3 1.2-.3h2.1c.5 0 .9.1 1.1.3.2.2.3.7.1 1.3l-6.2 17.7c-.2.7-.5 1-.7 1.2-.2.2-.7.3-1.2.3h-1.9c-.6 0-1-.1-1.2-.3-.2-.2-.5-.6-.6-1.2l-4.8-20-4.8 20c-.2.6-.4 1-.6 1.2-.2.2-.7.3-1.2.3h-2.2zm33.2.7c-1.1 0-2.3-.1-3.4-.4-1.1-.3-2-.6-2.6-1-.4-.2-.6-.5-.7-.7-.1-.2-.1-.5-.1-.8v-1.5c0-.7.3-1.1.8-1.1.2 0 .4 0 .6.1.2.1.5.2.8.3.9.4 1.9.7 2.9.9 1 .2 2 .3 3 .3 1.6 0 2.8-.3 3.7-.8.9-.5 1.3-1.3 1.3-2.3 0-.7-.2-1.2-.7-1.7-.4-.5-1.3-.9-2.6-1.3l-3.7-1.2c-1.9-.6-3.3-1.5-4.1-2.7-.8-1.2-1.2-2.5-1.2-3.9 0-1.1.2-2.1.7-3 .5-.9 1.1-1.6 1.9-2.2.8-.6 1.7-1 2.8-1.4 1.1-.3 2.3-.5 3.5-.5.6 0 1.2 0 1.9.1.7.1 1.3.2 1.9.3.6.1 1.2.3 1.7.5.5.2.9.4 1.2.6.4.2.7.5.8.8.1.2.2.5.2.9v1.4c0 .7-.3 1.1-.8 1.1-.3 0-.7-.1-1.2-.4-1.8-.8-3.8-1.2-6-1.2-1.4 0-2.6.2-3.4.7-.8.5-1.2 1.2-1.2 2.2 0 .7.2 1.3.7 1.7.5.4 1.4.9 2.8 1.3l3.7 1.2c1.8.6 3.2 1.4 4 2.5.8 1 1.2 2.2 1.2 3.6 0 1.1-.2 2.1-.7 3-.5.9-1.1 1.7-2 2.4-.9.7-1.9 1.1-3 1.5-1.2.3-2.4.5-3.8.5z" fill="#FF9900"/></svg>
+                  <svg width="32" height="20" viewBox="0 0 80 32" fill="none"><path d="M22.9 13.8c0 1.1.1 2 .3 2.6.2.7.5 1.4.9 2.2.1.2.2.4.2.6 0 .3-.2.5-.5.7l-1.7 1.1c-.2.1-.5.2-.7.2-.3 0-.5-.1-.8-.4-.4-.4-.7-.9-1-1.4-.3-.5-.6-1.1-.9-1.8-2.2 2.6-5 3.9-8.3 3.9-2.4 0-4.3-.7-5.7-2-1.4-1.4-2.1-3.2-2.1-5.4 0-2.4.8-4.3 2.5-5.7 1.7-1.4 3.9-2.1 6.8-2.1.9 0 1.9.1 2.9.2 1 .1 2.1.3 3.2.6V5.3c0-2-.4-3.4-1.3-4.2-.9-.8-2.4-1.2-4.6-1.2-1 0-2 .1-3 .4-1 .2-2 .6-3 1-.4.2-.8.3-1 .3-.5 0-.7-.4-.7-1.1V-.1c0-.5.1-.9.3-1.1.2-.2.6-.5 1.1-.7 1-.5 2.2-.9 3.6-1.2 1.4-.3 2.9-.5 4.5-.5 3.4 0 5.9.8 7.5 2.3 1.6 1.5 2.4 3.9 2.4 7v9.1h.1zm-11.5 4.3c.9 0 1.8-.2 2.8-.5 1-.3 1.9-.9 2.6-1.8.4-.5.7-1.1.9-1.7.2-.7.3-1.5.3-2.4v-1.2c-.8-.2-1.6-.3-2.4-.4-.8-.1-1.6-.1-2.4-.1-1.7 0-2.9.3-3.8 1-.8.7-1.2 1.6-1.2 2.9 0 1.2.3 2 .9 2.6.7.4 1.5.6 2.3.6zm20.5 2.8c-.6 0-1-.1-1.2-.3-.2-.2-.5-.6-.7-1.2L24 1.9c-.2-.6-.3-1 .1-1.3.2-.2.6-.3 1.1-.3h2.2c.6 0 1 .1 1.2.3.2.2.4.6.6 1.2l5.2 20.4 4.8-20.4c.2-.7.4-1 .6-1.2.2-.2.7-.3 1.2-.3h1.8c.6 0 1 .1 1.2.3.2.2.5.6.6 1.2l4.9 20.7L54 1.8c.2-.6.4-1 .6-1.2.2-.2.6-.3 1.2-.3h2.1c.5 0 .9.1 1.1.3.2.2.3.7.1 1.3l-6.2 17.7c-.2.7-.5 1-.7 1.2-.2.2-.7.3-1.2.3h-1.9c-.6 0-1-.1-1.2-.3-.2-.2-.5-.6-.6-1.2l-4.8-20-4.8 20c-.2.6-.4 1-.6 1.2-.2.2-.7.3-1.2.3h-2.2zm33.2.7c-1.1 0-2.3-.1-3.4-.4-1.1-.3-2-.6-2.6-1-.4-.2-.6-.5-.7-.7-.1-.2-.1-.5-.1-.8v-1.5c0-.7.3-1.1.8-1.1.2 0 .4 0 .6.1.2.1.5.2.8.3.9.4 1.9.7 2.9.9 1 .2 2 .3 3 .3 1.6 0 2.8-.3 3.7-.8.9-.5 1.3-1.3 1.3-2.3 0-.7-.2-1.2-.7-1.7-.4-.5-1.3-.9-2.6-1.3l-3.7-1.2c-1.9-.6-3.3-1.5-4.1-2.7-.8-1.2-1.2-2.5-1.2-3.9 0-1.1.2-2.1.7-3 .5-.9 1.1-1.6 1.9-2.2.8-.6 1.7-1 2.8-1.4 1.1-.3 2.3-.5 3.5-.5.6 0 1.2 0 1.9.1.7.1 1.3.2 1.9.3.6.1 1.2.3 1.7.5.5.2.9.4 1.2.6.4.2.7.5.8.8.1.2.2.5.2.9v1.4c0 .7-.3 1.1-.8 1.1-.3 0-.7-.1-1.2-.4-1.8-.8-3.8-1.2-6-1.2-1.4 0-2.6.2-3.4.7-.8.5-1.2 1.2-1.2 2.2 0 .7.2 1.3.7 1.7.5.4 1.4.9 2.8 1.3l3.7 1.2c1.8.6 3.2 1.4 4 2.5.8 1 1.2 2.2 1.2 3.6 0 1.1-.2 2.1-.7 3-.5.9-1.1 1.7-2 2.4-.9.7-1.9 1.1-3 1.5-1.2.3-2.4.5-3.8.5z" fill="#FF9900" /></svg>
                   AWS PARTNER
                 </span>
                 <span className="marquee-item">
-                  <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" /><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" /><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" /><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" /></svg>
                   GOOGLE CLOUD
                 </span>
                 <span className="marquee-item">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#C8202F"><path d="M12 2L3 7v10l9 5 9-5V7L12 2zm0 2.5l7 3.9v7.2l-7 3.9-7-3.9V8.4l7-3.9z"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#C8202F"><path d="M12 2L3 7v10l9 5 9-5V7L12 2zm0 2.5l7 3.9v7.2l-7 3.9-7-3.9V8.4l7-3.9z" /></svg>
                   COMPTIA
                 </span>
                 <span className="marquee-item">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#10b981"><path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#10b981"><path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z" /></svg>
                   NASTP
                 </span>
                 <span className="marquee-item">
-                  <svg width="20" height="20" viewBox="0 0 24 24"><path d="M11.5 0h-11.5v11.5h11.5v-11.5zm12.5 0h-11.5v11.5h11.5v-11.5zm-12.5 12.5h-11.5v11.5h11.5v-11.5zm12.5 0h-11.5v11.5h11.5v-11.5z" fill="#00A4EF"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24"><path d="M11.5 0h-11.5v11.5h11.5v-11.5zm12.5 0h-11.5v11.5h11.5v-11.5zm-12.5 12.5h-11.5v11.5h11.5v-11.5zm12.5 0h-11.5v11.5h11.5v-11.5z" fill="#00A4EF" /></svg>
                   MICROSOFT
                 </span>
                 <span className="marquee-item">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#FCC624"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#FCC624"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" /></svg>
                   LINUX
                 </span>
                 {/* Duplicates for loop */}
                 <span className="marquee-item">
-                  <svg width="32" height="20" viewBox="0 0 80 32" fill="none"><path d="M22.9 13.8c0 1.1.1 2 .3 2.6.2.7.5 1.4.9 2.2.1.2.2.4.2.6 0 .3-.2.5-.5.7l-1.7 1.1c-.2.1-.5.2-.7.2-.3 0-.5-.1-.8-.4-.4-.4-.7-.9-1-1.4-.3-.5-.6-1.1-.9-1.8-2.2 2.6-5 3.9-8.3 3.9-2.4 0-4.3-.7-5.7-2-1.4-1.4-2.1-3.2-2.1-5.4 0-2.4.8-4.3 2.5-5.7 1.7-1.4 3.9-2.1 6.8-2.1.9 0 1.9.1 2.9.2 1 .1 2.1.3 3.2.6V5.3c0-2-.4-3.4-1.3-4.2-.9-.8-2.4-1.2-4.6-1.2-1 0-2 .1-3 .4-1 .2-2 .6-3 1-.4.2-.8.3-1 .3-.5 0-.7-.4-.7-1.1V-.1c0-.5.1-.9.3-1.1.2-.2.6-.5 1.1-.7 1-.5 2.2-.9 3.6-1.2 1.4-.3 2.9-.5 4.5-.5 3.4 0 5.9.8 7.5 2.3 1.6 1.5 2.4 3.9 2.4 7v9.1h.1zm-11.5 4.3c.9 0 1.8-.2 2.8-.5 1-.3 1.9-.9 2.6-1.8.4-.5.7-1.1.9-1.7.2-.7.3-1.5.3-2.4v-1.2c-.8-.2-1.6-.3-2.4-.4-.8-.1-1.6-.1-2.4-.1-1.7 0-2.9.3-3.8 1-.8.7-1.2 1.6-1.2 2.9 0 1.2.3 2 .9 2.6.7.4 1.5.6 2.3.6zm20.5 2.8c-.6 0-1-.1-1.2-.3-.2-.2-.5-.6-.7-1.2L24 1.9c-.2-.6-.3-1 .1-1.3.2-.2.6-.3 1.1-.3h2.2c.6 0 1 .1 1.2.3.2.2.4.6.6 1.2l5.2 20.4 4.8-20.4c.2-.7.4-1 .6-1.2.2-.2.7-.3 1.2-.3h1.8c.6 0 1 .1 1.2.3.2.2.5.6.6 1.2l4.9 20.7L54 1.8c.2-.6.4-1 .6-1.2.2-.2.6-.3 1.2-.3h2.1c.5 0 .9.1 1.1.3.2.2.3.7.1 1.3l-6.2 17.7c-.2.7-.5 1-.7 1.2-.2.2-.7.3-1.2.3h-1.9c-.6 0-1-.1-1.2-.3-.2-.2-.5-.6-.6-1.2l-4.8-20-4.8 20c-.2.6-.4 1-.6 1.2-.2.2-.7.3-1.2.3h-2.2zm33.2.7c-1.1 0-2.3-.1-3.4-.4-1.1-.3-2-.6-2.6-1-.4-.2-.6-.5-.7-.7-.1-.2-.1-.5-.1-.8v-1.5c0-.7.3-1.1.8-1.1.2 0 .4 0 .6.1.2.1.5.2.8.3.9.4 1.9.7 2.9.9 1 .2 2 .3 3 .3 1.6 0 2.8-.3 3.7-.8.9-.5 1.3-1.3 1.3-2.3 0-.7-.2-1.2-.7-1.7-.4-.5-1.3-.9-2.6-1.3l-3.7-1.2c-1.9-.6-3.3-1.5-4.1-2.7-.8-1.2-1.2-2.5-1.2-3.9 0-1.1.2-2.1.7-3 .5-.9 1.1-1.6 1.9-2.2.8-.6 1.7-1 2.8-1.4 1.1-.3 2.3-.5 3.5-.5.6 0 1.2 0 1.9.1.7.1 1.3.2 1.9.3.6.1 1.2.3 1.7.5.5.2.9.4 1.2.6.4.2.7.5.8.8.1.2.2.5.2.9v1.4c0 .7-.3 1.1-.8 1.1-.3 0-.7-.1-1.2-.4-1.8-.8-3.8-1.2-6-1.2-1.4 0-2.6.2-3.4.7-.8.5-1.2 1.2-1.2 2.2 0 .7.2 1.3.7 1.7.5.4 1.4.9 2.8 1.3l3.7 1.2c1.8.6 3.2 1.4 4 2.5.8 1 1.2 2.2 1.2 3.6 0 1.1-.2 2.1-.7 3-.5.9-1.1 1.7-2 2.4-.9.7-1.9 1.1-3 1.5-1.2.3-2.4.5-3.8.5z" fill="#FF9900"/></svg>
+                  <svg width="32" height="20" viewBox="0 0 80 32" fill="none"><path d="M22.9 13.8c0 1.1.1 2 .3 2.6.2.7.5 1.4.9 2.2.1.2.2.4.2.6 0 .3-.2.5-.5.7l-1.7 1.1c-.2.1-.5.2-.7.2-.3 0-.5-.1-.8-.4-.4-.4-.7-.9-1-1.4-.3-.5-.6-1.1-.9-1.8-2.2 2.6-5 3.9-8.3 3.9-2.4 0-4.3-.7-5.7-2-1.4-1.4-2.1-3.2-2.1-5.4 0-2.4.8-4.3 2.5-5.7 1.7-1.4 3.9-2.1 6.8-2.1.9 0 1.9.1 2.9.2 1 .1 2.1.3 3.2.6V5.3c0-2-.4-3.4-1.3-4.2-.9-.8-2.4-1.2-4.6-1.2-1 0-2 .1-3 .4-1 .2-2 .6-3 1-.4.2-.8.3-1 .3-.5 0-.7-.4-.7-1.1V-.1c0-.5.1-.9.3-1.1.2-.2.6-.5 1.1-.7 1-.5 2.2-.9 3.6-1.2 1.4-.3 2.9-.5 4.5-.5 3.4 0 5.9.8 7.5 2.3 1.6 1.5 2.4 3.9 2.4 7v9.1h.1zm-11.5 4.3c.9 0 1.8-.2 2.8-.5 1-.3 1.9-.9 2.6-1.8.4-.5.7-1.1.9-1.7.2-.7.3-1.5.3-2.4v-1.2c-.8-.2-1.6-.3-2.4-.4-.8-.1-1.6-.1-2.4-.1-1.7 0-2.9.3-3.8 1-.8.7-1.2 1.6-1.2 2.9 0 1.2.3 2 .9 2.6.7.4 1.5.6 2.3.6zm20.5 2.8c-.6 0-1-.1-1.2-.3-.2-.2-.5-.6-.7-1.2L24 1.9c-.2-.6-.3-1 .1-1.3.2-.2.6-.3 1.1-.3h2.2c.6 0 1 .1 1.2.3.2.2.4.6.6 1.2l5.2 20.4 4.8-20.4c.2-.7.4-1 .6-1.2.2-.2.7-.3 1.2-.3h1.8c.6 0 1 .1 1.2.3.2.2.5.6.6 1.2l4.9 20.7L54 1.8c.2-.6.4-1 .6-1.2.2-.2.6-.3 1.2-.3h2.1c.5 0 .9.1 1.1.3.2.2.3.7.1 1.3l-6.2 17.7c-.2.7-.5 1-.7 1.2-.2.2-.7.3-1.2.3h-1.9c-.6 0-1-.1-1.2-.3-.2-.2-.5-.6-.6-1.2l-4.8-20-4.8 20c-.2.6-.4 1-.6 1.2-.2.2-.7.3-1.2.3h-2.2zm33.2.7c-1.1 0-2.3-.1-3.4-.4-1.1-.3-2-.6-2.6-1-.4-.2-.6-.5-.7-.7-.1-.2-.1-.5-.1-.8v-1.5c0-.7.3-1.1.8-1.1.2 0 .4 0 .6.1.2.1.5.2.8.3.9.4 1.9.7 2.9.9 1 .2 2 .3 3 .3 1.6 0 2.8-.3 3.7-.8.9-.5 1.3-1.3 1.3-2.3 0-.7-.2-1.2-.7-1.7-.4-.5-1.3-.9-2.6-1.3l-3.7-1.2c-1.9-.6-3.3-1.5-4.1-2.7-.8-1.2-1.2-2.5-1.2-3.9 0-1.1.2-2.1.7-3 .5-.9 1.1-1.6 1.9-2.2.8-.6 1.7-1 2.8-1.4 1.1-.3 2.3-.5 3.5-.5.6 0 1.2 0 1.9.1.7.1 1.3.2 1.9.3.6.1 1.2.3 1.7.5.5.2.9.4 1.2.6.4.2.7.5.8.8.1.2.2.5.2.9v1.4c0 .7-.3 1.1-.8 1.1-.3 0-.7-.1-1.2-.4-1.8-.8-3.8-1.2-6-1.2-1.4 0-2.6.2-3.4.7-.8.5-1.2 1.2-1.2 2.2 0 .7.2 1.3.7 1.7.5.4 1.4.9 2.8 1.3l3.7 1.2c1.8.6 3.2 1.4 4 2.5.8 1 1.2 2.2 1.2 3.6 0 1.1-.2 2.1-.7 3-.5.9-1.1 1.7-2 2.4-.9.7-1.9 1.1-3 1.5-1.2.3-2.4.5-3.8.5z" fill="#FF9900" /></svg>
                   AWS PARTNER
                 </span>
                 <span className="marquee-item">
-                  <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" /><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" /><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" /><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" /></svg>
                   GOOGLE CLOUD
                 </span>
                 <span className="marquee-item">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#C8202F"><path d="M12 2L3 7v10l9 5 9-5V7L12 2zm0 2.5l7 3.9v7.2l-7 3.9-7-3.9V8.4l7-3.9z"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#C8202F"><path d="M12 2L3 7v10l9 5 9-5V7L12 2zm0 2.5l7 3.9v7.2l-7 3.9-7-3.9V8.4l7-3.9z" /></svg>
                   COMPTIA
                 </span>
                 <span className="marquee-item">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#10b981"><path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#10b981"><path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z" /></svg>
                   NASTP
                 </span>
                 <span className="marquee-item">
-                  <svg width="20" height="20" viewBox="0 0 24 24"><path d="M11.5 0h-11.5v11.5h11.5v-11.5zm12.5 0h-11.5v11.5h11.5v-11.5zm-12.5 12.5h-11.5v11.5h11.5v-11.5zm12.5 0h-11.5v11.5h11.5v-11.5z" fill="#00A4EF"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24"><path d="M11.5 0h-11.5v11.5h11.5v-11.5zm12.5 0h-11.5v11.5h11.5v-11.5zm-12.5 12.5h-11.5v11.5h11.5v-11.5zm12.5 0h-11.5v11.5h11.5v-11.5z" fill="#00A4EF" /></svg>
                   MICROSOFT
                 </span>
                 <span className="marquee-item">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#FCC624"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#FCC624"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" /></svg>
                   LINUX
                 </span>
               </div>
@@ -656,8 +672,8 @@ export default function Home() {
               {team.map((member, index) => (
                 <div key={index} className="team-card">
                   <div className="team-image-container">
-                    <img 
-                      src={member.image} 
+                    <img
+                      src={member.image}
                       alt={member.name}
                       className="team-image"
                       loading="lazy"
@@ -676,41 +692,41 @@ export default function Home() {
           <h2 className="section-title">STUDENT <span className="text-green">SUCCESS</span></h2>
           <p className="section-subtitle">Real stories from real learners who transformed their careers</p>
           <div className="testimonial-grid">
-          {testimonials.map((item, index) => (
-  <div key={index} className="testimonial-card">
+            {testimonials.map((item, index) => (
+              <div key={index} className="testimonial-card">
 
-    {/* Stars upar */}
-    <div className="testimonial-stars">
-      {renderStars(item.rating)}
-    </div>
+                {/* Stars upar */}
+                <div className="testimonial-stars">
+                  {renderStars(item.rating)}
+                </div>
 
-    {/* Quote middle */}
-    <p className="testimonial-quote">"{item.text}"</p>
+                {/* Quote middle */}
+                <p className="testimonial-quote">"{item.text}"</p>
 
-    {/* Divider */}
-    <div className="testimonial-divider"></div>
+                {/* Divider */}
+                <div className="testimonial-divider"></div>
 
-    {/* Avatar neeche */}
-    <div className="testimonial-footer">
-      <div className="testimonial-avatar">{item.letter}</div>
-      <div>
-        <div className="testimonial-name">{item.name}</div>
-        <div className="testimonial-course">{item.course}</div>
-      </div>
-    </div>
+                {/* Avatar neeche */}
+                <div className="testimonial-footer">
+                  <div className="testimonial-avatar">{item.letter}</div>
+                  <div>
+                    <div className="testimonial-name">{item.name}</div>
+                    <div className="testimonial-course">{item.course}</div>
+                  </div>
+                </div>
 
-  </div>
-))}
+              </div>
+            ))}
           </div>
         </div>
 
         <FAQ />
-        
+
 
         <div className="texteffect-wrapper">
           <TextEffect />
-          </div>
-          
+        </div>
+
 
         <CTA />
       </div>
