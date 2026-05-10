@@ -19,6 +19,7 @@ export default function Home() {
   const statsRef = useRef<HTMLDivElement>(null);
   const teamRef = useRef<HTMLDivElement>(null);
   const testimonialsRef = useRef<HTMLDivElement>(null);
+  const partnersRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Stats cards animation
@@ -33,13 +34,26 @@ export default function Home() {
         }
       );
     }
+    
+    // Partners animation
+    if (partnersRef.current) {
+      gsap.fromTo(
+        partnersRef.current.querySelectorAll('.partner-card, .certificate-card'),
+        { y: 50, opacity: 0 },
+        {
+          y: 0, opacity: 1,
+          duration: 1, stagger: 0.2, ease: 'power4.out',
+          scrollTrigger: { trigger: partnersRef.current, start: 'top 85%' }
+        }
+      );
+    }
   }, []);
 
   const team = [
     { 
       name: 'Abdul Moiz', 
       role: 'Founder', 
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face&auto=format', 
+      image: '/images/moiz.jpeg', 
       desc: 'Driving the macro-vision of YUNI to build an unparalleled educational empire.' 
     }
   ];
@@ -199,6 +213,79 @@ export default function Home() {
           color: var(--text-secondary);
           line-height: 1.7;
         }
+
+        .partners-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          margin-top: 3rem;
+        }
+        @media (min-width: 768px) {
+          .partners-grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
+
+        .partner-card {
+          padding: 2rem;
+          background: var(--bg-secondary);
+          border: 1px solid var(--border-light);
+          border-radius: var(--card-radius);
+          text-align: center;
+          transition: all 0.3s ease;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
+        }
+
+        .partner-card:hover {
+          border-color: var(--pk-green);
+          background: var(--bg-primary);
+          box-shadow: 0 10px 30px var(--glass-shadow);
+        }
+
+        .partner-logo {
+          max-width: 150px;
+          height: auto;
+          mix-blend-mode: multiply;
+          border-radius: 8px;
+        }
+
+        .certificate-card {
+          grid-column: 1 / -1;
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
+          padding: 3rem;
+          background: var(--bg-secondary);
+          border: 1px solid var(--border-light);
+          border-radius: var(--card-radius);
+          align-items: center;
+          text-align: center;
+        }
+
+        @media (min-width: 1024px) {
+          .certificate-card {
+            flex-direction: row;
+            text-align: left;
+            align-items: center;
+            justify-content: space-between;
+          }
+        }
+
+        .certificate-img {
+          max-width: 100%;
+          border-radius: 12px;
+          border: 4px solid var(--border-light);
+          box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        @media (min-width: 1024px) {
+          .certificate-img {
+            max-width: 50%;
+          }
+        }
       `}</style>
 
       <AnimatedBackground />
@@ -256,6 +343,47 @@ export default function Home() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="section-container" ref={partnersRef}>
+        <AnimatedTitle className="section-title">Community Partners & Registrations</AnimatedTitle>
+        <p style={{textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '3rem', maxWidth: '800px', margin: '0 auto'}}>
+          We are officially partnered and registered with top industry and government entities to ensure our trainings meet the highest standards.
+        </p>
+        <div className="partners-grid">
+          <div className="partner-card">
+            <img src="/images/logo1.png" alt="NICAT" className="partner-logo" />
+            <h3 style={{fontSize: '1.2rem', fontWeight: 'bold'}}>NICAT</h3>
+            <p style={{color: 'var(--text-tertiary)', fontSize: '0.9rem'}}>Official Community Partner</p>
+          </div>
+          <div className="partner-card">
+            <img src="/images/logo2.png" alt="NASTP" className="partner-logo" />
+            <h3 style={{fontSize: '1.2rem', fontWeight: 'bold'}}>NASTP</h3>
+            <p style={{color: 'var(--text-tertiary)', fontSize: '0.9rem'}}>Official Registration Partner</p>
+          </div>
+          <div className="partner-card">
+            <div style={{fontSize: '3rem'}}>🎓</div>
+            <h3 style={{fontSize: '1.2rem', fontWeight: 'bold'}}>Dual Certification</h3>
+            <p style={{color: 'var(--text-tertiary)', fontSize: '0.9rem'}}>Graduates receive both a Training Certification and an Internship Certification.</p>
+          </div>
+
+          <div className="certificate-card">
+            <div style={{flex: 1}}>
+              <h2 style={{fontSize: '2rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--text-primary)'}}>
+                PSEB Certified Training Provider
+              </h2>
+              <p style={{color: 'var(--text-secondary)', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '1.5rem'}}>
+                YUNI Pakistan is officially registered with the Pakistan Software Export Board (PSEB). Our training programs are aligned with national standards, providing you with credentials recognized by top tech companies nationwide.
+              </p>
+              <ul style={{color: 'var(--text-secondary)', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '0.8rem', listStyle: 'none', padding: 0}}>
+                <li>✓ Official Government Recognition</li>
+                <li>✓ Industry-Validated Curriculum</li>
+                <li>✓ Dual Certification Path (Training + Internship)</li>
+              </ul>
+            </div>
+            <img src="/images/pseb-certificate.png" alt="PSEB Certificate" className="certificate-img" />
+          </div>
         </div>
       </section>
 

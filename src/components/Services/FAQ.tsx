@@ -10,35 +10,35 @@ const faqs = [
   },
   {
     question: "Do I get a certificate upon completion?",
-    answer: "Yes! All students receive an industry-recognized certificate upon successfully completing their course and assessments. Many of our certifications are also accredited and recognized by leading industry partners."
+    answer: "Yes! All students receive Dual Certifications upon successfully completing their training and assessments: a Training Certification and an Internship Certification. Many of our certifications are also accredited and recognized by leading industry partners."
   },
   {
     question: "What are the payment methods accepted?",
-    answer: "We accept bank transfers to Meezan Bank, Easypaisa, and JazzCash. Detailed payment instructions are provided during the checkout process. EMI options are also available for select courses."
+    answer: "We accept bank transfers to Meezan Bank, Easypaisa, and JazzCash. Detailed payment instructions are provided during the checkout process. EMI options are also available for select trainings."
   },
   {
     question: "Can I get a refund if I change my mind?",
-    answer: "Yes, we offer a 7-day refund window after course start date, provided you have completed less than 20% of the course content. Refund requests must be submitted in writing to support@yunipakistan.com."
+    answer: "Yes, we offer a 7-day refund window after the training start date, provided you have completed less than 20% of the training content. Refund requests must be submitted in writing to support@yunipakistan.com."
   },
   {
-    question: "Are there any prerequisites for the courses?",
-    answer: "Prerequisites vary by course. Beginner-level courses require no prior experience. Intermediate courses recommend basic understanding of the subject. Advanced courses require prior knowledge or completion of prerequisite courses. Check individual course pages for specific requirements."
+    question: "Are there any prerequisites for the trainings?",
+    answer: "Prerequisites vary by training. Beginner-level trainings require no prior experience. Intermediate trainings recommend basic understanding of the subject. Advanced trainings require prior knowledge or completion of prerequisite trainings. Check individual training pages for specific requirements."
   },
   {
-    question: "How long will I have access to the course materials?",
-    answer: "You receive lifetime access to all course materials, video lectures, and resources after enrollment. This includes future updates to the course content at no additional cost."
+    question: "How long will I have access to the training materials?",
+    answer: "You receive lifetime access to all training materials, video lectures, and resources after enrollment. This includes future updates to the training content at no additional cost."
   },
   {
     question: "Do you offer job placement assistance?",
     answer: "Yes, we provide career support including resume reviews, interview preparation, and connections to our hiring partner network. Our graduates have been placed at leading tech companies across Pakistan."
   },
   {
-    question: "Can I take multiple courses simultaneously?",
-    answer: "Yes, you can enroll in multiple courses. However, we recommend managing your workload carefully. Contact our academic advisors for a personalized learning plan if you plan to take more than two courses at once."
+    question: "Can I take multiple trainings simultaneously?",
+    answer: "Yes, you can enroll in multiple trainings. However, we recommend managing your workload carefully. Contact our academic advisors for a personalized learning plan if you plan to take more than two trainings at once."
   },
   {
-    question: "What technical requirements do I need for online courses?",
-    answer: "You need a reliable internet connection (minimum 10 Mbps), a laptop or desktop computer (8GB RAM recommended), a webcam for proctored exams, and Zoom installed for live sessions. Specific software requirements are listed on each course page."
+    question: "What technical requirements do I need for online trainings?",
+    answer: "You need a reliable internet connection (minimum 10 Mbps), a laptop or desktop computer (8GB RAM recommended), a webcam for proctored exams, and Zoom installed for live sessions. Specific software requirements are listed on each training page."
   },
   {
     question: "Do you offer group discounts for organizations?",
@@ -46,7 +46,7 @@ const faqs = [
   },
   {
     question: "What is the class schedule like?",
-    answer: "Classes are typically held in evening slots (6 PM - 9 PM) on weekdays and weekend batches are available on Saturday and Sunday. Specific schedules vary by course and are shared upon enrollment."
+    answer: "Classes are typically held in evening slots (6 PM - 9 PM) on weekdays and weekend batches are available on Saturday and Sunday. Specific schedules vary by training and are shared upon enrollment."
   },
   {
     question: "Are instructors industry professionals?",

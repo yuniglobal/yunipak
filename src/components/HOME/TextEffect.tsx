@@ -100,7 +100,7 @@ const TextEffect = () => {
           line-height: 1.2;
           margin: 0;
           width: 100%;
-          color: var(--text-tertiary);
+          color: rgba(100, 116, 139, 0.2);
           background: linear-gradient(to right, var(--text-primary), var(--text-primary)) no-repeat;
           -webkit-background-clip: text;
           background-clip: text;

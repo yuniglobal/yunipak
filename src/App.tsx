@@ -1,6 +1,7 @@
 import { useLayoutEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -11,6 +12,8 @@ import Careers from './pages/Careers';
 import Events from './pages/Events';
 import CoursesPage from './pages/Courses';
 import './styles.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const location = useLocation();

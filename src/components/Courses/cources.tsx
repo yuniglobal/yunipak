@@ -590,6 +590,7 @@ const Courses: React.FC = () => {
               <h3>Strategic Outcomes</h3>
               <div className="outcomes-grid">
                 {[
+                  "Dual Certifications (Training + Internship)",
                   "Hands-on architectural implementation",
                   "Expert-led deep dive sessions",
                   "Exclusive industry ecosystem access",
