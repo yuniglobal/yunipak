@@ -292,7 +292,7 @@ const Navbar = () => {
 
       <div className="navbar-container">
         <div className="nav-logo" onClick={() => navigate('/')}>
-          YUNI<span>.</span>
+          <img src="/images/logo1.png" alt="YUNI" style={{height: '35px', width: 'auto'}} />
         </div>
 
         <div className="nav-links">

@@ -50,6 +50,7 @@ const Footer = () => {
         .footer-tech {
           background: var(--bg-primary);
           position: relative;
+          z-index: 100;
           overflow: hidden;
           padding-top: 5rem;
         }
@@ -235,7 +236,9 @@ const Footer = () => {
       <div className="footer-content">
         <div className="footer-main">
           <div className="footer-brand">
-            <div className="footer-logo">YUNI<span>.</span></div>
+            <div className="footer-logo">
+              <img src="/images/logo2.png" alt="YUNI" style={{height: '50px', width: 'auto'}} />
+            </div>
             <p className="footer-desc">
               The technical benchmark of Pakistan. Based at NASTP, 
               we are architecting the next generation of engineers, 
