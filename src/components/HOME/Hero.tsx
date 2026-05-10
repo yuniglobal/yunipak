@@ -10,7 +10,7 @@ export default function Hero() {
 
   const subRef = useRef<HTMLParagraphElement>(null);
   const btnsRef = useRef<HTMLDivElement>(null);
-  
+
   // Three.js Refs
   const sceneRef = useRef<THREE.Scene | null>(null);
   const particlesRef = useRef<THREE.Points | null>(null);
@@ -100,16 +100,16 @@ export default function Hero() {
 
     const animate = () => {
       const id = requestAnimationFrame(animate);
-      
+
       // Calculate target rotations based on mouse position
       // Mouse Y controls rotation around X axis, Mouse X controls rotation around Y axis
       targetRotationX = mouseRef.current.y * 0.8;
       targetRotationY = mouseRef.current.x * 0.8;
-      
+
       // Smoothly interpolate current rotation towards the target (fluidity)
       currentRotationX += (targetRotationX - currentRotationX) * 0.05;
       currentRotationY += (targetRotationY - currentRotationY) * 0.05;
-      
+
       // Base continuous rotation based on time so it never completely stops
       const time = Date.now() * 0.0001;
 
@@ -117,11 +117,11 @@ export default function Hero() {
       // Scroll adds a slight tilt
       particles.rotation.x = currentRotationX + scrollRef.current * 0.0005;
       particles.rotation.y = currentRotationY + time;
-      
+
       // Camera parallax effect for deeper 3D feel
       const targetCameraX = mouseRef.current.x * 30;
       const targetCameraY = mouseRef.current.y * 30;
-      
+
       camera.position.x += (targetCameraX - camera.position.x) * 0.03;
       camera.position.y += (targetCameraY - camera.position.y) * 0.03;
       camera.lookAt(scene.position);
@@ -154,7 +154,7 @@ export default function Hero() {
   // Entrance Animations
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: 'expo.out', duration: 1.8 } });
-    
+
     tl.fromTo('.hero-title-main', { y: 150, opacity: 0, skewY: 10 }, { y: 0, opacity: 1, skewY: 0, delay: 0.3 })
       .fromTo('.hero-title-accent', { y: 80, opacity: 0 }, { y: 0, opacity: 1 }, '-=1.4')
       .fromTo(subRef.current, { y: 40, opacity: 0 }, { y: 0, opacity: 1 }, '-=1.2')
@@ -279,8 +279,8 @@ export default function Hero() {
       <div className="hero-content">
         <div>
           <div className="hero-badge">
-            <span style={{width: 8, height: 8, background: 'var(--pk-green)', borderRadius: '50%', boxShadow: '0 0 10px var(--pk-green)'}}></span>
-            PROTOCOLS ONLINE
+            <span style={{ width: 8, height: 8, background: 'var(--pk-green)', borderRadius: '50%', boxShadow: '0 0 10px var(--pk-green)' }}></span>
+
           </div>
         </div>
 
@@ -290,15 +290,15 @@ export default function Hero() {
         </h1>
 
         <p className="hero-sub" ref={subRef}>
-          Stop consuming technology. Start architecting it. 
-          The elite technical fellowship at NASTP is now accepting 
+          Stop consuming technology. Start architecting it.
+          The elite technical fellowship at NASTP is now accepting
           the next generation of Pakistani engineers.
         </p>
 
         <div className="hero-btns" ref={btnsRef}>
           <button className="btn-tech btn-tech-primary" onClick={() => navigate('/Programs')}>
             Initialize Training
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
           </button>
           <button className="btn-tech btn-tech-outline" onClick={() => navigate('/contact')}>
             Consult Architects

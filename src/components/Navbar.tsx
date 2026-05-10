@@ -56,7 +56,7 @@ const Navbar = () => {
       <style>{`
         .navbar-wrapper {
           position: fixed;
-          top: calc(var(--banner-height, 0px) + 12px);
+          top: calc(var(--banner-height, 0px) + 8px);
           left: 0;
           width: 100%;
           z-index: 1000;
@@ -148,7 +148,7 @@ const Navbar = () => {
 
         .nav-links {
           display: none;
-          gap: 1.5rem;
+          gap: 2rem;
         }
 
         @media (min-width: 1024px) {
@@ -304,7 +304,7 @@ const Navbar = () => {
                 className={`nav-link ${location.pathname === link.path ? 'active' : ''}`}
                 onClick={() => handleNavigate(link.path)}
               >
-                <Icon size={18} />
+                <Icon size={18} strokeWidth={2.5} />
                 <span>{link.name}</span>
               </div>
             );
@@ -313,7 +313,7 @@ const Navbar = () => {
 
         <div className="nav-actions">
           <div className="theme-toggle" onClick={toggleTheme}>
-            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+            {theme === 'dark' ? <Sun size={20} strokeWidth={2.5} /> : <Moon size={20} strokeWidth={2.5} />}
           </div>
           
           <button className="btn-enroll" onClick={() => navigate('/Programs')}>
@@ -321,7 +321,7 @@ const Navbar = () => {
           </button>
 
           <div className="mobile-toggle" onClick={() => setIsOpen(true)}>
-            <Menu size={24} />
+            <Menu size={24} strokeWidth={2.5} />
           </div>
         </div>
       </div>
