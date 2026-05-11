@@ -94,16 +94,16 @@ const Navbar = () => {
         /* --- Contracted State Styles --- */
         .contracted .navbar-container {
           max-width: max-content;
-          padding: 0.5rem 1.5rem;
+          padding: 0.5rem 1.25rem;
           background: var(--glass-bg-heavy);
+          gap: 0.75rem;
         }
 
         .contracted .nav-logo {
-          max-width: 0;
-          opacity: 0;
-          margin: 0;
-          padding: 0;
-          overflow: hidden;
+          max-width: 80px;
+          opacity: 1;
+          margin-right: 0.5rem;
+          overflow: visible;
         }
 
         .contracted .nav-link span {
@@ -124,6 +124,12 @@ const Navbar = () => {
           padding: 0;
           margin: 0;
           overflow: hidden;
+        }
+
+        @media (max-width: 1024px) {
+          .contracted .theme-toggle {
+            display: none;
+          }
         }
 
         /* ------------------------------- */
