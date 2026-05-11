@@ -254,39 +254,55 @@ const Navbar = () => {
           }
         }
 
-        /* Mobile Menu */
+        /* Mobile Menu Overlay */
         .mobile-menu {
           position: fixed;
           top: 0;
           left: 0;
           width: 100%;
           height: 100vh;
-          background: var(--bg-primary);
+          background: var(--glass-bg-heavy);
+          backdrop-filter: blur(25px) saturate(200%);
+          -webkit-backdrop-filter: blur(25px) saturate(200%);
           z-index: 2000;
           display: flex;
           flex-direction: column;
-          padding: 2rem;
+          padding: 2.5rem;
           transform: translateX(100%);
-          transition: transform 0.5s var(--transition-smooth);
+          transition: all 0.6s var(--transition-smooth);
+          pointer-events: auto;
+          visibility: hidden;
         }
 
         .mobile-menu.open {
           transform: translateX(0);
+          visibility: visible;
         }
 
         .mobile-nav-link {
-          font-size: 2.5rem;
+          font-size: 2.2rem;
           font-family: 'Space Grotesk', sans-serif;
           font-weight: 800;
           color: var(--text-primary);
-          margin-bottom: 1.5rem;
+          margin-bottom: 1rem;
           display: flex;
           align-items: center;
           justify-content: space-between;
+          padding: 1rem 0;
+          border-bottom: 1px solid var(--glass-border);
+          transition: all 0.3s ease;
+          cursor: pointer;
         }
 
         .mobile-nav-link:hover {
           color: var(--pk-green);
+          padding-left: 1rem;
+        }
+
+        .mobile-nav-link span {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
         }
       `}</style>
 
@@ -328,20 +344,42 @@ const Navbar = () => {
 
       {/* Mobile Menu Overlay */}
       <div className={`mobile-menu ${isOpen ? 'open' : ''}`}>
-        <div style={{display: 'flex', justifyContent: 'flex-end', marginBottom: '4rem'}}>
-          <X size={32} onClick={() => setIsOpen(false)} style={{cursor: 'pointer'}} />
+        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem'}}>
+          <img src="/images/logo1.png" alt="YUNI" style={{height: '40px', width: 'auto'}} />
+          <div 
+            onClick={() => setIsOpen(false)} 
+            style={{
+              cursor: 'pointer',
+              width: '48px',
+              height: '48px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '50%',
+              background: 'rgba(255,255,255,0.05)',
+              border: '1px solid var(--glass-border)'
+            }}
+          >
+            <X size={32} strokeWidth={2.5} />
+          </div>
         </div>
         
-        {navLinks.map((link) => (
-          <div 
-            key={link.path} 
-            className="mobile-nav-link"
-            onClick={() => handleNavigate(link.path)}
-          >
-            {link.name}
-            <ChevronRight size={32} />
-          </div>
-        ))}
+        {navLinks.map((link) => {
+          const Icon = link.icon;
+          return (
+            <div 
+              key={link.path} 
+              className="mobile-nav-link"
+              onClick={() => handleNavigate(link.path)}
+            >
+              <span>
+                <Icon size={28} strokeWidth={2.5} />
+                {link.name}
+              </span>
+              <ChevronRight size={32} />
+            </div>
+          );
+        })}
 
         <div style={{marginTop: 'auto', paddingBottom: '4rem'}}>
           <button 
