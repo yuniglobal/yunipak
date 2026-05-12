@@ -671,6 +671,33 @@ const DesktopExperience: React.FC = () => {
 
 // ==================== MOBILE ABOUT (CARDS + RAINBOW) ====================
 const MobileAbout: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const cards = document.querySelectorAll('.mobile-about-card');
+    cards.forEach((card) => {
+      gsap.fromTo(card,
+        { 
+          y: 60, 
+          opacity: 0,
+          scale: 0.95
+        },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 1.2,
+          ease: "expo.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    });
+  }, []);
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -729,62 +756,107 @@ const MobileAbout: React.FC = () => {
       </div>
 
       {/* Content */}
-      <section style={{
+      <section ref={containerRef} style={{
         position: 'relative',
         zIndex: 10,
         maxWidth: '1000px',
         margin: '0 auto',
         padding: '10rem 1.5rem 6rem',
       }}>
-        <h1 style={{
-          fontSize: 'clamp(2.5rem, 10vw, 4.5rem)',
-          fontWeight: 900,
-          color: 'var(--text-primary)',
-          marginBottom: '0.8rem',
-          letterSpacing: '-0.03em',
-          lineHeight: 1,
-        }}>YUNI</h1>
-        <p style={{
-          fontSize: '1.4rem',
-          color: 'var(--pk-green)',
-          marginBottom: '4rem',
-          fontWeight: 700,
-          opacity: 0.9,
-        }}>Establish Dominance. 🦅</p>
+        <div className="mobile-about-header" style={{ marginBottom: '5rem' }}>
+          <h1 style={{
+            fontSize: 'clamp(3rem, 15vw, 5rem)',
+            fontWeight: 900,
+            color: 'var(--text-primary)',
+            marginBottom: '0.5rem',
+            letterSpacing: '-0.04em',
+            lineHeight: 0.9,
+          }}>YUNI</h1>
+          <p style={{
+            fontSize: '1.2rem',
+            color: 'var(--pk-green)',
+            fontWeight: 700,
+            letterSpacing: '0.2em',
+            textTransform: 'uppercase',
+            opacity: 0.9,
+          }}>Intelligence 🦅</p>
+        </div>
 
-        <div style={cardStyle} className="card-glow-border" onMouseMove={handleMouseMove}>
-          <h2 style={headingStyle}>Ideology</h2>
+        {/* 0. Intelligence */}
+        <div style={cardStyle} className="card-glow-border mobile-about-card" onMouseMove={handleMouseMove}>
+          <h2 style={headingStyle}>Intelligence</h2>
           <p style={paragraphStyle}>
-            <span style={strongStyle}>Khudi</span> — Self-realization is the ignition.
+            Yuni exists to <span style={strongStyle}>awaken the youth</span> of Pakistan, 
+            transforming raw data into operational power.
           </p>
           <p style={paragraphStyle}>
-            <span style={strongStyle}>Knowledge</span> — Information is the ammunition.
-          </p>
-          <p style={paragraphStyle}>
-            <span style={strongStyle}>Independence</span> — Economic sovereignty is the objective.
+            Inspired by the meta-philosophies of <span style={strongStyle}>Dr. Allama Iqbal</span>, 
+            we provide a 360° tactical ecosystem.
           </p>
         </div>
 
-        <div style={cardStyle} className="card-glow-border" onMouseMove={handleMouseMove}>
-          <h2 style={headingStyle}>Ecosystem</h2>
-          <p style={paragraphStyle}><span style={strongStyle}>Yuni-Buddy</span> — Elite connectivity nodes.</p>
-          <p style={paragraphStyle}><span style={strongStyle}>Yuni-Trainings</span> — Tactical skill acquisition.</p>
-          <p style={paragraphStyle}><span style={strongStyle}>Yuni-Coworking</span> — Innovation strongholds.</p>
+        {/* 1. Core Ideology */}
+        <div style={cardStyle} className="card-glow-border mobile-about-card" onMouseMove={handleMouseMove}>
+          <h2 style={headingStyle}>Core Ideology</h2>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Khudi</span> — Self‑realization is the ignition. Through education and discipline, students become agents of evolution.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Knowledge</span> — Intellectual sovereignty is the foundation of a strong state.
+          </p>
         </div>
 
-        <div style={cardStyle} className="card-glow-border" onMouseMove={handleMouseMove}>
-          <h2 style={headingStyle}>Future State</h2>
+        {/* 2. The Ecosystem */}
+        <div style={cardStyle} className="card-glow-border mobile-about-card" onMouseMove={handleMouseMove}>
+          <h2 style={headingStyle}>The Ecosystem</h2>
           <p style={paragraphStyle}>
-            The current system is obsolete. Yuni is the upgrade.
+            <span style={strongStyle}>Yuni‑Buddy</span> — Neural network of connectivity and global resource access.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Yuni‑Trainings</span> — Intensive, project‑driven tactical modules.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Yuni‑Coworking</span> — Physical hubs for collaboration at NASTP.
+          </p>
+        </div>
+
+        {/* 3. Operational Nodes */}
+        <div style={cardStyle} className="card-glow-border mobile-about-card" onMouseMove={handleMouseMove}>
+          <h2 style={headingStyle}>Operational Nodes</h2>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Parwaaz‑e‑Uqabi</span> — Nationwide connectivity and global scholarship pathways.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Umeed‑e‑Sahar</span> — Real‑world project implementation. We validate expertise through results.
+          </p>
+        </div>
+
+        {/* 4. Strategic Hubs */}
+        <div style={cardStyle} className="card-glow-border mobile-about-card" onMouseMove={handleMouseMove}>
+          <h2 style={headingStyle}>Strategic Hubs</h2>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Taqat‑e‑Parwaaz</span> — Elevating Pakistan's digital footprint via AI infrastructure.
+          </p>
+          <p style={paragraphStyle}>
+            <span style={strongStyle}>Yuni‑Anjuman</span> — Premium environments designed for peak focus and collaborative breakthroughs.
+          </p>
+        </div>
+
+        {/* 5. Future Horizon */}
+        <div style={cardStyle} className="card-glow-border mobile-about-card" onMouseMove={handleMouseMove}>
+          <h2 style={headingStyle}>Future Horizon</h2>
+          <p style={paragraphStyle}>
+            The void ahead is not empty—it is <span style={strongStyle}>latency</span>.
           </p>
           <p style={paragraphStyle}>
             <span style={strongStyle}>Initialize deployment.</span> Rise as a Shaheen.
           </p>
           <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-            <span className="premium-tag">Coming Soon</span>
+            <span className="premium-tag">System Ready</span>
           </div>
         </div>
       </section>
+
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
