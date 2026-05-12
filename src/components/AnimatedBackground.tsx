@@ -30,12 +30,20 @@ export default function AnimatedBackground() {
         return;
       }
 
-      // Exact follow for the glow, easing for orbs
-      mouseX += (targetX - mouseX) * 0.15;
-      mouseY += (targetY - mouseY) * 0.15;
+      // Liquid movement for the glow (slower easing for fluid feel)
+      const dx = targetX - mouseX;
+      const dy = targetY - mouseY;
+      
+      mouseX += dx * 0.08;
+      mouseY += dy * 0.08;
 
       if (glow) {
-        glow.style.transform = `translate3d(${targetX - 500}px, ${targetY - 500}px, 0)`;
+        // Calculate velocity for stretching effect
+        const velocity = Math.sqrt(dx * dx + dy * dy);
+        const scale = 1 + Math.min(velocity * 0.001, 0.2);
+        const rotation = Math.atan2(dy, dx) * (180 / Math.PI);
+        
+        glow.style.transform = `translate3d(${mouseX - 500}px, ${mouseY - 500}px, 0) rotate(${rotation}deg) scale(${scale}, ${1 / scale})`;
       }
 
       orbs.forEach((orb, i) => {
