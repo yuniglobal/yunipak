@@ -2,12 +2,14 @@ import { useEffect, useRef } from 'react';
 
 export default function AnimatedBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     const orbs = container.querySelectorAll('.liquid-orb');
+    const glow = glowRef.current;
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     let targetX = mouseX;
@@ -21,25 +23,26 @@ export default function AnimatedBackground() {
     window.addEventListener('mousemove', handleMouseMove);
 
     let animationFrameId: number;
-    const isLowPerf = document.documentElement.getAttribute('data-perf') === 'low';
     
     const update = () => {
-      // Pause if tab is not visible or if we want to save power
       if (document.visibilityState === 'hidden') {
         animationFrameId = requestAnimationFrame(update);
         return;
       }
 
-      // Easing for liquid feel
-      mouseX += (targetX - mouseX) * 0.05;
-      mouseY += (targetY - mouseY) * 0.05;
+      // Exact follow for the glow, easing for orbs
+      mouseX += (targetX - mouseX) * 0.15;
+      mouseY += (targetY - mouseY) * 0.15;
+
+      if (glow) {
+        glow.style.transform = `translate3d(${targetX - 500}px, ${targetY - 500}px, 0)`;
+      }
 
       orbs.forEach((orb, i) => {
         const speed = 0.02 + (i * 0.01);
         const xOffset = Math.sin(Date.now() * 0.001 * speed + i) * 100;
         const yOffset = Math.cos(Date.now() * 0.001 * speed + i) * 100;
         
-        // Combine mouse position with floating movement
         const x = mouseX + xOffset - (window.innerWidth / 2);
         const y = mouseY + yOffset - (window.innerHeight / 2);
         
@@ -59,10 +62,15 @@ export default function AnimatedBackground() {
 
   return (
     <div className="liquid-bg-container" ref={containerRef}>
-      <div className="liquid-orb orb-1"></div>
-      <div className="liquid-orb orb-2"></div>
-      <div className="liquid-orb orb-3"></div>
-      <div className="liquid-orb orb-4"></div>
+      <div className="liquid-background">
+        <div ref={glowRef} className="mouse-glow" />
+        <div className="liquid-container">
+          <div className="liquid-orb orb-1"></div>
+          <div className="liquid-orb orb-2"></div>
+          <div className="liquid-orb orb-3"></div>
+          <div className="liquid-orb orb-4"></div>
+        </div>
+      </div>
       <div className="noise-overlay"></div>
       
       <style>{`
@@ -95,10 +103,28 @@ export default function AnimatedBackground() {
         }
 
         .orb-1 {
-          background: radial-gradient(circle, var(--pk-green) 0%, transparent 70%);
+          background: radial-gradient(circle at 50% 50%, var(--bg-primary) 0%, #000 100%);
           width: 70vw;
           height: 70vw;
           opacity: 0.3;
+        }
+
+        .mouse-glow {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 1000px;
+          height: 1000px;
+          background: radial-gradient(circle at center, rgba(0, 230, 118, 0.08) 0%, transparent 70%);
+          pointer-events: none;
+          z-index: -4;
+          will-change: transform;
+          filter: blur(80px);
+        }
+
+        [data-perf="low"] .mouse-glow,
+        [data-webgl="false"] .mouse-glow {
+          display: none;
         }
 
         .orb-2 {
