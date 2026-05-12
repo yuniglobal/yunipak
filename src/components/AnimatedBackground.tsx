@@ -141,10 +141,15 @@ export default function AnimatedBackground() {
           }
         }
 
-        [data-perf="low"] .liquid-orb {
+        [data-perf="low"] .liquid-orb,
+        [data-webgl="false"] .liquid-orb {
           filter: blur(40px);
           opacity: 0.2;
           will-change: auto; /* Reduce compositor pressure */
+        }
+
+        [data-webgl="false"] .liquid-orb {
+          display: none !important;
         }
       `}</style>
     </div>

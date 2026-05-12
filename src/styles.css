@@ -188,10 +188,19 @@ h1, h2, h3, h4 {
   will-change: backdrop-filter;
 }
 
-[data-perf="low"] .glass-panel {
+[data-perf="low"] .glass-panel,
+[data-webgl="false"] .glass-panel {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   background: var(--glass-bg-heavy);
+}
+
+[data-webgl="false"] .glass-panel {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: rgba(10, 10, 10, 0.95); /* More opaque to mimic glass depth without blur */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none; /* Large shadows are expensive in software */
 }
 
 .mesh-card {
@@ -279,8 +288,9 @@ h1, h2, h3, h4 {
   z-index: 101;
 }
 
-[data-perf="low"] .noise-overlay {
-  display: none;
+[data-perf="low"] .noise-overlay,
+[data-webgl="false"] .noise-overlay {
+  display: none !important;
 }
 
 @keyframes noise-move {

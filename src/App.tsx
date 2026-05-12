@@ -38,7 +38,17 @@ function App() {
                        // @ts-ignore
                        (navigator.deviceMemory && navigator.deviceMemory < 4);
       
+      const checkWebGL = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+        } catch (e) {
+          return false;
+        }
+      };
+
       document.documentElement.setAttribute('data-perf', isLowEnd ? 'low' : 'high');
+      document.documentElement.setAttribute('data-webgl', checkWebGL() ? 'true' : 'false');
     };
     
     checkPerformance();

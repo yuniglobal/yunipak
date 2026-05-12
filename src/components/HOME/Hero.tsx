@@ -207,9 +207,13 @@ export default function Hero() {
         .hero-fallback {
           position: absolute;
           inset: 0;
-          background: radial-gradient(circle at 50% 50%, #0a0a0a 0%, #000 100%);
+          background: #030303;
           z-index: 0;
           overflow: hidden;
+        }
+
+        [data-webgl="false"] .fallback-orb {
+          display: none;
         }
 
         .fallback-orb {
