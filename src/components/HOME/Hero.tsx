@@ -54,14 +54,19 @@ export default function Hero() {
     const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
     camera.position.z = 180;
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    const renderer = new THREE.WebGLRenderer({ 
+      alpha: true, 
+      antialias: window.devicePixelRatio === 1,
+      powerPreference: 'high-performance'
+    });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     containerRef.current.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
     const geometry = new THREE.BufferGeometry();
-    const count = 3000;
+    const isMobile = window.innerWidth < 768;
+    const count = isMobile ? 1500 : 3000;
     const positions = new Float32Array(count * 3);
     for (let i = 0; i < count * 3; i++) {
       positions[i] = (Math.random() - 0.5) * 600;
@@ -153,7 +158,7 @@ export default function Hero() {
 
   // Entrance Animations
   useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: 'expo.out', duration: 1.8 } });
+    const tl = gsap.timeline({ defaults: { ease: 'expo.out', duration: 1.8, force3D: true } });
 
     tl.fromTo('.hero-title-main', { y: 150, opacity: 0, skewY: 10 }, { y: 0, opacity: 1, skewY: 0, delay: 0.3 })
       .fromTo('.hero-title-accent', { y: 80, opacity: 0 }, { y: 0, opacity: 1 }, '-=1.4')
@@ -266,10 +271,11 @@ export default function Hero() {
           background: radial-gradient(circle, var(--pk-green-glow-subtle) 0%, transparent 70%);
           top: -10vw;
           right: -10vw;
-          filter: blur(100px);
+          filter: blur(60px);
           opacity: 0.4;
           z-index: 0;
           pointer-events: none;
+          will-change: filter;
         }
       `}</style>
 

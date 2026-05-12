@@ -35,7 +35,7 @@ export default function AnimatedBackground() {
         const x = mouseX + xOffset - (window.innerWidth / 2);
         const y = mouseY + yOffset - (window.innerHeight / 2);
         
-        (orb as HTMLElement).style.transform = `translate(${x}px, ${y}px)`;
+        (orb as HTMLElement).style.transform = `translate3d(${x}px, ${y}px, 0)`;
       });
 
       animationFrameId = requestAnimationFrame(update);
@@ -79,7 +79,7 @@ export default function AnimatedBackground() {
           margin-left: -30vw;
           margin-top: -30vw;
           border-radius: 50%;
-          filter: blur(120px);
+          filter: blur(80px);
           opacity: 0.4;
           mix-blend-mode: var(--orb-blend-mode);
           pointer-events: none;
@@ -129,7 +129,7 @@ export default function AnimatedBackground() {
             height: 100vw;
             margin-left: -50vw;
             margin-top: -50vw;
-            filter: blur(80px);
+            filter: blur(40px);
           }
         }
       `}</style>

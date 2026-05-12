@@ -16,6 +16,7 @@ import SummerPromoPopup from './components/SummerPromoPopup';
 import './styles.css';
 
 gsap.registerPlugin(ScrollTrigger);
+gsap.config({ force3D: true });
 
 function App() {
   const location = useLocation();

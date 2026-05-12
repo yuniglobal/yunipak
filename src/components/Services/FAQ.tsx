@@ -61,13 +61,20 @@ export default function FAQ() {
     setOpenIndex(openIndex === index ? null : index)
   }
 
+  const rafId = useRef<number | null>(null);
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (rafId.current) return;
+
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
     const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
-    card.style.setProperty('--mouse-x', `${x}%`);
-    card.style.setProperty('--mouse-y', `${y}%`);
+
+    rafId.current = requestAnimationFrame(() => {
+      card.style.setProperty('--mouse-x', `${x}%`);
+      card.style.setProperty('--mouse-y', `${y}%`);
+      rafId.current = null;
+    });
   };
 
   return (
@@ -158,11 +165,13 @@ export default function FAQ() {
 
         .faq-item-premium {
           background: var(--glass-bg);
-          backdrop-filter: blur(20px);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
           border: 1px solid var(--glass-border);
           border-radius: 2rem;
           transition: all 0.5s var(--transition-smooth);
           height: fit-content;
+          will-change: backdrop-filter, transform;
         }
 
         .faq-item-inner {
