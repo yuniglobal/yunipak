@@ -7,7 +7,6 @@ import gsap from 'gsap';
 export default function Hero() {
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement | null>(null);
-
   const subRef = useRef<HTMLParagraphElement>(null);
   const btnsRef = useRef<HTMLDivElement>(null);
 
@@ -15,6 +14,11 @@ export default function Hero() {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const particlesRef = useRef<THREE.Points | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+
+  // Interaction & Performance Refs
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const scrollRef = useRef(0);
+  const [hasWebGL, setHasWebGL] = useState(true);
 
   // Detect theme - direct DOM check is more reliable for Three.js init
   const getInitialTheme = () => document.documentElement.getAttribute('data-theme') || 'dark';
@@ -39,11 +43,22 @@ export default function Hero() {
     }
   };
 
-  // Interaction Refs
-  const mouseRef = useRef({ x: 0, y: 0 });
-  const scrollRef = useRef(0);
-
   useEffect(() => {
+    // WebGL Support Check
+    const checkWebGL = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+      } catch (e) {
+        return false;
+      }
+    };
+
+    if (!checkWebGL()) {
+      setHasWebGL(false);
+      return;
+    }
+
     if (!containerRef.current) return;
 
     const width = containerRef.current.clientWidth;
@@ -54,13 +69,14 @@ export default function Hero() {
     const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
     camera.position.z = 180;
 
+    const isLowPerf = document.documentElement.getAttribute('data-perf') === 'low';
     const renderer = new THREE.WebGLRenderer({ 
       alpha: true, 
-      antialias: window.devicePixelRatio === 1,
+      antialias: window.devicePixelRatio === 1 && !isLowPerf,
       powerPreference: 'high-performance'
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isLowPerf ? 1 : 2));
     containerRef.current.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
@@ -91,7 +107,6 @@ export default function Hero() {
     let currentRotationY = 0;
 
     const handleMouseMove = (event: MouseEvent) => {
-      // Normalize mouse coordinates from -1 to 1
       mouseRef.current.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouseRef.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
     };
@@ -103,27 +118,30 @@ export default function Hero() {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('scroll', handleScroll);
 
+    let isVisible = true;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(containerRef.current);
+
     const animate = () => {
       const id = requestAnimationFrame(animate);
+      if (!isVisible) return id;
 
-      // Calculate target rotations based on mouse position
-      // Mouse Y controls rotation around X axis, Mouse X controls rotation around Y axis
       targetRotationX = mouseRef.current.y * 0.8;
       targetRotationY = mouseRef.current.x * 0.8;
 
-      // Smoothly interpolate current rotation towards the target (fluidity)
       currentRotationX += (targetRotationX - currentRotationX) * 0.05;
       currentRotationY += (targetRotationY - currentRotationY) * 0.05;
 
-      // Base continuous rotation based on time so it never completely stops
       const time = Date.now() * 0.0001;
 
-      // Apply rotations to particles
-      // Scroll adds a slight tilt
       particles.rotation.x = currentRotationX + scrollRef.current * 0.0005;
       particles.rotation.y = currentRotationY + time;
 
-      // Camera parallax effect for deeper 3D feel
       const targetCameraX = mouseRef.current.x * 30;
       const targetCameraY = mouseRef.current.y * 30;
 
@@ -147,6 +165,7 @@ export default function Hero() {
     window.addEventListener('resize', handleResize);
 
     return () => {
+      observer.disconnect();
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
@@ -156,10 +175,8 @@ export default function Hero() {
     };
   }, []);
 
-  // Entrance Animations
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: 'expo.out', duration: 1.8, force3D: true } });
-
     tl.fromTo('.hero-title-main', { y: 150, opacity: 0, skewY: 10 }, { y: 0, opacity: 1, skewY: 0, delay: 0.3 })
       .fromTo('.hero-title-accent', { y: 80, opacity: 0 }, { y: 0, opacity: 1 }, '-=1.4')
       .fromTo(subRef.current, { y: 40, opacity: 0 }, { y: 0, opacity: 1 }, '-=1.2')
@@ -181,11 +198,38 @@ export default function Hero() {
           background: var(--bg-primary);
         }
 
-        .hero-canvas {
+        .hero-canvas-container {
           position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
+          inset: 0;
+          z-index: 1;
+        }
+
+        .hero-fallback {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at 50% 50%, #0a0a0a 0%, #000 100%);
+          z-index: 0;
+          overflow: hidden;
+        }
+
+        .fallback-orb {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(100px);
+          opacity: 0.15;
+          animation: fallback-float 20s infinite alternate ease-in-out;
+        }
+
+        .orb-1 { width: 400px; height: 400px; background: var(--pk-green); top: -10%; left: -10%; }
+        .orb-2 { width: 300px; height: 300px; background: #0085d1; bottom: 10%; right: 10%; animation-delay: -5s; }
+        .orb-3 { width: 250px; height: 250px; background: #9d00ff; top: 40%; left: 30%; animation-delay: -10s; }
+
+        @keyframes fallback-float {
+          from { transform: translate(0, 0) rotate(0deg); }
+          to { transform: translate(100px, 50px) rotate(30deg); }
+        }
+
+        .hero-overlay {
           height: 100%;
           z-index: 1;
           pointer-events: none;
@@ -280,13 +324,21 @@ export default function Hero() {
       `}</style>
 
       <div className="mesh-decor" />
-      <div ref={containerRef} className="hero-canvas" />
+      <div ref={containerRef} className="hero-canvas-container" />
+      
+      {!hasWebGL && (
+        <div className="hero-fallback">
+          <div className="fallback-orb orb-1"></div>
+          <div className="fallback-orb orb-2"></div>
+          <div className="fallback-orb orb-3"></div>
+        </div>
+      )}
 
+      <div className="hero-overlay"></div>
       <div className="hero-content">
         <div>
           <div className="hero-badge">
             <span style={{ width: 8, height: 8, background: 'var(--pk-green)', borderRadius: '50%', boxShadow: '0 0 10px var(--pk-green)' }}></span>
-
           </div>
         </div>
 

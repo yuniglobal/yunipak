@@ -17,6 +17,7 @@ import './styles.css';
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.config({ force3D: true });
+ScrollTrigger.config({ limitCallbacks: true });
 
 function App() {
   const location = useLocation();
@@ -29,6 +30,18 @@ function App() {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
+
+    // Performance/Hardware Detection
+    const checkPerformance = () => {
+      const isLowEnd = (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) || 
+                       (window.innerWidth < 768 && !('deviceMemory' in navigator)) ||
+                       // @ts-ignore
+                       (navigator.deviceMemory && navigator.deviceMemory < 4);
+      
+      document.documentElement.setAttribute('data-perf', isLowEnd ? 'low' : 'high');
+    };
+    
+    checkPerformance();
   }, []);
 
   // Scroll to top on route change, EXCEPT for the Services page (where ScrollMotionPath lives)

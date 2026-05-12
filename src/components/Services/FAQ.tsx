@@ -174,6 +174,12 @@ export default function FAQ() {
           will-change: backdrop-filter, transform;
         }
 
+        [data-perf="low"] .faq-item-premium {
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          background: var(--glass-bg-heavy);
+        }
+
         .faq-item-inner {
           padding: 1.5rem 2rem;
           background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 230, 118, 0.05) 0%, transparent 70%);

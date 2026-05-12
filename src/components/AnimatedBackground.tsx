@@ -21,7 +21,15 @@ export default function AnimatedBackground() {
     window.addEventListener('mousemove', handleMouseMove);
 
     let animationFrameId: number;
+    const isLowPerf = document.documentElement.getAttribute('data-perf') === 'low';
+    
     const update = () => {
+      // Pause if tab is not visible or if we want to save power
+      if (document.visibilityState === 'hidden') {
+        animationFrameId = requestAnimationFrame(update);
+        return;
+      }
+
       // Easing for liquid feel
       mouseX += (targetX - mouseX) * 0.05;
       mouseY += (targetY - mouseY) * 0.05;
@@ -131,6 +139,12 @@ export default function AnimatedBackground() {
             margin-top: -50vw;
             filter: blur(40px);
           }
+        }
+
+        [data-perf="low"] .liquid-orb {
+          filter: blur(40px);
+          opacity: 0.2;
+          will-change: auto; /* Reduce compositor pressure */
         }
       `}</style>
     </div>
