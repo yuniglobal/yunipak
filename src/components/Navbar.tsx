@@ -118,13 +118,6 @@ const Navbar = () => {
           padding: 0.5rem;
         }
 
-        .contracted .btn-enroll {
-          max-width: 0;
-          opacity: 0;
-          padding: 0;
-          margin: 0;
-          overflow: hidden;
-        }
 
         @media (max-width: 1024px) {
           .contracted .theme-toggle {
@@ -220,33 +213,6 @@ const Navbar = () => {
           color: var(--pk-green);
         }
 
-        .btn-enroll {
-          display: none;
-          padding: 0.6rem 1.5rem;
-          background: var(--pk-green);
-          color: #fff;
-          border-radius: 100px;
-          font-weight: 700;
-          font-size: 0.8rem;
-          text-transform: uppercase;
-          transition: all 0.4s ease;
-          max-width: 150px;
-          opacity: 1;
-          white-space: nowrap;
-          border: none;
-          cursor: pointer;
-        }
-
-        @media (min-width: 640px) {
-          .btn-enroll {
-            display: block;
-          }
-        }
-
-        .btn-enroll:hover {
-          background: var(--pk-green-light);
-          transform: scale(1.05);
-        }
 
         .mobile-toggle {
           display: flex;
@@ -338,10 +304,6 @@ const Navbar = () => {
             {theme === 'dark' ? <Sun size={20} strokeWidth={2.5} /> : <Moon size={20} strokeWidth={2.5} />}
           </div>
           
-          <button className="btn-enroll" onClick={() => navigate('/Programs')}>
-            Trainings
-          </button>
-
           <div className="mobile-toggle" onClick={() => setIsOpen(true)}>
             <Menu size={24} strokeWidth={2.5} />
           </div>
