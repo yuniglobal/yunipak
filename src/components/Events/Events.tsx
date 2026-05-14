@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AnimatedTitle from "../AnimatedTitle";
 import AnimatedBackground from "../AnimatedBackground";
-import { GraduationCap, MapPin, Award, CreditCard, UserCheck, ShieldCheck, Calendar, Clock } from 'lucide-react';
+import { MapPin, CreditCard, UserCheck, ShieldCheck, Calendar, Clock } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -139,7 +139,6 @@ const blogPosts: BlogPost[] = [
 
 const Blog: React.FC = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const [currentView, setCurrentView] = useState<"intel" | "registration">("intel");
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [visiblePosts, setVisiblePosts] = useState<number>(6);
