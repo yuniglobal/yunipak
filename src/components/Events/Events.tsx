@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AnimatedTitle from "../AnimatedTitle";
 import AnimatedBackground from "../AnimatedBackground";
+import { GraduationCap, MapPin, Award } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,7 +20,47 @@ interface BlogPost {
   readTime: string;
   imageUrl: string;
   author: string;
+  externalLink?: string;
 }
+
+interface EnrollmentData {
+  fullName: string;
+  fatherName: string;
+  cnic: string;
+  dateOfBirth: string;
+  gender: string;
+  email: string;
+  phoneNumber: string;
+  alternatePhone: string;
+  currentAddress: string;
+  city: string;
+  province: string;
+  highestQualification: string;
+  institution: string;
+  yearOfCompletion: string;
+  percentage: string;
+  courseId: string;
+  courseTitle: string;
+  coursePrice: string;
+  paymentMethod: string;
+  bankName: string;
+  bankAccountTitle: string;
+  bankAccountNumber: string;
+  transactionId: string;
+  transactionDate: string;
+  transactionAmount: string;
+  currentEmployment: string;
+  organization: string;
+  designation: string;
+  hearAboutUs: string;
+  referralCode: string;
+  whyJoin: string;
+  declaration: boolean;
+  timestamp: string;
+  status: string;
+}
+
+const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbxv3FVEPexjV4hLcAWNj6FafStyFzqzrJWzo-Zk8FJFOWkxw-mh9bxNi-ZYbwnLHyfzxg/exec';
 
 const blogPosts: BlogPost[] = [
   {
@@ -96,11 +138,28 @@ const blogPosts: BlogPost[] = [
 ];
 
 const Blog: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [currentView, setCurrentView] = useState<"intel" | "registration">("intel");
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [visiblePosts, setVisiblePosts] = useState<number>(6);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+
+  const [formData, setFormData] = useState<EnrollmentData>({
+    fullName: "", fatherName: "", cnic: "", dateOfBirth: "", gender: "",
+    email: "", phoneNumber: "", alternatePhone: "", currentAddress: "",
+    city: "", province: "Punjab", highestQualification: "", institution: "",
+    yearOfCompletion: "", percentage: "", courseId: "summit-2026", courseTitle: "Future-Ready Summit",
+    coursePrice: "500", paymentMethod: "", bankName: "", bankAccountTitle: "",
+    bankAccountNumber: "", transactionId: "", transactionDate: "",
+    transactionAmount: "500", currentEmployment: "", organization: "",
+    designation: "", hearAboutUs: "", referralCode: "", whyJoin: "",
+    declaration: false, timestamp: new Date().toISOString(), status: "pending",
+  });
 
   // Filter categories
-  const categories = ["all", "Tech Conference", "CSR Initiative", "Education", "Industry Event", "Community", "Partnership"];
+  const categories = ["all", "Summit", "Tech Conference", "CSR Initiative", "Education", "Industry Event", "Community", "Partnership"];
 
   const filteredPosts = activeFilter === "all"
     ? blogPosts
@@ -109,6 +168,14 @@ const Blog: React.FC = () => {
   const displayedPosts = filteredPosts.slice(0, visiblePosts);
 
   useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('register') === 'summit') {
+      setCurrentView("registration");
+    }
+  }, [location]);
+
+  useEffect(() => {
+    if (currentView === "intel") {
     const cards = document.querySelectorAll('.blog-card');
     if (cards.length > 0) {
       gsap.fromTo(cards,
@@ -134,7 +201,8 @@ const Blog: React.FC = () => {
         }
       );
     }
-  }, [displayedPosts]);
+    }
+  }, [displayedPosts, currentView]);
 
   const getCategoryColor = (colorClass: string): string => {
     return colorClass === "brand" ? "var(--pk-green)" : "var(--pk-green-light)";
@@ -148,9 +216,129 @@ const Blog: React.FC = () => {
       "fa-robot": "🤖",
       "fa-users": "👥",
       "fa-handshake": "🤝",
+      "fa-rocket": "🚀",
     };
     return iconMap[icon] || "📰";
   };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+    }));
+  };
+
+  const handleRegister = () => {
+    setCurrentView("registration");
+    window.scrollTo(0, 0);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+    try {
+      await fetch(GOOGLE_SHEETS_API, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      setSubmitStatus({ type: 'success', message: 'Registration transmitted successfully! See you at the Summit.' });
+    } catch (error) {
+      setSubmitStatus({ type: 'error', message: 'Data sync failed. Please check your connection.' });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const renderRegistrationView = () => (
+    <div className="registration-view">
+      <div className="registration-container-premium">
+        <button onClick={() => setCurrentView("intel")} className="cancel-btn-tech">Aborted Session</button>
+        <h2 className="registration-title-tech">Summit <span className="text-gradient">Registration</span> Gateway</h2>
+
+        {submitStatus && (
+          <div className={`status-banner-tech ${submitStatus.type}`}>
+            <span className="icon">{submitStatus.type === 'success' ? '✓' : '⚠'}</span>
+            {submitStatus.message}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="registration-form-premium">
+          <div className="form-grid-premium">
+            <div className="form-left-col">
+              <section className="form-section-tech">
+                <h3 className="section-header-tech">1. Payment Protocol</h3>
+                <div className="payment-nodes">
+                  <div className="payment-node-card active-node">
+                    <h4>Bank Al Falah</h4>
+                    <div className="node-details">
+                      <p><span>Title:</span> YUNI-TY x NICAT</p>
+                      <p><span>Account:</span> 0140-1010831162</p>
+                      <p><span>Branch:</span> Rawalpindi</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="input-group-tech">
+                  <div className="field-tech">
+                    <label>Network</label>
+                    <select name="paymentMethod" value={formData.paymentMethod} onChange={handleInputChange} required>
+                      <option value="">Select Gateway</option>
+                      <option value="bank">Direct Bank (Al Falah)</option>
+                      <option value="easypaisa">Easypaisa / JazzCash</option>
+                    </select>
+                  </div>
+                  <div className="field-tech">
+                    <label>TXN ID / Hash</label>
+                    <input type="text" name="transactionId" placeholder="Enter RefID" value={formData.transactionId} onChange={handleInputChange} required />
+                  </div>
+                  <div className="field-tech">
+                    <label>Timestamp</label>
+                    <input type="date" name="transactionDate" value={formData.transactionDate} onChange={handleInputChange} required />
+                  </div>
+                  <div className="field-tech">
+                    <label>Credits (PKR)</label>
+                    <input type="text" name="transactionAmount" value={formData.transactionAmount} readOnly />
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <div className="form-right-col">
+              <section className="form-section-tech">
+                <h3 className="section-header-tech">2. Identity Sync</h3>
+                <div className="input-group-tech">
+                  <div className="field-tech full"><label>Full Legal Name</label><input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} required /></div>
+                  <div className="field-tech"><label>CNIC (Verified)</label><input type="text" name="cnic" placeholder="XXXXX-XXXXXXX-X" value={formData.cnic} onChange={handleInputChange} required /></div>
+                  <div className="field-tech"><label>Email Address</label><input type="email" name="email" value={formData.email} onChange={handleInputChange} required /></div>
+                  <div className="field-tech full"><label>Comms (WhatsApp)</label><input type="tel" name="phoneNumber" placeholder="03XXXXXXXXX" value={formData.phoneNumber} onChange={handleInputChange} required /></div>
+                </div>
+              </section>
+
+              <section className="form-section-tech">
+                <h3 className="section-header-tech">3. Validation</h3>
+                <div className="declaration-tech">
+                  <label className="checkbox-tech">
+                    <input type="checkbox" name="declaration" checked={formData.declaration} onChange={handleInputChange} required />
+                    <span className="checkmark-tech"></span>
+                    I confirm my participation in the Summit.
+                  </label>
+                </div>
+                <div className="form-actions-tech">
+                  <button type="submit" className="submit-btn-premium" disabled={isSubmitting}>
+                    {isSubmitting ? 'Syncing...' : 'Confirm Registration'}
+                  </button>
+                </div>
+              </section>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 
 
   return (
@@ -158,7 +346,27 @@ const Blog: React.FC = () => {
       <AnimatedBackground />
       {/* Background Light Orbs */}
 
-      <div className="events-container">
+      {currentView === "registration" ? (
+        renderRegistrationView()
+      ) : (
+        <div className="events-container">
+          {/* Summit Highlight Banner */}
+          <div className="summit-highlight-banner">
+            <div className="summit-content">
+              <span className="summit-tag">Special Event</span>
+              <div className="summit-text">
+                <h3>YUNI-TY x NICAT: Future-Ready Summit ✨</h3>
+                <p>16-17 May | NICAT, Rawalpindi | AI • Cyber • Strategy</p>
+              </div>
+              <button 
+                onClick={handleRegister}
+                className="summit-btn"
+              >
+                Register Now <span className="arrow">→</span>
+              </button>
+            </div>
+          </div>
+
         {/* Header */}
         <div className="title-wrapper">
           <AnimatedTitle>Intelligence & Events</AnimatedTitle>
@@ -215,9 +423,18 @@ const Blog: React.FC = () => {
                       <div className="author-avatar-tech">{post.author.charAt(0)}</div>
                       <span className="author-name">{post.author}</span>
                     </div>
-                    <button className="read-more-btn-tech">
-                      Explore <span className="arrow">→</span>
-                    </button>
+                    {post.externalLink ? (
+                      <button 
+                        onClick={handleRegister}
+                        className="read-more-btn-tech"
+                      >
+                        Register Now <span className="arrow">→</span>
+                      </button>
+                    ) : (
+                      <button className="read-more-btn-tech">
+                        Explore <span className="arrow">→</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -237,6 +454,7 @@ const Blog: React.FC = () => {
           </div>
         )}
       </div>
+    )}
 
       <style>{`
         .events-premium-section {
@@ -248,7 +466,6 @@ const Blog: React.FC = () => {
           padding-bottom: 8rem;
           position: relative;
           z-index: 1;
-          overflow-x: hidden;
         }
 
         .events-container {
@@ -469,6 +686,131 @@ const Blog: React.FC = () => {
         @media (max-width: 768px) {
           .blog-grid-premium { grid-template-columns: 1fr; }
           .detail-panel-premium { padding: 2rem; }
+        }
+
+        .summit-highlight-banner {
+          background: rgba(0, 230, 118, 0.05);
+          border: 1px solid var(--pk-green);
+          border-radius: 20px;
+          padding: 1.5rem 2.5rem;
+          margin-bottom: 4rem;
+          position: relative;
+          overflow: hidden;
+          backdrop-filter: blur(10px);
+        }
+
+        .summit-highlight-banner::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(90deg, transparent, rgba(0, 230, 118, 0.1), transparent);
+          transform: translateX(-100%);
+          animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+          100% { transform: translateX(100%); }
+        }
+
+        .summit-content {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 2rem;
+          position: relative;
+          z-index: 2;
+        }
+
+        .summit-tag {
+          background: var(--pk-green);
+          color: #000;
+          font-weight: 900;
+          font-size: 0.7rem;
+          padding: 0.3rem 0.8rem;
+          border-radius: 50px;
+          text-transform: uppercase;
+        }
+
+        .summit-text h3 {
+          font-size: 1.4rem;
+          margin: 0;
+          color: var(--text-primary);
+        }
+
+        .summit-text p {
+          font-size: 0.9rem;
+          color: var(--text-secondary);
+          margin: 0.2rem 0 0;
+          font-weight: 600;
+        }
+
+        .summit-btn {
+          background: var(--pk-green);
+          color: #000;
+          padding: 0.8rem 1.5rem;
+          border-radius: 12px;
+          font-weight: 800;
+          font-size: 0.9rem;
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          transition: all 0.3s ease;
+          flex-shrink: 0;
+        }
+
+        .summit-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 20px var(--pk-green-glow);
+        }
+
+        @media (max-width: 1024px) {
+          .summit-content { flex-direction: column; text-align: center; gap: 1rem; }
+          .summit-highlight-banner { padding: 2rem; }
+        }
+
+        /* --- Registration Form Styles --- */
+        .registration-view { padding: 10rem 5% 5rem; max-width: 1300px; margin: 0 auto; animation: fadeIn 0.6s ease; width: 100%; }
+        .registration-container-premium { background: var(--glass-bg); backdrop-filter: blur(40px); border-radius: 4rem; padding: 4rem 5%; border: 1px solid var(--glass-border); position: relative; box-shadow: 0 50px 100px rgba(0,0,0,0.5); width: 100%; box-sizing: border-box; overflow: hidden; }
+        .registration-title-tech { font-size: 3.5rem; font-weight: 900; margin-bottom: 5rem; text-align: center; color: var(--pk-green); text-transform: uppercase; letter-spacing: 0.2em; text-shadow: 0 0 30px var(--pk-green-glow-subtle); }
+        .cancel-btn-tech { position: absolute; top: 3rem; right: 4rem; background: rgba(255, 50, 50, 0.05); border: 1px solid rgba(255, 50, 50, 0.2); color: #ff4d4d; padding: 0.8rem 1.6rem; border-radius: 15px; font-weight: 800; font-size: 0.8rem; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.1em; z-index: 10; }
+        .cancel-btn-tech:hover { background: #ff4d4d; color: #fff; box-shadow: 0 0 20px rgba(255, 77, 77, 0.4); transform: translateY(-2px); }
+
+        .form-grid-premium { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; width: 100%; }
+        .section-header-tech { font-size: 1.2rem; font-weight: 800; color: var(--pk-green); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        .form-section-tech { margin-bottom: 3rem; }
+
+        .payment-nodes { display: grid; gap: 1.5rem; margin-bottom: 2.5rem; }
+        .payment-node-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border-light); padding: 2rem; border-radius: 25px; transition: all 0.3s ease; }
+        .payment-node-card.active-node { border-color: var(--pk-green); background: rgba(0, 230, 118, 0.05); box-shadow: 0 10px 30px rgba(0, 230, 118, 0.1); }
+        .payment-node-card h4 { margin: 0 0 1.2rem; font-size: 1.2rem; color: var(--pk-green); font-weight: 900; text-transform: uppercase; }
+        .node-details p { margin: 0.6rem 0; font-size: 1rem; color: var(--text-secondary); }
+        .node-details span { color: var(--text-tertiary); font-weight: 700; width: 100px; display: inline-block; }
+
+        .input-group-tech { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .field-tech { display: flex; flex-direction: column; gap: 0.6rem; }
+        .field-tech.full { grid-column: span 2; }
+        .field-tech label { font-size: 0.85rem; font-weight: 800; color: var(--text-tertiary); text-transform: uppercase; margin-left: 0.5rem; letter-spacing: 0.05em; }
+        .field-tech input, .field-tech select { background: rgba(0,0,0,0.3); border: 1px solid var(--border-light); padding: 1.2rem 1.5rem; border-radius: 15px; color: #fff; font-size: 1.05rem; transition: all 0.3s ease; }
+        .field-tech input:focus, .field-tech select:focus { border-color: var(--pk-green); background: rgba(0,0,0,0.5); outline: none; box-shadow: 0 0 20px var(--pk-green-glow-subtle); transform: translateY(-2px); }
+
+        .declaration-tech { margin-bottom: 2.5rem; }
+        .checkbox-tech { display: flex; align-items: center; gap: 1rem; cursor: pointer; color: var(--text-secondary); font-weight: 600; font-size: 0.95rem; }
+        .checkbox-tech input { width: 20px; height: 20px; accent-color: var(--pk-green); }
+
+        .submit-btn-premium { width: 100%; background: var(--pk-green); color: #000; padding: 1.2rem; border-radius: 15px; font-weight: 900; font-size: 1.1rem; border: none; cursor: pointer; transition: all 0.4s ease; text-transform: uppercase; letter-spacing: 0.1em; }
+        .submit-btn-premium:hover:not(:disabled) { transform: translateY(-5px); box-shadow: 0 20px 40px var(--pk-green-glow); }
+        .submit-btn-premium:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .status-banner-tech { padding: 1.2rem; border-radius: 15px; margin-bottom: 3rem; display: flex; align-items: center; gap: 1rem; font-weight: 700; }
+        .status-banner-tech.success { background: rgba(0, 230, 118, 0.1); color: var(--pk-green); border: 1px solid var(--pk-green); }
+        .status-banner-tech.error { background: rgba(255, 77, 77, 0.1); color: #ff4d4d; border: 1px solid #ff4d4d; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 900px) {
+          .form-grid-premium { grid-template-columns: 1fr; gap: 2rem; }
+          .registration-container-premium { padding: 2rem; }
         }
       `}</style>
     </section>

@@ -23,7 +23,7 @@ const SummerPromoPopup: React.FC = () => {
 
   const handleAction = () => {
     handleDismiss();
-    navigate('/Programs');
+    navigate('/events?register=summit');
   };
 
   if (!isVisible) return null;
@@ -278,32 +278,33 @@ const SummerPromoPopup: React.FC = () => {
           Registrations Open
         </div>
 
-        <h2 className="popup-title">Summer Trainings 2026</h2>
+        <h2 className="popup-title">Future-Ready Summit ✨</h2>
         
         <div className="discount-badge">
-          30% OFF <span>on all trainings</span>
+          RS. 500 <span>Only for Professionals & Parents</span>
         </div>
 
         <p className="popup-desc">
-          50+ industry-aligned trainings. Located at NASTP. PSEB certified. 
-          Build skills that get you hired or help you earn independently.
+          Empowering Professionals, Inspiring Educators, and Guiding Families. 
+          Join us for a high-impact weekend at NICAT, Rawalpindi. 
+          Tech Innovation, AI, & Career Strategy.
         </p>
 
         <div className="features-grid">
           <div className="feature-box">
             <GraduationCap size={20} color="var(--pk-green)" />
-            <span>50+</span>
-            <strong>Trainings</strong>
+            <span>Agenda</span>
+            <strong>Day 1: Tech</strong>
           </div>
           <div className="feature-box">
             <MapPin size={20} color="var(--pk-green)" />
-            <span>Located At</span>
-            <strong>NASTP</strong>
+            <span>Venue</span>
+            <strong>NICAT</strong>
           </div>
           <div className="feature-box">
             <Award size={20} color="var(--pk-green)" />
-            <span>PSEB</span>
-            <strong>Certified</strong>
+            <span>Agenda</span>
+            <strong>Day 2: Skills</strong>
           </div>
         </div>
 
@@ -313,7 +314,7 @@ const SummerPromoPopup: React.FC = () => {
 
         <div className="popup-footer">
           <div className="footer-dot"></div>
-          Limited seats available — Summer discount ending soon
+          Only 80 seats per session — Register now to secure yours
         </div>
       </div>
     </div>
