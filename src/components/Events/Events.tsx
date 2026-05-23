@@ -367,23 +367,6 @@ const Blog: React.FC = () => {
         renderRegistrationView()
       ) : (
         <div className="events-container">
-          {/* Summit Highlight Banner */}
-          <div className="summit-highlight-banner">
-            <div className="summit-content">
-              <span className="summit-tag">Special Event</span>
-              <div className="summit-text">
-                <h3>YUNI-TY x NICAT: Future-Ready Summit ✨</h3>
-                <p>16-17 May | NICAT, Rawalpindi | AI • Cyber • Strategy</p>
-              </div>
-              <button 
-                onClick={handleRegister}
-                className="summit-btn"
-              >
-                Register Now <span className="arrow">→</span>
-              </button>
-            </div>
-          </div>
-
         {/* Header */}
         <div className="title-wrapper">
           <AnimatedTitle>Intelligence & Events</AnimatedTitle>

@@ -362,10 +362,6 @@ export default function Home() {
         </p>
         <div className="partners-grid">
           <div className="partner-card">
-            <img src="/images/nicat.png" alt="NICAT" className="partner-logo" />
-            <p style={{ color: 'var(--text-tertiary)', fontSize: '0.9rem' }}>Official Community Partner</p>
-          </div>
-          <div className="partner-card">
             <img src="/images/nastp.png" alt="NASTP" className="partner-logo" />
             <p style={{ color: 'var(--text-tertiary)', fontSize: '0.9rem' }}>Official Registration Partner</p>
           </div>

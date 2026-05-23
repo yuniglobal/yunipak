@@ -23,7 +23,7 @@ const SummerPromoPopup: React.FC = () => {
 
   const handleAction = () => {
     handleDismiss();
-    navigate('/events?register=summit');
+    navigate('/courses');
   };
 
   if (!isVisible) return null;
@@ -275,36 +275,35 @@ const SummerPromoPopup: React.FC = () => {
 
         <div className="badge-open">
           <div className="badge-dot"></div>
-          Registrations Open
+          Admissions Open
         </div>
 
-        <h2 className="popup-title">Future-Ready Summit ✨</h2>
+        <h2 className="popup-title">Start Your Journey ✨</h2>
         
         <div className="discount-badge">
-          RS. 500 <span>Only for Professionals & Parents</span>
+          30% OFF <span>on all trainings</span>
         </div>
 
         <p className="popup-desc">
-          Empowering Professionals, Inspiring Educators, and Guiding Families. 
-          Join us for a high-impact weekend at NICAT, Rawalpindi. 
-          Tech Innovation, AI, & Career Strategy.
+          50+ industry-aligned trainings. Located at NASTP. PSEB certified. 
+          Build skills that get you hired or help you earn independently.
         </p>
 
         <div className="features-grid">
           <div className="feature-box">
             <GraduationCap size={20} color="var(--pk-green)" />
-            <span>Agenda</span>
-            <strong>Day 1: Tech</strong>
+            <span>50+</span>
+            <strong>Trainings</strong>
           </div>
           <div className="feature-box">
             <MapPin size={20} color="var(--pk-green)" />
-            <span>Venue</span>
-            <strong>NICAT</strong>
+            <span>Located At</span>
+            <strong>NASTP</strong>
           </div>
           <div className="feature-box">
             <Award size={20} color="var(--pk-green)" />
-            <span>Agenda</span>
-            <strong>Day 2: Skills</strong>
+            <span>Certified</span>
+            <strong>PSEB</strong>
           </div>
         </div>
 
@@ -314,7 +313,7 @@ const SummerPromoPopup: React.FC = () => {
 
         <div className="popup-footer">
           <div className="footer-dot"></div>
-          Only 80 seats per session — Register now to secure yours
+          Limited seats available — Register now to secure yours
         </div>
       </div>
     </div>
