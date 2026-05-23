@@ -18,17 +18,8 @@ const Navbar = () => {
       const currentScrollY = window.scrollY;
       setIsScrolled(currentScrollY > 20);
       
-      // Contract on scrolling down, expand on scrolling up
-      if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
-        setIsContracted(true); // contracted
-      } else if (currentScrollY < lastScrollY.current && currentScrollY > 50) {
-        setIsContracted(false); // expanded
-      }
-      
-      // Always expand at the very top
-      if (currentScrollY <= 50) {
-        setIsContracted(false);
-      }
+      // Removed contraction logic to ensure nav bar works/looks the same at all times
+      setIsContracted(false);
       
       lastScrollY.current = currentScrollY;
     };

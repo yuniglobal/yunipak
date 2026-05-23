@@ -463,11 +463,13 @@ const Courses: React.FC = () => {
   };
 
   const handleViewCourse = (course: CourseItem) => {
+    window.scrollTo(0, 0);
     setSelectedCourse(course);
     setCurrentView("course-detail");
   };
 
   const handleEnroll = (course: CourseItem) => {
+    window.scrollTo(0, 0);
     setSelectedCourse(course);
     setFormData(prev => ({
       ...prev,
@@ -480,6 +482,7 @@ const Courses: React.FC = () => {
   };
 
   const handleBackToHub = () => {
+    window.scrollTo(0, 0);
     setCurrentView("trainings");
     setSelectedCourse(null);
     setSubmitStatus(null);
