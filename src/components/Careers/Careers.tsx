@@ -4,70 +4,23 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AnimatedTitle from "../AnimatedTitle";
 import AnimatedBackground from "../AnimatedBackground";
 
+import JobApplicationForm from "./Forms/JobApplicationForm";
+import InternshipForm from "./Forms/InternshipForm";
+import AmbassadorForm from "./Forms/AmbassadorForm";
+
 gsap.registerPlugin(ScrollTrigger);
 
-// Job/Internship type definition
-interface Position {
+export interface Position {
   id: string;
   title: string;
   department: string;
   location: string;
   type: string;
   description: string;
+  category: 'job' | 'internship' | 'ambassador';
 }
 
-// Form data interface
-interface FormData {
-  // Personal Information
-  fullName: string;
-  cnic: string;
-  dateOfBirth: string;
-  gender: string;
-  fatherName: string;
-  phoneNumber: string;
-  alternatePhone: string;
-  email: string;
-  currentAddress: string;
-  permanentAddress: string;
-  city: string;
-  province: string;
-
-  // Professional Information
-  positionId: string;
-  positionTitle: string;
-  experience: string;
-  currentSalary: string;
-  expectedSalary: string;
-  noticePeriod: string;
-  isCurrentlyEmployed: string;
-
-  // Education
-  highestDegree: string;
-  university: string;
-  yearOfCompletion: string;
-  cgpa: string;
-
-  // Skills & Certifications
-  technicalSkills: string;
-  certifications: string;
-  languagesSpoken: string;
-
-  // References
-  referenceName: string;
-  referenceContact: string;
-  referenceRelation: string;
-
-  // Additional
-  linkedinProfile: string;
-  portfolioUrl: string;
-  hearAboutUs: string;
-  additionalInfo: string;
-
-  // Declaration
-  declaration: boolean;
-  timestamp: string;
-  status: string;
-}
+export const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbx-jQckKH2mPOTX8W_8D2ZNv8kAzMFUr5LgtDQXMZnH9HNbNOlSNxukuOL1R_ZUUnfKmQ/exec';
 
 const positions: Position[] = [
   {
@@ -77,59 +30,34 @@ const positions: Position[] = [
     location: "NASTP, Pakistan",
     type: "Full-time, On-Site",
     description: "React, Next.js, Tailwind. Join our engineering team at NASTP to build cutting-edge web applications.",
+    category: "job"
   },
+  {
+    id: "pos-2",
+    title: "Internship Programs",
+    department: "Talent Development",
+    location: "NASTP or Remote",
+    type: "Internship",
+    description: "Gain real-world experience inside Pakistan's fastest-growing AI and edtech startup.",
+    category: "internship"
+  },
+  {
+    id: "pos-3",
+    title: "Yuni Ambassador Program",
+    department: "Community",
+    location: "Nationwide (Universities)",
+    type: "Community Leader",
+    description: "Represent Pakistan's AI-powered growth ecosystem at your campus or community.",
+    category: "ambassador"
+  }
 ];
-
-// IMPORTANT: Replace this URL with your deployed Google Apps Script URL
-const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbx-jQckKH2mPOTX8W_8D2ZNv8kAzMFUr5LgtDQXMZnH9HNbNOlSNxukuOL1R_ZUUnfKmQ/exec';
 
 const Careers: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [selectedPosition, setSelectedPosition] = useState<Position | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
-
-  const [formData, setFormData] = useState<FormData>({
-    fullName: "",
-    cnic: "",
-    dateOfBirth: "",
-    gender: "",
-    fatherName: "",
-    phoneNumber: "",
-    alternatePhone: "",
-    email: "",
-    currentAddress: "",
-    permanentAddress: "",
-    city: "",
-    province: "Punjab",
-    positionId: "",
-    positionTitle: "",
-    experience: "",
-    currentSalary: "",
-    expectedSalary: "",
-    noticePeriod: "",
-    isCurrentlyEmployed: "",
-    highestDegree: "",
-    university: "",
-    yearOfCompletion: "",
-    cgpa: "",
-    technicalSkills: "",
-    certifications: "",
-    languagesSpoken: "",
-    referenceName: "",
-    referenceContact: "",
-    referenceRelation: "",
-    linkedinProfile: "",
-    portfolioUrl: "",
-    hearAboutUs: "",
-    additionalInfo: "",
-    declaration: false,
-    timestamp: new Date().toISOString(),
-    status: "pending",
-  });
 
   useEffect(() => {
-    const items = document.querySelectorAll('.position-panel');
+    const items = document.querySelectorAll('.position-panel, .position-card-premium');
     if (items.length > 0) {
       gsap.fromTo(items, 
         { 
@@ -143,7 +71,7 @@ const Careers: React.FC = () => {
           stagger: 0.2,
           ease: "power4.out",
           scrollTrigger: {
-            trigger: ".positions-list",
+            trigger: ".positions-grid-premium",
             start: "top 80%",
             toggleActions: "play none none reverse"
           }
@@ -154,150 +82,14 @@ const Careers: React.FC = () => {
 
   const handleApply = (position: Position) => {
     setSelectedPosition(position);
-    setFormData(prev => ({
-      ...prev,
-      positionId: position.id,
-      positionTitle: position.title,
-    }));
     setShowForm(true);
-    setSubmitStatus(null);
   };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target;
-    const checked = (e.target as HTMLInputElement).checked;
-
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Validation
-    if (!formData.fullName || !formData.cnic || !formData.email || !formData.phoneNumber) {
-      setSubmitStatus({ type: 'error', message: 'Please fill all required fields (*)' });
-      return;
-    }
-
-    if (!formData.declaration) {
-      setSubmitStatus({ type: 'error', message: 'Please accept the declaration' });
-      return;
-    }
-
-    // CNIC validation
-    const cnicRegex = /^[0-9]{5}-[0-9]{7}-[0-9]$/;
-    if (!cnicRegex.test(formData.cnic)) {
-      setSubmitStatus({ type: 'error', message: 'Please enter valid CNIC format (XXXXX-XXXXXXX-X)' });
-      return;
-    }
-
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setSubmitStatus({ type: 'error', message: 'Please enter valid email address' });
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      // Create URLSearchParams for proper form encoding
-      const submitData = new URLSearchParams();
-      Object.entries(formData).forEach(([key, value]) => {
-        submitData.append(key, String(value));
-      });
-
-      // Submit to Google Sheets with CORS mode
-      const response = await fetch(GOOGLE_SHEETS_API, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: submitData,
-      });
-
-      let result;
-      try {
-        result = await response.json();
-      } catch {
-        result = { success: response.ok };
-      }
-
-      if (response.ok && result.success !== false) {
-        setSubmitStatus({
-          type: 'success',
-          message: `Application submitted successfully for ${selectedPosition?.title}! We will contact you within 5-7 business days.`
-        });
-
-        // Reset form after 3 seconds
-        setTimeout(() => {
-          setShowForm(false);
-          setSelectedPosition(null);
-          setSubmitStatus(null);
-          // Reset form data
-          setFormData({
-            fullName: "",
-            cnic: "",
-            dateOfBirth: "",
-            gender: "",
-            fatherName: "",
-            phoneNumber: "",
-            alternatePhone: "",
-            email: "",
-            currentAddress: "",
-            permanentAddress: "",
-            city: "",
-            province: "Punjab",
-            positionId: "",
-            positionTitle: "",
-            experience: "",
-            currentSalary: "",
-            expectedSalary: "",
-            noticePeriod: "",
-            isCurrentlyEmployed: "",
-            highestDegree: "",
-            university: "",
-            yearOfCompletion: "",
-            cgpa: "",
-            technicalSkills: "",
-            certifications: "",
-            languagesSpoken: "",
-            referenceName: "",
-            referenceContact: "",
-            referenceRelation: "",
-            linkedinProfile: "",
-            portfolioUrl: "",
-            hearAboutUs: "",
-            additionalInfo: "",
-            declaration: false,
-            timestamp: new Date().toISOString(),
-            status: "pending",
-          });
-        }, 3000);
-      } else {
-        throw new Error(result.message || 'Submission failed');
-      }
-
-    } catch (error) {
-      console.error('Submission error:', error);
-      setSubmitStatus({ type: 'error', message: 'Error submitting application. Please try again or email us directly at careers@yunipakistan.com' });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
 
   return (
     <section className="careers-premium-section">
       <AnimatedBackground />
-      {/* Background Light Orbs */}
 
       <div className="careers-container-premium">
-        {/* Header */}
         <div className="title-wrapper">
           <AnimatedTitle>Forge The Future.</AnimatedTitle>
           <p className="careers-subtitle-premium">
@@ -305,7 +97,6 @@ const Careers: React.FC = () => {
           </p>
         </div>
 
-        {/* Positions List */}
         <div className="positions-grid-premium">
           {positions.map((position) => (
             <div 
@@ -346,7 +137,6 @@ const Careers: React.FC = () => {
           ))}
         </div>
 
-        {/* Bottom CTA */}
         <div className="bottom-cta-premium card-glow-border">
           <div className="cta-content">
             <h2 className="cta-title">Passive Recruitment Active</h2>
@@ -360,163 +150,14 @@ const Careers: React.FC = () => {
         </div>
       </div>
 
-      {/* Application Form Modal */}
       {showForm && selectedPosition && (
         <div className="modal-overlay-premium" onClick={() => setShowForm(false)}>
           <div className="modal-content-premium" onClick={(e) => e.stopPropagation()}>
             <button className="modal-close-premium" onClick={() => setShowForm(false)}>×</button>
 
-            <div className="form-header-premium">
-              <span className="protocol-label">Application Protocol</span>
-              <h2 className="form-title-premium">Apply for {selectedPosition.title}</h2>
-              <div className="form-progress-bar"></div>
-            </div>
-
-            {submitStatus && (
-              <div className={`status-message-premium ${submitStatus.type}`}>
-                <span className="status-icon">{submitStatus.type === 'success' ? '✓' : '⚠'}</span>
-                {submitStatus.message}
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="application-form-premium">
-              {/* Personal Information Section */}
-              <div className="form-section-premium">
-                <div className="section-title-wrapper">
-                  <span className="section-number">01</span>
-                  <h3>Personnel Profile</h3>
-                </div>
-                <div className="form-grid-premium">
-                  <div className="form-field-premium">
-                    <label>Legal Full Name *</label>
-                    <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} required placeholder="Enter full name" />
-                  </div>
-
-                  <div className="form-field-premium">
-                    <label>National ID (CNIC) *</label>
-                    <input type="text" name="cnic" placeholder="XXXXX-XXXXXXX-X" value={formData.cnic} onChange={handleInputChange} required />
-                  </div>
-
-                  <div className="form-field-premium">
-                    <label>Father's Designation *</label>
-                    <input type="text" name="fatherName" value={formData.fatherName} onChange={handleInputChange} required placeholder="Father's name" />
-                  </div>
-
-                  <div className="form-field-premium">
-                    <label>Date of Birth *</label>
-                    <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleInputChange} required />
-                  </div>
-
-                  <div className="form-field-premium">
-                    <label>Gender Identification *</label>
-                    <select name="gender" value={formData.gender} onChange={handleInputChange} required>
-                      <option value="">Select Protocol</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                      <option value="Other">Other</option>
-                    </select>
-                  </div>
-
-                  <div className="form-field-premium">
-                    <label>Primary Comms (Phone) *</label>
-                    <input type="tel" name="phoneNumber" placeholder="03XXXXXXXXX" value={formData.phoneNumber} onChange={handleInputChange} required />
-                  </div>
-
-                  <div className="form-field-premium">
-                    <label>Digital Mail (Email) *</label>
-                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="email@address.com" />
-                  </div>
-
-                  <div className="form-field-premium">
-                    <label>Current Location (City) *</label>
-                    <input type="text" name="city" value={formData.city} onChange={handleInputChange} required placeholder="e.g. Islamabad" />
-                  </div>
-                </div>
-
-                <div className="form-field-premium full-width" style={{ marginTop: '1.5rem' }}>
-                  <label>Residential Coordinates (Address) *</label>
-                  <textarea name="currentAddress" rows={2} value={formData.currentAddress} onChange={handleInputChange} required placeholder="Current street address..."></textarea>
-                </div>
-              </div>
-
-              {/* Professional Information */}
-              <div className="form-section-premium">
-                <div className="section-title-wrapper">
-                  <span className="section-number">02</span>
-                  <h3>Professional Status</h3>
-                </div>
-                <div className="form-grid-premium">
-                  <div className="form-field-premium">
-                    <label>Service Duration *</label>
-                    <select name="experience" value={formData.experience} onChange={handleInputChange} required>
-                      <option value="">Select Level</option>
-                      <option value="Fresher">Entry Level (0 Exp)</option>
-                      <option value="1-2 years">1-2 years</option>
-                      <option value="3-5 years">3-5 years</option>
-                      <option value="6-8 years">6-8 years</option>
-                      <option value="9+ years">Senior (9+ years)</option>
-                    </select>
-                  </div>
-
-                  <div className="form-field-premium">
-                    <label>Expected Compensation (PKR/mo) *</label>
-                    <input type="text" name="expectedSalary" placeholder="e.g. 150,000" value={formData.expectedSalary} onChange={handleInputChange} required />
-                  </div>
-
-                  <div className="form-field-premium">
-                    <label>Redeployment Window (Notice) *</label>
-                    <select name="noticePeriod" value={formData.noticePeriod} onChange={handleInputChange} required>
-                      <option value="">Select Duration</option>
-                      <option value="Immediate">Instant Availability</option>
-                      <option value="15 days">15 Days</option>
-                      <option value="1 month">30 Days</option>
-                      <option value="2 months">60 Days</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Skills Section */}
-              <div className="form-section-premium">
-                <div className="section-title-wrapper">
-                  <span className="section-number">03</span>
-                  <h3>Technical Stack</h3>
-                </div>
-                <div className="form-field-premium full-width">
-                  <label>Core Technologies * (comma-separated)</label>
-                  <textarea name="technicalSkills" rows={3} placeholder="e.g. React, Node.js, GSAP, Python, Cybersecurity..." value={formData.technicalSkills} onChange={handleInputChange} required></textarea>
-                </div>
-
-                <div className="form-grid-premium" style={{ marginTop: '1.5rem' }}>
-                  <div className="form-field-premium">
-                    <label>LinkedIn Identity</label>
-                    <input type="url" name="linkedinProfile" placeholder="https://linkedin.com/in/username" value={formData.linkedinProfile} onChange={handleInputChange} />
-                  </div>
-
-                  <div className="form-field-premium">
-                    <label>Portfolio / Git Link</label>
-                    <input type="url" name="portfolioUrl" placeholder="https://github.com/username" value={formData.portfolioUrl} onChange={handleInputChange} />
-                  </div>
-                </div>
-              </div>
-
-              {/* Declaration */}
-              <div className="form-section-premium declaration-wrapper-premium">
-                <label className="checkbox-container-premium">
-                  <input type="checkbox" name="declaration" checked={formData.declaration} onChange={handleInputChange} required />
-                  <span className="checkmark"></span>
-                  <p>I confirm that all transmitted data is authentic. I authorize YUNI Intelligence to perform verification protocols.</p>
-                </label>
-              </div>
-
-              <div className="form-actions-premium">
-                <button type="button" className="cancel-btn-premium" onClick={() => setShowForm(false)}>Abort</button>
-                <button type="submit" className="submit-btn-premium" disabled={isSubmitting}>
-                  <span className="btn-text">{isSubmitting ? 'Transmitting Data...' : 'Submit Application'}</span>
-                  <div className="btn-glow"></div>
-                </button>
-              </div>
-            </form>
+            {selectedPosition.category === 'job' && <JobApplicationForm position={selectedPosition} onClose={() => setShowForm(false)} />}
+            {selectedPosition.category === 'internship' && <InternshipForm position={selectedPosition} onClose={() => setShowForm(false)} />}
+            {selectedPosition.category === 'ambassador' && <AmbassadorForm position={selectedPosition} onClose={() => setShowForm(false)} />}
           </div>
         </div>
       )}
@@ -751,6 +392,11 @@ const Careers: React.FC = () => {
           .positions-grid-premium { grid-template-columns: 1fr; }
         }
       `}</style>
+    </section>
+  );
+};
+
+export default Careers;
     </section>
   );
 };
