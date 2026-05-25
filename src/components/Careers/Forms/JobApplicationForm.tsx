@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Position, GOOGLE_SHEETS_API } from "../Careers";
+import { type Position, GOOGLE_SHEETS_API } from "../Careers";
 
 interface FormData {
   fullName: string;
@@ -156,10 +156,10 @@ const JobApplicationForm: React.FC<Props> = ({ position, onClose }) => {
       }
 
       if (response.ok && result.success !== false) {
-        setSubmitStatus({
-          type: 'success',
-          message: \`Application submitted successfully for \${position.title}! We will contact you within 5-7 business days.\`
-        });
+          setSubmitStatus({
+            type: 'success',
+            message: 'Application submitted successfully for ' + position.title + '! We will contact you within 5-7 business days.'
+          });
 
         setTimeout(() => {
           onClose();
@@ -185,7 +185,7 @@ const JobApplicationForm: React.FC<Props> = ({ position, onClose }) => {
       </div>
 
       {submitStatus && (
-        <div className={\`status-message-premium \${submitStatus.type}\`}>
+        <div className={'status-message-premium ' + submitStatus.type}>
           <span className="status-icon">{submitStatus.type === 'success' ? '✓' : '⚠'}</span>
           {submitStatus.message}
         </div>

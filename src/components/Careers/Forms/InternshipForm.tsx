@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Position, GOOGLE_SHEETS_API } from "../Careers";
+import { type Position, GOOGLE_SHEETS_API } from "../Careers";
 
 interface InternshipFormData {
   // Section 1: Personal Information
@@ -182,7 +182,7 @@ const InternshipForm: React.FC<Props> = ({ position, onClose }) => {
       if (response.ok && result.success !== false) {
         setSubmitStatus({
           type: 'success',
-          message: \`Your application has been received! Our hiring team reviews applications on a rolling basis. Shortlisted candidates will be contacted within 7–10 business days.\`
+          message: 'Your application has been received! Our hiring team reviews applications on a rolling basis. Shortlisted candidates will be contacted within 7-10 business days.'
         });
 
         setTimeout(() => {
@@ -212,7 +212,7 @@ const InternshipForm: React.FC<Props> = ({ position, onClose }) => {
       </div>
 
       {submitStatus && (
-        <div className={\`status-message-premium \${submitStatus.type}\`}>
+        <div className={'status-message-premium ' + submitStatus.type}>
           <span className="status-icon">{submitStatus.type === 'success' ? '✓' : '⚠'}</span>
           {submitStatus.message}
         </div>

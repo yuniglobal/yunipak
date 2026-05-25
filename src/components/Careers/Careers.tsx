@@ -20,7 +20,7 @@ export interface Position {
   category: 'job' | 'internship' | 'ambassador';
 }
 
-export const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbx-jQckKH2mPOTX8W_8D2ZNv8kAzMFUr5LgtDQXMZnH9HNbNOlSNxukuOL1R_ZUUnfKmQ/exec';
+export const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbyTe6E2mhnznORt6dvWy9G_7KwCAnQbIx7a5Xp6hTHB1dtpaYrdl5PBrXpjJE_t7D2U/exec';
 
 const positions: Position[] = [
   {
@@ -392,11 +392,6 @@ const Careers: React.FC = () => {
           .positions-grid-premium { grid-template-columns: 1fr; }
         }
       `}</style>
-    </section>
-  );
-};
-
-export default Careers;
     </section>
   );
 };

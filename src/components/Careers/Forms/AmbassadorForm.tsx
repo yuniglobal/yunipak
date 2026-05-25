@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Position, GOOGLE_SHEETS_API } from "../Careers";
+import { type Position, GOOGLE_SHEETS_API } from "../Careers";
 
 interface AmbassadorFormData {
   // Section 1: Personal Information
@@ -157,7 +157,7 @@ const AmbassadorForm: React.FC<Props> = ({ position, onClose }) => {
       if (response.ok && result.success !== false) {
         setSubmitStatus({
           type: 'success',
-          message: \`Thank you for applying! Our team will review your application and reach out within 5–7 business days. In the meantime, explore Yuni's courses and stay connected with us on LinkedIn.\`
+          message: 'Thank you for applying! Our team will review your application and reach out within 5-7 business days. In the meantime, explore Yuni\'s courses and stay connected with us on LinkedIn.'
         });
 
         setTimeout(() => {
@@ -187,7 +187,7 @@ const AmbassadorForm: React.FC<Props> = ({ position, onClose }) => {
       </div>
 
       {submitStatus && (
-        <div className={\`status-message-premium \${submitStatus.type}\`}>
+        <div className={'status-message-premium ' + submitStatus.type}>
           <span className="status-icon">{submitStatus.type === 'success' ? '✓' : '⚠'}</span>
           {submitStatus.message}
         </div>
