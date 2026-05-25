@@ -191,7 +191,7 @@ const JobApplicationForm: React.FC<Props> = ({ position, onClose }) => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="application-form-premium">
+      <form onSubmit={handleSubmit} onInvalid={(e) => { e.preventDefault(); setSubmitStatus({ type: "error", message: "Please fill out all required fields correctly." }); }} className="application-form-premium">
         {/* Personal Information Section */}
         <div className="form-section-premium">
           <div className="section-title-wrapper">
@@ -320,6 +320,13 @@ const JobApplicationForm: React.FC<Props> = ({ position, onClose }) => {
             <p>I confirm that all transmitted data is authentic. I authorize YUNI Intelligence to perform verification protocols.</p>
           </label>
         </div>
+
+        {submitStatus && (
+          <div className={'status-message-premium ' + submitStatus.type} style={{ marginBottom: '1rem' }}>
+            <span className="status-icon">{submitStatus.type === 'success' ? '✓' : '⚠'}</span>
+            {submitStatus.message}
+          </div>
+        )}
 
         <div className="form-actions-premium">
           <button type="button" className="cancel-btn-premium" onClick={onClose}>Abort</button>

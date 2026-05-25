@@ -218,7 +218,7 @@ const InternshipForm: React.FC<Props> = ({ position, onClose }) => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="application-form-premium">
+      <form onSubmit={handleSubmit} onInvalid={(e) => { e.preventDefault(); setSubmitStatus({ type: "error", message: "Please fill out all required fields correctly." }); }} className="application-form-premium">
         {/* Section 1: Personal Information */}
         <div className="form-section-premium">
           <div className="section-title-wrapper">
@@ -497,6 +497,13 @@ const InternshipForm: React.FC<Props> = ({ position, onClose }) => {
             <p>I agree to the terms above.</p>
           </label>
         </div>
+
+        {submitStatus && (
+          <div className={'status-message-premium ' + submitStatus.type} style={{ marginBottom: '1rem' }}>
+            <span className="status-icon">{submitStatus.type === 'success' ? '✓' : '⚠'}</span>
+            {submitStatus.message}
+          </div>
+        )}
 
         <div className="form-actions-premium">
           <button type="button" className="cancel-btn-premium" onClick={onClose}>Cancel</button>
