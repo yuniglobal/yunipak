@@ -314,7 +314,7 @@ const CertificateForm: React.FC = () => {
           ) : (
             <>
               <Download className="w-5 h-5" />
-              INITIALIZE SYNC & DOWNLOAD ALL
+              VERIFY AND DOWNLOAD
             </>
           )}
         </button>
