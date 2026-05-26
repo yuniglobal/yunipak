@@ -10,7 +10,7 @@ const Certificates: React.FC = () => {
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-transparent">
       <style>{`
         .certificates-view { 
-          padding: 10rem 2rem 8rem; 
+          padding: 8rem 1rem 6rem; 
           max-width: 1200px; 
           margin: 0 auto; 
           position: relative; 
@@ -22,9 +22,19 @@ const Certificates: React.FC = () => {
         }
 
         .title-wrapper { 
-          margin-bottom: 4rem; 
+          margin-bottom: 3rem; 
           text-align: center; 
           width: 100%;
+        }
+
+        @media (max-width: 768px) {
+          .certificates-view {
+            padding: 7rem 1rem 4rem;
+          }
+          .subtitle-tech {
+            font-size: 1rem;
+            padding: 0 1rem;
+          }
         }
 
         .subtitle-tech { 

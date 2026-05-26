@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, GraduationCap, MapPin, Award, ArrowRight } from 'lucide-react';
+import { X, GraduationCap, Award, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const SummerPromoPopup: React.FC = () => {
@@ -23,7 +23,7 @@ const SummerPromoPopup: React.FC = () => {
 
   const handleAction = () => {
     handleDismiss();
-    navigate('/courses');
+    navigate('/certificates');
   };
 
   if (!isVisible) return null;
@@ -107,7 +107,7 @@ const SummerPromoPopup: React.FC = () => {
           color: transparent;
         }
 
-        .discount-badge {
+        .promo-badge {
           display: inline-block;
           background: var(--pk-green);
           color: #000;
@@ -117,13 +117,6 @@ const SummerPromoPopup: React.FC = () => {
           font-size: 1.2rem;
           margin: 1rem 0;
           box-shadow: 0 10px 20px rgba(0, 230, 118, 0.3);
-        }
-
-        .discount-badge span {
-          font-size: 0.8rem;
-          opacity: 0.8;
-          font-weight: 700;
-          margin-left: 0.5rem;
         }
 
         .popup-desc {
@@ -275,45 +268,45 @@ const SummerPromoPopup: React.FC = () => {
 
         <div className="badge-open">
           <div className="badge-dot"></div>
-          Admissions Open
+          Protocol v2.0 Live
         </div>
 
-        <h2 className="popup-title">Start Your Journey ✨</h2>
+        <h2 className="popup-title">Get Certified 🎓</h2>
         
-        <div className="discount-badge">
-          30% OFF <span>on all trainings</span>
+        <div className="promo-badge">
+          DOWNLOAD NOW
         </div>
 
         <p className="popup-desc">
-          50+ industry-aligned trainings. Located at NASTP. PSEB certified. 
-          Build skills that get you hired or help you earn independently.
+          Official YUNI Pakistan certificates are now available for all students. 
+          Use your Reference ID to download your digital credentials instantly.
         </p>
 
         <div className="features-grid">
           <div className="feature-box">
-            <GraduationCap size={20} color="var(--pk-green)" />
-            <span>50+</span>
-            <strong>Trainings</strong>
-          </div>
-          <div className="feature-box">
-            <MapPin size={20} color="var(--pk-green)" />
-            <span>Located At</span>
-            <strong>NASTP</strong>
-          </div>
-          <div className="feature-box">
             <Award size={20} color="var(--pk-green)" />
-            <span>Certified</span>
-            <strong>PSEB</strong>
+            <span>Official</span>
+            <strong>Certification</strong>
+          </div>
+          <div className="feature-box">
+            <GraduationCap size={20} color="var(--pk-green)" />
+            <span>Secure</span>
+            <strong>Verification</strong>
+          </div>
+          <div className="feature-box">
+            <ArrowRight size={20} color="var(--pk-green)" />
+            <span>Instant</span>
+            <strong>Download</strong>
           </div>
         </div>
 
         <button className="btn-register" onClick={handleAction}>
-          Register Now <ArrowRight size={20} />
+          Go to Certificates <ArrowRight size={20} />
         </button>
 
         <div className="popup-footer">
           <div className="footer-dot"></div>
-          Limited seats available — Register now to secure yours
+          Valid for all registered alumni and current trainees
         </div>
       </div>
     </div>

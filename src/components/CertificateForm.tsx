@@ -131,6 +131,27 @@ const CertificateForm: React.FC = () => {
           padding: 3rem;
         }
 
+        @media (max-width: 640px) {
+          .protocol-section {
+            padding: 2rem 1.5rem;
+          }
+          .input-group-protocol {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+          .field-protocol.full {
+            grid-column: span 1;
+          }
+          .protocol-header {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+          }
+          .protocol-submit-btn {
+            padding: 1.1rem;
+            font-size: 0.9rem;
+          }
+        }
+
         .protocol-header {
           font-size: 1.1rem;
           font-weight: 800;
