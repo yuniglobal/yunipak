@@ -11,6 +11,7 @@ import Contact from './pages/Contact';
 import Careers from './pages/Careers';
 import Events from './pages/Events';
 import CoursesPage from './pages/Courses';
+import Certificates from './pages/Certificates';
 import PromoBanner from './components/PromoBanner';
 import SummerPromoPopup from './components/SummerPromoPopup';
 import './styles.css';
@@ -80,6 +81,7 @@ function App() {
           <Route path="/Programs" element={<CoursesPage />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/certificates" element={<Certificates />} />
         </Routes>
       </main>
       {location.pathname !== '/Aboutus' && <Footer />}

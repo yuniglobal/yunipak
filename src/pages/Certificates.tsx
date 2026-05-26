@@ -1,0 +1,86 @@
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import AnimatedBackground from '../components/AnimatedBackground';
+import CertificateForm from '../components/CertificateForm';
+import AnimatedTitle from '../components/AnimatedTitle';
+
+const Certificates: React.FC = () => {
+  return (
+    <div className="min-h-screen flex flex-col relative overflow-hidden bg-transparent">
+      <style>{`
+        .certificates-view { 
+          padding: 10rem 2rem 8rem; 
+          max-width: 1200px; 
+          margin: 0 auto; 
+          position: relative; 
+          z-index: 10;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .title-wrapper { 
+          margin-bottom: 4rem; 
+          text-align: center; 
+          width: 100%;
+        }
+
+        .subtitle-tech { 
+          color: var(--text-secondary); 
+          font-size: 1.1rem; 
+          margin-top: 1.5rem; 
+          max-width: 700px; 
+          margin-left: auto; 
+          margin-right: auto; 
+          opacity: 0.8; 
+          text-align: center; 
+          line-height: 1.6;
+        }
+
+        .protocol-badge {
+          display: inline-block;
+          padding: 0.5rem 1.5rem;
+          background: rgba(0, 230, 118, 0.1);
+          border: 1px solid rgba(0, 230, 118, 0.2);
+          border-radius: 100px;
+          color: var(--pk-green);
+          font-size: 0.8rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.2em;
+          margin-bottom: 2rem;
+        }
+
+        .form-wrapper {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        }
+      `}</style>
+
+      <AnimatedBackground />
+      <Navbar />
+      
+      <main className="certificates-view flex-grow">
+        <div className="title-wrapper">
+          <div className="protocol-badge">Verification Protocol v2.0</div>
+          <AnimatedTitle>Validate Your Excellence</AnimatedTitle>
+          <p className="subtitle-tech">
+            Securely access and download your official YUNI Pakistan certifications. 
+            Our digital credentials follow industry-standard verification protocols for global recognition.
+          </p>
+        </div>
+
+        <div className="form-wrapper">
+          <CertificateForm />
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Certificates;

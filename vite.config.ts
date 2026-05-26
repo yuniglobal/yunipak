@@ -14,7 +14,7 @@ export default defineConfig({
         '/services',
         '/contact',
         '/careers',
-        // Add all your React Router routes here
+        '/certificates',
       ],
       // Optional: exclude certain paths
       exclude: ['/admin', '/private'],
@@ -23,4 +23,13 @@ export default defineConfig({
       priority: 0.8,
     }),
   ],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path) => path,
+      },
+    },
+  },
 })

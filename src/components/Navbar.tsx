@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { Menu, X, Sun, Moon, ChevronRight, Home, Info, BookOpen, Calendar, Briefcase, Mail } from 'lucide-react';
+import { Menu, X, Sun, Moon, ChevronRight, Home, Info, BookOpen, Calendar, Briefcase, Mail, Download } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,6 +43,7 @@ const Navbar = () => {
     { name: 'Trainings', path: '/Programs', icon: BookOpen },
     { name: 'Events', path: '/events', icon: Calendar },
     { name: 'Careers', path: '/careers', icon: Briefcase },
+    { name: 'Certificates', path: '/certificates', icon: Download },
     { name: 'Contact', path: '/contact', icon: Mail }
   ];
 
