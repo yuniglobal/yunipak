@@ -11,6 +11,7 @@ const Certificates: React.FC = () => {
       <style>{`
         .certificates-view { 
           padding: 8rem 1rem 6rem; 
+          width: 100%;
           max-width: 1200px; 
           margin: 0 auto; 
           position: relative; 
@@ -18,22 +19,26 @@ const Certificates: React.FC = () => {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
+          justify-content: flex-start;
+          min-height: 100vh;
+          overflow-x: hidden;
         }
 
         .title-wrapper { 
           margin-bottom: 3rem; 
           text-align: center; 
           width: 100%;
+          padding: 0 1rem;
         }
 
         @media (max-width: 768px) {
           .certificates-view {
-            padding: 7rem 1rem 4rem;
+            padding: 6rem 0.75rem 4rem;
           }
           .subtitle-tech {
-            font-size: 1rem;
-            padding: 0 1rem;
+            font-size: 0.95rem;
+            padding: 0 0.5rem;
+            margin-top: 1rem;
           }
         }
 

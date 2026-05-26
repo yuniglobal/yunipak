@@ -144,12 +144,52 @@ const CertificateForm: React.FC = () => {
   return (
     <div className="certificate-form-protocol max-w-2xl mx-auto">
       <style>{`
-        .certificate-form-protocol { width: 100%; }
-        .protocol-section { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 2rem; padding: 3rem; }
+        .certificate-form-protocol { 
+          width: 100%; 
+          max-width: 100%;
+          box-sizing: border-box;
+        }
+        .protocol-section { 
+          background: var(--glass-bg); 
+          backdrop-filter: blur(20px); 
+          border: 1px solid var(--glass-border); 
+          border-radius: 2rem; 
+          padding: 3rem; 
+          width: 100%;
+          box-sizing: border-box;
+        }
         @media (max-width: 640px) {
-          .protocol-section { padding: 2rem 1.5rem; }
-          .input-group-protocol { grid-template-columns: 1fr; gap: 1rem; }
-          .field-protocol.full { grid-column: span 1; }
+          .protocol-section { 
+            padding: 1.5rem 1.25rem; 
+            border-radius: 1.5rem;
+          }
+          .input-group-protocol { 
+            grid-template-columns: 1fr; 
+            gap: 1rem; 
+          }
+          .field-protocol.full { 
+            grid-column: span 1; 
+          }
+          .protocol-header {
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+          }
+          .protocol-submit-btn {
+            padding: 1rem;
+            font-size: 0.85rem;
+            border-radius: 1rem;
+          }
+          .field-protocol input, .field-protocol select {
+            padding: 0.9rem;
+            font-size: 0.9rem;
+          }
+          .workshop-row {
+            gap: 0.5rem;
+          }
+          .remove-workshop {
+            width: 38px;
+            height: 38px;
+          }
         }
         .protocol-header { font-size: 1.1rem; font-weight: 800; color: var(--pk-green); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.15em; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
         .input-group-protocol { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
