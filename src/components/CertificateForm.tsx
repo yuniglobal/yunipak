@@ -49,19 +49,13 @@ const CertificateForm: React.FC = () => {
 
         ctx.drawImage(img, 0, 0);
         ctx.fillStyle = '#1a365d';
-        ctx.textAlign = 'center';
+        ctx.textAlign = 'left';
         
-        // Student Name
+        // Student Name (Left Aligned)
         ctx.font = 'bold 140px "Segoe UI", Arial, sans-serif';
-        ctx.fillText(studentName.toUpperCase(), canvas.width / 2, 1200);
-
-        // Workshop Name
-        ctx.fillStyle = '#2d3748';
-        ctx.font = 'italic 70px "Segoe UI", Arial, sans-serif';
-        ctx.fillText(workshopName, canvas.width / 2, 1550);
+        ctx.fillText(studentName.toUpperCase(), 450, 1200);
 
         // Reference Number (Bottom Left)
-        ctx.textAlign = 'left';
         ctx.fillStyle = '#a0aec0';
         ctx.font = '30px "Segoe UI", Arial, sans-serif';
         ctx.fillText(`Certificate ID: ${refNo}`, 200, canvas.height - 150);
