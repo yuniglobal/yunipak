@@ -148,6 +148,7 @@ const CertificateForm: React.FC = () => {
           width: 100%; 
           max-width: 100%;
           box-sizing: border-box;
+          overflow-x: hidden;
         }
         .protocol-section { 
           background: var(--glass-bg); 
@@ -156,16 +157,33 @@ const CertificateForm: React.FC = () => {
           border-radius: 2rem; 
           padding: 3rem; 
           width: 100%;
+          max-width: 100%;
           box-sizing: border-box;
+          overflow: hidden;
+        }
+        .field-protocol input, 
+        .field-protocol select { 
+          width: 100%;
+          max-width: 100%;
+          box-sizing: border-box;
+          background: rgba(255, 255, 255, 0.03); 
+          border: 1px solid var(--border-light); 
+          border-radius: 1rem; 
+          padding: 1.1rem; 
+          color: var(--text-primary); 
+          font-family: inherit; 
+          font-size: 0.95rem; 
+          transition: all 0.3s ease; 
         }
         @media (max-width: 640px) {
           .protocol-section { 
-            padding: 1.5rem 1.25rem; 
+            padding: 1.5rem 1rem; 
             border-radius: 1.5rem;
           }
           .input-group-protocol { 
             grid-template-columns: 1fr; 
             gap: 1rem; 
+            width: 100%;
           }
           .field-protocol.full { 
             grid-column: span 1; 
@@ -178,17 +196,20 @@ const CertificateForm: React.FC = () => {
             padding: 1rem;
             font-size: 0.85rem;
             border-radius: 1rem;
+            width: 100%;
           }
           .field-protocol input, .field-protocol select {
-            padding: 0.9rem;
+            padding: 0.85rem;
             font-size: 0.9rem;
           }
           .workshop-row {
             gap: 0.5rem;
+            width: 100%;
           }
           .remove-workshop {
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
           }
         }
         .protocol-header { font-size: 1.1rem; font-weight: 800; color: var(--pk-green); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.15em; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
