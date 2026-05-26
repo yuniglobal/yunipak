@@ -1,6 +1,4 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import AnimatedBackground from '../components/AnimatedBackground';
 import CertificateForm from '../components/CertificateForm';
 import AnimatedTitle from '../components/AnimatedTitle';
@@ -76,7 +74,6 @@ const Certificates: React.FC = () => {
       `}</style>
 
       <AnimatedBackground />
-      <Navbar />
       
       <main className="certificates-view flex-grow">
         <div className="title-wrapper">
@@ -92,8 +89,6 @@ const Certificates: React.FC = () => {
           <CertificateForm />
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };
