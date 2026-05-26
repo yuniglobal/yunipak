@@ -77,6 +77,7 @@ const Certificates: React.FC = () => {
       
       <main className="certificates-view flex-grow">
         <div className="title-wrapper">
+          <div className="protocol-badge">Secure Certificate Access</div>
           <AnimatedTitle>Validate Your Excellence</AnimatedTitle>
           <p className="subtitle-tech">
             Securely access and download your official YUNI Pakistan certifications. 

@@ -268,7 +268,7 @@ const SummerPromoPopup: React.FC = () => {
 
         <div className="badge-open">
           <div className="badge-dot"></div>
-          Protocol v2.0 Live
+          YUNI-TY Event Protocol
         </div>
 
         <h2 className="popup-title">Get Certified 🎓</h2>
