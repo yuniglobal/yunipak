@@ -306,7 +306,7 @@ const SummerPromoPopup: React.FC = () => {
 
         <div className="popup-footer">
           <div className="footer-dot"></div>
-          Valid for all registered alumni and current trainees
+          Valid for all participants of the YUNI-TY event
         </div>
       </div>
     </div>
