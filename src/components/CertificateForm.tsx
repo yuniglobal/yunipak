@@ -114,6 +114,52 @@ const CertificateForm: React.FC = () => {
       return;
     }
 
+    // Immediate global lockout check
+    if (localStorage.getItem('yuni_limit_lock') === 'true') {
+      setError('Certificate limit reached for this device. You cannot download more than 3 certificates.');
+      return;
+    }
+
+    // Robust fingerprinting for tracking
+    const getFingerprint = () => {
+      const data = [
+        navigator.userAgent,
+        navigator.language,
+        window.screen.width + 'x' + window.screen.height,
+        new Date().getTimezoneOffset(),
+        // Add more static markers if needed
+      ].join('|');
+      // Simple hash function for the fingerprint
+      let hash = 0;
+      for (let i = 0; i < data.length; i++) {
+        const char = data.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+      }
+      return Math.abs(hash).toString(36);
+    };
+
+    const fingerprint = getFingerprint();
+    const localDownloadsKey = `yuni_protocol_v2_${fingerprint}`;
+    const localDownloads = JSON.parse(localStorage.getItem(localDownloadsKey) || '[]');
+    
+    // Check both by fingerprint and by Reference Number (multi-layered protection)
+    const refNoKey = `yuni_ref_${formData.refNo.toUpperCase()}`;
+    const refDownloads = JSON.parse(localStorage.getItem(refNoKey) || '[]');
+    
+    // Merge the two for the check
+    const combinedDownloads = [...new Set([...localDownloads, ...refDownloads])];
+    const uniqueNewWorkshops = formData.workshops.filter(w => !combinedDownloads.includes(w));
+    
+    if (combinedDownloads.length + uniqueNewWorkshops.length > 3) {
+      const remaining = 3 - combinedDownloads.length;
+      setError(remaining <= 0 
+        ? 'You have already reached the 3-certificate download limit for this student/device.' 
+        : `You can only download ${remaining} more certificate(s). Total allowed: 3.`
+      );
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
     setSuccess(false);
@@ -140,6 +186,17 @@ const CertificateForm: React.FC = () => {
             await generateCertificate(result.student.name, result.student.refNo, workshop.name, workshop.template);
           }
         }
+        
+        // Update local storage tracking (multi-layered)
+        const updatedDownloads = [...new Set([...combinedDownloads, ...formData.workshops])];
+        localStorage.setItem(localDownloadsKey, JSON.stringify(updatedDownloads));
+        localStorage.setItem(refNoKey, JSON.stringify(updatedDownloads));
+        
+        // Also set a global "fingerprint lockout" if they have 3
+        if (updatedDownloads.length >= 3) {
+          localStorage.setItem('yuni_limit_lock', 'true');
+        }
+        
         setSuccess(true);
       } else {
         setError(result.error || 'Verification failed. Please check your details.');

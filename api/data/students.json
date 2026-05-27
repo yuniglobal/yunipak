@@ -425,11 +425,6 @@
     "phone": "0322-5434373"
   },
   {
-    "refNo": "REF-0086",
-    "name": "Maira Abrar",
-    "phone": "0331-4403596"
-  },
-  {
     "refNo": "REF-0087",
     "name": "Laiba Tanveer",
     "phone": "0308-5003149"
@@ -475,16 +470,6 @@
     "phone": "0349-5130321"
   },
   {
-    "refNo": "REF-0096",
-    "name": "Hafsa Sagheer",
-    "phone": "0370-5197532"
-  },
-  {
-    "refNo": "REF-0097",
-    "name": "Ayesha Eiman",
-    "phone": "0333-7669647"
-  },
-  {
     "refNo": "REF-0098",
     "name": "Kainat Fatima",
     "phone": "0307-5218425"
@@ -505,19 +490,9 @@
     "phone": "0306-5513068"
   },
   {
-    "refNo": "REF-0102",
-    "name": "Hamna Shoaib",
-    "phone": "0326-8185899"
-  },
-  {
     "refNo": "REF-0103",
     "name": "Laiba Malik",
     "phone": "0316-5121640"
-  },
-  {
-    "refNo": "REF-0104",
-    "name": "Rania Maryam",
-    "phone": "0303-8827850"
   },
   {
     "refNo": "REF-0105",
@@ -528,16 +503,6 @@
     "refNo": "REF-0106",
     "name": "Aiman",
     "phone": "0321-4108719"
-  },
-  {
-    "refNo": "REF-0107",
-    "name": "Asma Bint Fayyaz",
-    "phone": "0321-5484564"
-  },
-  {
-    "refNo": "REF-0108",
-    "name": "Nimra Rasool",
-    "phone": "0317-0522971"
   },
   {
     "refNo": "REF-0109",
@@ -570,24 +535,9 @@
     "phone": "0319-7342314"
   },
   {
-    "refNo": "REF-0115",
-    "name": "Moheeb Ansari",
-    "phone": "0331-5425690"
-  },
-  {
     "refNo": "REF-0116",
     "name": "Malik Samiullah",
     "phone": "0333-5994360"
-  },
-  {
-    "refNo": "REF-0117",
-    "name": "Ume-Laila",
-    "phone": "0322-5434373"
-  },
-  {
-    "refNo": "REF-0118",
-    "name": "Talia Amjad",
-    "phone": "0319-5330141"
   },
   {
     "refNo": "REF-0119",
@@ -615,11 +565,6 @@
     "phone": "0347-5585209"
   },
   {
-    "refNo": "REF-0124",
-    "name": "M. Ubaid-ur-Rehman",
-    "phone": "0306-5471848"
-  },
-  {
     "refNo": "REF-0125",
     "name": "Wajahut Rehmen",
     "phone": "0313-1563826"
@@ -638,11 +583,6 @@
     "refNo": "REF-0128",
     "name": "M. Ahmad Bajwa",
     "phone": "0818-8288949"
-  },
-  {
-    "refNo": "REF-0129",
-    "name": "Muhammad Sudais",
-    "phone": "0333-1523331"
   },
   {
     "refNo": "REF-0130",
@@ -675,24 +615,9 @@
     "phone": "0319-5291944"
   },
   {
-    "refNo": "REF-0136",
-    "name": "Fizza Mumtaz",
-    "phone": "0321-9141315"
-  },
-  {
-    "refNo": "REF-0137",
-    "name": "Zill-e-Huma Rani",
-    "phone": "0326-5502074"
-  },
-  {
     "refNo": "REF-0138",
     "name": "Iqra Laraib",
     "phone": "0310-5834893"
-  },
-  {
-    "refNo": "REF-0139",
-    "name": "Aqsa Afzal Malik",
-    "phone": "0370-1518447"
   },
   {
     "refNo": "REF-0140",
@@ -720,29 +645,9 @@
     "phone": "0333-5294844"
   },
   {
-    "refNo": "REF-0145",
-    "name": "Areesha Sajid",
-    "phone": "0344-5035414"
-  },
-  {
-    "refNo": "REF-0146",
-    "name": "Ayesha Bibi",
-    "phone": "0306-5513068"
-  },
-  {
-    "refNo": "REF-0147",
-    "name": "Jaweria Firdous",
-    "phone": "0344-4950097"
-  },
-  {
     "refNo": "REF-0148",
     "name": "Malaika Jabeen",
     "phone": "0319-5881927"
-  },
-  {
-    "refNo": "REF-0149",
-    "name": "Alishba Jahangir",
-    "phone": "0349-5130321"
   },
   {
     "refNo": "REF-0150",
@@ -960,11 +865,6 @@
     "phone": "0325-5821113"
   },
   {
-    "refNo": "REF-0193",
-    "name": "Kainat Majeed",
-    "phone": "0317-0150207"
-  },
-  {
     "refNo": "REF-0194",
     "name": "Syeda Samra Batool",
     "phone": "0341-4122667"
@@ -1005,11 +905,6 @@
     "phone": "0317-5701203"
   },
   {
-    "refNo": "REF-0202",
-    "name": "Ruqayya Farooq",
-    "phone": "0315-5354417"
-  },
-  {
     "refNo": "REF-0203",
     "name": "Muqaddas",
     "phone": "0320-9544623"
@@ -1025,11 +920,6 @@
     "phone": "0311-9684270"
   },
   {
-    "refNo": "REF-0206",
-    "name": "Nimra Bibi",
-    "phone": "0329-5456581"
-  },
-  {
     "refNo": "REF-0207",
     "name": "Aarsa Afzal Malik",
     "phone": "0370-1518447"
@@ -1038,26 +928,6 @@
     "refNo": "REF-0208",
     "name": "Eman Mehmood",
     "phone": "0302-5119567"
-  },
-  {
-    "refNo": "REF-0209",
-    "name": "Aafreen Zahra Kazmi",
-    "phone": "0343-0040855"
-  },
-  {
-    "refNo": "REF-0210",
-    "name": "Aliha Afzal",
-    "phone": "0318-7841114"
-  },
-  {
-    "refNo": "REF-0211",
-    "name": "Maira Abrar",
-    "phone": "0331-4403596"
-  },
-  {
-    "refNo": "REF-0212",
-    "name": "Kainat Majeed",
-    "phone": "0317-0150207"
   },
   {
     "refNo": "REF-0213",
@@ -1095,11 +965,6 @@
     "phone": "0319-9093249"
   },
   {
-    "refNo": "REF-0220",
-    "name": "Zain-ul-Abideen",
-    "phone": "0334-5182049"
-  },
-  {
     "refNo": "REF-0221",
     "name": "Khuzaima Farooq",
     "phone": "0317-7127856"
@@ -1115,49 +980,9 @@
     "phone": "0336-0558675"
   },
   {
-    "refNo": "REF-0224",
-    "name": "Aafreen Zahra Kazmi",
-    "phone": "0343-0040855"
-  },
-  {
-    "refNo": "REF-0225",
-    "name": "Qurat-ul-Ain",
-    "phone": "0329-5220184"
-  },
-  {
-    "refNo": "REF-0226",
-    "name": "Maryam Shaheen",
-    "phone": "0306-4930959"
-  },
-  {
-    "refNo": "REF-0227",
-    "name": "Saima Rehman",
-    "phone": "0335-7628252"
-  },
-  {
-    "refNo": "REF-0228",
-    "name": "Hamna Mumtaz",
-    "phone": "0332-9503557"
-  },
-  {
-    "refNo": "REF-0229",
-    "name": "Javeria Fazal",
-    "phone": "0318-5841640"
-  },
-  {
-    "refNo": "REF-0230",
-    "name": "Kainat Majeed",
-    "phone": "0317-0150207"
-  },
-  {
     "refNo": "REF-0231",
     "name": "Syeda Sukaina Raza Kazmi",
     "phone": "0305-5149000"
-  },
-  {
-    "refNo": "REF-0232",
-    "name": "Maira Abrar",
-    "phone": "0331-4403596"
   },
   {
     "refNo": "REF-0233",
@@ -1165,79 +990,9 @@
     "phone": "0314-9432664"
   },
   {
-    "refNo": "REF-0234",
-    "name": "Rania Anjum",
-    "phone": "0333-0928546"
-  },
-  {
-    "refNo": "REF-0235",
-    "name": "Sana Qaisar",
-    "phone": "0334-3360947"
-  },
-  {
-    "refNo": "REF-0236",
-    "name": "Sadia",
-    "phone": "0315-9144796"
-  },
-  {
-    "refNo": "REF-0237",
-    "name": "Marya Sagheer",
-    "phone": "0336-9519720"
-  },
-  {
-    "refNo": "REF-0238",
-    "name": "Nawal Mustafa",
-    "phone": "0319-4590522"
-  },
-  {
-    "refNo": "REF-0239",
-    "name": "Minahil Gulnaz",
-    "phone": "0331-5114999"
-  },
-  {
-    "refNo": "REF-0240",
-    "name": "Aliha Afzal",
-    "phone": "0318-7841114"
-  },
-  {
-    "refNo": "REF-0241",
-    "name": "Asma Bint Fayyaz",
-    "phone": "0321-5484564"
-  },
-  {
-    "refNo": "REF-0242",
-    "name": "Aiman",
-    "phone": "0321-4108719"
-  },
-  {
-    "refNo": "REF-0243",
-    "name": "Nimra Rasool",
-    "phone": "0317-0522971"
-  },
-  {
-    "refNo": "REF-0244",
-    "name": "Sahaab Fatima",
-    "phone": "0319-9975024"
-  },
-  {
     "refNo": "REF-0245",
     "name": "Laraib Nasar",
     "phone": "0325-5159359"
-  },
-  {
-    "refNo": "REF-0246",
-    "name": "Samana Zahra",
-    "phone": "0312-0393639"
-  },
-  {
-    "refNo": "REF-0247",
-    "name": "Ayesha Arif",
-    "phone": "0335-1542366"
-  },
-  {
-    "refNo": "REF-0248",
-    "name": "Insha Khalid",
-    "phone": "0331-5348619"
   },
   {
     "refNo": "REF-0249",
@@ -1263,11 +1018,6 @@
     "refNo": "REF-0253",
     "name": "Saleha Noor",
     "phone": "0336-8505445"
-  },
-  {
-    "refNo": "REF-0254",
-    "name": "Farqaleet Ali",
-    "phone": "0334-5448338"
   },
   {
     "refNo": "REF-0255",
@@ -1340,16 +1090,6 @@
     "phone": "0315-9680237"
   },
   {
-    "refNo": "REF-0269",
-    "name": "Fatima Bibi",
-    "phone": "0315-8649779"
-  },
-  {
-    "refNo": "REF-0270",
-    "name": "Sarah Shahzad",
-    "phone": "0370-5168186"
-  },
-  {
     "refNo": "REF-0271",
     "name": "Javeria",
     "phone": "0320-6689248"
@@ -1400,76 +1140,6 @@
     "phone": "0332-5553881"
   },
   {
-    "refNo": "REF-0281",
-    "name": "Syeda Aleena Batool",
-    "phone": "0345-5556067"
-  },
-  {
-    "refNo": "REF-0282",
-    "name": "Areesha Sajid",
-    "phone": "0344-5035414"
-  },
-  {
-    "refNo": "REF-0283",
-    "name": "Alishba Jahangir",
-    "phone": "0349-5130321"
-  },
-  {
-    "refNo": "REF-0284",
-    "name": "Hafsa Sagheer",
-    "phone": "0370-5197532"
-  },
-  {
-    "refNo": "REF-0285",
-    "name": "Ayesha Eiman",
-    "phone": "0333-7669647"
-  },
-  {
-    "refNo": "REF-0286",
-    "name": "Asma Ahmed",
-    "phone": "0320-5602087"
-  },
-  {
-    "refNo": "REF-0287",
-    "name": "Anum Gillani",
-    "phone": "0316-9970389"
-  },
-  {
-    "refNo": "REF-0288",
-    "name": "Hamna Mumtaz",
-    "phone": "0332-9503557"
-  },
-  {
-    "refNo": "REF-0289",
-    "name": "Memoona Andleeb",
-    "phone": "0319-7342314"
-  },
-  {
-    "refNo": "REF-0290",
-    "name": "Asma Bint Fayyaz",
-    "phone": "0321-5484564"
-  },
-  {
-    "refNo": "REF-0291",
-    "name": "Nimra Rasool",
-    "phone": "0317-0522971"
-  },
-  {
-    "refNo": "REF-0292",
-    "name": "Aiman",
-    "phone": "0302-5318966"
-  },
-  {
-    "refNo": "REF-0293",
-    "name": "Marya Sagheer",
-    "phone": "0336-9519720"
-  },
-  {
-    "refNo": "REF-0294",
-    "name": "Muhammad Shahmeer Mughal",
-    "phone": "0332-7718811"
-  },
-  {
     "refNo": "REF-0295",
     "name": "Muhammad Murtaza",
     "phone": "0340-5817764"
@@ -1485,54 +1155,14 @@
     "phone": "0319-5093249"
   },
   {
-    "refNo": "REF-0298",
-    "name": "Malik Samiullah",
-    "phone": "0333-5994360"
-  },
-  {
-    "refNo": "REF-0299",
-    "name": "Moheeb Ansari",
-    "phone": "0331-5425690"
-  },
-  {
-    "refNo": "REF-0300",
-    "name": "Hamna Shoaib",
-    "phone": "0326-8185899"
-  },
-  {
-    "refNo": "REF-0301",
-    "name": "Zill-e-Huma Rani",
-    "phone": "0326-5502074"
-  },
-  {
     "refNo": "REF-0302",
     "name": "Eman Mumtaza",
     "phone": "0343-7953677"
   },
   {
-    "refNo": "REF-0303",
-    "name": "Sadia",
-    "phone": "0315-9144796"
-  },
-  {
-    "refNo": "REF-0304",
-    "name": "Anum Gillani",
-    "phone": "0316-9970389"
-  },
-  {
-    "refNo": "REF-0305",
-    "name": "Asma Ahmed",
-    "phone": "0320-5602087"
-  },
-  {
     "refNo": "REF-0306",
     "name": "M. Asim",
     "phone": "0346-4800136"
-  },
-  {
-    "refNo": "REF-0307",
-    "name": "Taha Naeem",
-    "phone": "0323-5500176"
   },
   {
     "refNo": "REF-0308",
@@ -1543,46 +1173,6 @@
     "refNo": "REF-0309",
     "name": "Hamza Bin Zia",
     "phone": "0328-5230089"
-  },
-  {
-    "refNo": "REF-0310",
-    "name": "Muhammad Asghar Raza",
-    "phone": "0336-9997517"
-  },
-  {
-    "refNo": "REF-0311",
-    "name": "Gul-E-Rana",
-    "phone": "0333-4778456"
-  },
-  {
-    "refNo": "REF-0312",
-    "name": "Abiha Talat",
-    "phone": "0337-9222106"
-  },
-  {
-    "refNo": "REF-0313",
-    "name": "Malik Muhammad Ahmed Awan",
-    "phone": "0331-9149421"
-  },
-  {
-    "refNo": "REF-0314",
-    "name": "Muhammad Hashim",
-    "phone": "0310-5541025"
-  },
-  {
-    "refNo": "REF-0315",
-    "name": "Abdul Moiz",
-    "phone": "0347-5585209"
-  },
-  {
-    "refNo": "REF-0316",
-    "name": "Muhammad Asghar Raza",
-    "phone": "0336-9997517"
-  },
-  {
-    "refNo": "REF-0317",
-    "name": "M. Hassan Jamshaid",
-    "phone": "0323-0884428"
   },
   {
     "refNo": "REF-0318",
@@ -1615,11 +1205,6 @@
     "phone": "0343-0054342"
   },
   {
-    "refNo": "REF-0324",
-    "name": "Mishal Tariq",
-    "phone": "0336-9754169"
-  },
-  {
     "refNo": "REF-0325",
     "name": "Abdur Rahman Khan",
     "phone": "0339-1202880"
@@ -1650,21 +1235,6 @@
     "phone": "0331-4062064"
   },
   {
-    "refNo": "REF-0331",
-    "name": "Momina Malik",
-    "phone": "0318-5336256"
-  },
-  {
-    "refNo": "REF-0332",
-    "name": "Javeria Saleem",
-    "phone": "0333-8518471"
-  },
-  {
-    "refNo": "REF-0333",
-    "name": "Mehmoona Saleem",
-    "phone": "0333-8518471"
-  },
-  {
     "refNo": "REF-0334",
     "name": "Ayesha Maqsood",
     "phone": "0329-8231501"
@@ -1685,21 +1255,6 @@
     "phone": "0370-5791138"
   },
   {
-    "refNo": "REF-0338",
-    "name": "Samana Zahra",
-    "phone": "0312-0393639"
-  },
-  {
-    "refNo": "REF-0339",
-    "name": "Ayesha Arif",
-    "phone": "0335-1542366"
-  },
-  {
-    "refNo": "REF-0340",
-    "name": "Insha Khalid",
-    "phone": "0331-5348619"
-  },
-  {
     "refNo": "REF-0341",
     "name": "Masooma Fatima",
     "phone": "0316-5418608"
@@ -1710,94 +1265,14 @@
     "phone": "0315-5255259"
   },
   {
-    "refNo": "REF-0343",
-    "name": "Mishal Tariq",
-    "phone": "0336-9754169"
-  },
-  {
-    "refNo": "REF-0344",
-    "name": "Fabeha Rashad",
-    "phone": "0331-5733351"
-  },
-  {
-    "refNo": "REF-0345",
-    "name": "Fatima Bibi",
-    "phone": "0315-8649779"
-  },
-  {
-    "refNo": "REF-0346",
-    "name": "Dur-e-Sadaf",
-    "phone": "0348-0973352"
-  },
-  {
-    "refNo": "REF-0347",
-    "name": "Aiman Shah",
-    "phone": "0320-9101654"
-  },
-  {
     "refNo": "REF-0348",
     "name": "Muhammad Umar",
     "phone": "0341-2220632"
   },
   {
-    "refNo": "REF-0349",
-    "name": "Abid Ali",
-    "phone": "0342-9036891"
-  },
-  {
-    "refNo": "REF-0350",
-    "name": "Anum Gillani",
-    "phone": "0316-9970389"
-  },
-  {
-    "refNo": "REF-0351",
-    "name": "Taha Naeem",
-    "phone": "0323-5500176"
-  },
-  {
     "refNo": "REF-0352",
     "name": "Hamza",
     "phone": "0314-5636718"
-  },
-  {
-    "refNo": "REF-0353",
-    "name": "Shanza Qasim",
-    "phone": "0314-5636718"
-  },
-  {
-    "refNo": "REF-0354",
-    "name": "Mahnoor Qasim",
-    "phone": "0312-6040523"
-  },
-  {
-    "refNo": "REF-0355",
-    "name": "Maira Abrar",
-    "phone": "0331-4403596"
-  },
-  {
-    "refNo": "REF-0356",
-    "name": "Kainat Majeed",
-    "phone": "0317-0150207"
-  },
-  {
-    "refNo": "REF-0357",
-    "name": "Syeda Sukaina Raza Kazmi",
-    "phone": "0305-5149000"
-  },
-  {
-    "refNo": "REF-0358",
-    "name": "Aafreen Zahra Kazmi",
-    "phone": "0343-0040855"
-  },
-  {
-    "refNo": "REF-0359",
-    "name": "Kubra Batool",
-    "phone": "0318-5696748"
-  },
-  {
-    "refNo": "REF-0360",
-    "name": "Rubina Shaheen",
-    "phone": "0316-5407468"
   },
   {
     "refNo": "REF-0361",
@@ -1820,11 +1295,6 @@
     "phone": "0321-9148232"
   },
   {
-    "refNo": "REF-0365",
-    "name": "Rania Maryam",
-    "phone": "0303-8827850"
-  },
-  {
     "refNo": "REF-0366",
     "name": "Mirub",
     "phone": "0320-6502505"
@@ -1845,44 +1315,9 @@
     "phone": "0345-3243998"
   },
   {
-    "refNo": "REF-0370",
-    "name": "Aqsa Arshad",
-    "phone": "0322-5018564"
-  },
-  {
-    "refNo": "REF-0371",
-    "name": "Bushra Noor",
-    "phone": "0315-5255259"
-  },
-  {
-    "refNo": "REF-0372",
-    "name": "Masooma Fatima",
-    "phone": "0316-5418608"
-  },
-  {
     "refNo": "REF-0373",
     "name": "Sonia Zaheer",
     "phone": "0316-9939447"
-  },
-  {
-    "refNo": "REF-0374",
-    "name": "Areesha Sajid",
-    "phone": "0344-5035414"
-  },
-  {
-    "refNo": "REF-0375",
-    "name": "Jaweria Firdous",
-    "phone": "0344-4950097"
-  },
-  {
-    "refNo": "REF-0376",
-    "name": "Alishba Jahangir",
-    "phone": "0349-5130321"
-  },
-  {
-    "refNo": "REF-0377",
-    "name": "Ayesha Bibi",
-    "phone": "0306-5513068"
   },
   {
     "refNo": "REF-0378",
@@ -1893,11 +1328,6 @@
     "refNo": "REF-0379",
     "name": "Hoorain Khalid",
     "phone": "0321-5425813"
-  },
-  {
-    "refNo": "REF-0380",
-    "name": "Irha Shoukat",
-    "phone": "0371-0955574"
   },
   {
     "refNo": "REF-0381",
@@ -1923,16 +1353,6 @@
     "refNo": "REF-0385",
     "name": "Zainab Jabbar",
     "phone": "0334-2055538"
-  },
-  {
-    "refNo": "REF-0386",
-    "name": "Fabeha Rashad",
-    "phone": "0331-5733351"
-  },
-  {
-    "refNo": "REF-0387",
-    "name": "Dur-e-Sadaf",
-    "phone": "0348-0973352"
   },
   {
     "refNo": "REF-0388",
@@ -1975,11 +1395,6 @@
     "phone": "0346-5205453"
   },
   {
-    "refNo": "REF-0396",
-    "name": "Asma Bint Fayyaz",
-    "phone": "0321-5484564"
-  },
-  {
     "refNo": "REF-0397",
     "name": "Marium Ali Mirza",
     "phone": "0336-5043063"
@@ -1990,29 +1405,9 @@
     "phone": "0336-9766149"
   },
   {
-    "refNo": "REF-0399",
-    "name": "Malaika Batool",
-    "phone": "0314-9442143"
-  },
-  {
     "refNo": "REF-0400",
     "name": "Sumaira Malik",
     "phone": "0343-5091287"
-  },
-  {
-    "refNo": "REF-0401",
-    "name": "Saman Hussain",
-    "phone": "0333-5368767"
-  },
-  {
-    "refNo": "REF-0402",
-    "name": "Memoona Andleeb",
-    "phone": "0319-7342314"
-  },
-  {
-    "refNo": "REF-0403",
-    "name": "Ayesha Ahmed",
-    "phone": "0318-3521701"
   },
   {
     "refNo": "REF-0404",
@@ -2040,26 +1435,6 @@
     "phone": "0332-3332992"
   },
   {
-    "refNo": "REF-0409",
-    "name": "Tahoora Amjad",
-    "phone": "0319-5330162"
-  },
-  {
-    "refNo": "REF-0410",
-    "name": "Laraib Fatima",
-    "phone": "0301-5299770"
-  },
-  {
-    "refNo": "REF-0411",
-    "name": "Kainat Fatima",
-    "phone": "0307-5218425"
-  },
-  {
-    "refNo": "REF-0412",
-    "name": "Laiba Tanveer",
-    "phone": "0308-5003149"
-  },
-  {
     "refNo": "REF-0413",
     "name": "Samia Karam",
     "phone": "0324-5725205"
@@ -2068,16 +1443,6 @@
     "refNo": "REF-0414",
     "name": "Fatima Bint Fayyaz",
     "phone": "0313-6288911"
-  },
-  {
-    "refNo": "REF-0415",
-    "name": "Malaika Batool",
-    "phone": "0314-9442143"
-  },
-  {
-    "refNo": "REF-0416",
-    "name": "Arzoo",
-    "phone": "0318-0979407"
   },
   {
     "refNo": "REF-0417",
@@ -2098,36 +1463,6 @@
     "refNo": "REF-0420",
     "name": "Sawaira Ashfaq",
     "phone": "0301-7131154"
-  },
-  {
-    "refNo": "REF-0421",
-    "name": "Fizza Mumtaz",
-    "phone": "0321-9141315"
-  },
-  {
-    "refNo": "REF-0422",
-    "name": "Sumaira Malik",
-    "phone": "0343-5091287"
-  },
-  {
-    "refNo": "REF-0423",
-    "name": "Saman Hussain",
-    "phone": "0333-5368767"
-  },
-  {
-    "refNo": "REF-0424",
-    "name": "Ayesha Ahmed",
-    "phone": "0318-3521701"
-  },
-  {
-    "refNo": "REF-0425",
-    "name": "Jaweria Firdous",
-    "phone": "0344-4950097"
-  },
-  {
-    "refNo": "REF-0426",
-    "name": "Laiba Malik",
-    "phone": "0316-5121640"
   },
   {
     "refNo": "REF-0427",
@@ -2158,21 +1493,6 @@
     "refNo": "REF-0432",
     "name": "M. Farhan",
     "phone": "0328-5278053"
-  },
-  {
-    "refNo": "REF-0433",
-    "name": "Taha Naeem",
-    "phone": "0323-5500176"
-  },
-  {
-    "refNo": "REF-0434",
-    "name": "Sahaab Fatima",
-    "phone": "0319-9975024"
-  },
-  {
-    "refNo": "REF-0435",
-    "name": "Ayesha Mushtaq",
-    "phone": "0327-5367134"
   },
   {
     "refNo": "REF-0436",
@@ -2248,11 +1568,6 @@
     "refNo": "REF-0450",
     "name": "Ammara Bibi",
     "phone": "0347-4499868"
-  },
-  {
-    "refNo": "REF-0451",
-    "name": "Muhammad Suleman Ali",
-    "phone": "0317-5349033"
   },
   {
     "refNo": "REF-0452",
