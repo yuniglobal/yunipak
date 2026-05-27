@@ -116,7 +116,8 @@ const CertificateForm: React.FC = () => {
         body: JSON.stringify({
           refNo: formData.refNo,
           name: formData.name,
-          phone: formData.phone
+          phone: formData.phone,
+          workshops: formData.workshops
         }),
       });
 
