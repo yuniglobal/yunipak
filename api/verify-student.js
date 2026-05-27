@@ -34,15 +34,18 @@ export default async function handler(req, res) {
     if (student) {
       const studentKey = student.refNo.toUpperCase();
       const studentDownloads = downloads[studentKey] || [];
-      
+
+      // Get unique requested workshops to avoid duplicate counting
+      const uniqueRequestedWorkshops = [...new Set(workshops)];
+
       // Calculate how many NEW unique workshops are being requested
-      const newWorkshops = workshops.filter(w => !studentDownloads.includes(w));
+      const newWorkshops = uniqueRequestedWorkshops.filter(w => !studentDownloads.includes(w));
       const totalCount = studentDownloads.length + newWorkshops.length;
 
       if (totalCount > 3) {
         const remaining = 3 - studentDownloads.length;
         return res.status(403).json({ 
-          error: `Certificate limit exceeded. You have already downloaded ${studentDownloads.length} certificate(s). You can only download ${remaining} more. Total allowed: 3.` 
+          error: `Certificate limit exceeded. You have already downloaded ${studentDownloads.length} unique certificate(s). You can only download ${remaining} more. Total allowed: 3.` 
         });
       }
 

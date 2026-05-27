@@ -33,6 +33,11 @@ const CertificateForm: React.FC = () => {
 
   const handleWorkshopChange = (index: number, value: string) => {
     const newWorkshops = [...formData.workshops];
+    // Prevent duplicate selections
+    if (newWorkshops.includes(value) && newWorkshops.indexOf(value) !== index) {
+      setError('You have already selected this workshop.');
+      return;
+    }
     newWorkshops[index] = value;
     setFormData(prev => ({ ...prev, workshops: newWorkshops }));
     setSuccess(false);
@@ -40,10 +45,14 @@ const CertificateForm: React.FC = () => {
 
   const addWorkshop = () => {
     if (formData.workshops.length < 3) {
-      setFormData(prev => ({
-        ...prev,
-        workshops: [...prev.workshops, WORKSHOPS[0].id]
-      }));
+      // Find the first workshop that hasn't been selected yet
+      const availableWorkshop = WORKSHOPS.find(w => !formData.workshops.includes(w.id));
+      if (availableWorkshop) {
+        setFormData(prev => ({
+          ...prev,
+          workshops: [...prev.workshops, availableWorkshop.id]
+        }));
+      }
     }
   };
 
