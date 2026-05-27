@@ -2,7 +2,7 @@ import XLSX from 'xlsx';
 import fs from 'fs';
 import path from 'path';
 
-const excelFilePath = './certificates/student details.xlsx';
+const excelFilePath = './certificates/new details.xlsx';
 const outputFilePath = './api/data/students.json';
 
 function convert() {
