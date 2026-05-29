@@ -433,16 +433,12 @@ const Blog: React.FC = () => {
                       <div className="author-avatar-tech">{post.author.charAt(0)}</div>
                       <span className="author-name">{post.author}</span>
                     </div>
-                    {post.externalLink ? (
+                    {post.externalLink && (
                       <button 
                         onClick={handleRegister}
                         className="read-more-btn-tech"
                       >
                         Register Now <span className="arrow">→</span>
-                      </button>
-                    ) : (
-                      <button className="read-more-btn-tech">
-                        Explore <span className="arrow">→</span>
                       </button>
                     )}
                   </div>
