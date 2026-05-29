@@ -781,6 +781,99 @@ const Blog: React.FC = () => {
           .summit-highlight-banner { padding: 2rem; }
         }
 
+        @media (max-width: 768px) {
+          .events-container,
+          .trainings-view,
+          .registration-view {
+            padding-left: 1rem;
+            padding-right: 1rem;
+          }
+
+          .filter-container-premium {
+            justify-content: flex-start;
+            overflow-x: auto;
+            flex-wrap: nowrap;
+            padding-bottom: 0.5rem;
+            -webkit-overflow-scrolling: touch;
+          }
+
+          .filter-btn-events {
+            flex: 0 0 auto;
+            padding: 0.8rem 1rem;
+          }
+
+          .blog-grid-premium {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
+
+          .blog-card-image {
+            height: 220px;
+          }
+
+          .blog-card-content {
+            padding: 1.5rem;
+          }
+
+          .blog-title-tech {
+            font-size: 1.45rem;
+          }
+
+          .blog-description-tech {
+            font-size: 0.98rem;
+          }
+
+          .blog-footer-tech {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+          }
+
+          .summit-highlight-banner {
+            padding: 1.25rem;
+            margin-bottom: 2.5rem;
+          }
+
+          .summit-text h3 {
+            font-size: 1.2rem;
+          }
+
+          .registration-view {
+            padding-top: 6rem;
+          }
+
+          .registration-container-premium {
+            border-radius: 2rem;
+            padding: 1.5rem;
+          }
+
+          .summit-schedule-premium {
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+          }
+
+          .cancel-btn-tech {
+            position: static;
+            margin-left: auto;
+            margin-bottom: 1rem;
+          }
+
+          .form-grid-premium,
+          .input-group-tech,
+          .form-row-premium {
+            grid-template-columns: 1fr;
+          }
+
+          .form-section-tech {
+            padding: 1.25rem;
+          }
+
+          .section-header-tech {
+            gap: 0.5rem;
+            font-size: 1rem;
+          }
+        }
+
         /* --- Registration Form Styles --- */
         .registration-view { 
           padding: 8rem 2rem 5rem; 

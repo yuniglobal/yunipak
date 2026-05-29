@@ -107,6 +107,40 @@ const Footer = () => {
           flex-wrap: wrap;
         }
 
+        @media (max-width: 768px) {
+          .footer-content {
+            padding: 0 1rem 1.5rem;
+            gap: 2.5rem;
+          }
+
+          .footer-main {
+            gap: 2rem;
+          }
+
+          .footer-links-container {
+            gap: 2rem;
+          }
+
+          .footer-link-group {
+            width: 100%;
+          }
+
+          .footer-bottom {
+            gap: 1.25rem;
+          }
+
+          .social-row {
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+
+          .footer-legal {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+          }
+        }
+
         .footer-link-group {
           display: flex;
           flex-direction: column;

@@ -66,6 +66,37 @@ const Navbar = () => {
           pointer-events: none;
         }
 
+        @media (max-width: 768px) {
+          .navbar-wrapper {
+            top: calc(var(--banner-height, 0px) + 6px);
+            padding: 0.75rem 1rem;
+          }
+
+          .navbar-container {
+            padding: 0.65rem 0.9rem;
+            border-radius: 28px;
+            gap: 0.75rem;
+          }
+
+          .nav-logo {
+            max-width: 86px;
+          }
+
+          .nav-logo img {
+            height: 28px !important;
+          }
+
+          .nav-actions {
+            gap: 0.6rem;
+          }
+
+          .theme-toggle,
+          .mobile-toggle {
+            width: 38px;
+            height: 38px;
+          }
+        }
+
         .navbar-container {
           max-width: 1200px;
           margin: 0 auto;
@@ -233,18 +264,19 @@ const Navbar = () => {
           top: 0;
           left: 0;
           width: 100%;
-          height: 100vh;
+          height: 100dvh;
           background: var(--glass-bg-heavy);
           backdrop-filter: blur(25px) saturate(200%);
           -webkit-backdrop-filter: blur(25px) saturate(200%);
           z-index: 2000;
           display: flex;
           flex-direction: column;
-          padding: 2.5rem;
+          padding: 1.5rem;
           transform: translateX(100%);
           transition: all 0.6s var(--transition-smooth);
           pointer-events: auto;
           visibility: hidden;
+          overflow-y: auto;
         }
 
         .mobile-menu.open {
@@ -253,7 +285,7 @@ const Navbar = () => {
         }
 
         .mobile-nav-link {
-          font-size: 2.2rem;
+          font-size: clamp(1.4rem, 6vw, 2rem);
           font-family: 'Space Grotesk', sans-serif;
           font-weight: 800;
           color: var(--text-primary);
@@ -276,6 +308,16 @@ const Navbar = () => {
           display: flex;
           align-items: center;
           gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+          .mobile-nav-link {
+            padding: 0.85rem 0;
+          }
+
+          .mobile-nav-link span {
+            gap: 0.75rem;
+          }
         }
       `}</style>
 

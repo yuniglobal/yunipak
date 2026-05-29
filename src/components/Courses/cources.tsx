@@ -898,6 +898,79 @@ const Courses: React.FC = () => {
           .detail-title-tech { font-size: 2.5rem; }
           .course-grid { grid-template-columns: 1fr; }
         }
+
+        @media (max-width: 768px) {
+          .trainings-view,
+          .detail-view,
+          .checkout-view {
+            padding: 6rem 1rem 5rem;
+          }
+
+          .filters-container {
+            justify-content: flex-start;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            flex-wrap: nowrap;
+            -webkit-overflow-scrolling: touch;
+          }
+
+          .filter-btn-premium {
+            flex: 0 0 auto;
+            padding: 0.75rem 1.1rem;
+          }
+
+          .course-grid {
+            gap: 1.5rem;
+          }
+
+          .course-card-content {
+            padding: 1.5rem;
+          }
+
+          .course-card-image {
+            height: 200px;
+          }
+
+          .course-title-tech,
+          .checkout-title-tech {
+            font-size: 1.8rem;
+          }
+
+          .detail-title-tech {
+            font-size: 2rem;
+          }
+
+          .detail-image-wrapper {
+            height: 260px;
+          }
+
+          .detail-stats-premium,
+          .outcomes-grid,
+          .input-group-tech {
+            grid-template-columns: 1fr;
+          }
+
+          .card-footer-premium {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+          }
+
+          .form-section-tech {
+            padding: 1.5rem;
+          }
+
+          .field-tech.full {
+            grid-column: span 1;
+          }
+
+          .field-tech input,
+          .field-tech select,
+          .submit-btn-premium,
+          .enroll-btn-premium {
+            border-radius: 1rem;
+          }
+        }
       `}</style>
     </div>
   );

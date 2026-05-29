@@ -295,6 +295,45 @@ export default function Home() {
             max-width: 50%;
           }
         }
+
+        @media (max-width: 768px) {
+          .section-container {
+            padding: 5rem 1rem;
+          }
+
+          .stats-grid,
+          .testimonial-grid,
+          .partners-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .stat-item,
+          .testimonial-card,
+          .partner-card,
+          .certificate-card {
+            padding: 1.5rem;
+          }
+
+          .team-image {
+            height: 280px;
+          }
+
+          .team-name {
+            font-size: 2rem;
+          }
+
+          .certificate-card {
+            text-align: left;
+          }
+
+          .certificate-card img {
+            width: 100%;
+          }
+
+          .certificate-card h2 {
+            font-size: 1.5rem !important;
+          }
+        }
       `}</style>
 
       <AnimatedBackground />

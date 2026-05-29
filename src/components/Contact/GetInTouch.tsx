@@ -426,7 +426,62 @@ const GetInTouch: React.FC = () => {
         }
 
         @media (max-width: 640px) {
+          .contact-premium-section {
+            padding-top: 6rem;
+            padding-bottom: 5rem;
+          }
+
+          .contact-container-premium {
+            padding: 0 1rem;
+          }
+
+          .title-wrapper {
+            margin-bottom: 2rem;
+          }
+
+          .contact-layout-premium {
+            gap: 1.5rem;
+            margin-top: 3rem;
+          }
+
+          .contact-info-panel,
+          .contact-form-panel {
+            border-radius: 1.5rem;
+          }
+
+          .info-panel-inner,
+          .form-panel-inner {
+            padding: 1.5rem;
+          }
+
+          .brand-header-premium {
+            gap: 1rem;
+            margin-bottom: 2rem;
+          }
+
+          .brand-text-premium {
+            font-size: 1.35rem;
+          }
+
+          .info-grid-premium {
+            gap: 1.5rem;
+          }
+
+          .social-nodes-premium {
+            flex-wrap: wrap;
+            gap: 1rem;
+          }
+
           .form-row-premium { grid-template-columns: 1fr; }
+          .checkbox-container-premium {
+            gap: 0.9rem;
+            align-items: flex-start;
+          }
+
+          .submit-btn-premium {
+            padding: 1.1rem;
+            border-radius: 1rem;
+          }
         }
       `}</style>
     </>

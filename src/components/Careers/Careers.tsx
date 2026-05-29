@@ -389,7 +389,55 @@ const Careers: React.FC = () => {
         }
 
         @media (max-width: 768px) {
-          .positions-grid-premium { grid-template-columns: 1fr; }
+          .careers-premium-section {
+            padding-top: 6rem;
+            padding-bottom: 5rem;
+          }
+
+          .careers-container-premium {
+            padding: 0 1rem;
+          }
+
+          .positions-grid-premium {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+          }
+
+          .position-card-inner,
+          .bottom-cta-premium,
+          .modal-content-premium {
+            padding: 1.5rem;
+          }
+
+          .position-meta-top {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+          }
+
+          .cta-title {
+            font-size: 1.8rem;
+          }
+
+          .cta-text {
+            font-size: 1rem;
+          }
+
+          .form-grid-premium {
+            gap: 1rem;
+          }
+
+          .form-actions-premium {
+            flex-direction: column;
+            align-items: stretch;
+          }
+
+          .submit-btn-premium,
+          .cancel-btn-premium {
+            width: 100%;
+          }
         }
       `}</style>
     </section>
