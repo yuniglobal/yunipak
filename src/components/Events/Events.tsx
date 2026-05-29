@@ -162,7 +162,7 @@ const Blog: React.FC = () => {
     email: "", phoneNumber: "", alternatePhone: "", currentAddress: "",
     city: "", province: "Punjab", highestQualification: "", institution: "",
     yearOfCompletion: "", percentage: "", courseId: "summit-2026", courseTitle: "Future-Ready Summit",
-    coursePrice: "500", paymentMethod: "", bankName: "", bankAccountTitle: "",
+    coursePrice: "500", paymentMethod: "bank", bankName: "", bankAccountTitle: "",
     bankAccountNumber: "", transactionId: "", transactionDate: "",
     transactionAmount: "500", currentEmployment: "", organization: "",
     designation: "", hearAboutUs: "", referralCode: "", whyJoin: "",
@@ -312,9 +312,7 @@ const Blog: React.FC = () => {
                   <div className="field-tech">
                     <label>Network</label>
                     <select name="paymentMethod" value={formData.paymentMethod} onChange={handleInputChange} required>
-                      <option value="">Select Gateway</option>
-                      <option value="bank">Direct Bank (Al Falah)</option>
-                      <option value="easypaisa">Easypaisa / JazzCash</option>
+                      <option value="bank">Bank Al Falah</option>
                     </select>
                   </div>
                   <div className="field-tech">
@@ -971,8 +969,10 @@ const Blog: React.FC = () => {
         .field-tech { display: flex; flex-direction: column; gap: 0.6rem; }
         .field-tech.full { grid-column: span 2; }
         .field-tech label { font-size: 0.85rem; font-weight: 800; color: var(--text-tertiary); text-transform: uppercase; margin-left: 0.5rem; letter-spacing: 0.05em; }
-        .field-tech input, .field-tech select { background: rgba(0,0,0,0.3); border: 1px solid var(--border-light); padding: 1.2rem 1.5rem; border-radius: 15px; color: #fff; font-size: 1.05rem; transition: all 0.3s ease; width: 100%; box-sizing: border-box; }
-        .field-tech input:focus, .field-tech select:focus { border-color: var(--pk-green); background: rgba(0,0,0,0.5); outline: none; box-shadow: 0 0 20px var(--pk-green-glow-subtle); transform: translateY(-2px); }
+        .field-tech input, .field-tech select { background: var(--bg-elevated); border: 1px solid var(--border-light); padding: 1.2rem 1.5rem; border-radius: 15px; color: var(--text-primary); font-size: 1.05rem; transition: all 0.3s ease; width: 100%; box-sizing: border-box; }
+        .field-tech select { color-scheme: dark; }
+        .field-tech select option { background: var(--bg-elevated); color: var(--text-primary); }
+        .field-tech input:focus, .field-tech select:focus { border-color: var(--pk-green); background: var(--bg-elevated); outline: none; box-shadow: 0 0 20px var(--pk-green-glow-subtle); transform: translateY(-2px); }
 
         .declaration-tech { margin-bottom: 2.5rem; }
         .checkbox-tech { display: flex; align-items: center; gap: 1rem; cursor: pointer; color: var(--text-secondary); font-weight: 600; font-size: 0.95rem; }

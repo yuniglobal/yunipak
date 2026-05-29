@@ -380,7 +380,7 @@ const Courses: React.FC = () => {
     email: "", phoneNumber: "", alternatePhone: "", currentAddress: "",
     city: "", province: "Punjab", highestQualification: "", institution: "",
     yearOfCompletion: "", percentage: "", courseId: "", courseTitle: "",
-    coursePrice: "", paymentMethod: "", bankName: "", bankAccountTitle: "",
+    coursePrice: "", paymentMethod: "bank", bankName: "", bankAccountTitle: "",
     bankAccountNumber: "", transactionId: "", transactionDate: "",
     transactionAmount: "", currentEmployment: "", organization: "",
     designation: "", hearAboutUs: "", referralCode: "", whyJoin: "",
@@ -647,9 +647,7 @@ const Courses: React.FC = () => {
                   <div className="field-tech">
                     <label>Network</label>
                     <select name="paymentMethod" value={formData.paymentMethod} onChange={handleInputChange} required>
-                      <option value="">Select Gateway</option>
-                      <option value="bank">Direct Bank (Meezan)</option>
-                      <option value="easypaisa">Easypaisa / JazzCash</option>
+                      <option value="bank">Bank Alfalah</option>
                     </select>
                   </div>
                   <div className="field-tech">
@@ -871,11 +869,18 @@ const Courses: React.FC = () => {
         
         .field-tech label { font-size: 0.8rem; font-weight: 700; color: var(--text-tertiary); text-transform: uppercase; }
         .field-tech input, .field-tech select { 
-          background: rgba(255,255,255,0.03); border: 1px solid var(--border-light); 
+          background: var(--bg-elevated); border: 1px solid var(--border-light); 
           border-radius: 0.8rem; padding: 1rem; color: var(--text-primary); font-family: inherit;
           transition: all 0.3s ease;
         }
-        .field-tech input:focus, .field-tech select:focus { outline: none; border-color: var(--pk-green); background: rgba(255,255,255,0.06); }
+        .field-tech select {
+          color-scheme: dark;
+        }
+        .field-tech select option {
+          background: var(--bg-elevated);
+          color: var(--text-primary);
+        }
+        .field-tech input:focus, .field-tech select:focus { outline: none; border-color: var(--pk-green); background: var(--bg-elevated); }
         
         .submit-btn-premium { 
           width: 100%; background: var(--pk-green); color: #fff; padding: 1.5rem; border-radius: 1.2rem; 
