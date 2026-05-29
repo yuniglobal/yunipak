@@ -641,13 +641,6 @@ const Courses: React.FC = () => {
                       <p><span>Account Number:</span> 0140-1010831162</p>
                     </div>
                   </div>
-                  <div className="payment-node-card">
-                    <h4>Digital Wallet</h4>
-                    <div className="node-details">
-                      <p><span>Title:</span> Muhammad Ali</p>
-                      <p><span>Mobile:</span> 0300 1234567</p>
-                    </div>
-                  </div>
                 </div>
 
                 <div className="input-group-tech">
