@@ -635,11 +635,10 @@ const Courses: React.FC = () => {
                 <h3 className="section-header-tech">1. Payment Protocol</h3>
                 <div className="payment-nodes">
                   <div className="payment-node-card">
-                    <h4>Meezan Alpha</h4>
+                    <h4>Bank Alfalah</h4>
                     <div className="node-details">
                       <p><span>Title:</span> YUNI Education Systems</p>
-                      <p><span>Account:</span> 1234-567890-12-3</p>
-                      <p><span>IBAN:</span> PK36MEZN0012345678901234</p>
+                      <p><span>Account Number:</span> 0140-1010831162</p>
                     </div>
                   </div>
                   <div className="payment-node-card">

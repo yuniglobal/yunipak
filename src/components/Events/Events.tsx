@@ -135,6 +135,18 @@ const blogPosts: BlogPost[] = [
     imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop&auto=format",
     author: "Partnerships Team",
   },
+  {
+    id: "blog-7",
+    title: "Upcoming Summer Trainings Trailer",
+    category: "Summit",
+    icon: "fa-rocket",
+    colorClass: "brand",
+    description: "A first look at the upcoming summer trainings lineup, plus the Open Learning Weekend preview for students and professionals.",
+    date: "May 29, 2026",
+    readTime: "2 min read",
+    imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop&auto=format",
+    author: "Events Team",
+  },
 ];
 
 const Blog: React.FC = () => {
@@ -290,7 +302,7 @@ const Blog: React.FC = () => {
                     <h4>Bank Al Falah</h4>
                     <div className="node-details">
                       <p><span>Title:</span> YUNI-TY x NICAT</p>
-                      <p><span>Account:</span> 0140-1010831162</p>
+                      <p><span>Account Number:</span> 0140-1010831162</p>
                       <p><span>Branch:</span> Rawalpindi</p>
                     </div>
                   </div>

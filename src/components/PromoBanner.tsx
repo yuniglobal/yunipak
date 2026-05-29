@@ -104,17 +104,17 @@ const PromoBanner: React.FC = () => {
       <div className="marquee-content">
         {[1, 2, 3, 4].map((i) => (
           <div key={i} className="marquee-item">
-            <span>☀️ Summer Trainings 2026</span>
+            <span>☀️ Upcoming Summer Trainings Trailer</span>
             <span className="separator">|</span>
-            <span style={{ color: '#000', fontWeight: 900 }}>30% OFF ALL TRAININGS</span>
+            <span style={{ color: '#000', fontWeight: 900 }}>Open Learning Weekend</span>
+            <span className="separator">|</span>
+            <span>Summer Trainings Preview</span>
             <span className="separator">|</span>
             <span>Registrations Open</span>
             <span className="separator">|</span>
             <span>PSEB Certified</span>
             <span className="separator">|</span>
             <span>Located at NASTP</span>
-            <span className="separator">|</span>
-            <span style={{ textDecoration: 'underline' }}>Enroll Now →</span>
           </div>
         ))}
       </div>
