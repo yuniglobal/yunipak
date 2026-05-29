@@ -64,6 +64,18 @@ const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbxv3FVEPexjV4
 
 const blogPosts: BlogPost[] = [
   {
+    id: "blog-7",
+    title: "Upcoming Summer Trainings Trailer",
+    category: "Summit",
+    icon: "fa-rocket",
+    colorClass: "brand",
+    description: "A first look at the upcoming summer trainings lineup, plus the Open Learning Weekend preview for students and professionals.",
+    date: "May 29, 2026",
+    readTime: "2 min read",
+    imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop&auto=format",
+    author: "Events Team",
+  },
+  {
     id: "blog-1",
     title: "NCAT 2026 at NASTP",
     category: "Tech Conference",
@@ -134,18 +146,6 @@ const blogPosts: BlogPost[] = [
     readTime: "5 min read",
     imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop&auto=format",
     author: "Partnerships Team",
-  },
-  {
-    id: "blog-7",
-    title: "Upcoming Summer Trainings Trailer",
-    category: "Summit",
-    icon: "fa-rocket",
-    colorClass: "brand",
-    description: "A first look at the upcoming summer trainings lineup, plus the Open Learning Weekend preview for students and professionals.",
-    date: "May 29, 2026",
-    readTime: "2 min read",
-    imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop&auto=format",
-    author: "Events Team",
   },
 ];
 
