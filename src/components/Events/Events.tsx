@@ -69,7 +69,7 @@ const blogPosts: BlogPost[] = [
     category: "Summit",
     icon: "fa-camera",
     colorClass: "brand",
-    description: "Chaos, caffeine, and creative spark. An intimate, behind-the-scenes look at the two-day YUNIty event through the lens of our official camera guy.",
+    description: "A raw, behind-the-scenes look at the two days of chaos, caffeine, and creative sparks that defined YUNIty, through the eyes of the camera guy.",
     date: "May 18, 2026",
     readTime: "8 min read",
     imageUrl: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=600&h=400&fit=crop&auto=format",
@@ -451,70 +451,69 @@ const Blog: React.FC = () => {
         <div className="blog-detail-body">
           <div className="blog-day-section">
             <h2 className="day-title"><span className="text-gradient">DAY 1</span> : Saturday, May 16th</h2>
-            
-            <h3 className="section-subtitle">08:00 AM — The Calibration of Chaos</h3>
+            <h3 className="section-subtitle">08:00 AM — Morning Setup Chaos</h3>
             <p>
-              My fingers were too cold to dial in the exposure correctly. At 8:00 AM, the lobby of the event space looked less like a tech summit and more like a high-velocity sorting warehouse. Heavy black bags containing tripods, slider rails, and backup batteries lay scattered near the entrance. Around me, staff members with headsets were moving fast, unspooling yards of heavy-duty gaffer tape over thick power cables, while volunteers in crisp, slightly oversized YUNIty shirts tried to decipher registration spreadsheets.
+              Fingers were freezing, making it a pain to dial in the exposure. By 8 AM, the lobby was a total madhouse—less tech summit, more like a logistics warehouse gone wild. Tripod bags, slider cases, and loose batteries were piled up by the doors. The YUNIty crew was running around with walkie-talkies, taping down thick power lines with rolls of gaffer tape, while volunteers in slightly oversized t-shirts tried to sort out the registration spreadsheets.
             </p>
             <p>
-              I raised the camera. Through the viewfinder, the world was a high-contrast blur of movement. I adjusted the manual focus ring, locking onto a volunteer balancing a stack of event lanyards while taking a massive sip of instant coffee. The shutter clicked. That was frame number one: the raw, unpolished, coffee-fueled foundation of Day 1.
+              I grabbed my camera. Through the viewfinder, the lobby was just a blur of high-contrast motion. I spun the focus ring, catching a volunteer trying to balance a stack of lanyards while taking a desperate sip of black coffee. *Click.* Frame one: the raw, tired, caffeine-fueled start of Day 1.
             </p>
 
             <div className="blog-image-wrapper">
               <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=1000&auto=format&fit=crop&q=80" alt="Volunteers setting up the event space" />
-              <span className="image-caption">Frame #01: Morning rush and calibration setup.</span>
+              <span className="image-caption">Frame #01: Morning rush and setup.</span>
             </div>
 
-            <h3 className="section-subtitle">The Spark: Launching the Engine</h3>
+            <h3 className="section-subtitle">10:00 AM — Main Stage Kickoff</h3>
             <p>
-              By the time the clock hit 10:00 AM, the atmosphere changed. The chaotic hum of setup compressed into a low, energetic rumble inside the main auditorium. When the stage lights flared and the launch presentation glowed onto the massive screens, I was tucked into the far corner, kneeling on the concrete floor with a 70-200mm lens mounted.
+              By 10, the vibe completely shifted. The setup noise settled into a low, excited buzz inside the main hall. When the stage lights kicked on and the opening slides hit the screen, I was already huddled in the corner, kneeling on the hard concrete with my 70-200mm lens ready to go.
             </p>
             <p>
-              The workshops kicked off with zero warning. These weren't the standard corporate slide-deck monologues where the speaker reads off bullet points. Speakers were pacing, waving hands, and engaging directly with the crowd. I focused my lens on the front rows: rows of students leaning forward, laptop screens casting cold white glows on their faces, eyes wide, writing down code snippets and system diagrams. Every time the speaker dropped a major concept, the collective scribble of notebooks and rapid-fire typing formed a satisfying acoustic background loop.
+              The workshops started without warning. Luckily, these weren't those dry corporate presentations where the speaker reads bullet points. The speakers were walking the stage, gesture-heavy, getting right in the crowd's face. I tracked the front rows: rows of students leaning in, laptops casting a cool glow on their faces, furiously copying down code blocks and system diagrams. Every time a new concept dropped, you could hear the collective rustle of notebooks and rapid typing—it was like a satisfying background track.
             </p>
 
             <div className="blog-image-wrapper">
               <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1000&auto=format&fit=crop&q=80" alt="Students focused on their screens during the workshop" />
-              <span className="image-caption">Frame #02: Ambient glow and focused minds during the workshops.</span>
+              <span className="image-caption">Frame #02: Focus and ambient glow during workshops.</span>
             </div>
 
-            <h3 className="section-subtitle">Intermission: The Waiting Booth Chronicles</h3>
+            <h3 className="section-subtitle">The Beanbag Sanctuary</h3>
             <p>
-              Behind the heavy doors of the main hall lay the escape hatch: the waiting booth. If you wanted to see the real soul of YUNIty, this is where you had to look. My favorite frames of the day came from this tiny, sunlit corner. It was filled with plush beanbags, half-empty soda cans, and laptops balanced on knees.
+              Right outside the main hall was the ultimate chill spot: the waiting area. If you wanted to see what YUNIty was actually about, this was the place. My favorite shots of the day came from this little sunlit nook, which was basically just a pile of beanbags, empty cans, and laptops balanced on knees.
             </p>
             <p>
-              I switched to a wide 24mm prime lens to capture the spatial vibe. People who had been complete strangers two hours prior were now packed together on the floor, arguing passionately about IDE setups, debugging failures, and which local food joint had the best spicy wings. There was no hierarchy here—mentors in clean hoodies were sitting on the floor right next to nervous first-year university students, laughing over shared horror stories of database crashes.
+              I swapped to a wide 24mm lens to capture the chaos. People who were complete strangers two hours ago were sitting shoulder-to-shoulder on the floor, debating IDE themes, compiler errors, and where to get the best wings in town. No corporate hierarchy, no egos—just mentors in hoodies sitting on the floor with nervous freshmen, laughing over database horror stories.
             </p>
 
             <div className="blog-image-wrapper">
               <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1000&auto=format&fit=crop&q=80" alt="Attendees collaborating in the waiting booth" />
-              <span className="image-caption">Frame #03: Casual networking and design iteration.</span>
+              <span className="image-caption">Frame #03: Casual networking and team banter.</span>
             </div>
 
-            <h3 className="section-subtitle">The Crucible: Pitching under the Gun</h3>
+            <h3 className="section-subtitle">Late Afternoon — Whiteboards & Pressure</h3>
             <p>
-              As the afternoon sun dipped below the window line, the temperature of the event shifted from learning to pressure. The Idea Pitching activity was announced, and the room fractured into dozens of working groups. The whiteboards came out.
+              When the afternoon sun started hitting the windows, the mood turned serious. The pitching challenge was announced, and the room split into messy working groups. The whiteboards came out in force.
             </p>
             <p>
-              The focus in the room was palpable, heavy, almost visible in the air. I walked slowly through the rows, trying not to break their concentration with the sound of my shutter. I captured hands tracing system architectures on whiteboard glass, fingers tapping rapidly on keyboards, and faces creased in deep thought. Laptops were stacked in rings like campfires. People were trying to distill complex technical ideas into tight, three-minute elevator pitches, and the race against the clock was starting to take its toll. The glamour of tech was stripped away; this was raw, grinding teamwork.
+              You could practically feel the stress in the air. I walked slow through the rows, trying to shoot silently. I got shots of marker ink on glass, fingers flying on keyboards, and foreheads creased in deep concentration. Groups huddled around laptops in circles on the floor like campfires. They had to condense complex tech stacks into a three-minute pitch, and the time limit was definitely getting to them. No tech-glamour here—just raw, gritty teamwork.
             </p>
 
             <div className="blog-image-wrapper">
               <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1000&auto=format&fit=crop&q=80" alt="Teammates hashing out ideas on a whiteboard" />
-              <span className="image-caption">Frame #04: Architectural design and brainstorming loops.</span>
+              <span className="image-caption">Frame #04: Distilling systems under time pressure.</span>
             </div>
 
-            <h3 className="section-subtitle">Midnight: Cake, Crumbs, and 24fps</h3>
+            <h3 className="section-subtitle">Midnight Surprise</h3>
             <p>
-              By midnight, the venue had quieted down, but the YUNIty team remained in the central workspace, surrounded by discarded pizza boxes and empty energy drink cans. The exhaustion was setting in, but we had one more milestone to hit.
+              By midnight, the place went quiet, but the core YUNIty crew was still in the main hub, buried in empty pizza boxes and energy drink cans. Exhaustion was hitting hard, but we had one last thing to do.
             </p>
             <p>
-              Suddenly, the overhead lights went black. A soft, flickering orange glow emerged from the hallway. Moiz was walking slowly toward the center table, carrying a birthday cake illuminated by a small cluster of candles. I bumped my ISO to 6400, opened the aperture wide to f/1.8, and trusted the camera to capture the low-light scene. The shadows cast by the candles danced on the faces of the team as they sang. The shutter fired repeatedly, capturing the surprise on Moiz's face and the laughter of the tired team surrounding him. It was a brief, warm pause in the middle of a weekend sprint.
+              Out of nowhere, the lights cut out. A flickering orange glow came from the hallway. It was Moiz carrying a birthday cake. I cranked my ISO to 6400, opened my lens wide open to f/1.8, and prayed the autofocus would hold. The candle shadows danced on everyone's faces as we sang. I just kept firing the shutter, capturing Moiz's shocked face and the tired smiles around him. It was a nice, warm break in a crazy weekend sprint.
             </p>
 
             <div className="blog-image-wrapper">
               <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1000&auto=format&fit=crop&q=80" alt="Moiz blowing out birthday candles at midnight" />
-              <span className="image-caption">Frame #05: Midnight candles and team laughter.</span>
+              <span className="image-caption">Frame #05: Midnight candles and team celebrations.</span>
             </div>
           </div>
 
@@ -525,10 +524,10 @@ const Blog: React.FC = () => {
 
             <h3 className="section-subtitle">09:00 AM — The Second Wind</h3>
             <p>
-              Sunday morning arrived with a layer of grit. My camera gear felt twice as heavy as it had the day before. The team trickled into the venue slowly, eyes bloodshot, clutching large cups of black tea. We were running on empty, but there was a collective understanding that Day 2 was where the final pieces had to fall into place.
+              Sunday morning felt heavy. My camera bag felt three times heavier than yesterday. People stumbled in slowly, bloodshot eyes, holding paper cups of hot chai. We were running on fumes, but everyone knew Day 2 was the final stretch.
             </p>
             <p>
-              I stood near the entrance, capturing the arrival frames: team members rubbing their eyes, yawning, yet still flashing tired grins at the lens. The cameras were wiped down, SD cards formatted, and fresh batteries slotted in. The day was officially open.
+              I stood by the entrance, shooting arrivals: people rubbing their eyes, yawning, but still throwing a tired peace sign at the camera. Wiped down the lenses, cleared the SD cards, popped in fresh batteries, and we were back in action.
             </p>
 
             <div className="blog-image-wrapper">
@@ -536,38 +535,38 @@ const Blog: React.FC = () => {
               <span className="image-caption">Frame #06: Coffee first, compile later.</span>
             </div>
 
-            <h3 className="section-subtitle">The Spark Plug: Moiz’s Hype Session</h3>
+            <h3 className="section-subtitle">The Morning Wake-up Call</h3>
             <p>
-              If there was any lingering drowsiness in the room, it was instantly vaporized when Moiz took the mic for the morning ice-breaker. I don't know what kind of coffee he drank, but the energy he brought was infectious. Within five minutes, he had the entire room of students out of their chairs, participating in a series of fast-paced, ridiculous physical activities designed to break down remaining walls.
+              Any remaining sleepiness evaporated the second Moiz grabbed the mic. Seriously, I don't know what caffeine he was on, but the energy was wild. In five minutes flat, he had everyone out of their chairs doing ridiculous physical icebreakers to wake up.
             </p>
             <p>
-              I ran around the perimeter of the hall, trying to frame the dynamic movements. The hall was filled with the sound of students laughing, shouting, and executing weird hand gestures. My lens caught pure, unscripted joy: people throwing their heads back in laughter, pointing at each other's ridiculous poses, and high-fiving. The ice didn't just break; it shattered.
+              I ran along the walls, trying to shoot the madness. The hall was a wall of noise—laughing, shouting, doing bizarre hand signs. Got some great shots of genuine, unpolished smiles: people cracking up, pointing at each other, and high-fiving. The ice didn't just break; it shattered.
             </p>
 
             <div className="blog-image-wrapper">
               <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1000&auto=format&fit=crop&q=80" alt="Students high fiving and laughing in icebreaker" />
-              <span className="image-caption">Frame #07: Pure kinetic energy and morning icebreakers.</span>
+              <span className="image-caption">Frame #07: Hype circles and morning energy.</span>
             </div>
 
-            <h3 className="section-subtitle">Fueling the Engine: The Refreshment Intermission</h3>
+            <h3 className="section-subtitle">Fueling Up</h3>
             <p>
-              Then came the lunch break—a welcome halt to the creative grind. A welcome wall of hot food, trays of snacks, and ice-cold drinks appeared. The quiet focus of the workshops dissolved back into a lively social exchange.
+              Then, lunchtime—the best part. A huge spread of hot food, snacks, and cold drinks showed up, and all the intense coding focus vanished into a noisy lunch chat.
             </p>
             <p>
-              My lens tracked the movement: plates piled high, people leaning against columns talking animatedly, and groups taking selfies with their team flags. It was a sensory contrast to the clean, quiet classrooms—here it was loud, warm, and smelled of spices and fresh mint drinks.
+              I snapped shots of plates piled dangerously high, guys leaning against columns talking with their hands, and teams posing with their custom flags. It was the complete opposite of the quiet workspaces—loud, warm, smelling of spices and fresh mint mocktails.
             </p>
 
             <div className="blog-image-wrapper">
               <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1000&auto=format&fit=crop&q=80" alt="A spread of snacks and tea at the refreshment break" />
-              <span className="image-caption">Frame #08: Food stacks and networking exchanges.</span>
+              <span className="image-caption">Frame #08: Lunch breaks and team syncs.</span>
             </div>
 
-            <h3 className="section-subtitle">The Taste Test: The Drink Collage</h3>
+            <h3 className="section-subtitle">The Infamous Taste Test</h3>
             <p>
-              We had to document the beverage experiment. The team had set up a table with a collection of home-brewed, neon-colored energy drinks and herbal teas, challenging people to taste-test them. The reactions were absolute gold for a photographer.
+              We had to capture the drink experiment. The crew had set up a table of home-brewed, neon-colored energy drinks and weird herbal teas, daring people to try them. The faces they made were absolute gold.
             </p>
             <p>
-              I stood three feet away with a fast shutter speed, ready for the split-second changes in expression. People took sips, expecting sweet juice, only to be hit with sour elements or intense spice. I captured it all: the instant squint of eyes, the contorted noses, the funny grimaces of surprise, followed immediately by bursts of laughter. It was a hilarious, lighthearted break in the day.
+              I stood a few feet back with a fast shutter speed, waiting for the exact split-second they took a sip. They'd expect normal sweet juice, then get hit with sour vinegar or random spices. Got some hilarious frames: squinted eyes, wrinkled noses, and instant shock, followed by everyone laughing. Easily the funniest moment of the afternoon.
             </p>
 
             {/* Collage Section */}
@@ -612,12 +611,12 @@ const Blog: React.FC = () => {
               })}
             </div>
 
-            <h3 className="section-subtitle" style={{ marginTop: '5rem' }}>The Lobby Wrap: The Quiet After the Storm</h3>
+            <h3 className="section-subtitle" style={{ marginTop: '5rem' }}>The Post-Event Collapse</h3>
             <p>
-              The event ended, the final pitches were judged, the winners were announced, and the crowds dispersed. The venue went silent, leaving only the YUNIty staff and core volunteers behind. We didn't leave immediately. Instead, we collapsed into the main lobby, sitting on the cool marble floor, leaning against the structural pillars.
+              Once the pitches were done, winners announced, and the crowd went home, the venue suddenly went dead silent. Just the YUNIty crew and volunteers left. We didn't pack up right away. We just collapsed on the cool lobby floor, leaning against the pillars.
             </p>
             <p>
-              I set my camera on the floor, using a wide-angle lens with a self-timer to join the group. There were no poses left, just tired shoulders, messy hair, and broad, authentic smiles of relief. We sat in a circle, looking at the gear bags and sharing stories of the crazy things that happened over the last 48 hours. Through my lens, this was the most honest picture of the weekend: a tired team, bound together by the shared experience of building something memorable.
+              I set my camera on a gear bag, threw on a wide lens, and set the self-timer to join the shot. No posed smiles here—just slouched shoulders, messy hair, and genuine smiles of relief. We sat in a circle around the gear, recounting the absolute chaos of the last 48 hours. For me, that was the realest photo of the whole event: a completely exhausted team, tight-knit, sharing the quiet after the storm.
             </p>
 
             <div className="blog-image-wrapper">
