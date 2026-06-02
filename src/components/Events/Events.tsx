@@ -64,6 +64,18 @@ const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbxv3FVEPexjV4
 
 const blogPosts: BlogPost[] = [
   {
+    id: "blog-yunity-2026",
+    title: "Through the Viewfinder: 48 Hours at YUNIty",
+    category: "Summit",
+    icon: "fa-camera",
+    colorClass: "brand",
+    description: "Chaos, caffeine, and creative spark. An intimate, behind-the-scenes look at the two-day YUNIty event through the lens of our official camera guy.",
+    date: "May 18, 2026",
+    readTime: "8 min read",
+    imageUrl: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=600&h=400&fit=crop&auto=format",
+    author: "Camera Guy",
+  },
+  {
     id: "blog-7",
     title: "Upcoming Summer Trainings Trailer",
     category: "Summit",
@@ -149,13 +161,48 @@ const blogPosts: BlogPost[] = [
   },
 ];
 
+const galleryImages = [
+  { id: 'g1', src: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80", alt: "Morning setups", size: "md" as const, x: 10, y: 15 },
+  { id: 'g2', src: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&auto=format&fit=crop&q=80", alt: "Workshop launch", size: "lg" as const, x: 38, y: 10 },
+  { id: 'g3', src: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=80", alt: "Waiting booth", size: "sm" as const, x: 15, y: 55 },
+  { id: 'g4', src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop&q=80", alt: "Pitching whiteboard", size: "lg" as const, x: 68, y: 15 },
+  { id: 'g5', src: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&auto=format&fit=crop&q=80", alt: "Moiz surprise birthday", size: "md" as const, x: 45, y: 65 },
+  { id: 'g6', src: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?w=800&auto=format&fit=crop&q=80", alt: "Sunday morning kickoff", size: "sm" as const, x: 82, y: 52 },
+  { id: 'g7', src: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80", alt: "Moiz session hype", size: "md" as const, x: 28, y: 45 },
+  { id: 'g8', src: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&auto=format&fit=crop&q=80", alt: "Refreshment breaks", size: "sm" as const, x: 65, y: 50 },
+  { id: 'g9', src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop&q=80", alt: "Grand lobby wrap", size: "lg" as const, x: 42, y: 45 }
+];
+
 const Blog: React.FC = () => {
   const location = useLocation();
-  const [currentView, setCurrentView] = useState<"intel" | "registration">("intel");
+  const [currentView, setCurrentView] = useState<"intel" | "registration" | "yunity-blog">("intel");
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [visiblePosts, setVisiblePosts] = useState<number>(6);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+
+  useEffect(() => {
+    if (currentView === "yunity-blog") {
+      const cards = document.querySelectorAll('.memory-card');
+      if (cards.length > 0) {
+        gsap.fromTo(cards,
+          {
+            opacity: 0,
+            scale: 0.5,
+            y: 40
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 1.0,
+            stagger: 0.15,
+            ease: "back.out(1.7)"
+          }
+        );
+      }
+    }
+  }, [currentView]);
 
   const [formData, setFormData] = useState<EnrollmentData>({
     fullName: "", fatherName: "", cnic: "", dateOfBirth: "", gender: "",
@@ -228,6 +275,7 @@ const Blog: React.FC = () => {
       "fa-users": "👥",
       "fa-handshake": "🤝",
       "fa-rocket": "🚀",
+      "fa-camera": "📷",
     };
     return iconMap[icon] || "📰";
   };
@@ -368,6 +416,225 @@ const Blog: React.FC = () => {
   );
 
 
+  const renderYunityBlogView = () => (
+    <div className="yunity-blog-detail-view animate-fade-in-up">
+      <div className="blog-detail-container-premium">
+        <button onClick={() => { setCurrentView("intel"); window.scrollTo(0, 0); }} className="back-btn-tech">
+          <span className="arrow">←</span> BACK TO INTEL
+        </button>
+
+        <header className="blog-detail-header">
+          <span className="blog-category-badge-premium" style={{ background: 'var(--pk-green)' }}>
+            <span className="badge-icon">📷</span>
+            <span className="badge-text">Summit Behind-the-Scenes</span>
+          </span>
+          <h1 className="blog-detail-title">
+            Through the Viewfinder: <span className="text-gradient">48 Hours of Chaos, Caffeine, and Creative Spark at YUNIty</span>
+          </h1>
+          <div className="blog-detail-meta">
+            <span className="meta-author">By the Camera Guy</span>
+            <span className="meta-separator">/</span>
+            <span className="meta-date">May 18, 2026</span>
+            <span className="meta-separator">/</span>
+            <span className="meta-readtime">8 min read</span>
+          </div>
+        </header>
+
+        {/* Featured Image */}
+        <div className="blog-detail-featured-image">
+          <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1600&auto=format&fit=crop&q=80" alt="YUNIty Event Viewfinder" />
+          <div className="scanline-overlay"></div>
+          <div className="image-vignette"></div>
+        </div>
+
+        {/* Article Body */}
+        <div className="blog-detail-body">
+          <div className="blog-day-section">
+            <h2 className="day-title"><span className="text-gradient">DAY 1</span> : Saturday, May 16th</h2>
+            
+            <h3 className="section-subtitle">08:00 AM — The Calibration of Chaos</h3>
+            <p>
+              My fingers were too cold to dial in the exposure correctly. At 8:00 AM, the lobby of the event space looked less like a tech summit and more like a high-velocity sorting warehouse. Heavy black bags containing tripods, slider rails, and backup batteries lay scattered near the entrance. Around me, staff members with headsets were moving fast, unspooling yards of heavy-duty gaffer tape over thick power cables, while volunteers in crisp, slightly oversized YUNIty shirts tried to decipher registration spreadsheets.
+            </p>
+            <p>
+              I raised the camera. Through the viewfinder, the world was a high-contrast blur of movement. I adjusted the manual focus ring, locking onto a volunteer balancing a stack of event lanyards while taking a massive sip of instant coffee. The shutter clicked. That was frame number one: the raw, unpolished, coffee-fueled foundation of Day 1.
+            </p>
+
+            <div className="blog-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=1000&auto=format&fit=crop&q=80" alt="Volunteers setting up the event space" />
+              <span className="image-caption">Frame #01: Morning rush and calibration setup.</span>
+            </div>
+
+            <h3 className="section-subtitle">The Spark: Launching the Engine</h3>
+            <p>
+              By the time the clock hit 10:00 AM, the atmosphere changed. The chaotic hum of setup compressed into a low, energetic rumble inside the main auditorium. When the stage lights flared and the launch presentation glowed onto the massive screens, I was tucked into the far corner, kneeling on the concrete floor with a 70-200mm lens mounted.
+            </p>
+            <p>
+              The workshops kicked off with zero warning. These weren't the standard corporate slide-deck monologues where the speaker reads off bullet points. Speakers were pacing, waving hands, and engaging directly with the crowd. I focused my lens on the front rows: rows of students leaning forward, laptop screens casting cold white glows on their faces, eyes wide, writing down code snippets and system diagrams. Every time the speaker dropped a major concept, the collective scribble of notebooks and rapid-fire typing formed a satisfying acoustic background loop.
+            </p>
+
+            <div className="blog-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1000&auto=format&fit=crop&q=80" alt="Students focused on their screens during the workshop" />
+              <span className="image-caption">Frame #02: Ambient glow and focused minds during the workshops.</span>
+            </div>
+
+            <h3 className="section-subtitle">Intermission: The Waiting Booth Chronicles</h3>
+            <p>
+              Behind the heavy doors of the main hall lay the escape hatch: the waiting booth. If you wanted to see the real soul of YUNIty, this is where you had to look. My favorite frames of the day came from this tiny, sunlit corner. It was filled with plush beanbags, half-empty soda cans, and laptops balanced on knees.
+            </p>
+            <p>
+              I switched to a wide 24mm prime lens to capture the spatial vibe. People who had been complete strangers two hours prior were now packed together on the floor, arguing passionately about IDE setups, debugging failures, and which local food joint had the best spicy wings. There was no hierarchy here—mentors in clean hoodies were sitting on the floor right next to nervous first-year university students, laughing over shared horror stories of database crashes.
+            </p>
+
+            <div className="blog-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1000&auto=format&fit=crop&q=80" alt="Attendees collaborating in the waiting booth" />
+              <span className="image-caption">Frame #03: Casual networking and design iteration.</span>
+            </div>
+
+            <h3 className="section-subtitle">The Crucible: Pitching under the Gun</h3>
+            <p>
+              As the afternoon sun dipped below the window line, the temperature of the event shifted from learning to pressure. The Idea Pitching activity was announced, and the room fractured into dozens of working groups. The whiteboards came out.
+            </p>
+            <p>
+              The focus in the room was palpable, heavy, almost visible in the air. I walked slowly through the rows, trying not to break their concentration with the sound of my shutter. I captured hands tracing system architectures on whiteboard glass, fingers tapping rapidly on keyboards, and faces creased in deep thought. Laptops were stacked in rings like campfires. People were trying to distill complex technical ideas into tight, three-minute elevator pitches, and the race against the clock was starting to take its toll. The glamour of tech was stripped away; this was raw, grinding teamwork.
+            </p>
+
+            <div className="blog-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1000&auto=format&fit=crop&q=80" alt="Teammates hashing out ideas on a whiteboard" />
+              <span className="image-caption">Frame #04: Architectural design and brainstorming loops.</span>
+            </div>
+
+            <h3 className="section-subtitle">Midnight: Cake, Crumbs, and 24fps</h3>
+            <p>
+              By midnight, the venue had quieted down, but the YUNIty team remained in the central workspace, surrounded by discarded pizza boxes and empty energy drink cans. The exhaustion was setting in, but we had one more milestone to hit.
+            </p>
+            <p>
+              Suddenly, the overhead lights went black. A soft, flickering orange glow emerged from the hallway. Moiz was walking slowly toward the center table, carrying a birthday cake illuminated by a small cluster of candles. I bumped my ISO to 6400, opened the aperture wide to f/1.8, and trusted the camera to capture the low-light scene. The shadows cast by the candles danced on the faces of the team as they sang. The shutter fired repeatedly, capturing the surprise on Moiz's face and the laughter of the tired team surrounding him. It was a brief, warm pause in the middle of a weekend sprint.
+            </p>
+
+            <div className="blog-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1000&auto=format&fit=crop&q=80" alt="Moiz blowing out birthday candles at midnight" />
+              <span className="image-caption">Frame #05: Midnight candles and team laughter.</span>
+            </div>
+          </div>
+
+          <hr className="blog-divider" />
+
+          <div className="blog-day-section">
+            <h2 className="day-title"><span className="text-gradient">DAY 2</span> : Sunday, May 17th</h2>
+
+            <h3 className="section-subtitle">09:00 AM — The Second Wind</h3>
+            <p>
+              Sunday morning arrived with a layer of grit. My camera gear felt twice as heavy as it had the day before. The team trickled into the venue slowly, eyes bloodshot, clutching large cups of black tea. We were running on empty, but there was a collective understanding that Day 2 was where the final pieces had to fall into place.
+            </p>
+            <p>
+              I stood near the entrance, capturing the arrival frames: team members rubbing their eyes, yawning, yet still flashing tired grins at the lens. The cameras were wiped down, SD cards formatted, and fresh batteries slotted in. The day was officially open.
+            </p>
+
+            <div className="blog-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?w=1000&auto=format&fit=crop&q=80" alt="Sunrise coffee cups and morning arrivals" />
+              <span className="image-caption">Frame #06: Coffee first, compile later.</span>
+            </div>
+
+            <h3 className="section-subtitle">The Spark Plug: Moiz’s Hype Session</h3>
+            <p>
+              If there was any lingering drowsiness in the room, it was instantly vaporized when Moiz took the mic for the morning ice-breaker. I don't know what kind of coffee he drank, but the energy he brought was infectious. Within five minutes, he had the entire room of students out of their chairs, participating in a series of fast-paced, ridiculous physical activities designed to break down remaining walls.
+            </p>
+            <p>
+              I ran around the perimeter of the hall, trying to frame the dynamic movements. The hall was filled with the sound of students laughing, shouting, and executing weird hand gestures. My lens caught pure, unscripted joy: people throwing their heads back in laughter, pointing at each other's ridiculous poses, and high-fiving. The ice didn't just break; it shattered.
+            </p>
+
+            <div className="blog-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1000&auto=format&fit=crop&q=80" alt="Students high fiving and laughing in icebreaker" />
+              <span className="image-caption">Frame #07: Pure kinetic energy and morning icebreakers.</span>
+            </div>
+
+            <h3 className="section-subtitle">Fueling the Engine: The Refreshment Intermission</h3>
+            <p>
+              Then came the lunch break—a welcome halt to the creative grind. A welcome wall of hot food, trays of snacks, and ice-cold drinks appeared. The quiet focus of the workshops dissolved back into a lively social exchange.
+            </p>
+            <p>
+              My lens tracked the movement: plates piled high, people leaning against columns talking animatedly, and groups taking selfies with their team flags. It was a sensory contrast to the clean, quiet classrooms—here it was loud, warm, and smelled of spices and fresh mint drinks.
+            </p>
+
+            <div className="blog-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1000&auto=format&fit=crop&q=80" alt="A spread of snacks and tea at the refreshment break" />
+              <span className="image-caption">Frame #08: Food stacks and networking exchanges.</span>
+            </div>
+
+            <h3 className="section-subtitle">The Taste Test: The Drink Collage</h3>
+            <p>
+              We had to document the beverage experiment. The team had set up a table with a collection of home-brewed, neon-colored energy drinks and herbal teas, challenging people to taste-test them. The reactions were absolute gold for a photographer.
+            </p>
+            <p>
+              I stood three feet away with a fast shutter speed, ready for the split-second changes in expression. People took sips, expecting sweet juice, only to be hit with sour elements or intense spice. I captured it all: the instant squint of eyes, the contorted noses, the funny grimaces of surprise, followed immediately by bursts of laughter. It was a hilarious, lighthearted break in the day.
+            </p>
+
+            {/* Collage Section */}
+            <div className="drink-collage-grid">
+              <div className="collage-card"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop" alt="Grimace 1" /></div>
+              <div className="collage-card"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop" alt="Grimace 2" /></div>
+              <div className="collage-card"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop" alt="Grimace 3" /></div>
+              <div className="collage-card"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop" alt="Grimace 4" /></div>
+            </div>
+            <span className="image-caption text-center">Frame #09: Taste-test reactions: squinting eyes and pure shock.</span>
+
+            <h2 className="day-title text-center" style={{ marginTop: '5rem', marginBottom: '2rem' }}>
+              YUNIty <span className="text-gradient">Memory Cloud</span>
+            </h2>
+            <p className="text-center" style={{ maxWidth: '650px', margin: '0 auto 4rem', color: 'var(--text-secondary)' }}>
+              Hover over the floating moments to bring them into clear focus, clearing the lens depth-of-field and enlarging the memory.
+            </p>
+
+            {/* REQUIREMENT 1: Interactive Gallery Cloud */}
+            <div className="gallery-cloud-viewport">
+              <div className="cloud-ambient-glow"></div>
+              {galleryImages.map((photo) => {
+                const randomRot = (photo.id === 'g1' ? 4 : photo.id === 'g2' ? -3 : photo.id === 'g3' ? 5 : photo.id === 'g4' ? -6 : photo.id === 'g5' ? 2 : photo.id === 'g6' ? -4 : photo.id === 'g7' ? 6 : photo.id === 'g8' ? -2 : 3);
+                return (
+                  <div
+                    key={photo.id}
+                    className={`memory-card size-${photo.size}`}
+                    style={{
+                      left: `${photo.x}%`,
+                      top: `${photo.y}%`,
+                      transform: `rotate(${randomRot}deg)`,
+                      '--card-rotation': `${randomRot}deg`,
+                    } as React.CSSProperties}
+                  >
+                    <div className="card-inner">
+                      <img src={photo.src} alt={photo.alt} loading="lazy" />
+                      <div className="vignette"></div>
+                      <div className="scanlines"></div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <h3 className="section-subtitle" style={{ marginTop: '5rem' }}>The Lobby Wrap: The Quiet After the Storm</h3>
+            <p>
+              The event ended, the final pitches were judged, the winners were announced, and the crowds dispersed. The venue went silent, leaving only the YUNIty staff and core volunteers behind. We didn't leave immediately. Instead, we collapsed into the main lobby, sitting on the cool marble floor, leaning against the structural pillars.
+            </p>
+            <p>
+              I set my camera on the floor, using a wide-angle lens with a self-timer to join the group. There were no poses left, just tired shoulders, messy hair, and broad, authentic smiles of relief. We sat in a circle, looking at the gear bags and sharing stories of the crazy things that happened over the last 48 hours. Through my lens, this was the most honest picture of the weekend: a tired team, bound together by the shared experience of building something memorable.
+            </p>
+
+            <div className="blog-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1000&auto=format&fit=crop&q=80" alt="The YUNIty core team sitting on the floor smiling" />
+              <span className="image-caption">Frame #10: The final lobby sit-down group wrap.</span>
+            </div>
+          </div>
+        </div>
+
+        <button onClick={() => { setCurrentView("intel"); window.scrollTo(0, 0); }} className="back-btn-tech bottom-back">
+          ← BACK TO INTEL
+        </button>
+      </div>
+    </div>
+  );
+
+
   return (
     <section className="events-premium-section">
       <AnimatedBackground />
@@ -375,6 +642,8 @@ const Blog: React.FC = () => {
 
       {currentView === "registration" ? (
         renderRegistrationView()
+      ) : currentView === "yunity-blog" ? (
+        renderYunityBlogView()
       ) : (
         <div className="events-container">
         {/* Header */}
@@ -405,7 +674,8 @@ const Blog: React.FC = () => {
           {displayedPosts.map((post) => (
             <article
               key={post.id}
-              className="blog-card-premium card-glow-border"
+              className={`blog-card-premium card-glow-border ${post.id === "blog-yunity-2026" ? "clickable-card" : ""}`}
+              onClick={post.id === "blog-yunity-2026" ? () => { setCurrentView("yunity-blog"); window.scrollTo(0, 0); } : undefined}
             >
               <div className="blog-card-inner">
                 <div className="blog-card-image">
@@ -433,14 +703,25 @@ const Blog: React.FC = () => {
                       <div className="author-avatar-tech">{post.author.charAt(0)}</div>
                       <span className="author-name">{post.author}</span>
                     </div>
-                    {post.externalLink && (
+                    {post.id === "blog-yunity-2026" ? (
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentView("yunity-blog");
+                          window.scrollTo(0, 0);
+                        }}
+                        className="read-more-btn-tech"
+                      >
+                        Read Full Story <span className="arrow">→</span>
+                      </button>
+                    ) : post.externalLink ? (
                       <button 
                         onClick={handleRegister}
                         className="read-more-btn-tech"
                       >
                         Register Now <span className="arrow">→</span>
                       </button>
-                    )}
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -987,6 +1268,321 @@ const Blog: React.FC = () => {
         @media (max-width: 900px) {
           .form-grid-premium { grid-template-columns: 1fr; gap: 2rem; }
           .registration-container-premium { padding: 2rem; }
+        }
+
+        /* --- YUNIty Blog Detail View --- */
+        .yunity-blog-detail-view {
+          padding: 2rem 0;
+          color: var(--text-primary);
+        }
+
+        .blog-detail-container-premium {
+          max-width: 54rem;
+          margin: 0 auto;
+          padding: 0 2rem;
+        }
+
+        .back-btn-tech {
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid var(--border-light);
+          color: var(--text-secondary);
+          padding: 0.8rem 1.6rem;
+          border-radius: 12px;
+          font-size: 0.85rem;
+          font-weight: 800;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          letter-spacing: 0.05em;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          margin-bottom: 3rem;
+        }
+
+        .back-btn-tech:hover {
+          border-color: var(--pk-green);
+          color: var(--pk-green);
+          background: rgba(0, 230, 118, 0.05);
+          transform: translateX(-4px);
+        }
+
+        .back-btn-tech.bottom-back {
+          margin-top: 4rem;
+          margin-bottom: 0;
+        }
+
+        .blog-detail-header {
+          margin-bottom: 3rem;
+        }
+
+        .blog-detail-title {
+          font-size: 3rem;
+          font-weight: 900;
+          line-height: 1.2;
+          margin: 1.5rem 0;
+          letter-spacing: -0.02em;
+        }
+
+        .blog-detail-meta {
+          display: flex;
+          align-items: center;
+          gap: 0.8rem;
+          font-size: 0.85rem;
+          color: var(--text-tertiary);
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+
+        .meta-separator {
+          color: rgba(255, 255, 255, 0.15);
+        }
+
+        .blog-detail-featured-image {
+          position: relative;
+          width: 100%;
+          height: 480px;
+          border-radius: 2rem;
+          overflow: hidden;
+          border: 1px solid var(--glass-border);
+          margin-bottom: 4rem;
+        }
+
+        .blog-detail-featured-image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .blog-detail-body {
+          font-size: 1.15rem;
+          line-height: 1.8;
+          color: var(--text-secondary);
+        }
+
+        .blog-day-section {
+          margin-bottom: 4rem;
+        }
+
+        .day-title {
+          font-size: 2.2rem;
+          font-weight: 900;
+          letter-spacing: -0.02em;
+          margin-top: 3rem;
+          margin-bottom: 2rem;
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        .section-subtitle {
+          font-size: 1.4rem;
+          font-weight: 800;
+          color: var(--text-primary);
+          margin-top: 2.5rem;
+          margin-bottom: 1rem;
+          letter-spacing: -0.01em;
+        }
+
+        .blog-image-wrapper {
+          position: relative;
+          width: 100%;
+          margin: 2.5rem 0;
+          border-radius: 1.5rem;
+          overflow: hidden;
+          border: 1px solid var(--glass-border);
+        }
+
+        .blog-image-wrapper img {
+          width: 100%;
+          height: auto;
+          display: block;
+          filter: brightness(0.95);
+        }
+
+        .image-caption {
+          display: block;
+          text-align: center;
+          font-size: 0.9rem;
+          color: var(--text-tertiary);
+          margin-top: 1rem;
+          font-style: italic;
+        }
+
+        .blog-divider {
+          border: 0;
+          height: 1px;
+          background: linear-gradient(to right, transparent, var(--glass-border), transparent);
+          margin: 4rem 0;
+        }
+
+        /* --- Drink Reactions Grid --- */
+        .drink-collage-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1rem;
+          margin: 2.5rem 0 1rem;
+        }
+
+        .collage-card {
+          aspect-ratio: 1;
+          border-radius: 1rem;
+          overflow: hidden;
+          border: 1px solid var(--glass-border);
+          background: rgba(255, 255, 255, 0.02);
+          transition: all 0.4s ease;
+        }
+
+        .collage-card img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          filter: grayscale(20%) contrast(1.05);
+          transition: all 0.4s ease;
+        }
+
+        .collage-card:hover {
+          transform: translateY(-5px) scale(1.05);
+          border-color: var(--pk-green);
+          box-shadow: 0 10px 25px rgba(0, 230, 118, 0.15);
+        }
+
+        .collage-card:hover img {
+          filter: grayscale(0%) contrast(1.1);
+        }
+
+        @media (max-width: 600px) {
+          .drink-collage-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+          }
+        }
+
+        /* --- Gallery Memory Cloud --- */
+        .gallery-cloud-viewport {
+          position: relative;
+          width: 100%;
+          height: 80vh;
+          min-height: 600px;
+          background: rgba(255, 255, 255, 0.01);
+          overflow: hidden;
+          border-radius: 2rem;
+          border: 1px solid var(--glass-border);
+          margin: 3rem 0;
+        }
+
+        .cloud-ambient-glow {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 60%;
+          height: 60%;
+          background: radial-gradient(circle, rgba(0, 230, 118, 0.08) 0%, transparent 70%);
+          pointer-events: none;
+        }
+
+        .memory-card {
+          position: absolute;
+          transition: z-index 0s, filter 0.5s ease, opacity 0.5s ease;
+          z-index: 2;
+          cursor: pointer;
+        }
+
+        .memory-card.size-sm { width: 140px; height: 100px; }
+        .memory-card.size-md { width: 220px; height: 160px; }
+        .memory-card.size-lg { width: 320px; height: 220px; }
+
+        .card-inner {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          border-radius: 1rem;
+          overflow: hidden;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+          background: rgba(255, 255, 255, 0.02);
+          transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+        }
+
+        .memory-card img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          filter: grayscale(40%) contrast(1.1) brightness(0.85);
+          transition: filter 0.5s ease, transform 0.8s ease;
+        }
+
+        .vignette {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle, transparent 50%, rgba(0,0,0,0.6) 100%);
+          pointer-events: none;
+        }
+
+        .scanlines {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.12) 50%), 
+                      linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+          background-size: 100% 3px, 3px 100%;
+          pointer-events: none;
+          opacity: 0.45;
+        }
+
+        /* Hover focal mechanics */
+        .gallery-cloud-viewport:hover .memory-card {
+          filter: blur(2px) grayscale(80%) brightness(0.6);
+          opacity: 0.4;
+        }
+
+        .gallery-cloud-viewport .memory-card:hover {
+          z-index: 50;
+          filter: blur(0px) grayscale(0%) brightness(1.1);
+          opacity: 1;
+        }
+
+        .gallery-cloud-viewport .memory-card:hover .card-inner {
+          transform: scale(1.18) rotate(0deg) translateY(-10px);
+          border-color: var(--pk-green, #00e676);
+          box-shadow: 0 20px 45px rgba(0, 230, 118, 0.25);
+        }
+
+        .gallery-cloud-viewport .memory-card:hover img {
+          transform: scale(1.05);
+        }
+
+        .clickable-card {
+          cursor: pointer;
+        }
+
+        /* Responsive memory cloud behavior */
+        @media (max-width: 768px) {
+          .gallery-cloud-viewport {
+            height: auto;
+            min-height: auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            padding: 1.5rem;
+          }
+          .memory-card {
+            position: relative !important;
+            left: auto !important;
+            top: auto !important;
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 1.5 !important;
+            transform: none !important;
+          }
+          .gallery-cloud-viewport:hover .memory-card {
+            filter: none !important;
+            opacity: 1 !important;
+          }
+          .gallery-cloud-viewport .memory-card:hover .card-inner {
+            transform: none !important;
+            box-shadow: none !important;
+          }
         }
       `}</style>
     </section>
