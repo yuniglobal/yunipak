@@ -76,6 +76,18 @@ const blogPosts: BlogPost[] = [
     author: "Camera Guy",
   },
   {
+    id: "gallery-yunity-2026",
+    title: "YUNIty 2026: Interactive Memory Cloud",
+    category: "Summit",
+    icon: "fa-camera",
+    colorClass: "brand",
+    description: "Launch the high-fidelity interactive gallery of the YUNIty event. Walk through the captured frames of our collective story.",
+    date: "May 18, 2026",
+    readTime: "Interactive Showcase",
+    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop&auto=format",
+    author: "Camera Guy",
+  },
+  {
     id: "blog-7",
     title: "Upcoming Summer Trainings Trailer",
     category: "Summit",
@@ -175,14 +187,14 @@ const galleryImages = [
 
 const Blog: React.FC = () => {
   const location = useLocation();
-  const [currentView, setCurrentView] = useState<"intel" | "registration" | "yunity-blog">("intel");
+  const [currentView, setCurrentView] = useState<"intel" | "registration" | "yunity-blog" | "yunity-gallery">("intel");
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [visiblePosts, setVisiblePosts] = useState<number>(6);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   useEffect(() => {
-    if (currentView === "yunity-blog") {
+    if (currentView === "yunity-gallery") {
       const cards = document.querySelectorAll('.memory-card');
       if (cards.length > 0) {
         gsap.fromTo(cards,
@@ -346,12 +358,26 @@ const Blog: React.FC = () => {
               <section className="form-section-tech">
                 <h3 className="section-header-tech"><CreditCard size={20} /> 1. Payment Protocol</h3>
                 <div className="payment-nodes">
-                  <div className="payment-node-card active-node">
-                    <h4>Bank Al Falah</h4>
+                  <div 
+                    className={`payment-node-card ${formData.paymentMethod === 'bank' ? 'active-node' : ''}`}
+                    onClick={() => setFormData(prev => ({ ...prev, paymentMethod: 'bank' }))}
+                  >
+                    <h4>Bank Alfalah</h4>
                     <div className="node-details">
-                      <p><span>Title:</span> YUNI-TY x NICAT</p>
-                      <p><span>Account Number:</span> 0140-1010831162</p>
+                      <p><span>Title:</span> YUNI (SMC-PRIVATE) LIMITED</p>
+                      <p><span>Account No:</span> 0140-1010831162</p>
                       <p><span>Branch:</span> Rawalpindi</p>
+                    </div>
+                  </div>
+                  <div 
+                    className={`payment-node-card ${formData.paymentMethod === 'nayapay' ? 'active-node' : ''}`}
+                    onClick={() => setFormData(prev => ({ ...prev, paymentMethod: 'nayapay' }))}
+                  >
+                    <h4>NayaPay</h4>
+                    <div className="node-details">
+                      <p><span>Title:</span> YUNI (SMC-PRIVATE) LIMITED</p>
+                      <p><span>Account No:</span> 03185861446</p>
+                      <p><span>Type:</span> Wallet / Mobile</p>
                     </div>
                   </div>
                 </div>
@@ -360,7 +386,8 @@ const Blog: React.FC = () => {
                   <div className="field-tech">
                     <label>Network</label>
                     <select name="paymentMethod" value={formData.paymentMethod} onChange={handleInputChange} required>
-                      <option value="bank">Bank Al Falah</option>
+                      <option value="bank">Bank Alfalah</option>
+                      <option value="nayapay">NayaPay</option>
                     </select>
                   </div>
                   <div className="field-tech">
@@ -578,37 +605,14 @@ const Blog: React.FC = () => {
             </div>
             <span className="image-caption text-center">Frame #09: Taste-test reactions: squinting eyes and pure shock.</span>
 
-            <h2 className="day-title text-center" style={{ marginTop: '5rem', marginBottom: '2rem' }}>
-              YUNIty <span className="text-gradient">Memory Cloud</span>
-            </h2>
-            <p className="text-center" style={{ maxWidth: '650px', margin: '0 auto 4rem', color: 'var(--text-secondary)' }}>
-              Hover over the floating moments to bring them into clear focus, clearing the lens depth-of-field and enlarging the memory.
-            </p>
-
-            {/* REQUIREMENT 1: Interactive Gallery Cloud */}
-            <div className="gallery-cloud-viewport">
-              <div className="cloud-ambient-glow"></div>
-              {galleryImages.map((photo) => {
-                const randomRot = (photo.id === 'g1' ? 4 : photo.id === 'g2' ? -3 : photo.id === 'g3' ? 5 : photo.id === 'g4' ? -6 : photo.id === 'g5' ? 2 : photo.id === 'g6' ? -4 : photo.id === 'g7' ? 6 : photo.id === 'g8' ? -2 : 3);
-                return (
-                  <div
-                    key={photo.id}
-                    className={`memory-card size-${photo.size}`}
-                    style={{
-                      left: `${photo.x}%`,
-                      top: `${photo.y}%`,
-                      transform: `rotate(${randomRot}deg)`,
-                      '--card-rotation': `${randomRot}deg`,
-                    } as React.CSSProperties}
-                  >
-                    <div className="card-inner">
-                      <img src={photo.src} alt={photo.alt} loading="lazy" />
-                      <div className="vignette"></div>
-                      <div className="scanlines"></div>
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="gallery-cta-card card-glow-border">
+              <div className="gallery-cta-content">
+                <h3>YUNIty 2026 Interactive Memory Cloud</h3>
+                <p>Step into our fully interactive, high-fidelity visual archive. Hover to focus, zoom, and explore the raw frames of the weekend.</p>
+                <button onClick={() => { setCurrentView("yunity-gallery"); window.scrollTo(0, 0); }} className="read-more-btn-tech" style={{ margin: '0 auto' }}>
+                  Launch Memory Cloud <span className="arrow">→</span>
+                </button>
+              </div>
             </div>
 
             <h3 className="section-subtitle" style={{ marginTop: '5rem' }}>The Post-Event Collapse</h3>
@@ -633,6 +637,61 @@ const Blog: React.FC = () => {
     </div>
   );
 
+  const renderYunityGalleryView = () => (
+    <div className="yunity-gallery-view animate-fade-in-up">
+      <div className="gallery-container-premium">
+        <button onClick={() => { setCurrentView("intel"); window.scrollTo(0, 0); }} className="back-btn-tech">
+          <span className="arrow">←</span> BACK TO INTEL
+        </button>
+
+        <header className="gallery-header-premium">
+          <span className="blog-category-badge-premium" style={{ background: 'var(--pk-green)' }}>
+            <span className="badge-icon">📷</span>
+            <span className="badge-text">Interactive Showcase</span>
+          </span>
+          <h1 className="gallery-title-premium">
+            YUNIty 2026: <span className="text-gradient">Memory Cloud</span>
+          </h1>
+          <p className="gallery-subtitle-premium">
+            An interactive, high-fidelity visual archive. Hover over the floating frames to bring key moments into sharp focus, clearing the lens depth-of-field and enlarging the memory.
+          </p>
+        </header>
+
+        {/* Interactive Gallery Cloud */}
+        <div className="gallery-cloud-viewport" style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+          <div className="cloud-ambient-glow"></div>
+          {galleryImages.map((photo) => {
+            const randomRot = (photo.id === 'g1' ? 4 : photo.id === 'g2' ? -3 : photo.id === 'g3' ? 5 : photo.id === 'g4' ? -6 : photo.id === 'g5' ? 2 : photo.id === 'g6' ? -4 : photo.id === 'g7' ? 6 : photo.id === 'g8' ? -2 : 3);
+            return (
+              <div
+                key={photo.id}
+                className={`memory-card size-${photo.size}`}
+                style={{
+                  left: `${photo.x}%`,
+                  top: `${photo.y}%`,
+                  transform: `rotate(${randomRot}deg)`,
+                  '--card-rotation': `${randomRot}deg`,
+                } as React.CSSProperties}
+              >
+                <div className="card-inner">
+                  <img src={photo.src} alt={photo.alt} loading="lazy" />
+                  <div className="vignette"></div>
+                  <div className="scanlines"></div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="gallery-footer-actions">
+          <button onClick={() => { setCurrentView("yunity-blog"); window.scrollTo(0, 0); }} className="back-btn-tech" style={{ margin: '0 auto' }}>
+            READ THE STORY <span className="arrow">→</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
 
   return (
     <section className="events-premium-section">
@@ -643,6 +702,8 @@ const Blog: React.FC = () => {
         renderRegistrationView()
       ) : currentView === "yunity-blog" ? (
         renderYunityBlogView()
+      ) : currentView === "yunity-gallery" ? (
+        renderYunityGalleryView()
       ) : (
         <div className="events-container">
         {/* Header */}
@@ -673,8 +734,16 @@ const Blog: React.FC = () => {
           {displayedPosts.map((post) => (
             <article
               key={post.id}
-              className={`blog-card-premium card-glow-border ${post.id === "blog-yunity-2026" ? "clickable-card" : ""}`}
-              onClick={post.id === "blog-yunity-2026" ? () => { setCurrentView("yunity-blog"); window.scrollTo(0, 0); } : undefined}
+              className={`blog-card-premium card-glow-border ${post.id === "blog-yunity-2026" || post.id === "gallery-yunity-2026" ? "clickable-card" : ""}`}
+              onClick={() => {
+                if (post.id === "blog-yunity-2026") {
+                  setCurrentView("yunity-blog");
+                  window.scrollTo(0, 0);
+                } else if (post.id === "gallery-yunity-2026") {
+                  setCurrentView("yunity-gallery");
+                  window.scrollTo(0, 0);
+                }
+              }}
             >
               <div className="blog-card-inner">
                 <div className="blog-card-image">
@@ -712,6 +781,17 @@ const Blog: React.FC = () => {
                         className="read-more-btn-tech"
                       >
                         Read Full Story <span className="arrow">→</span>
+                      </button>
+                    ) : post.id === "gallery-yunity-2026" ? (
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentView("yunity-gallery");
+                          window.scrollTo(0, 0);
+                        }}
+                        className="read-more-btn-tech"
+                      >
+                        Launch Gallery <span className="arrow">→</span>
                       </button>
                     ) : post.externalLink ? (
                       <button 
@@ -1234,8 +1314,9 @@ const Blog: React.FC = () => {
           gap: 2rem;
         }
 
-        .payment-nodes { display: grid; gap: 1.5rem; margin-bottom: 2.5rem; }
-        .payment-node-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border-light); padding: 2rem; border-radius: 25px; transition: all 0.3s ease; }
+        .payment-nodes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+        .payment-node-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border-light); padding: 2rem; border-radius: 25px; transition: all 0.3s ease; cursor: pointer; }
+        .payment-node-card:hover { border-color: rgba(0, 230, 118, 0.5); background: rgba(255, 255, 255, 0.05); }
         .payment-node-card.active-node { border-color: var(--pk-green); background: rgba(0, 230, 118, 0.05); box-shadow: 0 10px 30px rgba(0, 230, 118, 0.1); }
         .payment-node-card h4 { margin: 0 0 1.2rem; font-size: 1.2rem; color: var(--pk-green); font-weight: 900; text-transform: uppercase; }
         .node-details p { margin: 0.6rem 0; font-size: 1rem; color: var(--text-secondary); }
@@ -1553,6 +1634,78 @@ const Blog: React.FC = () => {
 
         .clickable-card {
           cursor: pointer;
+        }
+
+        .gallery-container-premium {
+          max-width: 90rem;
+          margin: 0 auto;
+          padding: 0 2rem;
+        }
+
+        .gallery-header-premium {
+          text-align: center;
+          margin-top: 2rem;
+          margin-bottom: 3rem;
+        }
+
+        .gallery-title-premium {
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          font-weight: 800;
+          letter-spacing: -0.03em;
+          margin-top: 1.5rem;
+          margin-bottom: 1.5rem;
+          line-height: 1.1;
+        }
+
+        .gallery-subtitle-premium {
+          color: var(--text-secondary);
+          font-size: 1.15rem;
+          max-width: 700px;
+          margin: 0 auto;
+          line-height: 1.7;
+        }
+
+        .gallery-footer-actions {
+          display: flex;
+          justify-content: center;
+          margin-top: 4rem;
+          gap: 2rem;
+        }
+
+        .gallery-cta-card {
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid var(--glass-border);
+          border-radius: 1.5rem;
+          padding: 2.5rem;
+          margin: 5rem 0;
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .gallery-cta-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at 50% 50%, rgba(0, 230, 118, 0.05) 0%, transparent 60%);
+          pointer-events: none;
+        }
+
+        .gallery-cta-content h3 {
+          font-size: 1.8rem;
+          font-weight: 800;
+          margin-bottom: 1rem;
+          letter-spacing: -0.02em;
+          color: var(--text-primary);
+        }
+
+        .gallery-cta-content p {
+          color: var(--text-secondary);
+          margin-bottom: 1.8rem;
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+          line-height: 1.6;
         }
 
         /* Responsive memory cloud behavior */

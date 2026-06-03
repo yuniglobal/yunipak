@@ -634,11 +634,26 @@ const Courses: React.FC = () => {
               <section className="form-section-tech">
                 <h3 className="section-header-tech">1. Payment Protocol</h3>
                 <div className="payment-nodes">
-                  <div className="payment-node-card">
+                  <div 
+                    className={`payment-node-card ${formData.paymentMethod === 'bank' ? 'active-node' : ''}`}
+                    onClick={() => setFormData(prev => ({ ...prev, paymentMethod: 'bank' }))}
+                  >
                     <h4>Bank Alfalah</h4>
                     <div className="node-details">
-                      <p><span>Title:</span> YUNI Education Systems</p>
-                      <p><span>Account Number:</span> 0140-1010831162</p>
+                      <p><span>Title:</span> YUNI (SMC-PRIVATE) LIMITED</p>
+                      <p><span>Account No:</span> 0140-1010831162</p>
+                      <p><span>Branch:</span> Rawalpindi</p>
+                    </div>
+                  </div>
+                  <div 
+                    className={`payment-node-card ${formData.paymentMethod === 'nayapay' ? 'active-node' : ''}`}
+                    onClick={() => setFormData(prev => ({ ...prev, paymentMethod: 'nayapay' }))}
+                  >
+                    <h4>NayaPay</h4>
+                    <div className="node-details">
+                      <p><span>Title:</span> YUNI (SMC-PRIVATE) LIMITED</p>
+                      <p><span>Account No:</span> 03185861446</p>
+                      <p><span>Type:</span> Wallet / Mobile</p>
                     </div>
                   </div>
                 </div>
@@ -648,6 +663,7 @@ const Courses: React.FC = () => {
                     <label>Network</label>
                     <select name="paymentMethod" value={formData.paymentMethod} onChange={handleInputChange} required>
                       <option value="bank">Bank Alfalah</option>
+                      <option value="nayapay">NayaPay</option>
                     </select>
                   </div>
                   <div className="field-tech">
@@ -856,8 +872,10 @@ const Courses: React.FC = () => {
         .form-section-tech { background: var(--glass-bg); backdrop-filter: blur(20px); border-radius: 2rem; padding: 2.5rem; border: 1px solid var(--glass-border); margin-bottom: 2rem; }
         .section-header-tech { font-size: 1.2rem; font-weight: 800; color: var(--pk-green); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem; }
         
-        .payment-nodes { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
-        .payment-node-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border-light); border-radius: 1.5rem; padding: 1.5rem; }
+        .payment-nodes { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+        .payment-node-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border-light); border-radius: 1.5rem; padding: 1.5rem; transition: all 0.3s ease; cursor: pointer; }
+        .payment-node-card:hover { border-color: rgba(0, 230, 118, 0.5); background: rgba(255, 255, 255, 0.05); }
+        .payment-node-card.active-node { border-color: var(--pk-green); background: rgba(0, 230, 118, 0.05); box-shadow: 0 10px 30px rgba(0, 230, 118, 0.1); }
         .payment-node-card h4 { color: var(--pk-green); margin-bottom: 1rem; font-weight: 800; }
         .node-details p { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
         .node-details p span { color: var(--text-tertiary); font-weight: 600; }
