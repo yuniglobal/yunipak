@@ -8,7 +8,18 @@ const REGISTRATION_SHEET = "CourseRegistrations";
 function doPost(e) {
   try {
     const sheet = getOrCreateSheet();
-    const data = e.parameter;
+    
+    // Support both URL-encoded/form parameters and JSON payloads
+    let data;
+    if (e && e.postData && e.postData.contents) {
+      try {
+        data = JSON.parse(e.postData.contents);
+      } catch (parseError) {
+        data = e.parameter || {};
+      }
+    } else {
+      data = e.parameter || {};
+    }
     
     // Get last row for serial number
     const lastRow = sheet.getLastRow();
