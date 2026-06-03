@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
 
 const PromoBanner: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(() => {
+    return !sessionStorage.getItem('promo-banner-dismissed');
+  });
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const isDismissed = sessionStorage.getItem('promo-banner-dismissed');
-    if (isDismissed) {
-      setIsVisible(false);
+    if (!isVisible) {
       document.documentElement.style.setProperty('--banner-height', '0px');
     } else {
       document.documentElement.style.setProperty('--banner-height', '40px');
@@ -16,7 +18,7 @@ const PromoBanner: React.FC = () => {
     return () => {
       document.documentElement.style.setProperty('--banner-height', '0px');
     };
-  }, []);
+  }, [isVisible]);
 
   const handleDismiss = () => {
     setIsVisible(false);
@@ -59,6 +61,19 @@ const PromoBanner: React.FC = () => {
           display: flex;
           align-items: center;
           gap: 1rem;
+        }
+
+        .marquee-link {
+          cursor: pointer;
+          transition: text-shadow 0.2s ease, transform 0.2s ease;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.3rem;
+        }
+
+        .marquee-link:hover {
+          text-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+          text-decoration: underline;
         }
 
         .separator {
@@ -104,17 +119,19 @@ const PromoBanner: React.FC = () => {
       <div className="marquee-content">
         {[1, 2, 3, 4].map((i) => (
           <div key={i} className="marquee-item">
-            <span>☀️ Upcoming Summer Trainings Trailer</span>
+            <span className="marquee-link" onClick={() => navigate('/Programs')}>
+              ☀️ YUNI Summer Camp 2026: Registrations Open!
+            </span>
             <span className="separator">|</span>
-            <span style={{ color: '#000', fontWeight: 900 }}>Open Learning Weekend</span>
+            <span className="marquee-link" style={{ fontWeight: 900 }} onClick={() => navigate('/certificates')}>
+              🎓 YUNI-TY Event Certificates: Download Now!
+            </span>
             <span className="separator">|</span>
-            <span>Summer Trainings Preview</span>
+            <span>🚀 7 Specialized Tracks</span>
             <span className="separator">|</span>
-            <span>Registrations Open</span>
+            <span>🏢 NASTP Rawalpindi</span>
             <span className="separator">|</span>
-            <span>PSEB Certified</span>
-            <span className="separator">|</span>
-            <span>Located at NASTP</span>
+            <span>🎖️ PSEB Certified</span>
           </div>
         ))}
       </div>

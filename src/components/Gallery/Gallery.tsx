@@ -45,7 +45,7 @@ const Gallery: React.FC = () => {
               <span className="badge-text">Interactive Showcase</span>
             </span>
             <h1 className="gallery-title-premium">
-              YUNIty 2026: <span className="text-gradient">Memory Cloud</span>
+              YUNI-TY 2026 : <span className="text-gradient">Memory Cloud</span>
             </h1>
             <p className="gallery-subtitle-premium">
               An interactive, high-fidelity visual archive. Hover over the floating frames to bring key moments into sharp focus, clearing the lens depth-of-field and enlarging the memory.

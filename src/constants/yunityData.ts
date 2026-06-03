@@ -24,7 +24,7 @@ export const blogPosts: BlogPost[] = [
     description: "A raw, behind-the-scenes look at the two days of chaos, caffeine, and creative sparks that defined YUNIty, through the eyes of the camera guy.",
     date: "May 18, 2026",
     readTime: "8 min read",
-    imageUrl: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=600&h=400&fit=crop&auto=format",
+    imageUrl: "/gallery/_DSC2263.jpg",
     author: "Camera Guy",
   },
   {
@@ -36,7 +36,7 @@ export const blogPosts: BlogPost[] = [
     description: "Launch the high-fidelity interactive gallery of the YUNIty event. Walk through the captured frames of our collective story.",
     date: "May 18, 2026",
     readTime: "Interactive Showcase",
-    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop&auto=format",
+    imageUrl: "/gallery/_DSC2342.jpg",
     author: "Camera Guy",
   },
   {
@@ -48,7 +48,7 @@ export const blogPosts: BlogPost[] = [
     description: "A first look at the upcoming summer trainings lineup, plus the Open Learning Weekend preview for students and professionals.",
     date: "May 29, 2026",
     readTime: "2 min read",
-    imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop&auto=format",
+    imageUrl: "/gallery/_DSC2200.jpg",
     author: "Events Team",
   },
   {
@@ -60,7 +60,7 @@ export const blogPosts: BlogPost[] = [
     description: "YUNI is organizing the National Conference of Applied Technology focusing on cybersecurity.",
     date: "March 15, 2026",
     readTime: "5 min read",
-    imageUrl: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop&auto=format",
+    imageUrl: "/gallery/_DSC2431.jpg",
     author: "YUNI Team",
   },
   {
@@ -84,7 +84,7 @@ export const blogPosts: BlogPost[] = [
     description: "First cohort of ethical hacking students complete their training with 100% certification success rate.",
     date: "February 28, 2026",
     readTime: "6 min read",
-    imageUrl: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&h=400&fit=crop&auto=format",
+    imageUrl: "/gallery/_DSC2377.jpg",
     author: "Academics Team",
   },
   {
@@ -126,13 +126,20 @@ export const blogPosts: BlogPost[] = [
 ];
 
 export const galleryImages = [
-  { id: 'g1', src: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80", alt: "Morning setups", size: "md" as const, x: 10, y: 15 },
-  { id: 'g2', src: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&auto=format&fit=crop&q=80", alt: "Workshop launch", size: "lg" as const, x: 38, y: 10 },
-  { id: 'g3', src: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=80", alt: "Waiting booth", size: "sm" as const, x: 15, y: 55 },
-  { id: 'g4', src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop&q=80", alt: "Pitching whiteboard", size: "lg" as const, x: 68, y: 15 },
-  { id: 'g5', src: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&auto=format&fit=crop&q=80", alt: "Moiz surprise birthday", size: "md" as const, x: 45, y: 65 },
-  { id: 'g6', src: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?w=800&auto=format&fit=crop&q=80", alt: "Sunday morning kickoff", size: "sm" as const, x: 82, y: 52 },
-  { id: 'g7', src: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80", alt: "Moiz session hype", size: "md" as const, x: 28, y: 45 },
-  { id: 'g8', src: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&auto=format&fit=crop&q=80", alt: "Refreshment breaks", size: "sm" as const, x: 65, y: 50 },
-  { id: 'g9', src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop&q=80", alt: "Grand lobby wrap", size: "lg" as const, x: 42, y: 45 }
+  { id: 'g1', src: "/gallery/_DSC2165.jpg", alt: "Event setup and preparations", size: "md" as const, x: 10, y: 15 },
+  { id: 'g2', src: "/gallery/_DSC2172.jpg", alt: "Workshop session in progress", size: "lg" as const, x: 38, y: 10 },
+  { id: 'g3', src: "/gallery/_DSC2198.jpg", alt: "Attendees networking", size: "sm" as const, x: 15, y: 55 },
+  { id: 'g4', src: "/gallery/_DSC2200.jpg", alt: "Speaker on the main stage", size: "lg" as const, x: 68, y: 15 },
+  { id: 'g5', src: "/gallery/_DSC2210.jpg", alt: "Team collaboration moment", size: "md" as const, x: 45, y: 65 },
+  { id: 'g6', src: "/gallery/_DSC2219.jpg", alt: "Candid crowd reactions", size: "sm" as const, x: 82, y: 52 },
+  { id: 'g7', src: "/gallery/_DSC2227.jpg", alt: "Interactive session highlights", size: "md" as const, x: 28, y: 45 },
+  { id: 'g8', src: "/gallery/_DSC2263.jpg", alt: "Behind the scenes crew", size: "sm" as const, x: 65, y: 50 },
+  { id: 'g9', src: "/gallery/_DSC2342.jpg", alt: "Group photo and celebrations", size: "lg" as const, x: 42, y: 45 },
+  { id: 'g10', src: "/gallery/_DSC2344.jpg", alt: "Audience engagement", size: "md" as const, x: 5, y: 40 },
+  { id: 'g11', src: "/gallery/_DSC2377.jpg", alt: "Keynote session energy", size: "sm" as const, x: 75, y: 35 },
+  { id: 'g12', src: "/gallery/_DSC2383.jpg", alt: "Post-event wind down", size: "md" as const, x: 55, y: 5 },
+  { id: 'g13', src: "/gallery/_DSC2431.jpg", alt: "Team building activities", size: "lg" as const, x: 20, y: 75 },
+  { id: 'g14', src: "/gallery/_DSC2432.jpg", alt: "Award ceremony highlights", size: "sm" as const, x: 85, y: 70 },
+  { id: 'g15', src: "/gallery/_DSC2447.jpg", alt: "Final group wrap-up", size: "md" as const, x: 60, y: 75 },
+  { id: 'g16', src: "/gallery/_DSC2604.jpg", alt: "Closing ceremony", size: "sm" as const, x: 35, y: 35 },
 ];

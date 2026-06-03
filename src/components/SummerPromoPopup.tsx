@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, GraduationCap, Award, ArrowRight } from 'lucide-react';
+import { X, GraduationCap, Award, ArrowRight, Sparkles, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const SummerPromoPopup: React.FC = () => {
@@ -7,13 +7,14 @@ const SummerPromoPopup: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // const isDismissed = sessionStorage.getItem('promo-popup-dismissed');
-    // if (!isDismissed) {
+    // Show popup after 1.5 seconds if not dismissed during current session
+    const isDismissed = sessionStorage.getItem('promo-popup-dismissed');
+    if (!isDismissed) {
       const timer = setTimeout(() => {
         setIsVisible(true);
       }, 1500);
       return () => clearTimeout(timer);
-    // }
+    }
   }, []);
 
   const handleDismiss = () => {
@@ -21,9 +22,9 @@ const SummerPromoPopup: React.FC = () => {
     sessionStorage.setItem('promo-popup-dismissed', 'true');
   };
 
-  const handleAction = () => {
+  const handleAction = (path: string) => {
     handleDismiss();
-    navigate('/certificates');
+    navigate(path);
   };
 
   if (!isVisible) return null;
@@ -38,7 +39,7 @@ const SummerPromoPopup: React.FC = () => {
           width: 100%;
           height: 100%;
           background: rgba(0, 0, 0, 0.85);
-          backdrop-filter: blur(10px);
+          backdrop-filter: blur(12px);
           z-index: 5000;
           display: flex;
           align-items: center;
@@ -49,15 +50,14 @@ const SummerPromoPopup: React.FC = () => {
 
         .popup-card {
           width: 100%;
-          max-width: 450px;
+          max-width: 850px;
           background: var(--bg-primary);
-          border-radius: 24px;
+          border-radius: 28px;
           position: relative;
           overflow: hidden;
-          padding: 2.5rem 2rem;
-          text-align: center;
-          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          padding: 3rem 2.5rem 2.5rem 2.5rem;
+          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+          border: 1px solid rgba(255, 255, 255, 0.08);
           animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
@@ -67,164 +67,172 @@ const SummerPromoPopup: React.FC = () => {
           top: -2px; left: -2px; right: -2px; bottom: -2px;
           background: linear-gradient(135deg, var(--pk-green), transparent, var(--pk-green-light));
           z-index: -1;
-          border-radius: 26px;
+          border-radius: 30px;
           opacity: 0.3;
         }
 
-        .badge-open {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          background: rgba(0, 230, 118, 0.1);
-          color: var(--pk-green);
-          padding: 0.4rem 1rem;
-          border-radius: 100px;
-          font-size: 0.75rem;
-          font-weight: 800;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          margin-bottom: 1.5rem;
-          border: 1px solid rgba(0, 230, 118, 0.2);
-        }
-
-        .badge-dot {
-          width: 8px;
-          height: 8px;
-          background: var(--pk-green);
-          border-radius: 50%;
-          box-shadow: 0 0 10px var(--pk-green);
-          animation: pulse 1.5s infinite;
-        }
-
-        .popup-title {
-          font-size: 2.2rem;
-          font-weight: 900;
-          margin-bottom: 0.5rem;
-          line-height: 1.1;
-          background: linear-gradient(to bottom, #fff, #aaa);
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-        }
-
-        .promo-badge {
-          display: inline-block;
-          background: var(--pk-green);
-          color: #000;
-          padding: 0.6rem 1.2rem;
-          border-radius: 12px;
-          font-weight: 900;
-          font-size: 1.2rem;
-          margin: 1rem 0;
-          box-shadow: 0 10px 20px rgba(0, 230, 118, 0.3);
-        }
-
-        .popup-desc {
-          color: var(--text-secondary);
-          font-size: 0.95rem;
-          line-height: 1.6;
-          margin-bottom: 2rem;
-        }
-
-        .features-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 0.8rem;
-          margin-bottom: 2rem;
-        }
-
-        .feature-box {
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          padding: 1rem 0.5rem;
-          border-radius: 16px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 0.5rem;
-          transition: all 0.3s ease;
-        }
-
-        .feature-box:hover {
-          background: rgba(0, 230, 118, 0.05);
-          border-color: rgba(0, 230, 118, 0.2);
-          transform: translateY(-5px);
-        }
-
-        .feature-box span {
-          font-size: 0.65rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          color: var(--text-tertiary);
-        }
-
-        .feature-box strong {
-          font-size: 0.8rem;
-          color: var(--text-primary);
-        }
-
-        .btn-register {
-          width: 100%;
-          background: linear-gradient(135deg, var(--pk-green) 0%, var(--pk-green-light) 100%);
-          color: #000;
-          border: none;
-          padding: 1.2rem;
-          border-radius: 16px;
-          font-weight: 900;
-          font-size: 1rem;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.8rem;
-          cursor: pointer;
-          transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-          box-shadow: 0 15px 30px rgba(0, 230, 118, 0.2);
-        }
-
-        .btn-register:hover {
-          transform: scale(1.02);
-          box-shadow: 0 20px 40px rgba(0, 230, 118, 0.3);
-        }
-
-        .popup-footer {
-          margin-top: 1.5rem;
-          font-size: 0.75rem;
-          color: var(--text-tertiary);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-        }
-
-        .footer-dot {
-          width: 6px;
-          height: 6px;
-          background: #ff5252;
-          border-radius: 50%;
-        }
-
-        .close-btn {
+        .popup-close-btn {
           position: absolute;
           top: 1.5rem;
           right: 1.5rem;
           background: rgba(255, 255, 255, 0.05);
           border: none;
           color: var(--text-secondary);
-          width: 32px;
-          height: 32px;
+          width: 36px;
+          height: 36px;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
           transition: all 0.3s ease;
+          z-index: 10;
         }
 
-        .close-btn:hover {
-          background: rgba(255, 255, 255, 0.1);
+        .popup-close-btn:hover {
+          background: rgba(255, 255, 255, 0.15);
           color: #fff;
+          transform: rotate(90deg);
+        }
+
+        .popup-split-container {
+          display: flex;
+          gap: 3rem;
+          margin-bottom: 2rem;
+        }
+
+        .popup-column {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          position: relative;
+        }
+
+        .popup-column:first-child::after {
+          content: '';
+          position: absolute;
+          right: -1.5rem;
+          top: 5%;
+          bottom: 5%;
+          width: 1px;
+          background: rgba(255, 255, 255, 0.08);
+        }
+
+        .column-content {
+          text-align: left;
+        }
+
+        .popup-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: rgba(0, 230, 118, 0.08);
+          color: var(--pk-green);
+          padding: 0.4rem 1rem;
+          border-radius: 100px;
+          font-size: 0.7rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          margin-bottom: 1.2rem;
+          border: 1px solid rgba(0, 230, 118, 0.15);
+        }
+
+        .popup-badge.blue-badge {
+          background: rgba(0, 145, 234, 0.08);
+          color: #0091ea;
+          border-color: rgba(0, 145, 234, 0.15);
+        }
+
+        .badge-pulse {
+          width: 6px;
+          height: 6px;
+          background: currentColor;
+          border-radius: 50%;
+          box-shadow: 0 0 8px currentColor;
+          animation: pulse 1.5s infinite;
+        }
+
+        .column-title {
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: 1.8rem;
+          font-weight: 800;
+          line-height: 1.2;
+          color: var(--text-primary);
+          margin-bottom: 1rem;
+        }
+
+        .column-desc {
+          color: var(--text-secondary);
+          font-size: 0.9rem;
+          line-height: 1.6;
+          margin-bottom: 1.5rem;
+          min-height: 70px;
+        }
+
+        .highlights-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.8rem;
+          margin-bottom: 2rem;
+        }
+
+        .highlight-item {
+          display: flex;
+          align-items: center;
+          gap: 0.8rem;
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: var(--text-primary);
+        }
+
+        .highlight-item svg {
+          flex-shrink: 0;
+        }
+
+        .column-btn {
+          width: 100%;
+          background: linear-gradient(135deg, var(--pk-green) 0%, var(--pk-green-light) 100%);
+          color: #000;
+          border: none;
+          padding: 1.1rem;
+          border-radius: 14px;
+          font-weight: 800;
+          font-size: 0.9rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.6rem;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+          box-shadow: 0 10px 20px rgba(0, 230, 118, 0.15);
+        }
+
+        .column-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 15px 25px rgba(0, 230, 118, 0.25);
+        }
+
+        .column-btn.blue-btn {
+          background: linear-gradient(135deg, #0091ea 0%, #00b0ff 100%);
+          color: #fff;
+          box-shadow: 0 10px 20px rgba(0, 145, 234, 0.15);
+        }
+
+        .column-btn.blue-btn:hover {
+          box-shadow: 0 15px 25px rgba(0, 145, 234, 0.25);
+        }
+
+        .popup-footer-text {
+          text-align: center;
+          font-size: 0.8rem;
+          color: var(--text-tertiary);
+          border-top: 1px solid rgba(255, 255, 255, 0.05);
+          padding-top: 1.2rem;
+          margin-top: 1rem;
         }
 
         @keyframes fadeIn {
@@ -233,80 +241,119 @@ const SummerPromoPopup: React.FC = () => {
         }
 
         @keyframes slideUp {
-          from { opacity: 0; transform: translateY(50px) scale(0.9); }
+          from { opacity: 0; transform: translateY(40px) scale(0.95); }
           to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         @keyframes pulse {
           0% { transform: scale(1); opacity: 1; }
-          50% { transform: scale(1.5); opacity: 0.5; }
+          50% { transform: scale(1.4); opacity: 0.5; }
           100% { transform: scale(1); opacity: 1; }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
           .popup-card {
-            padding: 2rem 1.5rem;
+            max-width: 500px;
+            padding: 3rem 1.5rem 1.5rem 1.5rem;
           }
-          .popup-title {
-            font-size: 1.8rem;
+          .popup-split-container {
+            flex-direction: column;
+            gap: 2.5rem;
           }
-          .features-grid {
-            grid-template-columns: 1fr;
+          .popup-column:first-child::after {
+            display: none;
           }
-          .feature-box {
-            flex-direction: row;
-            justify-content: center;
-            padding: 0.8rem;
+          .column-content {
+            text-align: center;
+          }
+          .popup-badge {
+            margin-bottom: 1rem;
+          }
+          .column-title {
+            font-size: 1.6rem;
+          }
+          .column-desc {
+            min-height: auto;
+            font-size: 0.85rem;
+          }
+          .highlights-list {
+            align-items: center;
+            margin-bottom: 1.5rem;
           }
         }
       `}</style>
 
       <div className="popup-card">
-        <button className="close-btn" onClick={handleDismiss}>
+        <button className="popup-close-btn" onClick={handleDismiss} title="Dismiss">
           <X size={20} />
         </button>
 
-        <div className="badge-open">
-          <div className="badge-dot"></div>
-          YUNI-TY Event Protocol
+        <div className="popup-split-container">
+          {/* Column 1: Summer Camp 2026 */}
+          <div className="popup-column">
+            <div className="column-content">
+              <div className="popup-badge">
+                <div className="badge-pulse"></div>
+                ☀️ Summer Camp 2026
+              </div>
+              <h3 className="column-title">Accelerate Your Skills</h3>
+              <p className="column-desc">
+                Join our premium IT & soft skills programs. 7 specialized tracks designed for career growth and hands-on learning at NASTP.
+              </p>
+              <div className="highlights-list">
+                <div className="highlight-item">
+                  <Sparkles size={18} color="var(--pk-green)" />
+                  <span>7 Specialized Tracks & Certifications</span>
+                </div>
+                <div className="highlight-item">
+                  <ShieldCheck size={18} color="var(--pk-green)" />
+                  <span>PSEB Certified Industry Programs</span>
+                </div>
+                <div className="highlight-item">
+                  <Award size={18} color="var(--pk-green)" />
+                  <span>Interactive Real-World Projects</span>
+                </div>
+              </div>
+            </div>
+            <button className="column-btn" onClick={() => handleAction('/Programs')}>
+              Register Now <ArrowRight size={18} />
+            </button>
+          </div>
+
+          {/* Column 2: Event Certificates */}
+          <div className="popup-column">
+            <div className="column-content">
+              <div className="popup-badge blue-badge">
+                <div className="badge-pulse"></div>
+                🎓 YUNI-TY Event
+              </div>
+              <h3 className="column-title">Download Certificates</h3>
+              <p className="column-desc">
+                Digital credentials and completion certificates are active for all YUNI-TY 2026 attendees. Verify and save your files.
+              </p>
+              <div className="highlights-list">
+                <div className="highlight-item">
+                  <GraduationCap size={18} color="#0091ea" />
+                  <span>Official Attendance Verification</span>
+                </div>
+                <div className="highlight-item">
+                  <ShieldCheck size={18} color="#0091ea" />
+                  <span>Secure QR-Coded Digital PDF</span>
+                </div>
+                <div className="highlight-item">
+                  <Award size={18} color="#0091ea" />
+                  <span>Instant Reference ID Search</span>
+                </div>
+              </div>
+            </div>
+            <button className="column-btn blue-btn" onClick={() => handleAction('/certificates')}>
+              Get Certificate <ArrowRight size={18} />
+            </button>
+          </div>
         </div>
 
-        <h2 className="popup-title">Get Certified 🎓</h2>
-        
-        <div className="promo-badge">
-          DOWNLOAD NOW
-        </div>
-
-        <p className="popup-desc">
-          Official YUNI Pakistan certificates are now available for all students. 
-          Use your Reference ID to download your digital credentials instantly.
-        </p>
-
-        <div className="features-grid">
-          <div className="feature-box">
-            <Award size={20} color="var(--pk-green)" />
-            <span>Official</span>
-            <strong>Certification</strong>
-          </div>
-          <div className="feature-box">
-            <GraduationCap size={20} color="var(--pk-green)" />
-            <span>Secure</span>
-            <strong>Verification</strong>
-          </div>
-          <div className="feature-box">
-            <ArrowRight size={20} color="var(--pk-green)" />
-            <span>Instant</span>
-            <strong>Download</strong>
-          </div>
-        </div>
-
-        <button className="btn-register" onClick={handleAction}>
-          Go to Certificates <ArrowRight size={20} />
-        </button>
-
-        <div className="popup-footer">
-          <div className="footer-dot"></div>
-          Valid for all participants of the YUNI-TY event
+        <div className="popup-footer-text">
+          Empowering the Youth through Modern Skills & Tech Education at NASTP Rawalpindi
         </div>
       </div>
     </div>

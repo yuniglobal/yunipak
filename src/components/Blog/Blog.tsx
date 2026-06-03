@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AnimatedBackground from "../AnimatedBackground";
+import { galleryImages } from "../../constants/yunityData";
 
 const Blog: React.FC = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const Blog: React.FC = () => {
 
           {/* Featured Image */}
           <div className="blog-detail-featured-image">
-            <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1600&auto=format&fit=crop&q=80" alt="YUNIty Event Viewfinder" />
+            <img src="/gallery/_DSC2342.jpg" alt="YUNIty Event Viewfinder" />
             <div className="scanline-overlay"></div>
             <div className="image-vignette"></div>
           </div>
@@ -56,7 +57,7 @@ const Blog: React.FC = () => {
               </p>
 
               <div className="blog-image-wrapper">
-                <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=1000&auto=format&fit=crop&q=80" alt="Volunteers setting up the event space" />
+                <img src="/gallery/_DSC2165.jpg" alt="Volunteers setting up the event space" />
                 <span className="image-caption">Frame #01: Morning rush and setup.</span>
               </div>
 
@@ -69,7 +70,7 @@ const Blog: React.FC = () => {
               </p>
 
               <div className="blog-image-wrapper">
-                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1000&auto=format&fit=crop&q=80" alt="Students focused on their screens during the workshop" />
+                <img src="/gallery/_DSC2172.jpg" alt="Students focused on their screens during the workshop" />
                 <span className="image-caption">Frame #02: Focus and ambient glow during workshops.</span>
               </div>
 
@@ -82,7 +83,7 @@ const Blog: React.FC = () => {
               </p>
 
               <div className="blog-image-wrapper">
-                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1000&auto=format&fit=crop&q=80" alt="Attendees collaborating in the waiting booth" />
+                <img src="/gallery/_DSC2198.jpg" alt="Attendees collaborating in the waiting booth" />
                 <span className="image-caption">Frame #03: Casual networking and team banter.</span>
               </div>
 
@@ -95,21 +96,21 @@ const Blog: React.FC = () => {
               </p>
 
               <div className="blog-image-wrapper">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1000&auto=format&fit=crop&q=80" alt="Teammates hashing out ideas on a whiteboard" />
+                <img src="/gallery/_DSC2210.jpg" alt="Teammates hashing out ideas on a whiteboard" />
                 <span className="image-caption">Frame #04: Distilling systems under time pressure.</span>
               </div>
 
-              <h3 className="section-subtitle">Midnight Surprise</h3>
+              <h3 className="section-subtitle">Late Night Coding & Dev Check-in</h3>
               <p>
-                By midnight, the place went quiet, but the core YUNIty crew was still in the main hub, buried in empty pizza boxes and energy drink cans. Exhaustion was hitting hard, but we had one last thing to do.
+                By midnight, the place went quiet, but the core YUNIty crew was still in the main hub, buried in lines of code, terminal outputs, and late-night system architecture debates. Exhaustion was hitting hard, but the focus was absolute.
               </p>
               <p>
-                Out of nowhere, the lights cut out. A flickering orange glow came from the hallway. It was Moiz carrying a birthday cake. I cranked my ISO to 6400, opened my lens wide open to f/1.8, and prayed the autofocus would hold. The candle shadows danced on everyone's faces as we sang. I just kept firing the shutter, capturing Moiz's shocked face and the tired smiles around him. It was a nice, warm break in a crazy weekend sprint.
+                We gathered around the central workstation to run a quick sprint sanity check. The ambient blue glow from the screens lit up the tired, determined faces of our lead engineers. I cranked my ISO to 6400 and opened the aperture wide, capturing the quiet intensity of the team working through complex compiler logs and database integrations.
               </p>
 
               <div className="blog-image-wrapper">
-                <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1000&auto=format&fit=crop&q=80" alt="Moiz blowing out birthday candles at midnight" />
-                <span className="image-caption">Frame #05: Midnight candles and team celebrations.</span>
+                <img src="/gallery/_DSC2263.jpg" alt="YUNIty core crew late night coding check-in" />
+                <span className="image-caption">Frame #05: Late night dev check-in and technical troubleshooting.</span>
               </div>
             </div>
 
@@ -127,7 +128,7 @@ const Blog: React.FC = () => {
               </p>
 
               <div className="blog-image-wrapper">
-                <img src="https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?w=1000&auto=format&fit=crop&q=80" alt="Sunrise coffee cups and morning arrivals" />
+                <img src="/gallery/_DSC2383.jpg" alt="Sunrise coffee cups and morning arrivals" />
                 <span className="image-caption">Frame #06: Coffee first, compile later.</span>
               </div>
 
@@ -140,7 +141,7 @@ const Blog: React.FC = () => {
               </p>
 
               <div className="blog-image-wrapper">
-                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1000&auto=format&fit=crop&q=80" alt="Students high fiving and laughing in icebreaker" />
+                <img src="/gallery/_DSC2344.jpg" alt="Students high fiving and laughing in icebreaker" />
                 <span className="image-caption">Frame #07: Hype circles and morning energy.</span>
               </div>
 
@@ -153,31 +154,44 @@ const Blog: React.FC = () => {
               </p>
 
               <div className="blog-image-wrapper">
-                <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1000&auto=format&fit=crop&q=80" alt="A spread of snacks and tea at the refreshment break" />
+                <img src="/gallery/_DSC2227.jpg" alt="A spread of snacks and tea at the refreshment break" />
                 <span className="image-caption">Frame #08: Lunch breaks and team syncs.</span>
               </div>
 
-              <h3 className="section-subtitle">The Infamous Taste Test</h3>
+              <h3 className="section-subtitle">Candid Snaps & Shared Energy</h3>
               <p>
-                We had to capture the drink experiment. The crew had set up a table of home-brewed, neon-colored energy drinks and weird herbal teas, daring people to try them. The faces they made were absolute gold.
+                A huge part of the summit was the raw, unscripted energy of the participants. I spent a lot of time pacing the floor, waiting for the moments when people forgot the camera was there—the moments of intense focus, the bursts of laughter during keynotes, and the excitement of the final presentations.
               </p>
               <p>
-                I stood a few feet back with a fast shutter speed, waiting for the exact split-second they took a sip. They'd expect normal sweet juice, then get hit with sour vinegar or random spices. Got some hilarious frames: squinted eyes, wrinkled noses, and instant shock, followed by everyone laughing. Easily the funniest moment of the afternoon.
+                I kept the shutter speed fast, capturing the split-second reactions. Whether it was the tension of waiting for results, the joy of a successful presentation, or the ambient buzz of the main hall, these frames caught the real pulse of YUNIty.
               </p>
 
               {/* Collage Section */}
               <div className="drink-collage-grid">
-                <div className="collage-card"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop" alt="Grimace 1" /></div>
-                <div className="collage-card"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop" alt="Grimace 2" /></div>
-                <div className="collage-card"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop" alt="Grimace 3" /></div>
-                <div className="collage-card"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop" alt="Grimace 4" /></div>
+                <div className="collage-card"><img src="/gallery/thumbs/_DSC2219.jpg" alt="Candid crowd reaction" /></div>
+                <div className="collage-card"><img src="/gallery/thumbs/_DSC2432.jpg" alt="Award ceremony reaction" /></div>
+                <div className="collage-card"><img src="/gallery/thumbs/_DSC2377.jpg" alt="Keynote session energy" /></div>
+                <div className="collage-card"><img src="/gallery/thumbs/_DSC2604.jpg" alt="Closing ceremony celebration" /></div>
               </div>
-              <span className="image-caption text-center">Frame #09: Taste-test reactions: squinting eyes and pure shock.</span>
+              <span className="image-caption text-center">Frame #09: Captured expressions, laughter, and high energy.</span>
 
               <div className="gallery-cta-card card-glow-border">
                 <div className="gallery-cta-content">
                   <h3>YUNIty 2026 Interactive Memory Cloud</h3>
                   <p>Step into our fully interactive, high-fidelity visual archive. Hover to focus, zoom, and explore the raw frames of the weekend.</p>
+                  
+                  {/* Gallery Glimpse Preview Grid */}
+                  <div className="gallery-glimpse-grid">
+                    {galleryImages.slice(0, 6).map((img) => (
+                      <div key={img.id} className="glimpse-thumbnail" onClick={() => navigate("/gallery")}>
+                        <img src={img.src.replace("/gallery/", "/gallery/thumbs/")} alt={img.alt} />
+                        <div className="glimpse-overlay">
+                          <span className="plus">+</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
                   <button onClick={() => navigate("/gallery")} className="read-more-btn-tech" style={{ margin: '0 auto' }}>
                     Launch Memory Cloud <span className="arrow">→</span>
                   </button>
@@ -193,8 +207,8 @@ const Blog: React.FC = () => {
               </p>
 
               <div className="blog-image-wrapper">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1000&auto=format&fit=crop&q=80" alt="The YUNIty core team sitting on the floor smiling" />
-                <span className="image-caption">Frame #10: The final lobby sit-down group wrap.</span>
+                <img src="/gallery/_DSC2447.jpg" alt="The YUNIty core team sitting on the floor smiling" />
+                <span className="image-caption">Frame #10: The final group wrap-up and smiles of relief.</span>
               </div>
             </div>
           </div>
@@ -484,6 +498,62 @@ const Blog: React.FC = () => {
           pointer-events: none;
         }
 
+        .gallery-glimpse-grid {
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          gap: 0.8rem;
+          margin: 2rem 0;
+          width: 100%;
+        }
+
+        .glimpse-thumbnail {
+          aspect-ratio: 1.5;
+          border-radius: 8px;
+          overflow: hidden;
+          border: 1px solid var(--border-light);
+          cursor: pointer;
+          position: relative;
+          transition: all 0.3s ease;
+        }
+
+        .glimpse-thumbnail img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.3s ease;
+        }
+
+        .glimpse-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 230, 118, 0.4);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .glimpse-overlay .plus {
+          color: #000;
+          font-size: 1.5rem;
+          font-weight: 800;
+        }
+
+        .glimpse-thumbnail:hover {
+          transform: translateY(-2px);
+          border-color: var(--pk-green);
+          box-shadow: 0 4px 12px rgba(0, 230, 118, 0.2);
+        }
+
+        .glimpse-thumbnail:hover img {
+          transform: scale(1.1);
+        }
+
+        .glimpse-thumbnail:hover .glimpse-overlay {
+          opacity: 1;
+        }
+
         @media (max-width: 768px) {
           .blog-detail-title {
             font-size: 2rem;
@@ -494,6 +564,11 @@ const Blog: React.FC = () => {
           .drink-collage-grid {
             grid-template-columns: repeat(2, 1fr);
             gap: 0.8rem;
+          }
+          .gallery-glimpse-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin: 1.5rem 0;
           }
         }
       `}</style>
