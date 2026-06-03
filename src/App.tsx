@@ -12,6 +12,8 @@ import Careers from './pages/Careers';
 import Events from './pages/Events';
 import CoursesPage from './pages/Courses';
 import Certificates from './pages/Certificates';
+import Blog from './pages/Blog';
+import Gallery from './pages/Gallery';
 import PromoBanner from './components/PromoBanner';
 import SummerPromoPopup from './components/SummerPromoPopup';
 import './styles.css';
@@ -81,6 +83,8 @@ function App() {
           <Route path="/Programs" element={<CoursesPage />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/certificates" element={<Certificates />} />
         </Routes>
       </main>
