@@ -310,11 +310,16 @@ const Blog: React.FC = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
     try {
+      const submitData = new URLSearchParams();
+      Object.entries(formData).forEach(([key, value]) => {
+        submitData.append(key, String(value));
+      });
+
       await fetch(GOOGLE_SHEETS_API, {
         method: 'POST',
         mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: submitData,
       });
       setSubmitStatus({ type: 'success', message: 'Registration transmitted successfully! See you at the Summit.' });
     } catch (error) {
