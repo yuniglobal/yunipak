@@ -16,6 +16,7 @@ import Blog from './pages/Blog';
 import Gallery from './pages/Gallery';
 import PromoBanner from './components/PromoBanner';
 import SummerPromoPopup from './components/SummerPromoPopup';
+import Newsletter from './components/Newsletter';
 import './styles.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -88,6 +89,7 @@ function App() {
           <Route path="/certificates" element={<Certificates />} />
         </Routes>
       </main>
+      <Newsletter />
       {location.pathname !== '/Aboutus' && <Footer />}
     </div>
   );

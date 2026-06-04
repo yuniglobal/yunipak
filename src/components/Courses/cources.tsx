@@ -60,14 +60,14 @@ const Courses: React.FC = () => {
   const studentsCountRef = useRef<HTMLSpanElement>(null);
 
   const [formData, setFormData] = useState<EnrollmentData>({
-    fullName: "", fatherName: "Summer Camp Student", cnic: "00000-0000000-0", dateOfBirth: "2010-01-01", gender: "Other",
-    email: "", phoneNumber: "", alternatePhone: "N/A", currentAddress: "N/A",
-    city: "", province: "Punjab", highestQualification: "Student", institution: "N/A",
-    yearOfCompletion: "2026", percentage: "N/A", courseId: "", courseTitle: "",
+    fullName: "", fatherName: "", cnic: "", dateOfBirth: "", gender: "",
+    email: "", phoneNumber: "", alternatePhone: "", currentAddress: "",
+    city: "", province: "", highestQualification: "", institution: "",
+    yearOfCompletion: "", percentage: "", courseId: "", courseTitle: "",
     coursePrice: "", paymentMethod: "bank", bankName: "N/A", bankAccountTitle: "N/A",
     bankAccountNumber: "N/A", transactionId: "", transactionDate: new Date().toISOString().split('T')[0],
-    transactionAmount: "", currentEmployment: "Student", organization: "N/A",
-    designation: "N/A", hearAboutUs: "Social Media", referralCode: "", whyJoin: "Summer learning and skill development.",
+    transactionAmount: "", currentEmployment: "", organization: "",
+    designation: "", hearAboutUs: "", referralCode: "", whyJoin: "",
     declaration: false, timestamp: new Date().toISOString(), status: "pending",
   });
 
@@ -114,14 +114,53 @@ const Courses: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
-    }));
+    setFormData(prev => {
+      const updated = {
+        ...prev,
+        [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+      };
+      
+      // If paymentMethod changes, automatically fill correct bank details
+      if (name === 'paymentMethod') {
+        if (value === 'bank') {
+          updated.bankName = 'Bank Alfalah';
+          updated.bankAccountTitle = 'YUNI (SMC-PRIVATE) LIMITED';
+          updated.bankAccountNumber = '0140-1010831162';
+        } else if (value === 'nayapay') {
+          updated.bankName = 'NayaPay Wallet';
+          updated.bankAccountTitle = 'YUNI (SMC-PRIVATE) LIMITED';
+          updated.bankAccountNumber = '03185861446';
+        }
+      }
+      return updated;
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!formData.fullName || !formData.cnic || !formData.email || !formData.phoneNumber) {
+      setSubmitStatus({ type: 'error', message: 'Please fill all required fields (*)' });
+      return;
+    }
+
+    if (!formData.declaration) {
+      setSubmitStatus({ type: 'error', message: 'Please accept the declaration' });
+      return;
+    }
+
+    const cnicRegex = /^[0-9]{5}-[0-9]{7}-[0-9]$/;
+    if (!cnicRegex.test(formData.cnic)) {
+      setSubmitStatus({ type: 'error', message: 'Please enter valid CNIC format (XXXXX-XXXXXXX-X)' });
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setSubmitStatus({ type: 'error', message: 'Please enter valid email address' });
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus(null);
     try {
@@ -130,15 +169,49 @@ const Courses: React.FC = () => {
         submitData.append(key, String(value));
       });
 
-      await fetch(GOOGLE_SHEETS_API, {
+      const response = await fetch(GOOGLE_SHEETS_API, {
         method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
         body: submitData,
       });
-      setSubmitStatus({ type: 'success', message: 'Enrollment request submitted successfully! Our admissions counselor will contact you via WhatsApp within 24 hours.' });
-    } catch {
-      setSubmitStatus({ type: 'error', message: 'Enrollment submission failed. Please check your internet connection and try again.' });
+
+      let result;
+      try {
+        result = await response.json();
+      } catch {
+        result = { success: response.ok };
+      }
+
+      if (response.ok && result.success !== false) {
+        setSubmitStatus({
+          type: 'success',
+          message: 'Your request for course registration has been successfully submitted. Our admissions counselor will contact you via WhatsApp within 24 hours to confirm your details and payment.'
+        });
+        
+        // Reset form data on success
+        setFormData({
+          fullName: "", fatherName: "", cnic: "", dateOfBirth: "", gender: "",
+          email: "", phoneNumber: "", alternatePhone: "", currentAddress: "",
+          city: "", province: "", highestQualification: "", institution: "",
+          yearOfCompletion: "", percentage: "", courseId: "", courseTitle: "",
+          coursePrice: "", paymentMethod: "bank", bankName: "N/A", bankAccountTitle: "N/A",
+          bankAccountNumber: "N/A", transactionId: "", transactionDate: new Date().toISOString().split('T')[0],
+          transactionAmount: "", currentEmployment: "", organization: "",
+          designation: "", hearAboutUs: "", referralCode: "", whyJoin: "",
+          declaration: false, timestamp: new Date().toISOString(), status: "pending",
+        });
+      } else {
+        throw new Error(result.message || 'Submission failed');
+      }
+    } catch (error: any) {
+      console.error('Submission error:', error);
+      setSubmitStatus({
+        type: 'error',
+        message: error.message || 'Enrollment submission failed. Please check your internet connection and try again.'
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -162,6 +235,10 @@ const Courses: React.FC = () => {
       courseTitle: `${course.title} - ${subcat.title}`,
       coursePrice: course.price,
       transactionAmount: course.price.replace(/[^\d]/g, ''), // Default to price numeric value
+      paymentMethod: 'bank',
+      bankName: 'Bank Alfalah',
+      bankAccountTitle: 'YUNI (SMC-PRIVATE) LIMITED',
+      bankAccountNumber: '0140-1010831162',
     }));
     setCurrentView("checkout");
     setSubmitStatus(null);
@@ -430,14 +507,31 @@ const Courses: React.FC = () => {
           </div>
 
           {submitStatus && (
-            <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 999999, padding: '20px', backdropFilter: 'blur(4px)' }}>
-              <div style={{ backgroundColor: submitStatus.type === 'success' ? '#0f1714' : '#1a0f12', border: `1px solid ${submitStatus.type === 'success' ? 'var(--pk-green-light)' : '#ff4757'}`, borderRadius: '16px', padding: '2.5rem', maxWidth: '450px', width: '100%', textAlign: 'center', boxShadow: '0 20px 50px rgba(0,0,0,0.5)', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
-                <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: submitStatus.type === 'success' ? 'rgba(0, 143, 76, 0.1)' : 'rgba(255, 71, 87, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', color: submitStatus.type === 'success' ? 'var(--pk-green-light)' : '#ff4757' }}>
-                  {submitStatus.type === 'success' ? '✓' : '⚠'}
+            <div className="registration-modal-overlay">
+              <div className={`registration-modal-content ${submitStatus.type === 'error' ? 'error' : ''}`}>
+                <div className="registration-modal-icon-wrapper">
+                  <div className="registration-modal-icon-glow"></div>
+                  <div className="registration-modal-icon">
+                    {submitStatus.type === 'success' ? '✓' : '⚠'}
+                  </div>
                 </div>
-                <h3 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 600 }}>{submitStatus.type === 'success' ? 'Registration Successful!' : 'Action Required'}</h3>
-                <p style={{ margin: 0, color: '#a0aab2', lineHeight: '1.6', fontSize: '0.95rem' }}>{submitStatus.message}</p>
-                <button type="button" onClick={() => { if (submitStatus.type === 'success') { handleBackToHub(); } else { setSubmitStatus(null); } }} style={{ marginTop: '1rem', padding: '0.8rem 2.5rem', backgroundColor: submitStatus.type === 'success' ? 'var(--pk-green)' : '#ff4757', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '1rem', width: '100%', transition: 'all 0.2s', alignSelf: 'stretch' }}>
+                <h3 className="registration-modal-title">
+                  {submitStatus.type === 'success' ? 'Registration Request Sent!' : 'Action Required'}
+                </h3>
+                <p className="registration-modal-message">
+                  {submitStatus.message}
+                </p>
+                <button 
+                  type="button" 
+                  className="registration-modal-btn" 
+                  onClick={() => { 
+                    if (submitStatus.type === 'success') { 
+                      handleBackToHub(); 
+                    } else { 
+                      setSubmitStatus(null); 
+                    } 
+                  }}
+                >
                   {submitStatus.type === 'success' ? 'Return to Trainings' : 'Try Again'}
                 </button>
               </div>
@@ -454,7 +548,13 @@ const Courses: React.FC = () => {
                   <div className="payment-nodes">
                     <div 
                       className={`payment-node-card ${formData.paymentMethod === 'bank' ? 'active-node' : ''}`}
-                      onClick={() => setFormData(prev => ({ ...prev, paymentMethod: 'bank' }))}
+                      onClick={() => setFormData(prev => ({ 
+                        ...prev, 
+                        paymentMethod: 'bank',
+                        bankName: 'Bank Alfalah',
+                        bankAccountTitle: 'YUNI (SMC-PRIVATE) LIMITED',
+                        bankAccountNumber: '0140-1010831162'
+                      }))}
                     >
                       <h4>Bank Alfalah</h4>
                       <div className="node-details">
@@ -465,7 +565,13 @@ const Courses: React.FC = () => {
                     </div>
                     <div 
                       className={`payment-node-card ${formData.paymentMethod === 'nayapay' ? 'active-node' : ''}`}
-                      onClick={() => setFormData(prev => ({ ...prev, paymentMethod: 'nayapay' }))}
+                      onClick={() => setFormData(prev => ({ 
+                        ...prev, 
+                        paymentMethod: 'nayapay',
+                        bankName: 'NayaPay Wallet',
+                        bankAccountTitle: 'YUNI (SMC-PRIVATE) LIMITED',
+                        bankAccountNumber: '03185861446'
+                      }))}
                     >
                       <h4>NayaPay Wallet</h4>
                       <div className="node-details">
@@ -498,6 +604,49 @@ const Courses: React.FC = () => {
                     </div>
                   </div>
                 </section>
+
+                <section className="form-section-tech">
+                  <h3 className="section-header-tech"><i className="fa-solid fa-graduation-cap"></i> 3. Academic & Professional Info</h3>
+                  <p className="payment-instructions-text">Provide your educational background and current status.</p>
+                  
+                  <div className="input-group-tech">
+                    <div className="field-tech">
+                      <label>Highest Qualification</label>
+                      <input type="text" name="highestQualification" placeholder="e.g., Bachelor's, Matric, Intermediate" value={formData.highestQualification} onChange={handleInputChange} required />
+                    </div>
+                    <div className="field-tech">
+                      <label>Institution Name</label>
+                      <input type="text" name="institution" placeholder="School, College or University" value={formData.institution} onChange={handleInputChange} required />
+                    </div>
+                    <div className="field-tech">
+                      <label>Year of Completion</label>
+                      <input type="text" name="yearOfCompletion" placeholder="e.g., 2024, 2026" value={formData.yearOfCompletion} onChange={handleInputChange} required />
+                    </div>
+                    <div className="field-tech">
+                      <label>Percentage / CGPA</label>
+                      <input type="text" name="percentage" placeholder="e.g., 85%, 3.7 CGPA" value={formData.percentage} onChange={handleInputChange} required />
+                    </div>
+                    <div className="field-tech full">
+                      <label>Employment Status</label>
+                      <select name="currentEmployment" value={formData.currentEmployment} onChange={handleInputChange} required>
+                        <option value="">Select Employment Status</option>
+                        <option value="Student">Student</option>
+                        <option value="Employed">Employed Full-time</option>
+                        <option value="Freelancer">Freelancer</option>
+                        <option value="Unemployed">Unemployed</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div className="field-tech">
+                      <label>Organization / Employer</label>
+                      <input type="text" name="organization" placeholder="e.g., Company, School Name" value={formData.organization} onChange={handleInputChange} />
+                    </div>
+                    <div className="field-tech">
+                      <label>Designation / Job Title</label>
+                      <input type="text" name="designation" placeholder="e.g., Software Engineer, Student" value={formData.designation} onChange={handleInputChange} />
+                    </div>
+                  </div>
+                </section>
               </div>
 
               <div className="form-right-col">
@@ -511,22 +660,101 @@ const Courses: React.FC = () => {
                       <input type="text" name="fullName" placeholder="Enter your full name" value={formData.fullName} onChange={handleInputChange} required />
                     </div>
                     <div className="field-tech full">
+                      <label>Father's Name</label>
+                      <input type="text" name="fatherName" placeholder="Enter father's name" value={formData.fatherName} onChange={handleInputChange} required />
+                    </div>
+                    <div className="field-tech">
+                      <label>CNIC / B-Form Number</label>
+                      <input type="text" name="cnic" placeholder="e.g., 37405-1234567-9" value={formData.cnic} onChange={handleInputChange} required />
+                    </div>
+                    <div className="field-tech">
+                      <label>Date of Birth</label>
+                      <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleInputChange} required />
+                    </div>
+                    <div className="field-tech full">
+                      <label>Gender</label>
+                      <select name="gender" value={formData.gender} onChange={handleInputChange} required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div className="field-tech">
                       <label>Email Address</label>
                       <input type="email" name="email" placeholder="example@gmail.com" value={formData.email} onChange={handleInputChange} required />
                     </div>
-                    <div className="field-tech full">
+                    <div className="field-tech">
                       <label>WhatsApp Number</label>
                       <input type="tel" name="phoneNumber" placeholder="e.g., 03123456789" value={formData.phoneNumber} onChange={handleInputChange} required />
                     </div>
                     <div className="field-tech full">
+                      <label>Alternate Phone Number</label>
+                      <input type="tel" name="alternatePhone" placeholder="e.g., 03123456789 (Optional)" value={formData.alternatePhone} onChange={handleInputChange} />
+                    </div>
+                    <div className="field-tech full">
+                      <label>Current Address</label>
+                      <input type="text" name="currentAddress" placeholder="Enter street address, house no, etc." value={formData.currentAddress} onChange={handleInputChange} required />
+                    </div>
+                    <div className="field-tech">
                       <label>City of Residence</label>
                       <input type="text" name="city" placeholder="e.g., Islamabad, Rawalpindi" value={formData.city} onChange={handleInputChange} required />
+                    </div>
+                    <div className="field-tech">
+                      <label>Province</label>
+                      <select name="province" value={formData.province} onChange={handleInputChange} required>
+                        <option value="">Select Province</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Sindh">Sindh</option>
+                        <option value="Khyber Pakhtunkhwa">Khyber Pakhtunkhwa</option>
+                        <option value="Balochistan">Balochistan</option>
+                        <option value="Gilgit-Baltistan">Gilgit-Baltistan</option>
+                        <option value="Azad Kashmir">Azad Kashmir</option>
+                        <option value="Islamabad Capital Territory">Islamabad</option>
+                      </select>
                     </div>
                   </div>
                 </section>
 
                 <section className="form-section-tech">
-                  <h3 className="section-header-tech"><i className="fa-solid fa-shield-halved"></i> 3. Complete Registration</h3>
+                  <h3 className="section-header-tech"><i className="fa-solid fa-circle-info"></i> 4. Additional Details</h3>
+                  
+                  <div className="input-group-tech">
+                    <div className="field-tech">
+                      <label>How did you hear about us?</label>
+                      <select name="hearAboutUs" value={formData.hearAboutUs} onChange={handleInputChange} required>
+                        <option value="">Select Option</option>
+                        <option value="Social Media">Social Media</option>
+                        <option value="Friends/Family">Friends / Family</option>
+                        <option value="Search Engine">Search Engine</option>
+                        <option value="Flyer/Poster">Flyer / Poster</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div className="field-tech">
+                      <label>Referral / Coupon Code</label>
+                      <input type="text" name="referralCode" placeholder="Optional" value={formData.referralCode} onChange={handleInputChange} />
+                    </div>
+                    <div className="field-tech full">
+                      <label>Why do you want to join this course?</label>
+                      <textarea name="whyJoin" rows={3} placeholder="Tell us briefly about your goals..." value={formData.whyJoin} onChange={handleInputChange} required style={{
+                        background: 'var(--bg-elevated)',
+                        border: '1px solid var(--border-light)',
+                        borderRadius: '0.8rem',
+                        padding: '1rem',
+                        color: 'var(--text-primary)',
+                        fontFamily: 'inherit',
+                        transition: 'all 0.3s ease',
+                        fontSize: '0.95rem',
+                        resize: 'vertical',
+                        outline: 'none'
+                      }} />
+                    </div>
+                  </div>
+                </section>
+
+                <section className="form-section-tech">
+                  <h3 className="section-header-tech"><i className="fa-solid fa-shield-halved"></i> 5. Complete Registration</h3>
                   <div className="declaration-tech">
                     <label className="checkbox-tech">
                       <input type="checkbox" name="declaration" checked={formData.declaration} onChange={handleInputChange} required />
@@ -1082,7 +1310,7 @@ const Courses: React.FC = () => {
           .module-card-premium { padding: 2rem; }
           .module-title-text { font-size: 1.25rem; }
           .module-body-premium { grid-template-columns: 1fr; gap: 2rem; }
-          .checkout-title-tech { font-size: 2.2rem; }
+          .checkout-title-tech { font-size: 2rem; }
           .filters-container {
             justify-content: flex-start;
             overflow-x: auto;
@@ -1093,6 +1321,225 @@ const Courses: React.FC = () => {
           .filter-btn-premium { flex: 0 0 auto; padding: 0.75rem 1.2rem; font-size: 0.85rem; }
           .course-grid { grid-template-columns: 1fr; gap: 2rem; }
           .payment-nodes { grid-template-columns: 1fr; }
+
+          /* Checkout form mobile fixes */
+          .input-group-tech { grid-template-columns: 1fr; gap: 1.2rem; }
+          .field-tech.full { grid-column: span 1; }
+          .form-section-tech { padding: 1.8rem 1.4rem; border-radius: 1.5rem; }
+          .section-header-tech { font-size: 1rem; margin-bottom: 1.2rem; }
+          .selected-track-summary-box { padding: 1.5rem; border-radius: 1.2rem; }
+          .summary-course-title { font-size: 1.25rem; }
+          .summary-price-val { font-size: 1.5rem; }
+          .checkout-subtitle-tech { font-size: 0.92rem; margin-bottom: 2.5rem; }
+          .cancel-btn-tech { margin-bottom: 1.5rem; }
+          .module-header-premium { flex-direction: column; align-items: flex-start; gap: 1rem; }
+          .module-actions-premium { justify-content: stretch; }
+          .module-enroll-btn { width: 100%; justify-content: center; }
+
+          /* Modal mobile fixes */
+          .registration-modal-overlay { padding: 16px; }
+          .registration-modal-content { padding: 2rem 1.5rem; border-radius: 18px; gap: 1.2rem; }
+          .registration-modal-icon { width: 70px; height: 70px; font-size: 2.2rem; }
+          .registration-modal-icon-glow { width: 80px; height: 80px; }
+          .registration-modal-title { font-size: 1.4rem; }
+          .registration-modal-message { font-size: 0.88rem; }
+          .registration-modal-btn { padding: 0.9rem 2rem; font-size: 0.95rem; border-radius: 12px; }
+        }
+
+        @media (max-width: 480px) {
+          .trainings-view, .detail-view, .checkout-view { padding: 5rem 0.8rem 4rem; }
+          .checkout-title-tech { font-size: 1.5rem; letter-spacing: -0.01em; }
+          .checkout-subtitle-tech { font-size: 0.85rem; margin-bottom: 2rem; }
+          .form-section-tech { padding: 1.2rem 1rem; border-radius: 1.2rem; margin-bottom: 1.2rem; }
+          .section-header-tech { font-size: 0.88rem; padding-bottom: 0.6rem; margin-bottom: 1rem; gap: 0.4rem; }
+          .payment-instructions-text { font-size: 0.82rem; margin-bottom: 1.2rem; }
+          .payment-node-card { padding: 1rem; border-radius: 1rem; }
+          .payment-node-card h4 { font-size: 0.95rem; margin-bottom: 0.5rem; }
+          .node-details p { font-size: 0.78rem; }
+          .field-tech label { font-size: 0.72rem; }
+          .field-tech input, .field-tech select { padding: 0.8rem; font-size: 0.88rem; border-radius: 0.6rem; }
+          .selected-track-summary-box { padding: 1.2rem; gap: 1rem; border-radius: 1rem; margin-bottom: 2.5rem; }
+          .summary-course-lbl, .summary-price-lbl { font-size: 0.7rem; }
+          .summary-course-title { font-size: 1.1rem; }
+          .summary-subcat-title { font-size: 0.9rem; }
+          .summary-price-val { font-size: 1.3rem; }
+          .checkbox-tech { font-size: 0.8rem; gap: 0.6rem; }
+          .submit-btn-premium { padding: 1.1rem; font-size: 0.95rem; border-radius: 1rem; }
+          .cancel-btn-tech { font-size: 0.78rem; padding: 0.5rem 1rem; }
+          .detail-hero-panel { padding: 2rem 1.2rem; border-radius: 1.5rem; gap: 2rem; margin-bottom: 2.5rem; }
+          .detail-title-tech { font-size: 1.7rem; }
+          .detail-description-main { font-size: 0.92rem; margin-bottom: 1.5rem; }
+          .detail-hero-image-wrapper { height: 220px; border-radius: 1.2rem; }
+          .detail-meta-horizontal { gap: 1rem; }
+          .meta-icon { width: 40px; height: 40px; font-size: 1rem; border-radius: 10px; }
+          .meta-val { font-size: 0.9rem; }
+          .section-title-premium { font-size: 1.3rem; }
+          .section-subtitle-premium { font-size: 0.9rem; margin-bottom: 2rem; }
+          .subcategory-card-premium { padding: 1.5rem; border-radius: 1.5rem; }
+          .sub-title-text { font-size: 1.1rem; }
+          .module-card-premium { padding: 1.5rem; border-radius: 1.5rem; }
+          .module-number { width: 40px; height: 40px; font-size: 1.3rem; border-radius: 10px; }
+          .module-title-text { font-size: 1.1rem; }
+          .course-card-premium { border-radius: 1.5rem; }
+          .course-card-content { padding: 1.5rem; }
+          .course-title-tech { font-size: 1.35rem; }
+
+          /* Modal small screen */
+          .registration-modal-overlay { padding: 12px; }
+          .registration-modal-content { padding: 1.5rem 1.2rem; border-radius: 16px; gap: 1rem; max-width: 100%; }
+          .registration-modal-icon { width: 60px; height: 60px; font-size: 1.8rem; }
+          .registration-modal-icon-glow { width: 70px; height: 70px; }
+          .registration-modal-title { font-size: 1.2rem; }
+          .registration-modal-message { font-size: 0.82rem; line-height: 1.5; }
+          .registration-modal-btn { padding: 0.8rem 1.5rem; font-size: 0.88rem; }
+        }
+
+        /* --- Premium Registration Modal --- */
+        .registration-modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(0, 0, 0, 0.85);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 999999;
+          padding: 20px;
+          backdrop-filter: blur(8px);
+          animation: fadeInModal 0.4s ease forwards;
+        }
+        
+        .registration-modal-content {
+          background: linear-gradient(135deg, #0d1310 0%, #050706 100%);
+          border: 1px solid rgba(0, 230, 118, 0.25);
+          border-radius: 24px;
+          padding: 3rem 2.5rem;
+          max-width: 480px;
+          width: 100%;
+          text-align: center;
+          box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(0, 230, 118, 0.05);
+          color: #fff;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1.8rem;
+          position: relative;
+          overflow: hidden;
+          animation: scaleInModal 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        
+        .registration-modal-content.error {
+          background: linear-gradient(135deg, #1a0f12 0%, #0a0507 100%);
+          border-color: rgba(255, 71, 87, 0.25);
+          box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(255, 71, 87, 0.05);
+        }
+        
+        .registration-modal-icon-wrapper {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 0.5rem;
+        }
+        
+        .registration-modal-icon-glow {
+          position: absolute;
+          width: 100px;
+          height: 100px;
+          background: radial-gradient(circle, rgba(0, 230, 118, 0.2) 0%, transparent 70%);
+          animation: pulseGlow 2s infinite ease-in-out;
+        }
+        
+        .registration-modal-content.error .registration-modal-icon-glow {
+          background: radial-gradient(circle, rgba(255, 71, 87, 0.2) 0%, transparent 70%);
+        }
+        
+        .registration-modal-icon {
+          width: 90px;
+          height: 90px;
+          border-radius: 50%;
+          background: rgba(0, 230, 118, 0.06);
+          border: 1px solid rgba(0, 230, 118, 0.3);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 2.8rem;
+          color: var(--pk-green-light);
+          z-index: 2;
+          box-shadow: inset 0 0 20px rgba(0, 230, 118, 0.1);
+        }
+        
+        .registration-modal-content.error .registration-modal-icon {
+          background: rgba(255, 71, 87, 0.06);
+          border-color: rgba(255, 71, 87, 0.3);
+          color: #ff4757;
+          box-shadow: inset 0 0 20px rgba(255, 71, 87, 0.1);
+        }
+        
+        .registration-modal-title {
+          margin: 0;
+          font-size: 1.8rem;
+          font-weight: 800;
+          letter-spacing: -0.01em;
+          color: #fff;
+        }
+        
+        .registration-modal-message {
+          margin: 0;
+          color: #a0aab2;
+          line-height: 1.7;
+          font-size: 0.98rem;
+        }
+        
+        .registration-modal-btn {
+          margin-top: 1rem;
+          padding: 1.1rem 2.5rem;
+          background: var(--pk-green);
+          color: #fff;
+          border: none;
+          border-radius: 14px;
+          cursor: pointer;
+          font-weight: 700;
+          font-size: 1.05rem;
+          width: 100%;
+          transition: all 0.3s ease;
+          align-self: stretch;
+          box-shadow: 0 10px 20px rgba(0, 143, 76, 0.2);
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+        
+        .registration-modal-btn:hover {
+          background: var(--pk-green-light);
+          transform: translateY(-2px);
+          box-shadow: 0 15px 30px rgba(0, 230, 118, 0.35);
+        }
+        
+        .registration-modal-content.error .registration-modal-btn {
+          background: #ff4757;
+          box-shadow: 0 10px 20px rgba(255, 71, 87, 0.2);
+        }
+        
+        .registration-modal-content.error .registration-modal-btn:hover {
+          background: #ff6b81;
+          box-shadow: 0 15px 30px rgba(255, 71, 87, 0.35);
+        }
+        
+        @keyframes fadeInModal {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        @keyframes scaleInModal {
+          from { transform: scale(0.9); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes pulseGlow {
+          0%, 100% { transform: scale(0.95); opacity: 0.5; }
+          50% { transform: scale(1.15); opacity: 1; }
         }
       `}</style>
     </div>

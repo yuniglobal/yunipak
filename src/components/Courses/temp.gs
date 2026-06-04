@@ -4,22 +4,78 @@
 // Sheet names
 const REGISTRATION_SHEET = "CourseRegistrations";
 
+// SPREADSHEET_ID: Paste your Google Sheet ID here if you deploy this as a Standalone Apps Script.
+// Leave it blank if the script is container-bound to the spreadsheet (Extensions > Apps Script).
+const SPREADSHEET_ID = "";
+
+// Helper function to safely get the spreadsheet (supports both bound and standalone deployments)
+function getSpreadsheet() {
+  let ss = null;
+  if (typeof SPREADSHEET_ID !== 'undefined' && SPREADSHEET_ID) {
+    try {
+      ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    } catch (e) {
+      console.log("Failed to open spreadsheet by ID: " + e.toString());
+    }
+  }
+  if (!ss) {
+    try {
+      ss = SpreadsheetApp.getActiveSpreadsheet();
+    } catch (e) {
+      console.log("Failed to get active spreadsheet: " + e.toString());
+    }
+  }
+  return ss;
+}
+
+// Helper function to parse URL-encoded query strings manually
+function parseQueryString(queryString) {
+  const params = {};
+  if (!queryString) return params;
+  const pairs = queryString.split('&');
+  for (let i = 0; i < pairs.length; i++) {
+    const pair = pairs[i].split('=');
+    if (pair.length > 0) {
+      const key = decodeURIComponent(pair[0].replace(/\+/g, ' '));
+      const value = pair.length > 1 ? decodeURIComponent(pair[1].replace(/\+/g, ' ')) : '';
+      if (key) {
+        params[key] = value;
+      }
+    }
+  }
+  return params;
+}
+
 // Main function to handle POST requests
 function doPost(e) {
   try {
-    const sheet = getOrCreateSheet();
-    
     // Support both URL-encoded/form parameters and JSON payloads
-    let data;
+    let data = {};
     if (e && e.postData && e.postData.contents) {
+      const contents = e.postData.contents;
       try {
-        data = JSON.parse(e.postData.contents);
+        data = JSON.parse(contents);
       } catch (parseError) {
-        data = e.parameter || {};
+        try {
+          data = parseQueryString(contents);
+        } catch (queryError) {
+          data = {};
+        }
       }
-    } else {
-      data = e.parameter || {};
     }
+    
+    // Fallback to e.parameter if parsed data is empty
+    if (!data || Object.keys(data).length === 0) {
+      data = (e && e.parameter) ? e.parameter : {};
+    }
+    
+    // Route based on formType
+    if (data.formType === 'newsletter') {
+      return handleNewsletter(data);
+    }
+    
+    // Default: Course Registration
+    const sheet = getOrCreateSheet();
     
     // Get last row for serial number
     const lastRow = sheet.getLastRow();
@@ -88,6 +144,149 @@ function doPost(e) {
       error: error.toString()
     });
   }
+}
+
+// =====================================================
+// NEWSLETTER SUBSCRIPTION HANDLER
+// =====================================================
+
+const NEWSLETTER_SHEET = "Newsletter";
+
+function getOrCreateNewsletterSheet() {
+  const ss = getSpreadsheet();
+  if (!ss) throw new Error("Cannot access spreadsheet");
+  
+  let sheet = ss.getSheetByName(NEWSLETTER_SHEET);
+  if (!sheet) {
+    sheet = ss.insertSheet(NEWSLETTER_SHEET);
+    // Create header row
+    const headers = [
+      "Sr. No",
+      "Subscription Date",
+      "Email",
+      "Phone / WhatsApp",
+      "Coupon Code",
+      "Email Sent",
+      "Timestamp"
+    ];
+    sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+    sheet.getRange(1, 1, 1, headers.length)
+      .setFontWeight("bold")
+      .setBackground("#008f4c")
+      .setFontColor("#ffffff");
+    sheet.setFrozenRows(1);
+  }
+  return sheet;
+}
+
+function handleNewsletter(data) {
+  try {
+    const sheet = getOrCreateNewsletterSheet();
+    const email = data.email || "";
+    const phone = data.phone || "";
+    const couponCode = data.couponCode || "YUNI-SUMMER-10";
+    
+    if (!email) {
+      return createJSONResponse({ success: false, message: "Email is required." });
+    }
+    
+    // Check for duplicate email
+    const lastRow = sheet.getLastRow();
+    if (lastRow > 1) {
+      const emailColumn = sheet.getRange(2, 3, lastRow - 1, 1).getValues();
+      for (var i = 0; i < emailColumn.length; i++) {
+        if (emailColumn[i][0].toString().toLowerCase() === email.toLowerCase()) {
+          return createJSONResponse({ 
+            success: false, 
+            message: "This email is already subscribed to our newsletter." 
+          });
+        }
+      }
+    }
+    
+    const serialNo = lastRow === 0 ? 1 : lastRow;
+    
+    // Record subscription
+    var emailSent = "No";
+    try {
+      sendNewsletterConfirmationEmail(email, phone, couponCode);
+      emailSent = "Yes";
+    } catch (emailError) {
+      console.log("Newsletter email error: " + emailError.toString());
+      emailSent = "Failed: " + emailError.toString();
+    }
+    
+    const rowData = [
+      serialNo,
+      new Date(),
+      email,
+      phone,
+      couponCode,
+      emailSent,
+      data.timestamp || new Date().toISOString()
+    ];
+    
+    sheet.appendRow(rowData);
+    
+    return createJSONResponse({
+      success: true,
+      message: "Newsletter subscription successful!",
+      couponCode: couponCode
+    });
+    
+  } catch (error) {
+    return createJSONResponse({
+      success: false,
+      error: error.toString()
+    });
+  }
+}
+
+function sendNewsletterConfirmationEmail(email, phone, couponCode) {
+  var subject = "Welcome to YUNI Newsletter! 🎉 Here's your exclusive coupon";
+  
+  var htmlBody = '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>'
+    + '<body style="margin:0;padding:0;background-color:#0a0d0b;font-family:Arial,Helvetica,sans-serif;">'
+    + '<table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0d0b;padding:30px 0;"><tr><td align="center">'
+    + '<table width="600" cellpadding="0" cellspacing="0" style="background:#111;border-radius:16px;border:1px solid rgba(0,230,118,0.15);overflow:hidden;">'
+    
+    // Header
+    + '<tr><td style="background:linear-gradient(135deg,#008f4c,#00e676);padding:30px 40px;text-align:center;">'
+    + '<h1 style="margin:0;color:#000;font-size:28px;font-weight:900;letter-spacing:-0.5px;">YUNI Global</h1>'
+    + '<p style="margin:8px 0 0;color:rgba(0,0,0,0.7);font-size:14px;font-weight:600;">Empowering Youth Through Education</p>'
+    + '</td></tr>'
+    
+    // Body
+    + '<tr><td style="padding:40px 40px 30px;">'
+    + '<h2 style="margin:0 0 12px;color:#fff;font-size:22px;font-weight:800;">Welcome to the YUNI Family! 🚀</h2>'
+    + '<p style="color:#a0aab2;font-size:15px;line-height:1.7;margin:0 0 25px;">'
+    + 'Thank you for subscribing to our newsletter! You\'ll now receive exclusive updates, course launches, and special offers directly in your inbox.</p>'
+    
+    // Coupon Box
+    + '<div style="background:rgba(0,143,76,0.08);border:2px dashed rgba(0,230,118,0.4);border-radius:14px;padding:20px;text-align:center;margin:0 0 25px;">'
+    + '<p style="margin:0 0 8px;color:#a0aab2;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">Your Exclusive Coupon Code</p>'
+    + '<p style="margin:0;color:#00e676;font-size:28px;font-weight:900;letter-spacing:0.1em;font-family:monospace;">' + couponCode + '</p>'
+    + '<p style="margin:8px 0 0;color:#a0aab2;font-size:13px;">Use this code during course registration for a special discount!</p>'
+    + '</div>'
+    
+    // CTA
+    + '<div style="text-align:center;margin:25px 0;">'
+    + '<a href="https://yuniglobal.com/Programs" style="display:inline-block;background:#008f4c;color:#fff;padding:14px 32px;border-radius:12px;text-decoration:none;font-weight:700;font-size:15px;">Explore Our Programs →</a>'
+    + '</div>'
+    + '</td></tr>'
+    
+    // Footer
+    + '<tr><td style="padding:20px 40px;border-top:1px solid rgba(255,255,255,0.06);text-align:center;">'
+    + '<p style="color:#555;font-size:12px;margin:0;">YUNI Global | NASTP Rawalpindi | © 2026</p>'
+    + '</td></tr>'
+    
+    + '</table></td></tr></table></body></html>';
+  
+  MailApp.sendEmail({
+    to: email,
+    subject: subject,
+    htmlBody: htmlBody
+  });
 }
 
 // Helper function to create JSON response with CORS headers
@@ -211,7 +410,10 @@ function escapeHtml(str) {
 // Function to create or get the sheet
 function getOrCreateSheet() {
   try {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const ss = getSpreadsheet();
+    if (!ss) {
+      throw new Error("Could not access Google Spreadsheet. Make sure SPREADSHEET_ID is set if using a standalone script.");
+    }
     let sheet = ss.getSheetByName(REGISTRATION_SHEET);
     
     if (!sheet) {
@@ -257,8 +459,9 @@ function getOrCreateSheet() {
 
 // Function to update registration status (for admin use)
 function updateStatus(serialNo, newStatus, adminNotes = "") {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(REGISTRATION_SHEET);
-  if (!sheet) return false;
+  const ss = getSpreadsheet();
+  if (!ss) return false;
+  const sheet = ss.getSheetByName(REGISTRATION_SHEET);
   
   const data = sheet.getDataRange().getValues();
   const headers = data[0];
@@ -378,7 +581,12 @@ function onOpen() {
 
 // Helper functions for the menu
 function showPendingRegistrations() {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(REGISTRATION_SHEET);
+  const ss = getSpreadsheet();
+  if (!ss) {
+    SpreadsheetApp.getUi().alert("Could not access Google Spreadsheet.");
+    return;
+  }
+  const sheet = ss.getSheetByName(REGISTRATION_SHEET);
   if (!sheet) {
     SpreadsheetApp.getUi().alert("Sheet not found. Please submit at least one registration first.");
     return;
@@ -394,7 +602,12 @@ function showPendingRegistrations() {
 }
 
 function generateReport() {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(REGISTRATION_SHEET);
+  const ss = getSpreadsheet();
+  if (!ss) {
+    SpreadsheetApp.getUi().alert("Could not access Google Spreadsheet.");
+    return;
+  }
+  const sheet = ss.getSheetByName(REGISTRATION_SHEET);
   if (!sheet) {
     SpreadsheetApp.getUi().alert("Sheet not found. No data to report.");
     return;

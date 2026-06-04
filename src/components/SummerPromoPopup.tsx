@@ -255,6 +255,24 @@ const SummerPromoPopup: React.FC = () => {
           .popup-card {
             max-width: 500px;
             padding: 3rem 1.5rem 1.5rem 1.5rem;
+            max-height: 90vh;
+            overflow-y: auto;
+          }
+          .popup-close-btn {
+            top: 0.6rem;
+            right: 0.6rem;
+            width: 42px;
+            height: 42px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            position: sticky;
+            float: right;
+            margin-top: -2.5rem;
+            margin-right: -0.5rem;
+            margin-bottom: -1rem;
+          }
+          .popup-close-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
           }
           .popup-split-container {
             flex-direction: column;
@@ -279,6 +297,35 @@ const SummerPromoPopup: React.FC = () => {
           .highlights-list {
             align-items: center;
             margin-bottom: 1.5rem;
+          }
+        }
+
+        @media (max-width: 420px) {
+          .popup-card {
+            padding: 2.5rem 1rem 1.2rem 1rem;
+            border-radius: 20px;
+            max-height: 88vh;
+          }
+          .popup-close-btn {
+            width: 38px;
+            height: 38px;
+          }
+          .column-title {
+            font-size: 1.3rem;
+          }
+          .column-desc {
+            font-size: 0.8rem;
+          }
+          .highlight-item {
+            font-size: 0.78rem;
+          }
+          .column-btn {
+            padding: 0.9rem;
+            font-size: 0.82rem;
+            border-radius: 12px;
+          }
+          .popup-footer-text {
+            font-size: 0.72rem;
           }
         }
       `}</style>
