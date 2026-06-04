@@ -3,7 +3,7 @@ import { Send, Gift, CheckCircle, AlertTriangle } from 'lucide-react';
 
 const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbxv3FVEPexjV4hLcAWNj6FafStyFzqzrJWzo-Zk8FJFOWkxw-mh9bxNi-ZYbwnLHyfzxg/exec';
 
-const COUPON_CODE = 'YUNI-SUMMER-10';
+const COUPON_CODE = 'SUBWAY-20';
 
 const Newsletter: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -55,7 +55,7 @@ const Newsletter: React.FC = () => {
       if (response.ok && result.success !== false) {
         setStatus({
           type: 'success',
-          message: `You're subscribed! Your exclusive coupon code is: ${COUPON_CODE}`
+          message: `Congratulations 🥳\n\nYou unlocked 20% OFF at Subway, AeroFusion!\n\nShow this notification to the nearest usher to claim your discount!`
         });
         setEmail('');
         setPhone('');
@@ -368,6 +368,7 @@ const Newsletter: React.FC = () => {
           color: #a0aab2;
           line-height: 1.7;
           font-size: 0.95rem;
+          white-space: pre-line;
         }
 
         .newsletter-coupon-display {
@@ -464,15 +465,15 @@ const Newsletter: React.FC = () => {
         <div className="newsletter-content">
           <div className="newsletter-badge">
             <div className="newsletter-badge-dot"></div>
-            Stay Updated
+            Yuniverse
           </div>
 
           <h2 className="newsletter-title">
-            Join the <span className="newsletter-title-accent">YUNI Newsletter</span>
+            Join the <span className="newsletter-title-accent">Yuniverse</span>
           </h2>
 
           <p className="newsletter-desc">
-            Subscribe to receive exclusive offers, course updates, and early access to new programs. Get an instant discount coupon upon subscribing!
+            Subscribe to Yuniverse to receive exclusive offers, course updates, and early access to new programs. Get an instant discount coupon upon subscribing!
           </p>
 
           <div className="newsletter-coupon-teaser">

@@ -150,7 +150,7 @@ function doPost(e) {
 // NEWSLETTER SUBSCRIPTION HANDLER
 // =====================================================
 
-const NEWSLETTER_SHEET = "Newsletter";
+const NEWSLETTER_SHEET = "Yuniverse";
 
 function getOrCreateNewsletterSheet() {
   const ss = getSpreadsheet();
@@ -184,7 +184,7 @@ function handleNewsletter(data) {
     const sheet = getOrCreateNewsletterSheet();
     const email = data.email || "";
     const phone = data.phone || "";
-    const couponCode = data.couponCode || "YUNI-SUMMER-10";
+    const couponCode = data.couponCode || "SUBWAY-20";
     
     if (!email) {
       return createJSONResponse({ success: false, message: "Email is required." });
@@ -198,7 +198,7 @@ function handleNewsletter(data) {
         if (emailColumn[i][0].toString().toLowerCase() === email.toLowerCase()) {
           return createJSONResponse({ 
             success: false, 
-            message: "This email is already subscribed to our newsletter." 
+            message: "This email is already subscribed to Yuniverse." 
           });
         }
       }
@@ -212,7 +212,7 @@ function handleNewsletter(data) {
       sendNewsletterConfirmationEmail(email, phone, couponCode);
       emailSent = "Yes";
     } catch (emailError) {
-      console.log("Newsletter email error: " + emailError.toString());
+      console.log("Yuniverse email error: " + emailError.toString());
       emailSent = "Failed: " + emailError.toString();
     }
     
@@ -230,7 +230,7 @@ function handleNewsletter(data) {
     
     return createJSONResponse({
       success: true,
-      message: "Newsletter subscription successful!",
+      message: "Yuniverse subscription successful!",
       couponCode: couponCode
     });
     
@@ -243,7 +243,7 @@ function handleNewsletter(data) {
 }
 
 function sendNewsletterConfirmationEmail(email, phone, couponCode) {
-  var subject = "Welcome to YUNI Newsletter! 🎉 Here's your exclusive coupon";
+  var subject = "Congratulations! 🥳 You unlocked 20% OFF at Subway, AeroFusion!";
   
   var htmlBody = '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>'
     + '<body style="margin:0;padding:0;background-color:#0a0d0b;font-family:Arial,Helvetica,sans-serif;">'
@@ -252,32 +252,33 @@ function sendNewsletterConfirmationEmail(email, phone, couponCode) {
     
     // Header
     + '<tr><td style="background:linear-gradient(135deg,#008f4c,#00e676);padding:30px 40px;text-align:center;">'
-    + '<h1 style="margin:0;color:#000;font-size:28px;font-weight:900;letter-spacing:-0.5px;">YUNI Global</h1>'
-    + '<p style="margin:8px 0 0;color:rgba(0,0,0,0.7);font-size:14px;font-weight:600;">Empowering Youth Through Education</p>'
+    + '<h1 style="margin:0;color:#000;font-size:28px;font-weight:900;letter-spacing:-0.5px;">Yuniverse</h1>'
+    + '<p style="margin:8px 0 0;color:rgba(0,0,0,0.7);font-size:14px;font-weight:600;">Subway AeroFusion Offer</p>'
     + '</td></tr>'
     
     // Body
     + '<tr><td style="padding:40px 40px 30px;">'
-    + '<h2 style="margin:0 0 12px;color:#fff;font-size:22px;font-weight:800;">Welcome to the YUNI Family! 🚀</h2>'
-    + '<p style="color:#a0aab2;font-size:15px;line-height:1.7;margin:0 0 25px;">'
-    + 'Thank you for subscribing to our newsletter! You\'ll now receive exclusive updates, course launches, and special offers directly in your inbox.</p>'
+    + '<h2 style="margin:0 0 12px;color:#fff;font-size:22px;font-weight:800;">Congratulations 🥳</h2>'
+    + '<p style="color:#a0aab2;font-size:16px;line-height:1.7;margin:0 0 25px;">'
+    + 'You unlocked <strong>20% OFF</strong> at Subway, AeroFusion!<br><br>'
+    + 'Show this email notification to the nearest usher to claim your discount.</p>'
     
     // Coupon Box
     + '<div style="background:rgba(0,143,76,0.08);border:2px dashed rgba(0,230,118,0.4);border-radius:14px;padding:20px;text-align:center;margin:0 0 25px;">'
-    + '<p style="margin:0 0 8px;color:#a0aab2;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">Your Exclusive Coupon Code</p>'
+    + '<p style="margin:0 0 8px;color:#a0aab2;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">Your Exclusive Discount Code</p>'
     + '<p style="margin:0;color:#00e676;font-size:28px;font-weight:900;letter-spacing:0.1em;font-family:monospace;">' + couponCode + '</p>'
-    + '<p style="margin:8px 0 0;color:#a0aab2;font-size:13px;">Use this code during course registration for a special discount!</p>'
+    + '<p style="margin:8px 0 0;color:#a0aab2;font-size:13px;">Show this screen or code at Subway, AeroFusion</p>'
     + '</div>'
     
     // CTA
     + '<div style="text-align:center;margin:25px 0;">'
-    + '<a href="https://yuniglobal.com/Programs" style="display:inline-block;background:#008f4c;color:#fff;padding:14px 32px;border-radius:12px;text-decoration:none;font-weight:700;font-size:15px;">Explore Our Programs →</a>'
+    + '<a href="https://yuniglobal.com" style="display:inline-block;background:#008f4c;color:#fff;padding:14px 32px;border-radius:12px;text-decoration:none;font-weight:700;font-size:15px;">Visit Yuniverse Website →</a>'
     + '</div>'
     + '</td></tr>'
     
     // Footer
     + '<tr><td style="padding:20px 40px;border-top:1px solid rgba(255,255,255,0.06);text-align:center;">'
-    + '<p style="color:#555;font-size:12px;margin:0;">YUNI Global | NASTP Rawalpindi | © 2026</p>'
+    + '<p style="color:#555;font-size:12px;margin:0;">Yuniverse | NASTP Rawalpindi | © 2026</p>'
     + '</td></tr>'
     
     + '</table></td></tr></table></body></html>';
