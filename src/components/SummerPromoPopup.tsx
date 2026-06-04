@@ -235,6 +235,11 @@ const SummerPromoPopup: React.FC = () => {
           margin-top: 1rem;
         }
 
+        .popup-scroll-container {
+          width: 100%;
+          height: 100%;
+        }
+
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
@@ -254,22 +259,27 @@ const SummerPromoPopup: React.FC = () => {
         @media (max-width: 768px) {
           .popup-card {
             max-width: 500px;
-            padding: 3rem 1.5rem 1.5rem 1.5rem;
+            padding: 0;
             max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+          }
+          .popup-scroll-container {
             overflow-y: auto;
+            padding: 3rem 1.5rem 1.5rem 1.5rem;
+            width: 100%;
           }
           .popup-close-btn {
-            top: 0.6rem;
-            right: 0.6rem;
-            width: 42px;
-            height: 42px;
-            background: rgba(255, 255, 255, 0.15);
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            position: sticky;
-            float: right;
-            margin-top: -2.5rem;
-            margin-right: -0.5rem;
-            margin-bottom: -1rem;
+            z-index: 1000;
+            margin: 0;
           }
           .popup-close-btn:hover {
             background: rgba(255, 255, 255, 0.25);
@@ -302,13 +312,18 @@ const SummerPromoPopup: React.FC = () => {
 
         @media (max-width: 420px) {
           .popup-card {
-            padding: 2.5rem 1rem 1.2rem 1rem;
+            padding: 0;
             border-radius: 20px;
             max-height: 88vh;
           }
+          .popup-scroll-container {
+            padding: 2.5rem 1rem 1.2rem 1rem;
+          }
           .popup-close-btn {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
+            top: 0.8rem;
+            right: 0.8rem;
           }
           .column-title {
             font-size: 1.3rem;
@@ -335,72 +350,74 @@ const SummerPromoPopup: React.FC = () => {
           <X size={20} />
         </button>
 
-        <div className="popup-split-container">
-          {/* Column 1: Summer Camp 2026 */}
-          <div className="popup-column">
-            <div className="column-content">
-              <div className="popup-badge">
-                <div className="badge-pulse"></div>
-                ☀️ Summer Camp 2026
+        <div className="popup-scroll-container">
+          <div className="popup-split-container">
+            {/* Column 1: Summer Camp 2026 */}
+            <div className="popup-column">
+              <div className="column-content">
+                <div className="popup-badge">
+                  <div className="badge-pulse"></div>
+                  ☀️ Summer Camp 2026
+                </div>
+                <h3 className="column-title">Accelerate Your Skills</h3>
+                <p className="column-desc">
+                  Join our premium IT & soft skills programs. 7 specialized tracks designed for career growth and hands-on learning at NASTP.
+                </p>
+                <div className="highlights-list">
+                  <div className="highlight-item">
+                    <Sparkles size={18} color="var(--pk-green)" />
+                    <span>7 Specialized Tracks & Certifications</span>
+                  </div>
+                  <div className="highlight-item">
+                    <ShieldCheck size={18} color="var(--pk-green)" />
+                    <span>PSEB Certified Industry Programs</span>
+                  </div>
+                  <div className="highlight-item">
+                    <Award size={18} color="var(--pk-green)" />
+                    <span>Interactive Real-World Projects</span>
+                  </div>
+                </div>
               </div>
-              <h3 className="column-title">Accelerate Your Skills</h3>
-              <p className="column-desc">
-                Join our premium IT & soft skills programs. 7 specialized tracks designed for career growth and hands-on learning at NASTP.
-              </p>
-              <div className="highlights-list">
-                <div className="highlight-item">
-                  <Sparkles size={18} color="var(--pk-green)" />
-                  <span>7 Specialized Tracks & Certifications</span>
-                </div>
-                <div className="highlight-item">
-                  <ShieldCheck size={18} color="var(--pk-green)" />
-                  <span>PSEB Certified Industry Programs</span>
-                </div>
-                <div className="highlight-item">
-                  <Award size={18} color="var(--pk-green)" />
-                  <span>Interactive Real-World Projects</span>
-                </div>
-              </div>
+              <button className="column-btn" onClick={() => handleAction('/Programs')}>
+                Register Now <ArrowRight size={18} />
+              </button>
             </div>
-            <button className="column-btn" onClick={() => handleAction('/Programs')}>
-              Register Now <ArrowRight size={18} />
-            </button>
+
+            {/* Column 2: Event Certificates */}
+            <div className="popup-column">
+              <div className="column-content">
+                <div className="popup-badge blue-badge">
+                  <div className="badge-pulse"></div>
+                  🎓 YUNI-TY Event
+                </div>
+                <h3 className="column-title">Download Certificates</h3>
+                <p className="column-desc">
+                  Digital credentials and completion certificates are active for all YUNI-TY 2026 attendees. Verify and save your files.
+                </p>
+                <div className="highlights-list">
+                  <div className="highlight-item">
+                    <GraduationCap size={18} color="#0091ea" />
+                    <span>Official Attendance Verification</span>
+                  </div>
+                  <div className="highlight-item">
+                    <ShieldCheck size={18} color="#0091ea" />
+                    <span>Secure QR-Coded Digital PDF</span>
+                  </div>
+                  <div className="highlight-item">
+                    <Award size={18} color="#0091ea" />
+                    <span>Instant Reference ID Search</span>
+                  </div>
+                </div>
+              </div>
+              <button className="column-btn blue-btn" onClick={() => handleAction('/certificates')}>
+                Get Certificate <ArrowRight size={18} />
+              </button>
+            </div>
           </div>
 
-          {/* Column 2: Event Certificates */}
-          <div className="popup-column">
-            <div className="column-content">
-              <div className="popup-badge blue-badge">
-                <div className="badge-pulse"></div>
-                🎓 YUNI-TY Event
-              </div>
-              <h3 className="column-title">Download Certificates</h3>
-              <p className="column-desc">
-                Digital credentials and completion certificates are active for all YUNI-TY 2026 attendees. Verify and save your files.
-              </p>
-              <div className="highlights-list">
-                <div className="highlight-item">
-                  <GraduationCap size={18} color="#0091ea" />
-                  <span>Official Attendance Verification</span>
-                </div>
-                <div className="highlight-item">
-                  <ShieldCheck size={18} color="#0091ea" />
-                  <span>Secure QR-Coded Digital PDF</span>
-                </div>
-                <div className="highlight-item">
-                  <Award size={18} color="#0091ea" />
-                  <span>Instant Reference ID Search</span>
-                </div>
-              </div>
-            </div>
-            <button className="column-btn blue-btn" onClick={() => handleAction('/certificates')}>
-              Get Certificate <ArrowRight size={18} />
-            </button>
+          <div className="popup-footer-text">
+            Empowering the Youth through Modern Skills & Tech Education at NASTP Rawalpindi
           </div>
-        </div>
-
-        <div className="popup-footer-text">
-          Empowering the Youth through Modern Skills & Tech Education at NASTP Rawalpindi
         </div>
       </div>
     </div>

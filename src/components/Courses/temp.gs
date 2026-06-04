@@ -261,7 +261,7 @@ function sendNewsletterConfirmationEmail(email, phone, couponCode) {
     + '<h2 style="margin:0 0 12px;color:#fff;font-size:22px;font-weight:800;">Congratulations 🥳</h2>'
     + '<p style="color:#a0aab2;font-size:16px;line-height:1.7;margin:0 0 25px;">'
     + 'You unlocked <strong>20% OFF</strong> at Subway, AeroFusion!<br><br>'
-    + 'Show this email notification to the nearest usher to claim your discount.</p>'
+    + 'Show this notification to the nearest usher to claim your discount.</p>'
     
     // Coupon Box
     + '<div style="background:rgba(0,143,76,0.08);border:2px dashed rgba(0,230,118,0.4);border-radius:14px;padding:20px;text-align:center;margin:0 0 25px;">'
@@ -271,8 +271,18 @@ function sendNewsletterConfirmationEmail(email, phone, couponCode) {
     + '</div>'
     
     // CTA
-    + '<div style="text-align:center;margin:25px 0;">'
+    + '<div style="text-align:center;margin:25px 0 15px 0;">'
     + '<a href="https://yuniglobal.com" style="display:inline-block;background:#008f4c;color:#fff;padding:14px 32px;border-radius:12px;text-decoration:none;font-weight:700;font-size:15px;">Visit Yuniverse Website →</a>'
+    + '</div>'
+    
+    // Social Links
+    + '<div style="text-align:center;margin:20px 0 30px;">'
+    + '<p style="color:#a0aab2;font-size:12px;margin:0 0 12px 0;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">Connect with YUNI</p>'
+    + '<table align="center" cellpadding="0" cellspacing="0" style="margin:0 auto;"><tr>'
+    + '<td style="padding:0 8px;"><a href="https://www.linkedin.com/company/yuni-edtech/" style="display:inline-block;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#00e676;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">LinkedIn</a></td>'
+    + '<td style="padding:0 8px;"><a href="https://www.instagram.com/yunipakistan" style="display:inline-block;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#00e676;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Instagram</a></td>'
+    + '<td style="padding:0 8px;"><a href="https://www.facebook.com/yunipakistan" style="display:inline-block;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#00e676;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Facebook</a></td>'
+    + '</tr></table>'
     + '</div>'
     + '</td></tr>'
     
