@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { X, GraduationCap, Award, ArrowRight, Sparkles, ShieldCheck } from 'lucide-react';
+import { X, ArrowRight, Sparkles, ShieldCheck, Send, Gift, Award } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import confetti from 'canvas-confetti';
 
 const SummerPromoPopup: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
+
+  const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbxv3FVEPexjV4hLcAWNj6FafStyFzqzrJWzo-Zk8FJFOWkxw-mh9bxNi-ZYbwnLHyfzxg/exec';
+  const COUPON_CODE = 'SUBWAY-20';
 
   useEffect(() => {
     // Show popup after 1.5 seconds if not dismissed during current session
@@ -25,6 +34,82 @@ const SummerPromoPopup: React.FC = () => {
   const handleAction = (path: string) => {
     handleDismiss();
     navigate(path);
+  };
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setErrorMsg('Please enter a valid email address.');
+      return;
+    }
+
+    if (!phone || phone.length < 10) {
+      setErrorMsg('Please enter a valid phone number.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorMsg('');
+
+    try {
+      const submitData = new URLSearchParams();
+      submitData.append('formType', 'newsletter');
+      submitData.append('email', email);
+      submitData.append('phone', phone);
+      submitData.append('couponCode', COUPON_CODE);
+      submitData.append('timestamp', new Date().toISOString());
+
+      const response = await fetch(GOOGLE_SHEETS_API, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: submitData,
+      });
+
+      let result;
+      try {
+        result = await response.json();
+      } catch {
+        result = { success: response.ok };
+      }
+
+      if (response.ok && result.success !== false) {
+        setIsSubscribed(true);
+        
+        // Party popper animation confetti (dual burst)
+        const duration = 3 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 99999 };
+
+        const randomInRange = (min: number, max: number) => {
+          return Math.random() * (max - min) + min;
+        };
+
+        const interval: any = setInterval(function() {
+          const timeLeft = animationEnd - Date.now();
+
+          if (timeLeft <= 0) {
+            return clearInterval(interval);
+          }
+
+          const particleCount = 50 * (timeLeft / duration);
+          // since particles fall down, animate a bit higher than they would
+          confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+          confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+        }, 250);
+      } else {
+        throw new Error(result.message || 'Subscription failed');
+      }
+    } catch (error: any) {
+      console.error('Newsletter error:', error);
+      setErrorMsg(error.message || 'Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (!isVisible) return null;
@@ -121,6 +206,9 @@ const SummerPromoPopup: React.FC = () => {
 
         .column-content {
           text-align: left;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
         }
 
         .popup-badge {
@@ -136,6 +224,7 @@ const SummerPromoPopup: React.FC = () => {
           text-transform: uppercase;
           letter-spacing: 0.08em;
           margin-bottom: 1.2rem;
+          align-self: flex-start;
           border: 1px solid rgba(0, 230, 118, 0.15);
         }
 
@@ -216,16 +305,6 @@ const SummerPromoPopup: React.FC = () => {
           box-shadow: 0 15px 25px rgba(0, 230, 118, 0.25);
         }
 
-        .column-btn.blue-btn {
-          background: linear-gradient(135deg, #0091ea 0%, #00b0ff 100%);
-          color: #fff;
-          box-shadow: 0 10px 20px rgba(0, 145, 234, 0.15);
-        }
-
-        .column-btn.blue-btn:hover {
-          box-shadow: 0 15px 25px rgba(0, 145, 234, 0.25);
-        }
-
         .popup-footer-text {
           text-align: center;
           font-size: 0.8rem;
@@ -238,6 +317,175 @@ const SummerPromoPopup: React.FC = () => {
         .popup-scroll-container {
           width: 100%;
           height: 100%;
+        }
+
+        /* Form styling inside popup */
+        .popup-form {
+          display: flex;
+          flex-direction: column;
+          gap: 0.8rem;
+          margin-top: auto;
+          width: 100%;
+        }
+
+        .popup-field {
+          display: flex;
+          align-items: center;
+          gap: 0.8rem;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 12px;
+          padding: 0 1rem;
+          transition: all 0.3s ease;
+        }
+
+        .popup-field:focus-within {
+          border-color: #0091ea;
+          box-shadow: 0 0 0 3px rgba(0, 145, 234, 0.15);
+        }
+
+        .popup-field-icon {
+          color: rgba(255, 255, 255, 0.35);
+          font-size: 0.85rem;
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
+        }
+
+        .popup-field input {
+          flex: 1;
+          background: transparent;
+          border: none;
+          outline: none;
+          padding: 0.8rem 0;
+          color: var(--text-primary, #fff);
+          font-size: 0.9rem;
+          font-family: inherit;
+        }
+
+        .popup-field input::placeholder {
+          color: rgba(255, 255, 255, 0.3);
+        }
+
+        .popup-submit-btn {
+          width: 100%;
+          background: linear-gradient(135deg, #0091ea 0%, #00b0ff 100%);
+          color: #fff;
+          border: none;
+          padding: 1rem;
+          border-radius: 12px;
+          font-weight: 800;
+          font-size: 0.85rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.6rem;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+          box-shadow: 0 10px 20px rgba(0, 145, 234, 0.15);
+        }
+
+        .popup-submit-btn:hover:not(:disabled) {
+          transform: translateY(-2px);
+          box-shadow: 0 15px 25px rgba(0, 145, 234, 0.25);
+        }
+
+        .popup-submit-btn:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        .popup-error-msg {
+          color: #ff4757;
+          font-size: 0.8rem;
+          font-weight: 600;
+          margin-top: -0.2rem;
+          margin-bottom: 0.2rem;
+          text-align: left;
+        }
+
+        /* Congrats Notification Card */
+        .congrats-notification-card {
+          background: rgba(0, 230, 118, 0.04);
+          border: 1px solid rgba(0, 230, 118, 0.2);
+          border-radius: 16px;
+          padding: 1.2rem;
+          display: flex;
+          gap: 1rem;
+          align-items: flex-start;
+          text-align: left;
+          box-shadow: 0 10px 30px rgba(0, 230, 118, 0.05), inset 0 0 15px rgba(0, 230, 118, 0.02);
+          margin-top: 1rem;
+          animation: slideInUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .congrats-icon-wrap {
+          background: rgba(0, 230, 118, 0.1);
+          border: 1px solid rgba(0, 230, 118, 0.3);
+          border-radius: 50%;
+          width: 44px;
+          height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--pk-green-light, #00e676);
+          flex-shrink: 0;
+          box-shadow: 0 0 12px rgba(0, 230, 118, 0.1);
+        }
+
+        .congrats-text-wrap {
+          display: flex;
+          flex-direction: column;
+          gap: 0.3rem;
+          flex: 1;
+        }
+
+        .congrats-title {
+          font-size: 1rem;
+          font-weight: 800;
+          color: #fff;
+          margin: 0;
+        }
+
+        .congrats-message {
+          font-size: 0.85rem;
+          color: #a0aab2;
+          margin: 0;
+          line-height: 1.4;
+        }
+
+        .congrats-subtext {
+          font-size: 0.75rem;
+          color: var(--text-tertiary, rgba(255,255,255,0.35));
+          margin: 0;
+          line-height: 1.4;
+        }
+
+        .congrats-coupon {
+          align-self: flex-start;
+          background: rgba(0, 143, 76, 0.1);
+          border: 1px dashed rgba(0, 230, 118, 0.4);
+          color: var(--pk-green-light, #00e676);
+          padding: 0.4rem 0.8rem;
+          border-radius: 8px;
+          font-family: monospace;
+          font-size: 0.85rem;
+          font-weight: 800;
+          margin-top: 0.5rem;
+          letter-spacing: 0.05em;
+        }
+
+        @keyframes slideInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
         @keyframes fadeIn {
@@ -293,9 +541,11 @@ const SummerPromoPopup: React.FC = () => {
           }
           .column-content {
             text-align: center;
+            align-items: center;
           }
           .popup-badge {
             margin-bottom: 1rem;
+            align-self: center;
           }
           .column-title {
             font-size: 1.6rem;
@@ -383,35 +633,73 @@ const SummerPromoPopup: React.FC = () => {
               </button>
             </div>
 
-            {/* Column 2: Event Certificates */}
+            {/* Column 2: Newsletter with Subway Coupon */}
             <div className="popup-column">
               <div className="column-content">
                 <div className="popup-badge blue-badge">
                   <div className="badge-pulse"></div>
-                  🎓 YUNI-TY Event
+                  🎁 Exclusive Offer
                 </div>
-                <h3 className="column-title">Download Certificates</h3>
-                <p className="column-desc">
-                  Digital credentials and completion certificates are active for all YUNI-TY 2026 attendees. Verify and save your files.
-                </p>
-                <div className="highlights-list">
-                  <div className="highlight-item">
-                    <GraduationCap size={18} color="#0091ea" />
-                    <span>Official Attendance Verification</span>
+                <h3 className="column-title">Welcome to YUNIVERSE</h3>
+                
+                {isSubscribed ? (
+                  <div className="congrats-notification-card">
+                    <div className="congrats-icon-wrap">
+                      <Gift size={24} />
+                    </div>
+                    <div className="congrats-text-wrap">
+                      <h4 className="congrats-title">Congratulations! 🥳</h4>
+                      <p className="congrats-message">
+                        You unlocked <strong>20% OFF on Subway!</strong>
+                      </p>
+                      <p className="congrats-subtext">
+                        Show this notification to the nearest usher to claim your discount.
+                      </p>
+                      <div className="congrats-coupon">
+                        Code: {COUPON_CODE}
+                      </div>
+                    </div>
                   </div>
-                  <div className="highlight-item">
-                    <ShieldCheck size={18} color="#0091ea" />
-                    <span>Secure QR-Coded Digital PDF</span>
-                  </div>
-                  <div className="highlight-item">
-                    <Award size={18} color="#0091ea" />
-                    <span>Instant Reference ID Search</span>
-                  </div>
-                </div>
+                ) : (
+                  <>
+                    <p className="column-desc" style={{ color: 'var(--pk-green-light)', fontWeight: 800, marginBottom: '0.5rem', minHeight: 'auto' }}>
+                      Signup to YUNIVERSE for 20% Off on Subway!
+                    </p>
+                    <p className="column-desc" style={{ fontSize: '0.82rem', minHeight: 'auto', marginBottom: '1.2rem', color: 'var(--text-secondary)' }}>
+                      Subscribe to our newsletter and unlock your 20% Subway discount coupon instantly.
+                    </p>
+                    
+                    <form className="popup-form" onSubmit={handleSubscribe}>
+                      <div className="popup-field">
+                        <span className="popup-field-icon">✉️</span>
+                        <input
+                          type="email"
+                          placeholder="Email address"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="popup-field">
+                        <span className="popup-field-icon">📱</span>
+                        <input
+                          type="tel"
+                          placeholder="WhatsApp (e.g., 03123456789)"
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          required
+                        />
+                      </div>
+                      {errorMsg && <div className="popup-error-msg">{errorMsg}</div>}
+                      <button type="submit" className="popup-submit-btn" disabled={isSubmitting}>
+                        {isSubmitting ? 'Verifying...' : (
+                          <>Claim 20% Off <Send size={16} /></>
+                        )}
+                      </button>
+                    </form>
+                  </>
+                )}
               </div>
-              <button className="column-btn blue-btn" onClick={() => handleAction('/certificates')}>
-                Get Certificate <ArrowRight size={18} />
-              </button>
             </div>
           </div>
 

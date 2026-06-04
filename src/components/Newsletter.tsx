@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Send, Gift, CheckCircle, AlertTriangle } from 'lucide-react';
+import confetti from 'canvas-confetti';
 
 const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbxv3FVEPexjV4hLcAWNj6FafStyFzqzrJWzo-Zk8FJFOWkxw-mh9bxNi-ZYbwnLHyfzxg/exec';
 
@@ -57,6 +58,28 @@ const Newsletter: React.FC = () => {
           type: 'success',
           message: `Congratulations 🥳\n\nYou unlocked 20% OFF at Subway, AeroFusion!\n\nShow this notification to the nearest usher to claim your discount!`
         });
+
+        // Party popper animation confetti (dual burst)
+        const duration = 3 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999999 };
+
+        const randomInRange = (min: number, max: number) => {
+          return Math.random() * (max - min) + min;
+        };
+
+        const interval: any = setInterval(function() {
+          const timeLeft = animationEnd - Date.now();
+
+          if (timeLeft <= 0) {
+            return clearInterval(interval);
+          }
+
+          const particleCount = 50 * (timeLeft / duration);
+          confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+          confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+        }, 250);
+
         setEmail('');
         setPhone('');
       } else {
@@ -459,6 +482,89 @@ const Newsletter: React.FC = () => {
           .newsletter-modal-message { font-size: 0.82rem; }
           .newsletter-coupon-display { font-size: 0.95rem; padding: 0.8rem 1rem; gap: 0.5rem; }
         }
+
+        /* Congrats Notification Card */
+        .congrats-notification-card {
+          background: rgba(0, 230, 118, 0.04);
+          border: 1px solid rgba(0, 230, 118, 0.2);
+          border-radius: 16px;
+          padding: 1.2rem;
+          display: flex;
+          gap: 1rem;
+          align-items: flex-start;
+          text-align: left;
+          box-shadow: 0 10px 30px rgba(0, 230, 118, 0.05), inset 0 0 15px rgba(0, 230, 118, 0.02);
+          margin-top: 1rem;
+          width: 100%;
+          animation: slideInUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .congrats-icon-wrap {
+          background: rgba(0, 230, 118, 0.1);
+          border: 1px solid rgba(0, 230, 118, 0.3);
+          border-radius: 50%;
+          width: 44px;
+          height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--pk-green-light, #00e676);
+          flex-shrink: 0;
+          box-shadow: 0 0 12px rgba(0, 230, 118, 0.1);
+        }
+
+        .congrats-text-wrap {
+          display: flex;
+          flex-direction: column;
+          gap: 0.3rem;
+          flex: 1;
+        }
+
+        .congrats-title {
+          font-size: 1rem;
+          font-weight: 800;
+          color: #fff;
+          margin: 0;
+        }
+
+        .congrats-message {
+          font-size: 0.85rem;
+          color: #a0aab2;
+          margin: 0;
+          line-height: 1.4;
+        }
+
+        .congrats-subtext {
+          font-size: 0.75rem;
+          color: var(--text-tertiary, rgba(255,255,255,0.35));
+          margin: 0;
+          line-height: 1.4;
+        }
+
+        .congrats-coupon {
+          align-self: flex-start;
+          background: rgba(0, 143, 76, 0.1);
+          border: 1px dashed rgba(0, 230, 118, 0.4);
+          color: var(--pk-green-light, #00e676);
+          padding: 0.4rem 0.8rem;
+          border-radius: 8px;
+          font-family: monospace;
+          font-size: 0.85rem;
+          font-weight: 800;
+          margin-top: 0.5rem;
+          letter-spacing: 0.05em;
+        }
+
+        @keyframes slideInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
       `}</style>
 
       <div className="newsletter-container">
@@ -469,17 +575,16 @@ const Newsletter: React.FC = () => {
           </div>
 
           <h2 className="newsletter-title">
-            Join the <span className="newsletter-title-accent">Yuniverse</span>
+            Welcome to <span className="newsletter-title-accent">YUNIVERSE</span>
           </h2>
 
-          <p className="newsletter-desc">
-            Subscribe to Yuniverse to receive exclusive offers, course updates, and early access to new programs. Get an instant discount coupon upon subscribing!
+          <p className="newsletter-desc" style={{ color: 'var(--pk-green-light)', fontWeight: 800, fontSize: '1.2rem', marginBottom: '0.8rem' }}>
+            Signup to YUNIVERSE for 20% Off on Subway!
           </p>
 
-          <div className="newsletter-coupon-teaser">
-            <Gift size={18} />
-            Subscribe & get an exclusive discount coupon!
-          </div>
+          <p className="newsletter-desc" style={{ marginTop: 0 }}>
+            Subscribe to our newsletter to receive exclusive updates and unlock your 20% Subway discount coupon instantly.
+          </p>
 
           <form className="newsletter-form" onSubmit={handleSubscribe}>
             <div className="newsletter-field">
@@ -529,16 +634,29 @@ const Newsletter: React.FC = () => {
             </div>
 
             <h3 className="newsletter-modal-title">
-              {status.type === 'success' ? 'You\'re Subscribed!' : 'Oops!'}
+              {status.type === 'success' ? 'Welcome to YUNIVERSE' : 'Oops!'}
             </h3>
 
-            <p className="newsletter-modal-message">{status.message}</p>
-
-            {status.type === 'success' && (
-              <div className="newsletter-coupon-display">
-                <Gift size={22} />
-                {COUPON_CODE}
+            {status.type === 'success' ? (
+              <div className="congrats-notification-card">
+                <div className="congrats-icon-wrap">
+                  <Gift size={24} />
+                </div>
+                <div className="congrats-text-wrap">
+                  <h4 className="congrats-title">Congratulations! 🥳</h4>
+                  <p className="congrats-message">
+                    You unlocked <strong>20% OFF on Subway!</strong>
+                  </p>
+                  <p className="congrats-subtext">
+                    Show this notification to the nearest usher to claim your discount.
+                  </p>
+                  <div className="congrats-coupon">
+                    Code: {COUPON_CODE}
+                  </div>
+                </div>
               </div>
+            ) : (
+              <p className="newsletter-modal-message">{status.message}</p>
             )}
 
             <button
