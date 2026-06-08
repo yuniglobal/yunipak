@@ -354,7 +354,7 @@ const Careers: React.FC = () => {
         .section-title-wrapper { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2.5rem; }
         .section-number { 
           font-size: 1.5rem; font-weight: 900; color: transparent; 
-          -webkit-text-stroke: 1px var(--pk-green); font-family: 'Space Grotesk';
+          -webkit-text-stroke: 1px var(--pk-green); font-family: 'Outfit';
         }
         .section-title-wrapper h3 { font-size: 1.3rem; font-weight: 800; margin: 0; color: var(--text-primary); }
 

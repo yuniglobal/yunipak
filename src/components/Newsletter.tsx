@@ -126,7 +126,7 @@ const Newsletter: React.FC = () => {
           left: -20%;
           width: 400px;
           height: 400px;
-          background: radial-gradient(circle, rgba(0, 230, 118, 0.05) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(12, 98, 56, 0.05) 0%, transparent 70%);
           pointer-events: none;
           z-index: 0;
         }
@@ -141,9 +141,9 @@ const Newsletter: React.FC = () => {
           display: inline-flex;
           align-items: center;
           gap: 0.5rem;
-          background: rgba(0, 143, 76, 0.08);
-          border: 1px solid rgba(0, 143, 76, 0.2);
-          color: var(--pk-green-light, #00e676);
+          background: rgba(12, 98, 56, 0.08);
+          border: 1px solid rgba(12, 98, 56, 0.2);
+          color: var(--pk-green-light, #d4af37);
           padding: 0.4rem 1.2rem;
           border-radius: 100px;
           font-size: 0.72rem;
@@ -163,7 +163,7 @@ const Newsletter: React.FC = () => {
         }
 
         .newsletter-title {
-          font-family: 'Space Grotesk', 'Inter', sans-serif;
+          font-family: 'Outfit', 'Inter', sans-serif;
           font-size: 2.8rem;
           font-weight: 900;
           color: var(--text-primary, #fff);
@@ -173,7 +173,7 @@ const Newsletter: React.FC = () => {
         }
 
         .newsletter-title-accent {
-          background: linear-gradient(135deg, var(--pk-green-light, #00e676), var(--pk-green, #008f4c));
+          background: linear-gradient(135deg, var(--pk-green-light, #d4af37), var(--pk-green, #0c6238));
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
@@ -192,14 +192,14 @@ const Newsletter: React.FC = () => {
           display: inline-flex;
           align-items: center;
           gap: 0.6rem;
-          background: rgba(0, 143, 76, 0.06);
-          border: 1px dashed rgba(0, 230, 118, 0.3);
+          background: rgba(12, 98, 56, 0.06);
+          border: 1px dashed rgba(212, 175, 55, 0.3);
           padding: 0.7rem 1.5rem;
           border-radius: 12px;
           margin-bottom: 2.5rem;
           font-size: 0.88rem;
           font-weight: 700;
-          color: var(--pk-green-light, #00e676);
+          color: var(--pk-green-light, #d4af37);
         }
 
         .newsletter-form {
@@ -222,8 +222,8 @@ const Newsletter: React.FC = () => {
         }
 
         .newsletter-field:focus-within {
-          border-color: var(--pk-green, #008f4c);
-          box-shadow: 0 0 0 3px rgba(0, 143, 76, 0.08);
+          border-color: var(--pk-green, #0c6238);
+          box-shadow: 0 0 0 3px rgba(12, 98, 56, 0.08);
         }
 
         .newsletter-field-icon {
@@ -250,7 +250,7 @@ const Newsletter: React.FC = () => {
 
         .newsletter-submit-btn {
           width: 100%;
-          background: var(--pk-green, #008f4c);
+          background: var(--pk-green, #0c6238);
           color: #fff;
           border: none;
           padding: 1.2rem;
@@ -265,14 +265,14 @@ const Newsletter: React.FC = () => {
           align-items: center;
           justify-content: center;
           gap: 0.6rem;
-          box-shadow: 0 8px 20px rgba(0, 143, 76, 0.2);
+          box-shadow: 0 8px 20px rgba(12, 98, 56, 0.2);
           margin-top: 0.5rem;
         }
 
         .newsletter-submit-btn:hover:not(:disabled) {
-          background: var(--pk-green-light, #00e676);
+          background: var(--pk-green-light, #d4af37);
           transform: translateY(-2px);
-          box-shadow: 0 12px 28px rgba(0, 230, 118, 0.3);
+          box-shadow: 0 12px 28px rgba(212, 175, 55, 0.3);
         }
 
         .newsletter-submit-btn:disabled {
@@ -306,13 +306,13 @@ const Newsletter: React.FC = () => {
 
         .newsletter-modal-card {
           background: linear-gradient(135deg, #0d1310 0%, #050706 100%);
-          border: 1px solid rgba(0, 230, 118, 0.25);
+          border: 1px solid rgba(12, 98, 56, 0.25);
           border-radius: 24px;
           padding: 3rem 2.5rem;
           max-width: 460px;
           width: 100%;
           text-align: center;
-          box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(0, 230, 118, 0.05);
+          box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(12, 98, 56, 0.05);
           color: #fff;
           display: flex;
           flex-direction: column;
@@ -340,7 +340,7 @@ const Newsletter: React.FC = () => {
           position: absolute;
           width: 100px;
           height: 100px;
-          background: radial-gradient(circle, rgba(0, 230, 118, 0.2) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(12, 98, 56, 0.2) 0%, transparent 70%);
           animation: nlPulse 2s infinite ease-in-out;
         }
 
@@ -352,14 +352,14 @@ const Newsletter: React.FC = () => {
           width: 80px;
           height: 80px;
           border-radius: 50%;
-          background: rgba(0, 230, 118, 0.06);
-          border: 1px solid rgba(0, 230, 118, 0.3);
+          background: rgba(12, 98, 56, 0.06);
+          border: 1px solid rgba(12, 98, 56, 0.3);
           display: flex;
           align-items: center;
           justify-content: center;
           z-index: 2;
-          box-shadow: inset 0 0 20px rgba(0, 230, 118, 0.1);
-          color: var(--pk-green-light, #00e676);
+          box-shadow: inset 0 0 20px rgba(12, 98, 56, 0.1);
+          color: var(--pk-green-light, #d4af37);
         }
 
         .error-modal .newsletter-modal-icon {
@@ -384,8 +384,8 @@ const Newsletter: React.FC = () => {
         }
 
         .newsletter-coupon-display {
-          background: rgba(0, 143, 76, 0.08);
-          border: 2px dashed rgba(0, 230, 118, 0.4);
+          background: rgba(12, 98, 56, 0.08);
+          border: 2px dashed rgba(212, 175, 55, 0.4);
           border-radius: 14px;
           padding: 1.2rem 2rem;
           display: flex;
@@ -393,15 +393,15 @@ const Newsletter: React.FC = () => {
           gap: 0.8rem;
           font-size: 1.3rem;
           font-weight: 900;
-          color: var(--pk-green-light, #00e676);
+          color: var(--pk-green-light, #d4af37);
           letter-spacing: 0.08em;
-          font-family: 'Space Grotesk', monospace;
+          font-family: 'Outfit', monospace;
         }
 
         .newsletter-modal-btn {
           margin-top: 0.5rem;
           padding: 1rem 2.5rem;
-          background: var(--pk-green, #008f4c);
+          background: var(--pk-green, #0c6238);
           color: #fff;
           border: none;
           border-radius: 14px;
@@ -410,15 +410,15 @@ const Newsletter: React.FC = () => {
           font-size: 1rem;
           width: 100%;
           transition: all 0.3s ease;
-          box-shadow: 0 10px 20px rgba(0, 143, 76, 0.2);
+          box-shadow: 0 10px 20px rgba(12, 98, 56, 0.2);
           text-transform: uppercase;
           letter-spacing: 0.05em;
         }
 
         .newsletter-modal-btn:hover {
-          background: var(--pk-green-light, #00e676);
+          background: var(--pk-green-light, #d4af37);
           transform: translateY(-2px);
-          box-shadow: 0 15px 30px rgba(0, 230, 118, 0.35);
+          box-shadow: 0 15px 30px rgba(12, 98, 56, 0.35);
         }
 
         .error-modal .newsletter-modal-btn {

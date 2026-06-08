@@ -84,7 +84,7 @@ const Footer = () => {
         }
 
         .footer-logo {
-          font-family: 'Space Grotesk', sans-serif;
+          font-family: 'Outfit', sans-serif;
           font-weight: 900;
           font-size: 2.2rem;
           color: var(--text-primary);

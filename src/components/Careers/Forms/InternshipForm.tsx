@@ -191,7 +191,7 @@ const InternshipForm: React.FC<Props> = ({ position, onClose }) => {
   return (
     <>
       <div className="form-header-premium">
-        <span className="protocol-label">Internship Protocol</span>
+        <span className="protocol-label">Internship Program</span>
         <h2 className="form-title-premium">Apply for a Yuni Pakistan Internship</h2>
         <p className="careers-subtitle-premium" style={{ fontSize: '0.9rem', marginTop: '0.5rem', textAlign: 'left', marginLeft: 0 }}>
           Gain real-world experience inside Pakistan's fastest-growing AI and edtech startup. Work on live projects, get mentored by industry professionals, and build the skills that matter most in today's job market.
@@ -500,7 +500,7 @@ const InternshipForm: React.FC<Props> = ({ position, onClose }) => {
         <div className="form-actions-premium">
           <button type="button" className="cancel-btn-premium" onClick={onClose}>Cancel</button>
           <button type="submit" className="submit-btn-premium" disabled={isSubmitting}>
-            <span className="btn-text">{isSubmitting ? 'Transmitting Data...' : 'Submit My Application →'}</span>
+            <span className="btn-text">{isSubmitting ? 'Submitting...' : 'Submit My Application →'}</span>
             <div className="btn-glow"></div>
           </button>
         </div>

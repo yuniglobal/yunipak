@@ -167,7 +167,7 @@ const JobApplicationForm: React.FC<Props> = ({ position, onClose }) => {
   return (
     <>
       <div className="form-header-premium">
-        <span className="protocol-label">Application Protocol</span>
+        <span className="protocol-label">Job Application</span>
         <h2 className="form-title-premium">Apply for {position.title}</h2>
         <div className="form-progress-bar"></div>
       </div>
@@ -194,7 +194,7 @@ const JobApplicationForm: React.FC<Props> = ({ position, onClose }) => {
         <div className="form-section-premium">
           <div className="section-title-wrapper">
             <span className="section-number">01</span>
-            <h3>Personnel Profile</h3>
+            <h3>Personal Profile</h3>
           </div>
           <div className="form-grid-premium">
             <div className="form-field-premium">
@@ -220,7 +220,7 @@ const JobApplicationForm: React.FC<Props> = ({ position, onClose }) => {
             <div className="form-field-premium">
               <label>Gender Identification *</label>
               <select name="gender" value={formData.gender} onChange={handleInputChange} required>
-                <option value="">Select Protocol</option>
+                <option value="">Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="Other">Other</option>
@@ -315,15 +315,15 @@ const JobApplicationForm: React.FC<Props> = ({ position, onClose }) => {
           <label className="checkbox-container-premium">
             <input type="checkbox" name="declaration" checked={formData.declaration} onChange={handleInputChange} required />
             <span className="checkmark"></span>
-            <p>I confirm that all transmitted data is authentic. I authorize YUNI Intelligence to perform verification protocols.</p>
+            <p>I confirm that all submitted details are authentic. I authorize YUNI Pakistan to perform necessary background and reference checks.</p>
           </label>
         </div>
 
 
         <div className="form-actions-premium">
-          <button type="button" className="cancel-btn-premium" onClick={onClose}>Abort</button>
+          <button type="button" className="cancel-btn-premium" onClick={onClose}>Cancel</button>
           <button type="submit" className="submit-btn-premium" disabled={isSubmitting}>
-            <span className="btn-text">{isSubmitting ? 'Transmitting Data...' : 'Submit Application'}</span>
+            <span className="btn-text">{isSubmitting ? 'Submitting...' : 'Submit Application'}</span>
             <div className="btn-glow"></div>
           </button>
         </div>

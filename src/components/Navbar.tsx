@@ -162,7 +162,7 @@ const Navbar = () => {
         /* ------------------------------- */
 
         .nav-logo {
-          font-family: 'Space Grotesk', sans-serif;
+          font-family: 'Outfit', sans-serif;
           font-weight: 900;
           font-size: 1.5rem;
           color: var(--text-primary);
@@ -288,7 +288,7 @@ const Navbar = () => {
 
         .mobile-nav-link {
           font-size: clamp(1.4rem, 6vw, 2rem);
-          font-family: 'Space Grotesk', sans-serif;
+          font-family: 'Outfit', sans-serif;
           font-weight: 800;
           color: var(--text-primary);
           margin-bottom: 1rem;

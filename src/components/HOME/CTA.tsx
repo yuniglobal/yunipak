@@ -89,7 +89,7 @@ export default function CTA() {
 
         .cta-decor {
           position: absolute;
-          font-family: 'Space Grotesk', sans-serif;
+          font-family: 'Outfit', sans-serif;
           font-weight: 900;
           font-size: 15rem;
           opacity: 0.05;
@@ -107,13 +107,13 @@ export default function CTA() {
         <div className="cta-decor cta-decor-2">2026</div>
 
         <div className="cta-content">
-          <h2 className="cta-title-tech">The Future is <br/> <span style={{color: 'var(--pk-green-light)'}}>Coded by You.</span></h2>
+          <h2 className="cta-title-tech">Shape the Future <br/> of <span style={{color: 'var(--pk-green-light)'}}>Pakistan.</span></h2>
           <p className="cta-sub-tech">
-            Stop watching from the sidelines. Join Pakistan's fastest-growing 
-            technical collective and start building world-class products today.
+            Discover your purpose, unleash your potential, and work with discipline for a 
+            greater collective future. Apply now to join Yuni Pakistan.
           </p>
           <button className="btn-cta" onClick={() => navigate('/contact')}>
-            Initialize Success
+            Apply Now
           </button>
         </div>
       </div>

@@ -43,7 +43,7 @@ export const AnimatedTitle = ({ title, subtitle, children, className }: Animated
     <div className="title-wrapper" ref={containerRef} style={{ textAlign: 'center', margin: '0 auto 2rem' }}>
       <style>{`
         .scroll-fill-title {
-          font-family: 'Space Grotesk', 'Outfit', sans-serif;
+          font-family: 'Outfit', sans-serif;
           font-size: clamp(3rem, 7vw, 5rem);
           font-weight: 900;
           text-transform: uppercase;

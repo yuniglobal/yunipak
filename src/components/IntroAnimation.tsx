@@ -147,12 +147,14 @@ export default function IntroAnimation({ onComplete }: IntroAnimationProps) {
         }
 
         .intro-overlay .zen-dots-font {
-          font-family: "Zen Dots", cursive;
-          font-weight: 400;
+          font-family: "Outfit", sans-serif;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
         }
 
         .intro-overlay #green-filter {
-          background: radial-gradient(rgba(32, 147, 127, 0.05), rgba(32, 147, 127, 0.4) 80%);
+          background: radial-gradient(rgba(12, 98, 56, 0.05), rgba(12, 98, 56, 0.4) 80%);
           height: 100%;
           left: 0px;
           position: absolute;
@@ -172,11 +174,11 @@ export default function IntroAnimation({ onComplete }: IntroAnimationProps) {
         .intro-overlay #top-gradient {
           background: linear-gradient(
             to right,
-            rgba(127, 117, 237, 0.75) 0% 10%,
+            rgba(12, 98, 56, 0.75) 0% 10%,
             transparent 10% 20%,
-            rgba(171, 111, 218, 0.5) 20% 50%,
-            rgba(127, 117, 237, 0.5) 50% 70%,
-            rgba(32, 147, 127, 0.75) 70%
+            rgba(212, 175, 55, 0.5) 20% 50%,
+            rgba(12, 98, 56, 0.5) 50% 70%,
+            rgba(212, 175, 55, 0.75) 70%
           );
           top: -50px;
         }
@@ -184,11 +186,11 @@ export default function IntroAnimation({ onComplete }: IntroAnimationProps) {
         .intro-overlay #bottom-gradient {
           background: linear-gradient(
             to right,
-            rgba(127, 117, 237, 0.75) 0% 10%,
+            rgba(12, 98, 56, 0.75) 0% 10%,
             transparent 10% 30%,
-            rgba(127, 117, 237, 0.5) 30% 50%,
+            rgba(12, 98, 56, 0.5) 30% 50%,
             transparent 50% 70%,
-            rgba(171, 111, 218, 0.5) 70% 80%,
+            rgba(212, 175, 55, 0.5) 70% 80%,
             transparent 80%
           );
           bottom: -50px;
@@ -210,7 +212,7 @@ export default function IntroAnimation({ onComplete }: IntroAnimationProps) {
         }
 
         .intro-overlay #logo-border {
-          background-color: rgb(27, 219, 124);
+          background-color: #d4af37;
           border-radius: 2.25em;
           height: 160%;
           width: 140%;
@@ -232,7 +234,7 @@ export default function IntroAnimation({ onComplete }: IntroAnimationProps) {
         }
 
         .intro-overlay #hulu-text {
-          color: rgb(27, 219, 124);
+          color: #d4af37;
           /* Use clamp to keep size readable on all devices */
           font-size: clamp(4rem, 15vw, 8rem);
           line-height: 1.2;

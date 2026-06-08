@@ -148,7 +148,7 @@ const Gallery: React.FC = () => {
         .back-btn-tech:hover {
           border-color: var(--pk-green);
           color: var(--pk-green);
-          background: rgba(0, 230, 118, 0.05);
+          background: rgba(12, 98, 56, 0.05);
           transform: translateX(-4px);
         }
 
@@ -207,7 +207,7 @@ const Gallery: React.FC = () => {
           transform: translate(-50%, -50%);
           width: 60%;
           height: 60%;
-          background: radial-gradient(circle, rgba(0, 230, 118, 0.08) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
           pointer-events: none;
         }
 
@@ -273,8 +273,8 @@ const Gallery: React.FC = () => {
 
         .gallery-cloud-viewport .memory-card:hover .card-inner {
           transform: scale(1.18) rotate(0deg) translateY(-10px);
-          border-color: var(--pk-green, #00e676);
-          box-shadow: 0 20px 45px rgba(0, 230, 118, 0.25);
+          border-color: var(--pk-green-light, #d4af37);
+          box-shadow: 0 20px 45px rgba(212, 175, 55, 0.25);
         }
 
         .gallery-cloud-viewport .memory-card:hover img {

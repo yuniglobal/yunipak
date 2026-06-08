@@ -123,7 +123,7 @@ export default function AnimatedBackground() {
           left: 0;
           width: 1000px;
           height: 1000px;
-          background: radial-gradient(circle at center, rgba(0, 230, 118, 0.08) 0%, transparent 70%);
+          background: radial-gradient(circle at center, var(--pk-green-glow-subtle) 0%, transparent 70%);
           pointer-events: none;
           z-index: -4;
           will-change: transform;
@@ -136,7 +136,7 @@ export default function AnimatedBackground() {
         }
 
         .orb-2 {
-          background: radial-gradient(circle, #00c853 0%, transparent 70%);
+          background: radial-gradient(circle, var(--pk-green) 0%, transparent 70%);
           width: 50vw;
           height: 50vw;
           opacity: 0.2;

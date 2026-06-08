@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Hero from '../components/HOME/Hero';
 import FeaturesReveal from '../components/HOME/FeaturesReveal';
+import NationalAnalysis from '../components/HOME/NationalAnalysis';
 import CTA from '../components/HOME/CTA';
 import TextEffect from '../components/HOME/TextEffect';
 import FAQ from '../components/Services/FAQ';
@@ -361,6 +362,8 @@ export default function Home() {
       </section>
 
       <FeaturesReveal />
+
+      <NationalAnalysis />
 
       <section className="section-container" ref={teamRef}>
         <AnimatedTitle className="section-title">The Core</AnimatedTitle>

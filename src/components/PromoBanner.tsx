@@ -41,7 +41,7 @@ const PromoBanner: React.FC = () => {
           display: flex;
           align-items: center;
           overflow: hidden;
-          box-shadow: 0 4px 20px rgba(0, 230, 118, 0.2);
+          box-shadow: 0 4px 20px rgba(212, 175, 55, 0.2);
         }
 
         .marquee-content {
@@ -51,7 +51,7 @@ const PromoBanner: React.FC = () => {
         }
 
         .marquee-item {
-          font-family: 'Space Grotesk', sans-serif;
+          font-family: 'Outfit', sans-serif;
           font-weight: 700;
           font-size: 0.85rem;
           color: #000;

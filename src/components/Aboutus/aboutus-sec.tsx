@@ -377,6 +377,67 @@ const AboutUsPage: React.FC = () => {
           text-transform: uppercase;
           margin-top: 0.4rem;
         }
+
+        /* National Partners Grid styling */
+        .national-partners-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          margin-bottom: 4rem;
+        }
+        @media (min-width: 768px) {
+          .national-partners-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+        .national-partner-card {
+          background: linear-gradient(135deg, rgba(10, 45, 25, 0.45) 0%, rgba(197, 160, 89, 0.05) 100%);
+          border: 1px solid var(--pk-gold);
+          border-radius: 20px;
+          padding: 2.5rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          transition: all 0.3s ease;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 15px rgba(197, 160, 89, 0.05);
+        }
+        .national-partner-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 0 25px rgba(197, 160, 89, 0.15);
+          border-color: var(--pk-gold-light);
+        }
+        .national-partner-img-wrapper {
+          height: 100px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 1.5rem;
+        }
+        .national-partner-img-wrapper img {
+          max-height: 100%;
+          max-width: 100%;
+          object-fit: contain;
+        }
+        .national-partner-card h3 {
+          font-size: 1.4rem;
+          font-weight: 700;
+          color: #ffffff;
+          margin-bottom: 0.5rem;
+        }
+        .national-partner-card .partner-role {
+          font-size: 0.9rem;
+          color: var(--pk-gold-light);
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          margin-bottom: 1rem;
+        }
+        .national-partner-card p {
+          font-size: 0.95rem;
+          line-height: 1.6;
+          color: rgba(255, 255, 255, 0.75);
+        }
       `}</style>
 
       {/* Decorative Glow Elements */}
@@ -540,11 +601,46 @@ const AboutUsPage: React.FC = () => {
           </div>
         </section>
 
+        {/* National Recognition Partners */}
+        <section className="about-section">
+          <div className="section-header">
+            <span className="section-tag">Government & Defense Alignment</span>
+            <h2 className="section-title-text">National Recognition Partners</h2>
+            <div className="section-underline"></div>
+          </div>
+
+          <div className="national-partners-grid">
+            {/* Partner 1: NASTP */}
+            <div className="national-partner-card">
+              <div className="national-partner-img-wrapper">
+                <img src="/images/nastp.png" alt="NASTP Logo" />
+              </div>
+              <h3>NASTP</h3>
+              <div className="partner-role">Official Registration & Ecosystem Partner</div>
+              <p>
+                Collaborating under the National Aerospace Science & Technology Park framework to support technological innovation, training alignment, and high-altitude research initiatives.
+              </p>
+            </div>
+
+            {/* Partner 2: PSEB */}
+            <div className="national-partner-card">
+              <div className="national-partner-img-wrapper">
+                <img src="/images/pseb-certificate.png" alt="PSEB Registration Certificate" style={{ borderRadius: '8px' }} />
+              </div>
+              <h3>PSEB</h3>
+              <div className="partner-role">Official Registered Training Provider</div>
+              <p>
+                Officially registered with the Pakistan Software Export Board (PSEB) to deliver industry-validated IT training programs aligned with national standards, providing credentials recognized by top-tier tech companies.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Collaborative Partners Grid */}
         <section className="about-section">
           <div className="section-header">
-            <span className="section-tag">Institutional Alignment</span>
-            <h2 className="section-title-text">Collaborative Partners</h2>
+            <span className="section-tag">Ecosystem Alignment</span>
+            <h2 className="section-title-text">Collaborative & Ecosystem Partners</h2>
             <div className="section-underline"></div>
           </div>
 

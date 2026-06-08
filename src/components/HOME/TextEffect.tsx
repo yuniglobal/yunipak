@@ -18,11 +18,11 @@ const TextEffect = () => {
   const textRefs = useRef<(HTMLHeadingElement | null)[]>([]);
 
   const textItems: TextEffectItem[] = [
-    { mainText: "YUNI PAKISTAN", spanText: "INNOVATION" },
-    { mainText: "TECH SOLUTIONS", spanText: "FOR TOMORROW" },
-    { mainText: "EMPOWERING", spanText: "DIGITAL PAKISTAN" },
-    { mainText: "BUILD THE FUTURE", spanText: "EXPLORE TRAININGS"},
-    { mainText: "JOIN THE MOVEMENT", spanText: "CAREERS", link: "/careers" }
+    { mainText: "YUNI PAKISTAN", spanText: "AWAKENING YOUTH" },
+    { mainText: "KNOWLEDGE AS POWER", spanText: "ECONOMIC FREEDOM" },
+    { mainText: "UNITY FAITH DISCIPLINE", spanText: "JINNAH'S PILLARS" },
+    { mainText: "AWAKENING KHUDI", spanText: "IQBAL'S VISION" },
+    { mainText: "JOIN THE MISSION", spanText: "CAREERS", link: "/careers" }
   ];
 
   useEffect(() => {

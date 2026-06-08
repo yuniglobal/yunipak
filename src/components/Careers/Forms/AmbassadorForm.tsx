@@ -166,7 +166,7 @@ const AmbassadorForm: React.FC<Props> = ({ position, onClose }) => {
   return (
     <>
       <div className="form-header-premium">
-        <span className="protocol-label">Ambassador Protocol</span>
+        <span className="protocol-label">Ambassador Program</span>
         <h2 className="form-title-premium">Join the Yuni Ambassador Program</h2>
         <p className="careers-subtitle-premium" style={{ fontSize: '0.9rem', marginTop: '0.5rem', textAlign: 'left', marginLeft: 0 }}>
           Represent Pakistan's AI-powered growth ecosystem at your campus or community. As a Yuni Ambassador, you'll lead learning, inspire peers, and unlock exclusive opportunities — all while growing your own career.
@@ -428,7 +428,7 @@ const AmbassadorForm: React.FC<Props> = ({ position, onClose }) => {
         <div className="form-actions-premium">
           <button type="button" className="cancel-btn-premium" onClick={onClose}>Cancel</button>
           <button type="submit" className="submit-btn-premium" disabled={isSubmitting}>
-            <span className="btn-text">{isSubmitting ? 'Transmitting Data...' : 'Apply to Become an Ambassador →'}</span>
+            <span className="btn-text">{isSubmitting ? 'Submitting...' : 'Apply to Become an Ambassador →'}</span>
             <div className="btn-glow"></div>
           </button>
         </div>

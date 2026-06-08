@@ -173,10 +173,10 @@ const blogPosts: BlogPost[] = [
   },
 ];
 
-const Blog: React.FC = () => {
+const EventsComponent: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<"intel" | "registration">("intel");
+  const [currentView, setCurrentView] = useState<"updates" | "registration">("updates");
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [visiblePosts, setVisiblePosts] = useState<number>(6);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -211,7 +211,7 @@ const Blog: React.FC = () => {
   }, [location]);
 
   useEffect(() => {
-    if (currentView === "intel") {
+    if (currentView === "updates") {
     const cards = document.querySelectorAll('.blog-card');
     if (cards.length > 0) {
       gsap.fromTo(cards,
@@ -287,9 +287,9 @@ const Blog: React.FC = () => {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: submitData,
       });
-      setSubmitStatus({ type: 'success', message: 'Registration transmitted successfully! See you at the Summit.' });
+      setSubmitStatus({ type: 'success', message: 'Registration submitted successfully! See you at the Summit.' });
     } catch (error) {
-      setSubmitStatus({ type: 'error', message: 'Data sync failed. Please check your connection.' });
+      setSubmitStatus({ type: 'error', message: 'Submission failed. Please check your connection.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -298,7 +298,7 @@ const Blog: React.FC = () => {
   const renderRegistrationView = () => (
     <div className="registration-view">
       <div className="registration-container-premium">
-        <button onClick={() => setCurrentView("intel")} className="cancel-btn-tech">CANCEL</button>
+        <button onClick={() => setCurrentView("updates")} className="cancel-btn-tech">CANCEL</button>
         <h2 className="registration-title-tech">Summit <span className="text-gradient">Registration</span> Gateway</h2>
         
         <div className="summit-schedule-premium">
@@ -336,7 +336,7 @@ const Blog: React.FC = () => {
                 className="registration-modal-btn" 
                 onClick={() => { 
                   if (submitStatus.type === 'success') { 
-                    setCurrentView("intel"); 
+                    setCurrentView("updates"); 
                     setSubmitStatus(null); 
                   } else { 
                     setSubmitStatus(null); 
@@ -353,7 +353,7 @@ const Blog: React.FC = () => {
           <div className="form-grid-premium">
             <div className="form-left-col">
               <section className="form-section-tech">
-                <h3 className="section-header-tech"><CreditCard size={20} /> 1. Payment Protocol</h3>
+                <h3 className="section-header-tech"><CreditCard size={20} /> 1. Payment Details</h3>
                 <div className="payment-nodes">
                   <div 
                     className={`payment-node-card ${formData.paymentMethod === 'bank' ? 'active-node' : ''}`}
@@ -381,22 +381,22 @@ const Blog: React.FC = () => {
 
                 <div className="input-group-tech">
                   <div className="field-tech">
-                    <label>Network</label>
+                    <label>Payment Method</label>
                     <select name="paymentMethod" value={formData.paymentMethod} onChange={handleInputChange} required>
                       <option value="bank">Bank Alfalah</option>
                       <option value="nayapay">NayaPay</option>
                     </select>
                   </div>
                   <div className="field-tech">
-                    <label>TXN ID / Hash</label>
+                    <label>Transaction ID</label>
                     <input type="text" name="transactionId" placeholder="Enter RefID" value={formData.transactionId} onChange={handleInputChange} required />
                   </div>
                   <div className="field-tech">
-                    <label>Timestamp</label>
+                    <label>Date</label>
                     <input type="date" name="transactionDate" value={formData.transactionDate} onChange={handleInputChange} required />
                   </div>
                   <div className="field-tech">
-                    <label>Credits (PKR)</label>
+                    <label>Amount Paid (PKR)</label>
                     <input type="text" name="transactionAmount" value={formData.transactionAmount} readOnly />
                   </div>
                 </div>
@@ -405,12 +405,12 @@ const Blog: React.FC = () => {
 
             <div className="form-right-col">
               <section className="form-section-tech">
-                <h3 className="section-header-tech"><UserCheck size={20} /> 2. Identity Sync</h3>
+                <h3 className="section-header-tech"><UserCheck size={20} /> 2. Personal Information</h3>
                 <div className="input-group-tech">
                   <div className="field-tech full"><label>Full Legal Name</label><input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} required /></div>
-                  <div className="field-tech"><label>CNIC (Verified)</label><input type="text" name="cnic" placeholder="XXXXX-XXXXXXX-X" value={formData.cnic} onChange={handleInputChange} required /></div>
+                  <div className="field-tech"><label>CNIC</label><input type="text" name="cnic" placeholder="XXXXX-XXXXXXX-X" value={formData.cnic} onChange={handleInputChange} required /></div>
                   <div className="field-tech"><label>Email Address</label><input type="email" name="email" value={formData.email} onChange={handleInputChange} required /></div>
-                  <div className="field-tech full"><label>Comms (WhatsApp)</label><input type="tel" name="phoneNumber" placeholder="03XXXXXXXXX" value={formData.phoneNumber} onChange={handleInputChange} required /></div>
+                  <div className="field-tech full"><label>WhatsApp Number</label><input type="tel" name="phoneNumber" placeholder="03XXXXXXXXX" value={formData.phoneNumber} onChange={handleInputChange} required /></div>
                 </div>
               </section>
 
@@ -429,7 +429,7 @@ const Blog: React.FC = () => {
               </div>
               <div className="form-actions-tech">
                 <button type="submit" className="submit-btn-premium" disabled={isSubmitting}>
-                  {isSubmitting ? 'Syncing...' : 'Confirm Registration'}
+                  {isSubmitting ? 'Submitting...' : 'Confirm Registration'}
                 </button>
               </div>
             </div>
@@ -451,8 +451,8 @@ const Blog: React.FC = () => {
         <div className="events-container">
         {/* Header */}
         <div className="title-wrapper">
-          <AnimatedTitle>Intelligence & Events</AnimatedTitle>
-          <p className="events-subtitle-tech">Tracking the digital frontier and community milestones in real-time.</p>
+          <AnimatedTitle>News & Events</AnimatedTitle>
+          <p className="events-subtitle-tech">Stay updated with YUNI Pakistan's upcoming summits, industry conferences, and training workshops.</p>
         </div>
 
         {/* Category Filters */}
@@ -554,7 +554,7 @@ const Blog: React.FC = () => {
               className="load-more-btn-premium"
               onClick={() => setVisiblePosts(prev => prev + 6)}
             >
-              Fetch More Intel
+              View More Updates
             </button>
           </div>
         )}
@@ -683,6 +683,7 @@ const Blog: React.FC = () => {
         }
 
         .scanline-overlay {
+          display: none;
           position: absolute;
           inset: 0;
           background: linear-gradient(to bottom, rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%);
@@ -782,7 +783,7 @@ const Blog: React.FC = () => {
         /* --- Load More --- */
         .load-more-container-tech { text-align: center; margin-top: 6rem; }
         .load-more-btn-premium { 
-          background: rgba(0, 230, 118, 0.05); border: 2px solid var(--pk-green); 
+          background: var(--pk-green-glow-subtle); border: 2px solid var(--pk-green); 
           color: var(--pk-green); font-weight: 900; padding: 1.5rem 4rem; border-radius: 1.5rem; 
           font-size: 1.1rem; cursor: pointer; transition: all 0.4s var(--transition-smooth);
           text-transform: uppercase; letter-spacing: 0.2em;
@@ -798,7 +799,7 @@ const Blog: React.FC = () => {
         }
 
         .summit-highlight-banner {
-          background: rgba(0, 230, 118, 0.05);
+          background: var(--pk-green-glow-subtle);
           border: 1px solid var(--pk-green);
           border-radius: 20px;
           padding: 1.5rem 2.5rem;
@@ -812,7 +813,7 @@ const Blog: React.FC = () => {
           content: '';
           position: absolute;
           inset: 0;
-          background: linear-gradient(90deg, transparent, rgba(0, 230, 118, 0.1), transparent);
+          background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.15), transparent);
           transform: translateX(-100%);
           animation: shimmer 3s infinite;
         }
@@ -1059,8 +1060,8 @@ const Blog: React.FC = () => {
 
         .payment-nodes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
         .payment-node-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border-light); padding: 2rem; border-radius: 25px; transition: all 0.3s ease; cursor: pointer; }
-        .payment-node-card:hover { border-color: rgba(0, 230, 118, 0.5); background: rgba(255, 255, 255, 0.05); }
-        .payment-node-card.active-node { border-color: var(--pk-green); background: rgba(0, 230, 118, 0.05); box-shadow: 0 10px 30px rgba(0, 230, 118, 0.1); }
+        .payment-node-card:hover { border-color: rgba(212, 175, 55, 0.5); background: rgba(255, 255, 255, 0.05); }
+        .payment-node-card.active-node { border-color: var(--pk-green); background: var(--pk-green-glow-subtle); box-shadow: 0 10px 30px var(--pk-green-glow); }
         .payment-node-card h4 { margin: 0 0 1.2rem; font-size: 1.2rem; color: var(--pk-green); font-weight: 900; text-transform: uppercase; }
         .node-details p { margin: 0.6rem 0; font-size: 1rem; color: var(--text-secondary); }
         .node-details span { color: var(--text-tertiary); font-weight: 700; width: 100px; display: inline-block; }
@@ -1083,7 +1084,7 @@ const Blog: React.FC = () => {
         .submit-btn-premium:disabled { opacity: 0.5; cursor: not-allowed; }
 
         .status-banner-tech { padding: 1.2rem; border-radius: 15px; margin-bottom: 3rem; display: flex; align-items: center; gap: 1rem; font-weight: 700; }
-        .status-banner-tech.success { background: rgba(0, 230, 118, 0.1); color: var(--pk-green); border: 1px solid var(--pk-green); }
+        .status-banner-tech.success { background: var(--pk-green-glow-subtle); color: var(--pk-green); border: 1px solid var(--pk-green); }
         .status-banner-tech.error { background: rgba(255, 77, 77, 0.1); color: #ff4d4d; border: 1px solid #ff4d4d; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -1125,7 +1126,7 @@ const Blog: React.FC = () => {
         .back-btn-tech:hover {
           border-color: var(--pk-green);
           color: var(--pk-green);
-          background: rgba(0, 230, 118, 0.05);
+          background: var(--pk-green-glow-subtle);
           transform: translateX(-4px);
         }
 
@@ -1267,7 +1268,7 @@ const Blog: React.FC = () => {
         .collage-card:hover {
           transform: translateY(-5px) scale(1.05);
           border-color: var(--pk-green);
-          box-shadow: 0 10px 25px rgba(0, 230, 118, 0.15);
+          box-shadow: 0 10px 25px var(--pk-green-glow);
         }
 
         .collage-card:hover img {
@@ -1301,7 +1302,7 @@ const Blog: React.FC = () => {
           transform: translate(-50%, -50%);
           width: 60%;
           height: 60%;
-          background: radial-gradient(circle, rgba(0, 230, 118, 0.08) 0%, transparent 70%);
+          background: radial-gradient(circle, var(--pk-green-glow-subtle) 0%, transparent 70%);
           pointer-events: none;
         }
 
@@ -1344,6 +1345,7 @@ const Blog: React.FC = () => {
         }
 
         .scanlines {
+          display: none;
           position: absolute;
           inset: 0;
           background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.12) 50%), 
@@ -1367,8 +1369,8 @@ const Blog: React.FC = () => {
 
         .gallery-cloud-viewport .memory-card:hover .card-inner {
           transform: scale(1.18) rotate(0deg) translateY(-10px);
-          border-color: var(--pk-green, #00e676);
-          box-shadow: 0 20px 45px rgba(0, 230, 118, 0.25);
+          border-color: var(--pk-green);
+          box-shadow: 0 20px 45px var(--pk-green-glow);
         }
 
         .gallery-cloud-viewport .memory-card:hover img {
@@ -1430,7 +1432,7 @@ const Blog: React.FC = () => {
           content: '';
           position: absolute;
           inset: 0;
-          background: radial-gradient(circle at 50% 50%, rgba(0, 230, 118, 0.05) 0%, transparent 60%);
+          background: radial-gradient(circle at 50% 50%, var(--pk-green-glow-subtle) 0%, transparent 60%);
           pointer-events: none;
         }
 
@@ -1484,4 +1486,4 @@ const Blog: React.FC = () => {
   );
 };
 
-export default Blog;
+export default EventsComponent;

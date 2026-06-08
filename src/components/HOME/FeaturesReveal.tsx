@@ -93,7 +93,7 @@ const FeaturesReveal = () => {
         }
 
         .feature-number {
-          font-family: 'Space Grotesk', sans-serif;
+          font-family: 'Outfit', sans-serif;
           font-size: 3rem;
           font-weight: 900;
           color: var(--border-glow);
@@ -118,7 +118,7 @@ const FeaturesReveal = () => {
         }
       `}</style>
 
-      <h2 className="section-title">The <span className="text-gradient">Protocol</span></h2>
+      <h2 className="section-title">Our <span className="text-gradient">Core Pillars</span></h2>
       <div className="features-grid-tech">
         {features.map((f, i) => (
           <div key={i} className="feature-card-tech">

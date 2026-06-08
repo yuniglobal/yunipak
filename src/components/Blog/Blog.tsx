@@ -262,7 +262,7 @@ const Blog: React.FC = () => {
         .back-btn-tech:hover {
           border-color: var(--pk-green);
           color: var(--pk-green);
-          background: rgba(0, 230, 118, 0.05);
+          background: var(--pk-green-glow-subtle);
           transform: translateX(-4px);
         }
 
@@ -403,7 +403,7 @@ const Blog: React.FC = () => {
         .collage-card:hover {
           transform: translateY(-5px) scale(1.05);
           border-color: var(--pk-green);
-          box-shadow: 0 10px 25px rgba(0, 230, 118, 0.15);
+          box-shadow: 0 10px 25px var(--pk-green-glow);
         }
 
         .collage-card:hover img {
@@ -425,7 +425,7 @@ const Blog: React.FC = () => {
           content: '';
           position: absolute;
           inset: 0;
-          background: radial-gradient(circle at 50% 50%, rgba(0, 230, 118, 0.05) 0%, transparent 60%);
+          background: radial-gradient(circle at 50% 50%, var(--pk-green-glow-subtle) 0%, transparent 60%);
           pointer-events: none;
         }
 
@@ -465,7 +465,7 @@ const Blog: React.FC = () => {
           background: var(--pk-green);
           color: #000;
           transform: translateY(-2px);
-          box-shadow: 0 5px 15px rgba(0, 230, 118, 0.3);
+          box-shadow: 0 5px 15px var(--pk-green-glow);
         }
 
         .blog-category-badge-premium {
@@ -526,7 +526,7 @@ const Blog: React.FC = () => {
         .glimpse-overlay {
           position: absolute;
           inset: 0;
-          background: rgba(0, 230, 118, 0.4);
+          background: rgba(12, 98, 56, 0.4);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -543,7 +543,7 @@ const Blog: React.FC = () => {
         .glimpse-thumbnail:hover {
           transform: translateY(-2px);
           border-color: var(--pk-green);
-          box-shadow: 0 4px 12px rgba(0, 230, 118, 0.2);
+          box-shadow: 0 4px 12px var(--pk-green-glow);
         }
 
         .glimpse-thumbnail:hover img {
