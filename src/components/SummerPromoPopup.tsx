@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, ArrowRight, Sparkles, ShieldCheck, Send, Gift, Award } from 'lucide-react';
+import { X, ArrowRight, Sparkles, ShieldCheck, Send, Award } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import confetti from 'canvas-confetti';
 
@@ -13,7 +13,7 @@ const SummerPromoPopup: React.FC = () => {
   const navigate = useNavigate();
 
   const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbxv3FVEPexjV4hLcAWNj6FafStyFzqzrJWzo-Zk8FJFOWkxw-mh9bxNi-ZYbwnLHyfzxg/exec';
-  const COUPON_CODE = 'SUBWAY-20';
+  const COUPON_CODE = '';
 
   useEffect(() => {
     // Show popup after 1.5 seconds if not dismissed during current session
@@ -622,40 +622,37 @@ const SummerPromoPopup: React.FC = () => {
               </button>
             </div>
 
-            {/* Column 2: Newsletter with Subway Coupon */}
+            {/* Column 2: Newsletter */}
             <div className="popup-column">
               <div className="column-content">
                 <div className="popup-badge blue-badge">
                   <div className="badge-pulse"></div>
-                  🎁 Exclusive Offer
+                  📢 Newsletter
                 </div>
                 <h3 className="column-title">Welcome to YUNIVERSE</h3>
                 
                 {isSubscribed ? (
                   <div className="congrats-notification-card">
                     <div className="congrats-icon-wrap">
-                      <Gift size={24} />
+                      <ShieldCheck size={24} />
                     </div>
                     <div className="congrats-text-wrap">
-                      <h4 className="congrats-title">Congratulations! 🥳</h4>
+                      <h4 className="congrats-title">Subscription Active! 🥳</h4>
                       <p className="congrats-message">
-                        You unlocked <strong>20% OFF on Subway!</strong>
+                        Thank you for joining the YUNIVERSE newsletter.
                       </p>
                       <p className="congrats-subtext">
-                        Show this notification to the nearest usher to claim your discount.
+                        We will send you updates on new programs, events, and resources.
                       </p>
-                      <div className="congrats-coupon">
-                        Code: {COUPON_CODE}
-                      </div>
                     </div>
                   </div>
                 ) : (
                   <>
                     <p className="column-desc" style={{ color: 'var(--pk-green-light)', fontWeight: 800, marginBottom: '0.5rem', minHeight: 'auto' }}>
-                      Signup to YUNIVERSE for 20% Off on Subway!
+                      Join the YUNIVERSE Community!
                     </p>
                     <p className="column-desc" style={{ fontSize: '0.82rem', minHeight: 'auto', marginBottom: '1.2rem', color: 'var(--text-secondary)' }}>
-                      Subscribe to our newsletter and unlock your 20% Subway discount coupon instantly.
+                      Subscribe to our newsletter to receive exclusive updates, curriculum announcements, and insights.
                     </p>
                     
                     <form className="popup-form" onSubmit={handleSubscribe}>
@@ -681,8 +678,8 @@ const SummerPromoPopup: React.FC = () => {
                       </div>
                       {errorMsg && <div className="popup-error-msg">{errorMsg}</div>}
                       <button type="submit" className="popup-submit-btn" disabled={isSubmitting}>
-                        {isSubmitting ? 'Verifying...' : (
-                          <>Claim 20% Off <Send size={16} /></>
+                        {isSubmitting ? 'Subscribing...' : (
+                          <>Subscribe <Send size={16} /></>
                         )}
                       </button>
                     </form>

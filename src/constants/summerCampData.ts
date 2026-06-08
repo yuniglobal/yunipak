@@ -212,33 +212,75 @@ export const summerCampCourses: SummerCampCourse[] = [
   },
   {
     id: "sc-softskills",
-    title: "Soft Skills & Freelancing Mindset",
+    title: "7 — Soft Skills & Communication",
     price: "PKR 11,999",
     priceLabel: "per module",
     category: "Soft Skills",
     icon: "fa-lightbulb",
-    description: "Build critical thinking, leadership, teamwork, and freelancing readiness through a structured 8-week modular program.",
+    description: "Build critical thinking, leadership, teamwork, and personal branding through a structured 6-week modular program.",
     imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=400&fit=crop&auto=format",
-    duration: "8 Weeks",
+    duration: "6 Weeks",
     sessions: "3–4 Sessions/Week",
     sessionLength: "1.5 hrs/session",
     level: "Beginner to Intermediate",
     isModular: true,
     subcategories: [
       {
-        title: "Module 1: Critical Thinking & Problem Solving (Weeks 1–3)",
-        topics: ["Design thinking (Empathise–Define–Ideate–Prototype–Test)", "Root cause analysis (5-Whys)", "Structured decision-making frameworks", "Real Pakistan business case challenges", "Creative problem solving"],
-        skills: ["Complete a design thinking challenge for a real local problem — presented to peers"],
+        title: "Module 1: Critical Thinking & Problem Solving (Weeks 1–2)",
+        topics: [
+          "Design thinking (Empathise–Define–Ideate–Prototype–Test)",
+          "Root cause analysis (5 Whys)",
+          "Structured decision-making frameworks",
+          "Creative problem-solving techniques",
+          "Real-world business case studies"
+        ],
+        skills: [
+          "Analyze problems systematically",
+          "Identify root causes and propose effective solutions",
+          "Apply design thinking to real-world challenges",
+          "Make informed decisions using structured frameworks",
+          "Present solutions confidently to peers"
+        ],
       },
       {
-        title: "Module 2: Leadership & Teamwork (Weeks 4–6)",
-        topics: ["Agile sprint methodology", "Team roles and dynamics", "Conflict resolution strategies", "Giving and receiving feedback", "Cross-functional collaboration, delegation, peer mentoring"],
-        skills: ["Lead a 2-week team project sprint — graded on leadership quality and collaboration"],
+        title: "Module 2: Leadership & Teamwork (Weeks 3–4)",
+        topics: [
+          "Team roles and dynamics",
+          "Leadership styles",
+          "Conflict resolution strategies",
+          "Giving and receiving feedback",
+          "Cross-functional collaboration",
+          "Delegation and peer mentoring"
+        ],
+        skills: [
+          "Lead teams effectively toward shared goals",
+          "Collaborate productively with diverse team members",
+          "Resolve conflicts professionally",
+          "Delegate tasks and manage responsibilities",
+          "Provide constructive feedback and mentorship"
+        ],
       },
       {
-        title: "Module 3: Personal Branding & Freelancing (Weeks 7–8)",
-        topics: ["LinkedIn profile build and optimisation", "Upwork and Fiverr profile setup", "Portfolio writing", "Rate setting (market research)", "Proposal writing, client communication, first client strategy"],
-        skills: ["Leave camp with a complete LinkedIn, Upwork profile, and first proposal submitted live"],
+        title: "Module 3: Personal Branding (Weeks 5–6)",
+        topics: [
+          "Personal branding",
+          "Identifying strengths",
+          "LinkedIn optimization",
+          "Portfolio creation",
+          "Digital presence",
+          "Professional networking",
+          "Personal communication",
+          "Content creation"
+        ],
+        skills: [
+          "Build a strong personal brand",
+          "Create a professional LinkedIn profile",
+          "Develop a compelling portfolio",
+          "Improve professional communication",
+          "Grow a professional network",
+          "Strengthen online visibility",
+          "Present yourself confidently"
+        ],
       },
     ],
   },

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Send, Gift, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Send, CheckCircle, AlertTriangle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbxv3FVEPexjV4hLcAWNj6FafStyFzqzrJWzo-Zk8FJFOWkxw-mh9bxNi-ZYbwnLHyfzxg/exec';
 
-const COUPON_CODE = 'SUBWAY-20';
+const COUPON_CODE = '';
 
 const Newsletter: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -48,7 +48,7 @@ const Newsletter: React.FC = () => {
 
       setStatus({
           type: 'success',
-          message: `Congratulations 🥳\n\nYou unlocked 20% OFF at Subway, AeroFusion!\n\nShow this notification to the nearest usher to claim your discount!`
+          message: `Thank you for subscribing! 🥳\n\nYou have successfully joined the YUNIVERSE newsletter.`
         });
 
         // Party popper animation confetti (dual burst)
@@ -568,11 +568,11 @@ const Newsletter: React.FC = () => {
           </h2>
 
           <p className="newsletter-desc" style={{ color: 'var(--pk-green-light)', fontWeight: 800, fontSize: '1.2rem', marginBottom: '0.8rem' }}>
-            Signup to YUNIVERSE for 20% Off on Subway!
+            Join the YUNIVERSE Community!
           </p>
 
           <p className="newsletter-desc" style={{ marginTop: 0 }}>
-            Subscribe to our newsletter to receive exclusive updates and unlock your 20% Subway discount coupon instantly.
+            Subscribe to our newsletter to receive exclusive updates, curriculum announcements, and insights.
           </p>
 
           <form className="newsletter-form" onSubmit={handleSubscribe}>
@@ -600,7 +600,7 @@ const Newsletter: React.FC = () => {
 
             <button type="submit" className="newsletter-submit-btn" disabled={isSubmitting}>
               {isSubmitting ? 'Subscribing...' : (
-                <>Subscribe & Get Coupon <Send size={18} /></>
+                <>Subscribe <Send size={18} /></>
               )}
             </button>
           </form>
@@ -629,19 +629,16 @@ const Newsletter: React.FC = () => {
             {status.type === 'success' ? (
               <div className="congrats-notification-card">
                 <div className="congrats-icon-wrap">
-                  <Gift size={24} />
+                  <CheckCircle size={24} />
                 </div>
                 <div className="congrats-text-wrap">
-                  <h4 className="congrats-title">Congratulations! 🥳</h4>
+                  <h4 className="congrats-title">Subscription Active! 🥳</h4>
                   <p className="congrats-message">
-                    You unlocked <strong>20% OFF on Subway!</strong>
+                    Thank you for joining the YUNIVERSE newsletter.
                   </p>
                   <p className="congrats-subtext">
-                    Show this notification to the nearest usher to claim your discount.
+                    We will send you updates on new programs, events, and resources.
                   </p>
-                  <div className="congrats-coupon">
-                    Code: {COUPON_CODE}
-                  </div>
                 </div>
               </div>
             ) : (

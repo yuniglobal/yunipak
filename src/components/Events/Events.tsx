@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AnimatedTitle from "../AnimatedTitle";
@@ -173,48 +173,14 @@ const blogPosts: BlogPost[] = [
   },
 ];
 
-const galleryImages = [
-  { id: 'g1', src: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80", alt: "Morning setups", size: "md" as const, x: 10, y: 15 },
-  { id: 'g2', src: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&auto=format&fit=crop&q=80", alt: "Workshop launch", size: "lg" as const, x: 38, y: 10 },
-  { id: 'g3', src: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=80", alt: "Waiting booth", size: "sm" as const, x: 15, y: 55 },
-  { id: 'g4', src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop&q=80", alt: "Pitching whiteboard", size: "lg" as const, x: 68, y: 15 },
-  { id: 'g5', src: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&auto=format&fit=crop&q=80", alt: "Moiz surprise birthday", size: "md" as const, x: 45, y: 65 },
-  { id: 'g6', src: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?w=800&auto=format&fit=crop&q=80", alt: "Sunday morning kickoff", size: "sm" as const, x: 82, y: 52 },
-  { id: 'g7', src: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80", alt: "Moiz session hype", size: "md" as const, x: 28, y: 45 },
-  { id: 'g8', src: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&auto=format&fit=crop&q=80", alt: "Refreshment breaks", size: "sm" as const, x: 65, y: 50 },
-  { id: 'g9', src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop&q=80", alt: "Grand lobby wrap", size: "lg" as const, x: 42, y: 45 }
-];
-
 const Blog: React.FC = () => {
   const location = useLocation();
-  const [currentView, setCurrentView] = useState<"intel" | "registration" | "yunity-blog" | "yunity-gallery">("intel");
+  const navigate = useNavigate();
+  const [currentView, setCurrentView] = useState<"intel" | "registration">("intel");
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [visiblePosts, setVisiblePosts] = useState<number>(6);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
-
-  useEffect(() => {
-    if (currentView === "yunity-gallery") {
-      const cards = document.querySelectorAll('.memory-card');
-      if (cards.length > 0) {
-        gsap.fromTo(cards,
-          {
-            opacity: 0,
-            scale: 0.5,
-            y: 40
-          },
-          {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            duration: 1.0,
-            stagger: 0.15,
-            ease: "back.out(1.7)"
-          }
-        );
-      }
-    }
-  }, [currentView]);
 
   const [formData, setFormData] = useState<EnrollmentData>({
     fullName: "", fatherName: "", cnic: "", dateOfBirth: "", gender: "",
@@ -474,256 +440,6 @@ const Blog: React.FC = () => {
   );
 
 
-  const renderYunityBlogView = () => (
-    <div className="yunity-blog-detail-view animate-fade-in-up">
-      <div className="blog-detail-container-premium">
-        <button onClick={() => { setCurrentView("intel"); window.scrollTo(0, 0); }} className="back-btn-tech">
-          <span className="arrow">←</span> BACK TO INTEL
-        </button>
-
-        <header className="blog-detail-header">
-          <span className="blog-category-badge-premium" style={{ background: 'var(--pk-green)' }}>
-            <span className="badge-icon">📷</span>
-            <span className="badge-text">Summit Behind-the-Scenes</span>
-          </span>
-          <h1 className="blog-detail-title">
-            Through the Viewfinder: <span className="text-gradient">48 Hours of Chaos, Caffeine, and Creative Spark at YUNIty</span>
-          </h1>
-          <div className="blog-detail-meta">
-            <span className="meta-author">By the Camera Guy</span>
-            <span className="meta-separator">/</span>
-            <span className="meta-date">May 18, 2026</span>
-            <span className="meta-separator">/</span>
-            <span className="meta-readtime">8 min read</span>
-          </div>
-        </header>
-
-        {/* Featured Image */}
-        <div className="blog-detail-featured-image">
-          <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1600&auto=format&fit=crop&q=80" alt="YUNIty Event Viewfinder" />
-          <div className="scanline-overlay"></div>
-          <div className="image-vignette"></div>
-        </div>
-
-        {/* Article Body */}
-        <div className="blog-detail-body">
-          <div className="blog-day-section">
-            <h2 className="day-title"><span className="text-gradient">DAY 1</span> : Saturday, May 16th</h2>
-            <h3 className="section-subtitle">08:00 AM — Morning Setup Chaos</h3>
-            <p>
-              Fingers were freezing, making it a pain to dial in the exposure. By 8 AM, the lobby was a total madhouse—less tech summit, more like a logistics warehouse gone wild. Tripod bags, slider cases, and loose batteries were piled up by the doors. The YUNIty crew was running around with walkie-talkies, taping down thick power lines with rolls of gaffer tape, while volunteers in slightly oversized t-shirts tried to sort out the registration spreadsheets.
-            </p>
-            <p>
-              I grabbed my camera. Through the viewfinder, the lobby was just a blur of high-contrast motion. I spun the focus ring, catching a volunteer trying to balance a stack of lanyards while taking a desperate sip of black coffee. *Click.* Frame one: the raw, tired, caffeine-fueled start of Day 1.
-            </p>
-
-            <div className="blog-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=1000&auto=format&fit=crop&q=80" alt="Volunteers setting up the event space" />
-              <span className="image-caption">Frame #01: Morning rush and setup.</span>
-            </div>
-
-            <h3 className="section-subtitle">10:00 AM — Main Stage Kickoff</h3>
-            <p>
-              By 10, the vibe completely shifted. The setup noise settled into a low, excited buzz inside the main hall. When the stage lights kicked on and the opening slides hit the screen, I was already huddled in the corner, kneeling on the hard concrete with my 70-200mm lens ready to go.
-            </p>
-            <p>
-              The workshops started without warning. Luckily, these weren't those dry corporate presentations where the speaker reads bullet points. The speakers were walking the stage, gesture-heavy, getting right in the crowd's face. I tracked the front rows: rows of students leaning in, laptops casting a cool glow on their faces, furiously copying down code blocks and system diagrams. Every time a new concept dropped, you could hear the collective rustle of notebooks and rapid typing—it was like a satisfying background track.
-            </p>
-
-            <div className="blog-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1000&auto=format&fit=crop&q=80" alt="Students focused on their screens during the workshop" />
-              <span className="image-caption">Frame #02: Focus and ambient glow during workshops.</span>
-            </div>
-
-            <h3 className="section-subtitle">The Beanbag Sanctuary</h3>
-            <p>
-              Right outside the main hall was the ultimate chill spot: the waiting area. If you wanted to see what YUNIty was actually about, this was the place. My favorite shots of the day came from this little sunlit nook, which was basically just a pile of beanbags, empty cans, and laptops balanced on knees.
-            </p>
-            <p>
-              I swapped to a wide 24mm lens to capture the chaos. People who were complete strangers two hours ago were sitting shoulder-to-shoulder on the floor, debating IDE themes, compiler errors, and where to get the best wings in town. No corporate hierarchy, no egos—just mentors in hoodies sitting on the floor with nervous freshmen, laughing over database horror stories.
-            </p>
-
-            <div className="blog-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1000&auto=format&fit=crop&q=80" alt="Attendees collaborating in the waiting booth" />
-              <span className="image-caption">Frame #03: Casual networking and team banter.</span>
-            </div>
-
-            <h3 className="section-subtitle">Late Afternoon — Whiteboards & Pressure</h3>
-            <p>
-              When the afternoon sun started hitting the windows, the mood turned serious. The pitching challenge was announced, and the room split into messy working groups. The whiteboards came out in force.
-            </p>
-            <p>
-              You could practically feel the stress in the air. I walked slow through the rows, trying to shoot silently. I got shots of marker ink on glass, fingers flying on keyboards, and foreheads creased in deep concentration. Groups huddled around laptops in circles on the floor like campfires. They had to condense complex tech stacks into a three-minute pitch, and the time limit was definitely getting to them. No tech-glamour here—just raw, gritty teamwork.
-            </p>
-
-            <div className="blog-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1000&auto=format&fit=crop&q=80" alt="Teammates hashing out ideas on a whiteboard" />
-              <span className="image-caption">Frame #04: Distilling systems under time pressure.</span>
-            </div>
-
-            <h3 className="section-subtitle">Midnight Surprise</h3>
-            <p>
-              By midnight, the place went quiet, but the core YUNIty crew was still in the main hub, buried in empty pizza boxes and energy drink cans. Exhaustion was hitting hard, but we had one last thing to do.
-            </p>
-            <p>
-              Out of nowhere, the lights cut out. A flickering orange glow came from the hallway. It was Moiz carrying a birthday cake. I cranked my ISO to 6400, opened my lens wide open to f/1.8, and prayed the autofocus would hold. The candle shadows danced on everyone's faces as we sang. I just kept firing the shutter, capturing Moiz's shocked face and the tired smiles around him. It was a nice, warm break in a crazy weekend sprint.
-            </p>
-
-            <div className="blog-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1000&auto=format&fit=crop&q=80" alt="Moiz blowing out birthday candles at midnight" />
-              <span className="image-caption">Frame #05: Midnight candles and team celebrations.</span>
-            </div>
-          </div>
-
-          <hr className="blog-divider" />
-
-          <div className="blog-day-section">
-            <h2 className="day-title"><span className="text-gradient">DAY 2</span> : Sunday, May 17th</h2>
-
-            <h3 className="section-subtitle">09:00 AM — The Second Wind</h3>
-            <p>
-              Sunday morning felt heavy. My camera bag felt three times heavier than yesterday. People stumbled in slowly, bloodshot eyes, holding paper cups of hot chai. We were running on fumes, but everyone knew Day 2 was the final stretch.
-            </p>
-            <p>
-              I stood by the entrance, shooting arrivals: people rubbing their eyes, yawning, but still throwing a tired peace sign at the camera. Wiped down the lenses, cleared the SD cards, popped in fresh batteries, and we were back in action.
-            </p>
-
-            <div className="blog-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?w=1000&auto=format&fit=crop&q=80" alt="Sunrise coffee cups and morning arrivals" />
-              <span className="image-caption">Frame #06: Coffee first, compile later.</span>
-            </div>
-
-            <h3 className="section-subtitle">The Morning Wake-up Call</h3>
-            <p>
-              Any remaining sleepiness evaporated the second Moiz grabbed the mic. Seriously, I don't know what caffeine he was on, but the energy was wild. In five minutes flat, he had everyone out of their chairs doing ridiculous physical icebreakers to wake up.
-            </p>
-            <p>
-              I ran along the walls, trying to shoot the madness. The hall was a wall of noise—laughing, shouting, doing bizarre hand signs. Got some great shots of genuine, unpolished smiles: people cracking up, pointing at each other, and high-fiving. The ice didn't just break; it shattered.
-            </p>
-
-            <div className="blog-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1000&auto=format&fit=crop&q=80" alt="Students high fiving and laughing in icebreaker" />
-              <span className="image-caption">Frame #07: Hype circles and morning energy.</span>
-            </div>
-
-            <h3 className="section-subtitle">Fueling Up</h3>
-            <p>
-              Then, lunchtime—the best part. A huge spread of hot food, snacks, and cold drinks showed up, and all the intense coding focus vanished into a noisy lunch chat.
-            </p>
-            <p>
-              I snapped shots of plates piled dangerously high, guys leaning against columns talking with their hands, and teams posing with their custom flags. It was the complete opposite of the quiet workspaces—loud, warm, smelling of spices and fresh mint mocktails.
-            </p>
-
-            <div className="blog-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1000&auto=format&fit=crop&q=80" alt="A spread of snacks and tea at the refreshment break" />
-              <span className="image-caption">Frame #08: Lunch breaks and team syncs.</span>
-            </div>
-
-            <h3 className="section-subtitle">The Infamous Taste Test</h3>
-            <p>
-              We had to capture the drink experiment. The crew had set up a table of home-brewed, neon-colored energy drinks and weird herbal teas, daring people to try them. The faces they made were absolute gold.
-            </p>
-            <p>
-              I stood a few feet back with a fast shutter speed, waiting for the exact split-second they took a sip. They'd expect normal sweet juice, then get hit with sour vinegar or random spices. Got some hilarious frames: squinted eyes, wrinkled noses, and instant shock, followed by everyone laughing. Easily the funniest moment of the afternoon.
-            </p>
-
-            {/* Collage Section */}
-            <div className="drink-collage-grid">
-              <div className="collage-card"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop" alt="Grimace 1" /></div>
-              <div className="collage-card"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop" alt="Grimace 2" /></div>
-              <div className="collage-card"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop" alt="Grimace 3" /></div>
-              <div className="collage-card"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop" alt="Grimace 4" /></div>
-            </div>
-            <span className="image-caption text-center">Frame #09: Taste-test reactions: squinting eyes and pure shock.</span>
-
-            <div className="gallery-cta-card card-glow-border">
-              <div className="gallery-cta-content">
-                <h3>YUNIty 2026 Interactive Memory Cloud</h3>
-                <p>Step into our fully interactive, high-fidelity visual archive. Hover to focus, zoom, and explore the raw frames of the weekend.</p>
-                <button onClick={() => { setCurrentView("yunity-gallery"); window.scrollTo(0, 0); }} className="read-more-btn-tech" style={{ margin: '0 auto' }}>
-                  Launch Memory Cloud <span className="arrow">→</span>
-                </button>
-              </div>
-            </div>
-
-            <h3 className="section-subtitle" style={{ marginTop: '5rem' }}>The Post-Event Collapse</h3>
-            <p>
-              Once the pitches were done, winners announced, and the crowd went home, the venue suddenly went dead silent. Just the YUNIty crew and volunteers left. We didn't pack up right away. We just collapsed on the cool lobby floor, leaning against the pillars.
-            </p>
-            <p>
-              I set my camera on a gear bag, threw on a wide lens, and set the self-timer to join the shot. No posed smiles here—just slouched shoulders, messy hair, and genuine smiles of relief. We sat in a circle around the gear, recounting the absolute chaos of the last 48 hours. For me, that was the realest photo of the whole event: a completely exhausted team, tight-knit, sharing the quiet after the storm.
-            </p>
-
-            <div className="blog-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1000&auto=format&fit=crop&q=80" alt="The YUNIty core team sitting on the floor smiling" />
-              <span className="image-caption">Frame #10: The final lobby sit-down group wrap.</span>
-            </div>
-          </div>
-        </div>
-
-        <button onClick={() => { setCurrentView("intel"); window.scrollTo(0, 0); }} className="back-btn-tech bottom-back">
-          ← BACK TO INTEL
-        </button>
-      </div>
-    </div>
-  );
-
-  const renderYunityGalleryView = () => (
-    <div className="yunity-gallery-view animate-fade-in-up">
-      <div className="gallery-container-premium">
-        <button onClick={() => { setCurrentView("intel"); window.scrollTo(0, 0); }} className="back-btn-tech">
-          <span className="arrow">←</span> BACK TO INTEL
-        </button>
-
-        <header className="gallery-header-premium">
-          <span className="blog-category-badge-premium" style={{ background: 'var(--pk-green)' }}>
-            <span className="badge-icon">📷</span>
-            <span className="badge-text">Interactive Showcase</span>
-          </span>
-          <h1 className="gallery-title-premium">
-            YUNIty 2026: <span className="text-gradient">Memory Cloud</span>
-          </h1>
-          <p className="gallery-subtitle-premium">
-            An interactive, high-fidelity visual archive. Hover over the floating frames to bring key moments into sharp focus, clearing the lens depth-of-field and enlarging the memory.
-          </p>
-        </header>
-
-        {/* Interactive Gallery Cloud */}
-        <div className="gallery-cloud-viewport" style={{ marginTop: '2rem', marginBottom: '2rem' }}>
-          <div className="cloud-ambient-glow"></div>
-          {galleryImages.map((photo) => {
-            const randomRot = (photo.id === 'g1' ? 4 : photo.id === 'g2' ? -3 : photo.id === 'g3' ? 5 : photo.id === 'g4' ? -6 : photo.id === 'g5' ? 2 : photo.id === 'g6' ? -4 : photo.id === 'g7' ? 6 : photo.id === 'g8' ? -2 : 3);
-            return (
-              <div
-                key={photo.id}
-                className={`memory-card size-${photo.size}`}
-                style={{
-                  left: `${photo.x}%`,
-                  top: `${photo.y}%`,
-                  transform: `rotate(${randomRot}deg)`,
-                  '--card-rotation': `${randomRot}deg`,
-                } as React.CSSProperties}
-              >
-                <div className="card-inner">
-                  <img src={photo.src} alt={photo.alt} loading="lazy" />
-                  <div className="vignette"></div>
-                  <div className="scanlines"></div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="gallery-footer-actions">
-          <button onClick={() => { setCurrentView("yunity-blog"); window.scrollTo(0, 0); }} className="back-btn-tech" style={{ margin: '0 auto' }}>
-            READ THE STORY <span className="arrow">→</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-
-
   return (
     <section className={`events-premium-section ${submitStatus ? 'modal-open' : ''}`}>
       <AnimatedBackground />
@@ -731,10 +447,6 @@ const Blog: React.FC = () => {
 
       {currentView === "registration" ? (
         renderRegistrationView()
-      ) : currentView === "yunity-blog" ? (
-        renderYunityBlogView()
-      ) : currentView === "yunity-gallery" ? (
-        renderYunityGalleryView()
       ) : (
         <div className="events-container">
         {/* Header */}
@@ -768,11 +480,9 @@ const Blog: React.FC = () => {
               className={`blog-card-premium card-glow-border ${post.id === "blog-yunity-2026" || post.id === "gallery-yunity-2026" ? "clickable-card" : ""}`}
               onClick={() => {
                 if (post.id === "blog-yunity-2026") {
-                  setCurrentView("yunity-blog");
-                  window.scrollTo(0, 0);
+                  navigate("/blog");
                 } else if (post.id === "gallery-yunity-2026") {
-                  setCurrentView("yunity-gallery");
-                  window.scrollTo(0, 0);
+                  navigate("/gallery");
                 }
               }}
             >
@@ -806,8 +516,7 @@ const Blog: React.FC = () => {
                       <button 
                         onClick={(e) => {
                           e.stopPropagation();
-                          setCurrentView("yunity-blog");
-                          window.scrollTo(0, 0);
+                          navigate("/blog");
                         }}
                         className="read-more-btn-tech"
                       >
@@ -817,8 +526,7 @@ const Blog: React.FC = () => {
                       <button 
                         onClick={(e) => {
                           e.stopPropagation();
-                          setCurrentView("yunity-gallery");
-                          window.scrollTo(0, 0);
+                          navigate("/gallery");
                         }}
                         className="read-more-btn-tech"
                       >

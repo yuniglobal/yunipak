@@ -184,7 +184,6 @@ function handleNewsletter(data) {
     const sheet = getOrCreateNewsletterSheet();
     const email = data.email || "";
     const phone = data.phone || "";
-    const couponCode = data.couponCode || "SUBWAY-20";
     
     if (!email) {
       return createJSONResponse({ success: false, message: "Email is required." });
@@ -209,7 +208,7 @@ function handleNewsletter(data) {
     // Record subscription
     var emailSent = "No";
     try {
-      sendNewsletterConfirmationEmail(email, phone, couponCode);
+      sendNewsletterConfirmationEmail(email, phone);
       emailSent = "Yes";
     } catch (emailError) {
       console.log("Yuniverse email error: " + emailError.toString());
@@ -221,7 +220,7 @@ function handleNewsletter(data) {
       new Date(),
       email,
       phone,
-      couponCode,
+      "", // No coupon code
       emailSent,
       data.timestamp || new Date().toISOString()
     ];
@@ -230,8 +229,7 @@ function handleNewsletter(data) {
     
     return createJSONResponse({
       success: true,
-      message: "Yuniverse subscription successful!",
-      couponCode: couponCode
+      message: "Yuniverse subscription successful!"
     });
     
   } catch (error) {
@@ -242,8 +240,8 @@ function handleNewsletter(data) {
   }
 }
 
-function sendNewsletterConfirmationEmail(email, phone, couponCode) {
-  var subject = "Congratulations! 🥳 You unlocked 20% OFF at Subway, AeroFusion!";
+function sendNewsletterConfirmationEmail(email, phone) {
+  var subject = "Welcome to YUNIVERSE! 🥳";
   
   var htmlBody = '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>'
     + '<body style="margin:0;padding:0;background-color:#0a0d0b;font-family:Arial,Helvetica,sans-serif;">'
@@ -253,22 +251,15 @@ function sendNewsletterConfirmationEmail(email, phone, couponCode) {
     // Header
     + '<tr><td style="background:linear-gradient(135deg,#008f4c,#00e676);padding:30px 40px;text-align:center;">'
     + '<h1 style="margin:0;color:#000;font-size:28px;font-weight:900;letter-spacing:-0.5px;">Yuniverse</h1>'
-    + '<p style="margin:8px 0 0;color:rgba(0,0,0,0.7);font-size:14px;font-weight:600;">Subway AeroFusion Offer</p>'
+    + '<p style="margin:8px 0 0;color:rgba(0,0,0,0.7);font-size:14px;font-weight:600;">Welcome to the Community</p>'
     + '</td></tr>'
     
     // Body
     + '<tr><td style="padding:40px 40px 30px;">'
-    + '<h2 style="margin:0 0 12px;color:#fff;font-size:22px;font-weight:800;">Congratulations 🥳</h2>'
+    + '<h2 style="margin:0 0 12px;color:#fff;font-size:22px;font-weight:800;">Welcome to Yuniverse! 🥳</h2>'
     + '<p style="color:#a0aab2;font-size:16px;line-height:1.7;margin:0 0 25px;">'
-    + 'You unlocked <strong>20% OFF</strong> at Subway, AeroFusion!<br><br>'
-    + 'Show this notification to the nearest usher to claim your discount.</p>'
-    
-    // Coupon Box
-    + '<div style="background:rgba(0,143,76,0.08);border:2px dashed rgba(0,230,118,0.4);border-radius:14px;padding:20px;text-align:center;margin:0 0 25px;">'
-    + '<p style="margin:0 0 8px;color:#a0aab2;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">Your Exclusive Discount Code</p>'
-    + '<p style="margin:0;color:#00e676;font-size:28px;font-weight:900;letter-spacing:0.1em;font-family:monospace;">' + couponCode + '</p>'
-    + '<p style="margin:8px 0 0;color:#a0aab2;font-size:13px;">Show this screen or code at Subway, AeroFusion</p>'
-    + '</div>'
+    + "Thank you for subscribing to our newsletter. We're excited to have you as part of our community.<br><br>"
+    + "Stay tuned for updates, exclusive opportunities, and content delivered straight to your inbox!</p>"
     
     // CTA
     + '<div style="text-align:center;margin:25px 0 15px 0;">'

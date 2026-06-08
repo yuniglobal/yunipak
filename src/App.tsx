@@ -90,7 +90,7 @@ function App() {
         </Routes>
       </main>
       <Newsletter />
-      {location.pathname !== '/Aboutus' && <Footer />}
+      <Footer />
     </div>
   );
 }
