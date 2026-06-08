@@ -560,7 +560,7 @@ const AboutUsPage: React.FC = () => {
             {/* Partner 2: Fazaia Bilquis College */}
             <div className="partner-showcase-card">
               <div className="partner-img-wrapper">
-                <span className="partner-fallback-logo">FBC</span>
+                <img src="/images/fbc.png" alt="FBC Logo" />
               </div>
               <span className="partner-subtext">Fazaia Bilquis College</span>
             </div>
@@ -568,7 +568,7 @@ const AboutUsPage: React.FC = () => {
             {/* Partner 3: Nerdflow */}
             <div className="partner-showcase-card">
               <div className="partner-img-wrapper">
-                <span className="partner-fallback-logo">Nerdflow</span>
+                <img src="/images/nerdflow.png" alt="Nerdflow Logo" />
               </div>
               <span className="partner-subtext">Tech Infrastructure</span>
             </div>
@@ -576,7 +576,7 @@ const AboutUsPage: React.FC = () => {
             {/* Partner 4: Prosmetic Solutions */}
             <div className="partner-showcase-card">
               <div className="partner-img-wrapper">
-                <span className="partner-fallback-logo">Prosmetic</span>
+                <img src="/images/prosmetic.png" alt="Prosmetic Logo" />
               </div>
               <span className="partner-subtext">Solutions Provider</span>
             </div>
@@ -584,7 +584,7 @@ const AboutUsPage: React.FC = () => {
             {/* Partner 5: Event Agency (Mahnoor) */}
             <div className="partner-showcase-card">
               <div className="partner-img-wrapper">
-                <span className="partner-fallback-logo">Event Agency</span>
+                <img src="/images/eventagency.png" alt="Event Agency Logo" />
               </div>
               <span className="partner-subtext">Management & Outreach</span>
             </div>
@@ -592,7 +592,7 @@ const AboutUsPage: React.FC = () => {
             {/* Partner 6: Pakistan Film Society */}
             <div className="partner-showcase-card">
               <div className="partner-img-wrapper">
-                <span className="partner-fallback-logo">PFS</span>
+                <img src="/images/pfs.png" alt="PFS Logo" />
               </div>
               <span className="partner-subtext">Pakistan Film Society</span>
             </div>
