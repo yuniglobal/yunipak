@@ -24,15 +24,6 @@ export const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbyTe6E
 
 const positions: Position[] = [
   {
-    id: "pos-1",
-    title: "Frontend Engineer",
-    department: "Engineering",
-    location: "NASTP, Pakistan",
-    type: "Full-time, On-Site",
-    description: "React, Next.js, Tailwind. Join our engineering team at NASTP to build cutting-edge web applications.",
-    category: "job"
-  },
-  {
     id: "pos-2",
     title: "Internship Programs",
     department: "Talent Development",
