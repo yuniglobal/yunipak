@@ -226,7 +226,7 @@ export const summerCampCourses: SummerCampCourse[] = [
     isModular: true,
     subcategories: [
       {
-        title: "Module 1: Critical Thinking & Problem Solving (Weeks 1–2)",
+        title: "Critical Thinking & Problem Solving",
         topics: [
           "Design thinking (Empathise–Define–Ideate–Prototype–Test)",
           "Root cause analysis (5 Whys)",
@@ -243,7 +243,7 @@ export const summerCampCourses: SummerCampCourse[] = [
         ],
       },
       {
-        title: "Module 2: Leadership & Teamwork (Weeks 3–4)",
+        title: "Leadership & Teamwork",
         topics: [
           "Team roles and dynamics",
           "Leadership styles",
@@ -261,7 +261,7 @@ export const summerCampCourses: SummerCampCourse[] = [
         ],
       },
       {
-        title: "Module 3: Personal Branding (Weeks 5–6)",
+        title: "Personal Branding",
         topics: [
           "Personal branding",
           "Identifying strengths",

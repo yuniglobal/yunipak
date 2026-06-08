@@ -416,7 +416,7 @@ const Courses: React.FC = () => {
                     
                     <div className="module-actions-premium">
                       <button onClick={() => handleEnroll(selectedCourse, sub)} className="module-enroll-btn">
-                        Enroll in Module {idx + 1} <i className="fa-solid fa-arrow-right"></i>
+                        Enroll Now <i className="fa-solid fa-arrow-right"></i>
                       </button>
                     </div>
                   </div>
