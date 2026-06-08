@@ -169,43 +169,32 @@ const Courses: React.FC = () => {
         submitData.append(key, String(value));
       });
 
-      const response = await fetch(GOOGLE_SHEETS_API, {
+      await fetch(GOOGLE_SHEETS_API, {
         method: 'POST',
-        mode: 'cors',
+        mode: 'no-cors',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: submitData,
       });
 
-      let result;
-      try {
-        result = await response.json();
-      } catch {
-        result = { success: response.ok };
-      }
-
-      if (response.ok && result.success !== false) {
-        setSubmitStatus({
-          type: 'success',
-          message: 'Your request for course registration has been successfully submitted. Our admissions counselor will contact you via WhatsApp within 24 hours to confirm your details and payment.'
-        });
-        
-        // Reset form data on success
-        setFormData({
-          fullName: "", fatherName: "", cnic: "", dateOfBirth: "", gender: "",
-          email: "", phoneNumber: "", alternatePhone: "", currentAddress: "",
-          city: "", province: "", highestQualification: "", institution: "",
-          yearOfCompletion: "", percentage: "", courseId: "", courseTitle: "",
-          coursePrice: "", paymentMethod: "bank", bankName: "N/A", bankAccountTitle: "N/A",
-          bankAccountNumber: "N/A", transactionId: "", transactionDate: new Date().toISOString().split('T')[0],
-          transactionAmount: "", currentEmployment: "", organization: "",
-          designation: "", hearAboutUs: "", referralCode: "", whyJoin: "",
-          declaration: false, timestamp: new Date().toISOString(), status: "pending",
-        });
-      } else {
-        throw new Error(result.message || 'Submission failed');
-      }
+      setSubmitStatus({
+        type: 'success',
+        message: 'Your request for course registration has been successfully submitted. Our admissions counselor will contact you via WhatsApp within 24 hours to confirm your details and payment.'
+      });
+      
+      // Reset form data on success
+      setFormData({
+        fullName: "", fatherName: "", cnic: "", dateOfBirth: "", gender: "",
+        email: "", phoneNumber: "", alternatePhone: "", currentAddress: "",
+        city: "", province: "", highestQualification: "", institution: "",
+        yearOfCompletion: "", percentage: "", courseId: "", courseTitle: "",
+        coursePrice: "", paymentMethod: "bank", bankName: "N/A", bankAccountTitle: "N/A",
+        bankAccountNumber: "N/A", transactionId: "", transactionDate: new Date().toISOString().split('T')[0],
+        transactionAmount: "", currentEmployment: "", organization: "",
+        designation: "", hearAboutUs: "", referralCode: "", whyJoin: "",
+        declaration: false, timestamp: new Date().toISOString(), status: "pending",
+      });
     } catch (error: any) {
       console.error('Submission error:', error);
       setSubmitStatus({
@@ -777,7 +766,7 @@ const Courses: React.FC = () => {
   };
 
   return (
-    <div className="courses-app-premium">
+    <div className={`courses-app-premium ${submitStatus ? 'modal-open' : ''}`}>
       {currentView === "trainings" && renderTrainingsView()}
       {currentView === "course-detail" && renderCourseDetailView()}
       {currentView === "checkout" && renderCheckoutView()}
@@ -791,6 +780,10 @@ const Courses: React.FC = () => {
           position: relative; 
           z-index: 1; 
           overflow-x: hidden;
+        }
+
+        .courses-app-premium.modal-open {
+          z-index: 1001;
         }
 
         /* --- Header Section --- */
@@ -1337,7 +1330,7 @@ const Courses: React.FC = () => {
           .module-enroll-btn { width: 100%; justify-content: center; }
 
           /* Modal mobile fixes */
-          .registration-modal-overlay { padding: 16px; }
+          .registration-modal-overlay { padding: 24px 16px; }
           .registration-modal-content { padding: 2rem 1.5rem; border-radius: 18px; gap: 1.2rem; }
           .registration-modal-icon { width: 70px; height: 70px; font-size: 2.2rem; }
           .registration-modal-icon-glow { width: 80px; height: 80px; }
@@ -1385,7 +1378,7 @@ const Courses: React.FC = () => {
           .course-title-tech { font-size: 1.35rem; }
 
           /* Modal small screen */
-          .registration-modal-overlay { padding: 12px; }
+          .registration-modal-overlay { padding: 24px 12px; }
           .registration-modal-content { padding: 1.5rem 1.2rem; border-radius: 16px; gap: 1rem; max-width: 100%; }
           .registration-modal-icon { width: 60px; height: 60px; font-size: 1.8rem; }
           .registration-modal-icon-glow { width: 70px; height: 70px; }
@@ -1403,12 +1396,13 @@ const Courses: React.FC = () => {
           bottom: 0;
           background-color: rgba(0, 0, 0, 0.85);
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           justify-content: center;
           z-index: 999999;
-          padding: 20px;
+          padding: 40px 20px;
           backdrop-filter: blur(8px);
           animation: fadeInModal 0.4s ease forwards;
+          overflow-y: auto;
         }
         
         .registration-modal-content {
@@ -1428,6 +1422,7 @@ const Courses: React.FC = () => {
           position: relative;
           overflow: hidden;
           animation: scaleInModal 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+          margin: auto;
         }
         
         .registration-modal-content.error {

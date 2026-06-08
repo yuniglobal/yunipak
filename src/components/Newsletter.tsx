@@ -37,24 +37,16 @@ const Newsletter: React.FC = () => {
       submitData.append('couponCode', COUPON_CODE);
       submitData.append('timestamp', new Date().toISOString());
 
-      const response = await fetch(GOOGLE_SHEETS_API, {
+      await fetch(GOOGLE_SHEETS_API, {
         method: 'POST',
-        mode: 'cors',
+        mode: 'no-cors',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: submitData,
       });
 
-      let result;
-      try {
-        result = await response.json();
-      } catch {
-        result = { success: response.ok };
-      }
-
-      if (response.ok && result.success !== false) {
-        setStatus({
+      setStatus({
           type: 'success',
           message: `Congratulations 🥳\n\nYou unlocked 20% OFF at Subway, AeroFusion!\n\nShow this notification to the nearest usher to claim your discount!`
         });
@@ -82,9 +74,6 @@ const Newsletter: React.FC = () => {
 
         setEmail('');
         setPhone('');
-      } else {
-        throw new Error(result.message || 'Subscription failed');
-      }
     } catch (error: any) {
       console.error('Newsletter error:', error);
       setStatus({

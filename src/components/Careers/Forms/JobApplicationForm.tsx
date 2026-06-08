@@ -139,24 +139,16 @@ const JobApplicationForm: React.FC<Props> = ({ position, onClose }) => {
         submitData.append(key, String(value));
       });
 
-      const response = await fetch(GOOGLE_SHEETS_API, {
+      await fetch(GOOGLE_SHEETS_API, {
         method: 'POST',
-        mode: 'cors',
+        mode: 'no-cors',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: submitData,
       });
 
-      let result;
-      try {
-        result = await response.json();
-      } catch {
-        result = { success: response.ok };
-      }
-
-      if (response.ok && result.success !== false) {
-          setSubmitStatus({
+      setSubmitStatus({
             type: 'success',
             message: 'Application submitted successfully for ' + position.title + '! We will contact you within 5-7 business days.'
           });
@@ -164,10 +156,6 @@ const JobApplicationForm: React.FC<Props> = ({ position, onClose }) => {
         setTimeout(() => {
           onClose();
         }, 3000);
-      } else {
-        throw new Error(result.message || 'Submission failed');
-      }
-
     } catch (error) {
       console.error('Submission error:', error);
       setSubmitStatus({ type: 'error', message: 'Error submitting application. Please try again or email us directly at careers@yunipakistan.com' });

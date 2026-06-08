@@ -163,24 +163,16 @@ const InternshipForm: React.FC<Props> = ({ position, onClose }) => {
         submitData.append(key, String(value));
       });
 
-      const response = await fetch(GOOGLE_SHEETS_API, {
+      await fetch(GOOGLE_SHEETS_API, {
         method: 'POST',
-        mode: 'cors',
+        mode: 'no-cors',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: submitData,
       });
 
-      let result;
-      try {
-        result = await response.json();
-      } catch {
-        result = { success: response.ok };
-      }
-
-      if (response.ok && result.success !== false) {
-        setSubmitStatus({
+      setSubmitStatus({
           type: 'success',
           message: 'Your application has been received! Our hiring team reviews applications on a rolling basis. Shortlisted candidates will be contacted within 7-10 business days.'
         });
@@ -188,10 +180,6 @@ const InternshipForm: React.FC<Props> = ({ position, onClose }) => {
         setTimeout(() => {
           onClose();
         }, 5000);
-      } else {
-        throw new Error(result.message || 'Submission failed');
-      }
-
     } catch (error) {
       console.error('Submission error:', error);
       setSubmitStatus({ type: 'error', message: 'Error submitting application. Please try again. If uploading large files, they might exceed limits.' });

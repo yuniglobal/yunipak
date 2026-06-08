@@ -138,24 +138,16 @@ const AmbassadorForm: React.FC<Props> = ({ position, onClose }) => {
         }
       });
 
-      const response = await fetch(GOOGLE_SHEETS_API, {
+      await fetch(GOOGLE_SHEETS_API, {
         method: 'POST',
-        mode: 'cors',
+        mode: 'no-cors',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: submitData,
       });
 
-      let result;
-      try {
-        result = await response.json();
-      } catch {
-        result = { success: response.ok };
-      }
-
-      if (response.ok && result.success !== false) {
-        setSubmitStatus({
+      setSubmitStatus({
           type: 'success',
           message: 'Thank you for applying! Our team will review your application and reach out within 5-7 business days. In the meantime, explore Yuni\'s courses and stay connected with us on LinkedIn.'
         });
@@ -163,10 +155,6 @@ const AmbassadorForm: React.FC<Props> = ({ position, onClose }) => {
         setTimeout(() => {
           onClose();
         }, 5000);
-      } else {
-        throw new Error(result.message || 'Submission failed');
-      }
-
     } catch (error) {
       console.error('Submission error:', error);
       setSubmitStatus({ type: 'error', message: 'Error submitting application. Please try again.' });

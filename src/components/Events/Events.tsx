@@ -351,14 +351,32 @@ const Blog: React.FC = () => {
         </div>
 
         {submitStatus && (
-          <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 999999, padding: '20px', backdropFilter: 'blur(4px)' }}>
-            <div style={{ backgroundColor: submitStatus.type === 'success' ? '#0f1714' : '#1a0f12', border: `1px solid ${submitStatus.type === 'success' ? 'var(--pk-green-light)' : '#ff4757'}`, borderRadius: '16px', padding: '2.5rem', maxWidth: '450px', width: '100%', textAlign: 'center', boxShadow: '0 20px 50px rgba(0,0,0,0.5)', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
-              <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: submitStatus.type === 'success' ? 'rgba(0, 143, 76, 0.1)' : 'rgba(255, 71, 87, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', color: submitStatus.type === 'success' ? 'var(--pk-green-light)' : '#ff4757' }}>
-                {submitStatus.type === 'success' ? '✓' : '⚠'}
+          <div className="registration-modal-overlay">
+            <div className={`registration-modal-content ${submitStatus.type === 'error' ? 'error' : ''}`}>
+              <div className="registration-modal-icon-wrapper">
+                <div className="registration-modal-icon-glow"></div>
+                <div className="registration-modal-icon">
+                  {submitStatus.type === 'success' ? '✓' : '⚠'}
+                </div>
               </div>
-              <h3 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 600 }}>{submitStatus.type === 'success' ? 'Registration Successful!' : 'Action Required'}</h3>
-              <p style={{ margin: 0, color: '#a0aab2', lineHeight: '1.6', fontSize: '0.95rem' }}>{submitStatus.message}</p>
-              <button type="button" onClick={() => { if (submitStatus.type === 'success') { setCurrentView("intel"); setSubmitStatus(null); } else { setSubmitStatus(null); } }} style={{ marginTop: '1rem', padding: '0.8rem 2.5rem', backgroundColor: submitStatus.type === 'success' ? 'var(--pk-green)' : '#ff4757', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '1rem', width: '100%', transition: 'all 0.2s', alignSelf: 'stretch' }}>
+              <h3 className="registration-modal-title">
+                {submitStatus.type === 'success' ? 'Registration Successful!' : 'Action Required'}
+              </h3>
+              <p className="registration-modal-message">
+                {submitStatus.message}
+              </p>
+              <button 
+                type="button" 
+                className="registration-modal-btn" 
+                onClick={() => { 
+                  if (submitStatus.type === 'success') { 
+                    setCurrentView("intel"); 
+                    setSubmitStatus(null); 
+                  } else { 
+                    setSubmitStatus(null); 
+                  } 
+                }}
+              >
                 {submitStatus.type === 'success' ? 'Return to Events' : 'Try Again'}
               </button>
             </div>
@@ -707,7 +725,7 @@ const Blog: React.FC = () => {
 
 
   return (
-    <section className="events-premium-section">
+    <section className={`events-premium-section ${submitStatus ? 'modal-open' : ''}`}>
       <AnimatedBackground />
       {/* Background Light Orbs */}
 
@@ -845,6 +863,10 @@ const Blog: React.FC = () => {
           padding-bottom: 8rem;
           position: relative;
           z-index: 1;
+        }
+
+        .events-premium-section.modal-open {
+          z-index: 1001;
         }
 
         .events-container {
