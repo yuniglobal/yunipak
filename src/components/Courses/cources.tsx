@@ -250,7 +250,7 @@ const Courses: React.FC = () => {
           <AnimatedTitle>YUNI Summer Camp 2026</AnimatedTitle>
           <p className="subtitle-tech">Empower your summer. Learn future-proof skills from industry professionals with hands-on projects.</p>
           <div className="camp-badge-container">
-            <span className="camp-tag"><i className="fa-solid fa-calendar-days"></i> Starts July 2026</span>
+            <span className="camp-tag"><i className="fa-solid fa-calendar-days"></i> Starts June 2026</span>
             <span className="camp-tag"><i className="fa-solid fa-graduation-cap"></i> Ages 12 - 25+</span>
             <span className="camp-tag"><i className="fa-solid fa-award"></i> Project Certificates</span>
           </div>

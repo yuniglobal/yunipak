@@ -77,13 +77,6 @@ const TextEffect = () => {
   return (
     <>
       <style>{`
-        body {
-          margin: 0;
-          padding: 0;
-          font-family: 'Poppins', sans-serif;
-          overflow-x: hidden;
-        }
-
         .text-effect-container {
           display: flex;
           flex-direction: column;

@@ -142,21 +142,21 @@ export default function Hero() {
         }
 
         .hero-title-main {
-          font-size: clamp(3.5rem, 15vw, 10rem);
-          font-weight: 900;
+          font-size: clamp(3.5rem, 12vw, 8.5rem);
+          font-weight: 800;
           color: var(--text-primary);
-          line-height: 0.8;
-          letter-spacing: -0.07em;
-          margin-bottom: 0.5rem;
+          line-height: 0.95;
+          letter-spacing: -0.04em;
+          margin-bottom: 0.25rem;
         }
 
         .hero-title-accent {
-          font-size: clamp(2rem, 10vw, 6rem);
-          font-weight: 300;
+          font-size: clamp(2rem, 8vw, 5rem);
+          font-weight: 400;
           color: var(--pk-green-light);
           font-family: 'Outfit', sans-serif;
-          letter-spacing: -0.03em;
-          opacity: 0.9;
+          letter-spacing: -0.02em;
+          opacity: 0.95;
         }
 
         .hero-sub {
@@ -192,7 +192,7 @@ export default function Hero() {
         </div>
 
         <h1 className="hero-title">
-          <span className="hero-title-main">AWAKEN</span>
+          <span className="hero-title-main">Awaken</span>
           <span className="hero-title-accent">Your Potential.</span>
         </h1>
 

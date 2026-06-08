@@ -23,7 +23,7 @@ const LinkedInIcon = () => (
 
 const Logo = () => (
   <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
-    <circle cx="20" cy="20" r="18" fill="#0ae448" />
+    <circle cx="20" cy="20" r="18" fill="#0c6238" />
     <text x="20" y="27" fontSize="18" fontWeight="bold" fill="#000" textAnchor="middle" fontFamily="Inter, sans-serif">Y</text>
   </svg>
 );
@@ -396,7 +396,7 @@ const GetInTouch: React.FC = () => {
           transition: all 0.3s; width: 100%;
         }
         .form-field-premium input:focus, .form-field-premium select:focus, .form-field-premium textarea:focus {
-          border-color: var(--pk-green); box-shadow: 0 0 20px var(--pk-green-glow); outline: none; background: rgba(0, 230, 118, 0.05);
+          border-color: var(--pk-green); box-shadow: 0 0 20px var(--pk-green-glow); outline: none; background: rgba(12, 98, 56, 0.05);
         }
 
         .form-field-premium select option {
@@ -410,7 +410,7 @@ const GetInTouch: React.FC = () => {
         .checkbox-container-premium a { color: var(--pk-green); text-decoration: none; font-weight: 800; }
 
         .status-banner-premium { padding: 1.2rem; border-radius: 1rem; font-size: 0.9rem; font-weight: 700; text-align: center; }
-        .status-banner-premium.success { background: rgba(0, 230, 118, 0.1); border: 1px solid var(--pk-green); color: var(--pk-green); }
+        .status-banner-premium.success { background: rgba(12, 98, 56, 0.1); border: 1px solid var(--pk-green); color: var(--pk-green); }
         .status-banner-premium.error { background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #ef4444; }
 
         .submit-btn-premium { 

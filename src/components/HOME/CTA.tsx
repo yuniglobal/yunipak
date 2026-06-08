@@ -36,7 +36,7 @@ export default function CTA() {
           left: -50%;
           width: 200%;
           height: 200%;
-          background: radial-gradient(circle at center, rgba(0, 230, 118, 0.1) 0%, transparent 70%);
+          background: radial-gradient(circle at center, rgba(12, 98, 56, 0.1) 0%, transparent 70%);
           animation: ctaPulse 10s ease-in-out infinite;
         }
 

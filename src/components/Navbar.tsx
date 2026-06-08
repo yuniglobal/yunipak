@@ -212,7 +212,7 @@ const Navbar = () => {
 
         .nav-link.active {
           color: var(--pk-green);
-          background: rgba(0, 230, 118, 0.1);
+          background: rgba(12, 98, 56, 0.1);
         }
 
         .nav-link span {
