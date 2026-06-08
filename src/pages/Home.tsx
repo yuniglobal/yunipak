@@ -260,7 +260,7 @@ export default function Home() {
           background: #ffffff;
           padding: 1.2rem;
           border-radius: 1.5rem;
-          box-shadow: 0 0 30px rgba(0, 230, 118, 0.15);
+          box-shadow: 0 0 30px rgba(12, 98, 56, 0.15);
         }
 
         .certificate-card {

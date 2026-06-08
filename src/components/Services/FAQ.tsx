@@ -182,7 +182,7 @@ export default function FAQ() {
 
         .faq-item-inner {
           padding: 1.5rem 2rem;
-          background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 230, 118, 0.05) 0%, transparent 70%);
+          background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(12, 98, 56, 0.05) 0%, transparent 70%);
         }
 
         .faq-item-premium:hover {
@@ -193,7 +193,7 @@ export default function FAQ() {
 
         .faq-item-premium.open {
           border-color: var(--pk-green);
-          background: rgba(0, 230, 118, 0.03);
+          background: rgba(12, 98, 56, 0.03);
           box-shadow: 0 0 40px var(--pk-green-glow);
         }
 

@@ -1126,7 +1126,7 @@ const Courses: React.FC = () => {
         .module-topics-list, .module-skills-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
         .module-topics-list li, .module-skills-list li { font-size: 1rem; color: var(--text-secondary); line-height: 1.6; display: flex; gap: 0.8rem; align-items: flex-start; }
         .module-topics-list .bullet { color: var(--pk-green-light); }
-        .module-skills-list .bullet { color: var(--cyber-blue, #00e5ff); }
+        .module-skills-list .bullet { color: var(--pk-green-light, #d4af37); }
 
         .module-actions-premium {
           margin-top: 2.5rem;
@@ -1202,7 +1202,7 @@ const Courses: React.FC = () => {
 
         .payment-nodes { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
         .payment-node-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border-light); border-radius: 1.5rem; padding: 1.5rem; transition: all 0.3s ease; cursor: pointer; }
-        .payment-node-card:hover { border-color: rgba(0, 230, 118, 0.4); background: rgba(255, 255, 255, 0.04); }
+        .payment-node-card:hover { border-color: rgba(12, 98, 56, 0.4); background: rgba(255, 255, 255, 0.04); }
         .payment-node-card.active-node { border-color: var(--pk-green); background: rgba(0, 143, 76, 0.05); box-shadow: 0 10px 30px rgba(0, 143, 76, 0.08); }
         .payment-node-card h4 { color: var(--pk-green-light); margin-bottom: 0.8rem; font-weight: 800; font-size: 1.1rem; }
         .node-details p { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: flex; justify-content: space-between; }
@@ -1407,13 +1407,13 @@ const Courses: React.FC = () => {
         
         .registration-modal-content {
           background: linear-gradient(135deg, #0d1310 0%, #050706 100%);
-          border: 1px solid rgba(0, 230, 118, 0.25);
+          border: 1px solid rgba(12, 98, 56, 0.25);
           border-radius: 24px;
           padding: 3rem 2.5rem;
           max-width: 480px;
           width: 100%;
           text-align: center;
-          box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(0, 230, 118, 0.05);
+          box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(12, 98, 56, 0.05);
           color: #fff;
           display: flex;
           flex-direction: column;
@@ -1443,7 +1443,7 @@ const Courses: React.FC = () => {
           position: absolute;
           width: 100px;
           height: 100px;
-          background: radial-gradient(circle, rgba(0, 230, 118, 0.2) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(12, 98, 56, 0.2) 0%, transparent 70%);
           animation: pulseGlow 2s infinite ease-in-out;
         }
         
@@ -1455,15 +1455,15 @@ const Courses: React.FC = () => {
           width: 90px;
           height: 90px;
           border-radius: 50%;
-          background: rgba(0, 230, 118, 0.06);
-          border: 1px solid rgba(0, 230, 118, 0.3);
+          background: rgba(12, 98, 56, 0.06);
+          border: 1px solid rgba(12, 98, 56, 0.3);
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 2.8rem;
           color: var(--pk-green-light);
           z-index: 2;
-          box-shadow: inset 0 0 20px rgba(0, 230, 118, 0.1);
+          box-shadow: inset 0 0 20px rgba(12, 98, 56, 0.1);
         }
         
         .registration-modal-content.error .registration-modal-icon {
@@ -1509,7 +1509,7 @@ const Courses: React.FC = () => {
         .registration-modal-btn:hover {
           background: var(--pk-green-light);
           transform: translateY(-2px);
-          box-shadow: 0 15px 30px rgba(0, 230, 118, 0.35);
+          box-shadow: 0 15px 30px rgba(12, 98, 56, 0.35);
         }
         
         .registration-modal-content.error .registration-modal-btn {

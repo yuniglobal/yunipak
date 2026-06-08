@@ -474,32 +474,32 @@ const Newsletter: React.FC = () => {
 
         /* Congrats Notification Card */
         .congrats-notification-card {
-          background: rgba(0, 230, 118, 0.04);
-          border: 1px solid rgba(0, 230, 118, 0.2);
+          background: rgba(12, 98, 56, 0.04);
+          border: 1px solid rgba(12, 98, 56, 0.2);
           border-radius: 16px;
           padding: 1.2rem;
           display: flex;
           gap: 1rem;
           align-items: flex-start;
           text-align: left;
-          box-shadow: 0 10px 30px rgba(0, 230, 118, 0.05), inset 0 0 15px rgba(0, 230, 118, 0.02);
+          box-shadow: 0 10px 30px rgba(12, 98, 56, 0.05), inset 0 0 15px rgba(12, 98, 56, 0.02);
           margin-top: 1rem;
           width: 100%;
           animation: slideInUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
         .congrats-icon-wrap {
-          background: rgba(0, 230, 118, 0.1);
-          border: 1px solid rgba(0, 230, 118, 0.3);
+          background: rgba(12, 98, 56, 0.1);
+          border: 1px solid rgba(12, 98, 56, 0.3);
           border-radius: 50%;
           width: 44px;
           height: 44px;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: var(--pk-green-light, #00e676);
+          color: var(--pk-green-light, #d4af37);
           flex-shrink: 0;
-          box-shadow: 0 0 12px rgba(0, 230, 118, 0.1);
+          box-shadow: 0 0 12px rgba(12, 98, 56, 0.1);
         }
 
         .congrats-text-wrap {
@@ -533,8 +533,8 @@ const Newsletter: React.FC = () => {
         .congrats-coupon {
           align-self: flex-start;
           background: rgba(0, 143, 76, 0.1);
-          border: 1px dashed rgba(0, 230, 118, 0.4);
-          color: var(--pk-green-light, #00e676);
+          border: 1px dashed rgba(12, 98, 56, 0.4);
+          color: var(--pk-green-light, #d4af37);
           padding: 0.4rem 0.8rem;
           border-radius: 8px;
           font-family: monospace;

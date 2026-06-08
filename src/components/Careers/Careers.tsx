@@ -244,7 +244,7 @@ const Careers: React.FC = () => {
         }
 
         .type-tag {
-          background: rgba(0, 230, 118, 0.1);
+          background: rgba(12, 98, 56, 0.1);
           color: var(--pk-green);
           padding: 0.4rem 1rem;
           border-radius: 99px;
@@ -252,7 +252,7 @@ const Careers: React.FC = () => {
           font-weight: 900;
           text-transform: uppercase;
           letter-spacing: 0.05em;
-          border: 1px solid rgba(0, 230, 118, 0.2);
+          border: 1px solid rgba(12, 98, 56, 0.2);
         }
 
         .position-title-premium {
@@ -334,7 +334,7 @@ const Careers: React.FC = () => {
         .modal-content-premium {
           background: var(--bg-elevated); border: 1px solid var(--pk-green); border-radius: 3rem;
           width: 100%; max-width: 950px; max-height: 90vh; overflow-y: auto; padding: 4rem;
-          position: relative; box-shadow: 0 0 100px rgba(0, 230, 118, 0.1);
+          position: relative; box-shadow: 0 0 100px rgba(12, 98, 56, 0.1);
         }
 
         .modal-close-premium {
@@ -369,7 +369,7 @@ const Careers: React.FC = () => {
         .form-field-premium input:focus { border-color: var(--pk-green); box-shadow: 0 0 20px var(--pk-green-glow); outline: none; }
         .full-width { grid-column: span 2; }
 
-        .declaration-wrapper-premium { padding: 2rem; background: rgba(0, 230, 118, 0.05); border-radius: 1.5rem; border: 1px solid rgba(0, 230, 118, 0.1); }
+        .declaration-wrapper-premium { padding: 2rem; background: rgba(12, 98, 56, 0.05); border-radius: 1.5rem; border: 1px solid rgba(12, 98, 56, 0.1); }
         .checkbox-container-premium { display: flex; align-items: flex-start; gap: 1.5rem; cursor: pointer; }
         .checkbox-container-premium p { font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin: 0; }
 

@@ -55,8 +55,8 @@ const Certificates: React.FC = () => {
         .protocol-badge {
           display: inline-block;
           padding: 0.5rem 1.5rem;
-          background: rgba(0, 230, 118, 0.1);
-          border: 1px solid rgba(0, 230, 118, 0.2);
+          background: rgba(12, 98, 56, 0.1);
+          border: 1px solid rgba(12, 98, 56, 0.2);
           border-radius: 100px;
           color: var(--pk-green);
           font-size: 0.8rem;
