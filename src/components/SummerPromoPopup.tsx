@@ -241,6 +241,11 @@ const SummerPromoPopup: React.FC = () => {
           margin-bottom: 1rem;
         }
 
+        .column-title.prominent {
+          font-size: 2.2rem;
+          color: var(--pk-green);
+        }
+
         .column-desc {
           color: var(--text-secondary);
           font-size: 0.9rem;
@@ -539,6 +544,9 @@ const SummerPromoPopup: React.FC = () => {
           .column-title {
             font-size: 1.6rem;
           }
+          .column-title.prominent {
+            font-size: 1.8rem;
+          }
           .column-desc {
             min-height: auto;
             font-size: 0.85rem;
@@ -566,6 +574,9 @@ const SummerPromoPopup: React.FC = () => {
           }
           .column-title {
             font-size: 1.3rem;
+          }
+          .column-title.prominent {
+            font-size: 1.5rem;
           }
           .column-desc {
             font-size: 0.8rem;
@@ -596,9 +607,9 @@ const SummerPromoPopup: React.FC = () => {
               <div className="column-content">
                 <div className="popup-badge">
                   <div className="badge-pulse"></div>
-                  ☀️ Summer Camp 2026
+                  ☀️ Registrations Open!
                 </div>
-                <h3 className="column-title">Accelerate Your Skills</h3>
+                <h3 className="column-title prominent">YUNI Summer Camp 2026</h3>
                 <p className="column-desc">
                   Join our premium IT & soft skills programs. 7 specialized tracks designed for career growth and hands-on learning at NASTP.
                 </p>
