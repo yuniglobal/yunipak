@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { Menu, X, Sun, Moon, ChevronRight, Home, Info, BookOpen, Mail } from 'lucide-react';
+import { Menu, X, Sun, Moon, ChevronRight, Home, Info, BookOpen, GraduationCap, Mail } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +41,7 @@ const Navbar = () => {
     { name: 'Home', path: '/', icon: Home },
     { name: 'About Us', path: '/Aboutus', icon: Info },
     { name: 'Summer Camp', path: '/summer-camp', icon: Sun },
-    { name: 'Trainings', path: '/trainings', icon: BookOpen },
+    { name: 'Trainings', path: '/trainings', icon: GraduationCap },
     { name: 'Blog', path: '/blog', icon: BookOpen },
     { name: 'Contact', path: '/contact', icon: Mail }
   ];
