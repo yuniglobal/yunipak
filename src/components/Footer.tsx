@@ -19,17 +19,24 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   const footerLinks = [
-    { title: 'Nexus', links: [
+    { title: 'Explore', links: [
+      { name: 'Home', path: '/' },
+      { name: 'About Us', path: '/Aboutus' },
       { name: 'Summer Camp', path: '/summer-camp' },
       { name: 'Trainings', path: '/trainings' },
+      { name: 'Blog', path: '/blog' }
+    ]},
+    { title: 'Resources', links: [
+      { name: 'Services', path: '/services' },
       { name: 'Events', path: '/events' },
+      { name: 'Gallery', path: '/gallery' },
       { name: 'Careers', path: '/careers' },
-      { name: 'About Us', path: '/Aboutus' }
+      { name: 'Certificates', path: '/certificates' }
     ]},
     { title: 'Support', links: [
       { name: 'Contact', path: '/contact' },
-      { name: 'Privacy', path: '/privacy' },
-      { name: 'Terms', path: '/terms' }
+      { name: 'Privacy Policy', path: '/privacy' },
+      { name: 'Terms of Service', path: '/terms' }
     ]}
   ];
 
