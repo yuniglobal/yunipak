@@ -628,7 +628,7 @@ const SummerPromoPopup: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <button className="column-btn" onClick={() => handleAction('/Programs')}>
+              <button className="column-btn" onClick={() => handleAction('/summer-camp')}>
                 Register Now <ArrowRight size={18} />
               </button>
             </div>

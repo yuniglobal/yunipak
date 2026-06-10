@@ -10,7 +10,8 @@ import Services from './pages/Services';
 import Contact from './pages/Contact';
 import Careers from './pages/Careers';
 import Events from './pages/Events';
-import CoursesPage from './pages/Courses';
+import SummerCampPage from './pages/SummerCamp';
+import TrainingsPage from './pages/Trainings';
 import Certificates from './pages/Certificates';
 import Blog from './pages/Blog';
 import Gallery from './pages/Gallery';
@@ -82,7 +83,8 @@ function App() {
           <Route path="/Aboutus" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/Programs" element={<CoursesPage />} />
+          <Route path="/summer-camp" element={<SummerCampPage />} />
+          <Route path="/trainings" element={<TrainingsPage />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/events" element={<Events />} />
           <Route path="/blog" element={<Blog />} />

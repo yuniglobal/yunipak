@@ -20,10 +20,11 @@ const Footer = () => {
 
   const footerLinks = [
     { title: 'Nexus', links: [
-      { name: 'Trainings', path: '/Programs' },
+      { name: 'Summer Camp', path: '/summer-camp' },
+      { name: 'Trainings', path: '/trainings' },
       { name: 'Events', path: '/events' },
       { name: 'Careers', path: '/careers' },
-      { name: 'About', path: '/Aboutus' }
+      { name: 'About Us', path: '/Aboutus' }
     ]},
     { title: 'Support', links: [
       { name: 'Contact', path: '/contact' },

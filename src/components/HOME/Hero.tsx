@@ -203,8 +203,8 @@ export default function Hero() {
         </p>
 
         <div className="hero-btns" ref={btnsRef}>
-          <button className="btn-tech btn-tech-primary" onClick={() => navigate('/Programs')}>
-            Explore Programs
+          <button className="btn-tech btn-tech-primary" onClick={() => navigate('/summer-camp')}>
+            Explore Summer Camp
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
           </button>
           <button className="btn-tech btn-tech-outline" onClick={() => navigate('/contact')}>

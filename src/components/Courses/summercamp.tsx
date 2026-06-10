@@ -50,7 +50,18 @@ type View = "trainings" | "course-detail" | "checkout";
 
 const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbxv3FVEPexjV4hLcAWNj6FafStyFzqzrJWzo-Zk8FJFOWkxw-mh9bxNi-ZYbwnLHyfzxg/exec';
 
-const Courses: React.FC = () => {
+const getDiscountedPrice = (priceStr: string) => {
+  const numeric = parseInt(priceStr.replace(/[^\d]/g, ''), 10);
+  if (isNaN(numeric)) return { original: priceStr, discounted: priceStr, numericVal: priceStr };
+  const discounted = Math.round(numeric * 0.9);
+  return {
+    original: priceStr,
+    discounted: `PKR ${discounted.toLocaleString()}`,
+    numericVal: String(discounted)
+  };
+};
+
+const SummerCamp: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>("trainings");
   const [selectedCourse, setSelectedCourse] = useState<SummerCampCourse | null>(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState<SubCategory | null>(null);
@@ -218,12 +229,14 @@ const Courses: React.FC = () => {
     setSelectedCourse(course);
     setSelectedSubcategory(subcat);
     
+    const { discounted, numericVal } = getDiscountedPrice(course.price);
+    
     setFormData(prev => ({
       ...prev,
       courseId: course.id,
       courseTitle: `${course.title} - ${subcat.title}`,
-      coursePrice: course.price,
-      transactionAmount: course.price.replace(/[^\d]/g, ''), // Default to price numeric value
+      coursePrice: discounted,
+      transactionAmount: numericVal, // Default to price numeric value
       paymentMethod: 'bank',
       bankName: 'Bank Alfalah',
       bankAccountTitle: 'YUNI (SMC-PRIVATE) LIMITED',
@@ -314,7 +327,18 @@ const Courses: React.FC = () => {
 
                     <div className="card-footer-premium">
                       <div className="price-container">
-                        <span className="price-tag-tech">{course.price}</span>
+                        {(() => {
+                          const { original, discounted } = getDiscountedPrice(course.price);
+                          return (
+                            <>
+                              <span className="price-original" style={{ textDecoration: 'line-through', color: 'var(--text-muted)', fontSize: '0.9rem', opacity: 0.7 }}>{original}</span>
+                              <span className="price-tag-tech">
+                                {discounted}
+                                <span className="discount-badge" style={{ fontSize: '0.75rem', background: 'rgba(255, 75, 75, 0.15)', color: '#ff4b4b', padding: '0.1rem 0.4rem', borderRadius: '4px', marginLeft: '0.4rem', border: '1px solid rgba(255, 75, 75, 0.3)', fontWeight: 700, verticalAlign: 'middle' }}>10% OFF</span>
+                              </span>
+                            </>
+                          );
+                        })()}
                         <span className="price-sub-label">{course.priceLabel}</span>
                       </div>
                       <button onClick={() => handleViewCourse(course)} className="view-btn-tech">
@@ -392,7 +416,17 @@ const Courses: React.FC = () => {
                         <span className="module-number">0{idx + 1}</span>
                         <h4 className="module-title-text">{sub.title}</h4>
                       </div>
-                      <div className="module-price-badge">{selectedCourse.price}</div>
+                      <div className="module-price-badge" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.1rem', height: 'auto' }}>
+                        {(() => {
+                          const { original, discounted } = getDiscountedPrice(selectedCourse.price);
+                          return (
+                            <>
+                              <span style={{ textDecoration: 'line-through', opacity: 0.6, fontSize: '0.75rem' }}>{original}</span>
+                              <span style={{ fontWeight: 'bold' }}>{discounted}</span>
+                            </>
+                          );
+                        })()}
+                      </div>
                     </div>
                     
                     <div className="module-body-premium">
@@ -434,7 +468,17 @@ const Courses: React.FC = () => {
                   <div key={idx} className="subcategory-card-premium">
                     <div className="sub-card-header">
                       <h4 className="sub-title-text">{sub.title}</h4>
-                      <span className="sub-price-badge">{selectedCourse.price}</span>
+                      <span className="sub-price-badge" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.1rem', height: 'auto' }}>
+                        {(() => {
+                          const { original, discounted } = getDiscountedPrice(selectedCourse.price);
+                          return (
+                            <>
+                              <span style={{ textDecoration: 'line-through', opacity: 0.7, fontSize: '0.75rem' }}>{original}</span>
+                              <span>{discounted}</span>
+                            </>
+                          );
+                        })()}
+                      </span>
                     </div>
                     
                     <div className="sub-card-body">
@@ -491,7 +535,19 @@ const Courses: React.FC = () => {
             </div>
             <div className="summary-right">
               <span className="summary-price-lbl">Tuition Fee:</span>
-              <span className="summary-price-val">{selectedCourse.price}</span>
+              {(() => {
+                const { original, discounted } = getDiscountedPrice(selectedCourse.price);
+                return (
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                    <span className="summary-price-original" style={{ textDecoration: 'line-through', color: 'var(--text-muted)', fontSize: '0.9rem', opacity: 0.7 }}>
+                      {original}
+                    </span>
+                    <span className="summary-price-val" style={{ color: 'var(--pk-green-light)', fontWeight: 900 }}>
+                      {discounted}
+                    </span>
+                  </div>
+                );
+              })()}
             </div>
           </div>
 
@@ -1541,4 +1597,4 @@ const Courses: React.FC = () => {
   );
 };
 
-export default Courses;
+export default SummerCamp;

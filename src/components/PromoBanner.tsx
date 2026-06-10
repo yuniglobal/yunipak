@@ -119,7 +119,7 @@ const PromoBanner: React.FC = () => {
       <div className="marquee-content">
         {[1, 2, 3, 4].map((i) => (
           <div key={i} className="marquee-item">
-            <span className="marquee-link" onClick={() => navigate('/Programs')}>
+            <span className="marquee-link" onClick={() => navigate('/summer-camp')}>
               ☀️ YUNI Summer Camp 2026: Registrations Open!
             </span>
             <span className="separator">|</span>
