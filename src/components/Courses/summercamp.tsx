@@ -53,11 +53,10 @@ const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbxv3FVEPexjV4
 const getDiscountedPrice = (priceStr: string) => {
   const numeric = parseInt(priceStr.replace(/[^\d]/g, ''), 10);
   if (isNaN(numeric)) return { original: priceStr, discounted: priceStr, numericVal: priceStr };
-  const discounted = Math.round(numeric * 0.9);
   return {
     original: priceStr,
-    discounted: `PKR ${discounted.toLocaleString()}`,
-    numericVal: String(discounted)
+    discounted: priceStr,
+    numericVal: String(numeric)
   };
 };
 
@@ -328,15 +327,11 @@ const SummerCamp: React.FC = () => {
                     <div className="card-footer-premium">
                       <div className="price-container">
                         {(() => {
-                          const { original, discounted } = getDiscountedPrice(course.price);
+                          const { discounted } = getDiscountedPrice(course.price);
                           return (
-                            <>
-                              <span className="price-original" style={{ textDecoration: 'line-through', color: 'var(--text-muted)', fontSize: '0.9rem', opacity: 0.7 }}>{original}</span>
-                              <span className="price-tag-tech">
-                                {discounted}
-                                <span className="discount-badge" style={{ fontSize: '0.75rem', background: 'rgba(255, 75, 75, 0.15)', color: '#ff4b4b', padding: '0.1rem 0.4rem', borderRadius: '4px', marginLeft: '0.4rem', border: '1px solid rgba(255, 75, 75, 0.3)', fontWeight: 700, verticalAlign: 'middle' }}>10% OFF</span>
-                              </span>
-                            </>
+                            <span className="price-tag-tech">
+                              {discounted}
+                            </span>
                           );
                         })()}
                         <span className="price-sub-label">{course.priceLabel}</span>
@@ -418,12 +413,9 @@ const SummerCamp: React.FC = () => {
                       </div>
                       <div className="module-price-badge" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.1rem', height: 'auto' }}>
                         {(() => {
-                          const { original, discounted } = getDiscountedPrice(selectedCourse.price);
+                          const { discounted } = getDiscountedPrice(selectedCourse.price);
                           return (
-                            <>
-                              <span style={{ textDecoration: 'line-through', opacity: 0.6, fontSize: '0.75rem' }}>{original}</span>
-                              <span style={{ fontWeight: 'bold' }}>{discounted}</span>
-                            </>
+                            <span style={{ fontWeight: 'bold' }}>{discounted}</span>
                           );
                         })()}
                       </div>
@@ -470,12 +462,9 @@ const SummerCamp: React.FC = () => {
                       <h4 className="sub-title-text">{sub.title}</h4>
                       <span className="sub-price-badge" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.1rem', height: 'auto' }}>
                         {(() => {
-                          const { original, discounted } = getDiscountedPrice(selectedCourse.price);
+                          const { discounted } = getDiscountedPrice(selectedCourse.price);
                           return (
-                            <>
-                              <span style={{ textDecoration: 'line-through', opacity: 0.7, fontSize: '0.75rem' }}>{original}</span>
-                              <span>{discounted}</span>
-                            </>
+                            <span>{discounted}</span>
                           );
                         })()}
                       </span>
@@ -536,12 +525,9 @@ const SummerCamp: React.FC = () => {
             <div className="summary-right">
               <span className="summary-price-lbl">Tuition Fee:</span>
               {(() => {
-                const { original, discounted } = getDiscountedPrice(selectedCourse.price);
+                const { discounted } = getDiscountedPrice(selectedCourse.price);
                 return (
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                    <span className="summary-price-original" style={{ textDecoration: 'line-through', color: 'var(--text-muted)', fontSize: '0.9rem', opacity: 0.7 }}>
-                      {original}
-                    </span>
                     <span className="summary-price-val" style={{ color: 'var(--pk-green-light)', fontWeight: 900 }}>
                       {discounted}
                     </span>
