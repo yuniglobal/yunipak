@@ -16,7 +16,6 @@ import Certificates from './pages/Certificates';
 import Blog from './pages/Blog';
 import Gallery from './pages/Gallery';
 import Legal from './pages/Legal';
-import RegistrationPage from './pages/Registration';
 import PromoBanner from './components/PromoBanner';
 import SummerPromoPopup from './components/SummerPromoPopup';
 import Newsletter from './components/Newsletter';
@@ -93,7 +92,6 @@ function App() {
           <Route path="/certificates" element={<Certificates />} />
           <Route path="/privacy" element={<Legal defaultTab="privacy" />} />
           <Route path="/terms" element={<Legal defaultTab="terms" />} />
-          <Route path="/registration" element={<RegistrationPage />} />
         </Routes>
       </main>
       <Newsletter />
