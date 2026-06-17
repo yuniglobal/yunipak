@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YUNI-TY 2026 — Event Registration</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080e08;--surface:#0f180f;--card:#131f13;--border:#1c2e1c;
+  --green:#39ff14;--green-dim:#2bc210;--green-glow:rgba(57,255,20,0.10);
+  --green-mid:#174717;--dark:#050a05;--white:#ffffff;
+  --gray:#7a9a7a;--light:#c8e0c8;--red:#ff4d4d;
+}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--white);padding-bottom:80px}
+
+/* HERO */
+.hero{background:var(--surface);border-bottom:2px solid var(--green);padding:44px 24px 32px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(57,255,20,0.06) 0%,transparent 70%);pointer-events:none}
+.hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:4px;color:var(--green);text-transform:uppercase;margin-bottom:12px}
+.hero h1{font-size:clamp(24px,5.5vw,44px);font-weight:800;line-height:1.1;margin-bottom:8px}
+.hero h1 span{color:var(--green)}
+.hero-sub{font-size:12px;color:var(--gray);margin-bottom:24px}
+.hero-stats{display:flex;flex-wrap:wrap;gap:20px}
+.stat-val{font-size:20px;font-weight:800;color:var(--green);line-height:1}
+.stat-lbl{font-size:9px;color:var(--gray);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+
+/* PROGRESS */
+.prog-bar{background:var(--dark);border-bottom:1px solid var(--border);padding:14px 24px;position:sticky;top:0;z-index:100}
+.prog-inner{max-width:680px;margin:0 auto}
+.steps{display:flex;gap:5px;margin-bottom:7px}
+.step{flex:1;height:3px;background:var(--border);border-radius:2px;transition:background .3s}
+.step.done{background:var(--green)}
+.step.active{background:var(--green-dim)}
+.prog-lbl{font-size:10px;color:var(--gray)}
+.prog-lbl span{color:var(--green);font-weight:600}
+
+/* WRAP */
+.form-wrap{max-width:680px;margin:32px auto 0;padding:0 20px}
+
+/* SECTION */
+.section{margin-bottom:32px}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.sec-num{width:26px;height:26px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--dark);flex-shrink:0}
+.sec-title{font-size:13px;font-weight:700;color:var(--white);letter-spacing:.5px;text-transform:uppercase}
+
+/* FIELD */
+.field{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;font-size:12px;font-weight:600;color:var(--light);margin-bottom:6px}
+label .req{color:var(--green);margin-left:2px}
+label .opt{color:var(--gray);font-weight:400;font-size:11px}
+
+input[type=text],input[type=email],input[type=tel],input[type=number],select{
+  width:100%;background:var(--card);border:1px solid var(--border);border-radius:6px;
+  color:var(--white);font-family:'Poppins',sans-serif;font-size:13px;
+  padding:11px 14px;outline:none;transition:border-color .2s,box-shadow .2s;appearance:none
+}
+input::placeholder{color:#2a3d2a}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2339ff14' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+select option{background:#131f13}
+input:focus,select:focus{border-color:var(--green-dim);box-shadow:0 0 0 3px var(--green-glow)}
+
+/* PILLS */
+.pills{display:flex;flex-wrap:wrap;gap:7px}
+.pill input{position:absolute;opacity:0;width:0;height:0}
+.pill label{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:5px;padding:8px 13px;font-size:12px;color:var(--gray);cursor:pointer;transition:all .15s;margin:0;font-weight:400}
+.pill input:checked+label{background:var(--green-glow);border-color:var(--green-dim);color:var(--green);font-weight:600}
+.pill label:hover{border-color:var(--green-mid);color:var(--light)}
+.pill label::before{content:'';width:13px;height:13px;border:1.5px solid var(--border);border-radius:50%;flex-shrink:0;transition:all .15s}
+.pill input:checked+label::before{background:var(--green);border-color:var(--green)}
+.pill-check label::before{border-radius:3px}
+.pill-check input:checked+label::before{background:var(--green);border-color:var(--green);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpath d='M1 4l3 3 5-6' stroke='%23080e08' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center}
+
+/* FILE */
+.file-zone{background:var(--card);border:1.5px dashed var(--green-mid);border-radius:8px;padding:18px;text-align:center;cursor:pointer;transition:all .2s}
+.file-zone:hover{border-color:var(--green-dim);background:var(--green-glow)}
+.file-zone input{display:none}
+.file-hint{font-size:12px;color:var(--gray)}
+.file-hint span{color:var(--green);font-weight:600}
+.file-name{font-size:11px;color:var(--green);margin-top:6px;min-height:16px}
+
+/* WORKSHOP GRID */
+.ws-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ws-item input{position:absolute;opacity:0;width:0;height:0}
+.ws-item label{display:flex;flex-direction:column;gap:2px;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:10px 12px;cursor:pointer;transition:all .15s;margin:0;height:100%}
+.ws-item input:checked+label{background:var(--green-glow);border-color:var(--green-dim)}
+.ws-item label:hover{border-color:var(--green-mid)}
+.ws-pillar{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray)}
+.ws-item input:checked+label .ws-pillar{color:var(--green)}
+.ws-name{font-size:11px;font-weight:600;color:var(--light);line-height:1.3}
+.ws-item input:checked+label .ws-name{color:var(--white)}
+
+/* NOTICE */
+.notice{background:var(--green-glow);border:1px solid var(--green-mid);border-left:3px solid var(--green);border-radius:6px;padding:12px 14px;margin-bottom:16px}
+.notice p{font-size:12px;color:var(--light);line-height:1.6}
+.notice strong{color:var(--green)}
+
+/* HIDDEN SECTION */
+.hidden{display:none}
+
+/* SUBMIT */
+.submit-wrap{margin-top:36px}
+.submit-btn{width:100%;background:var(--green);color:var(--dark);font-family:'Poppins',sans-serif;font-size:15px;font-weight:800;padding:15px;border:none;border-radius:7px;cursor:pointer;letter-spacing:.5px;transition:all .2s;text-transform:uppercase}
+.submit-btn:hover{background:#4fff28;transform:translateY(-1px);box-shadow:0 8px 24px rgba(57,255,20,.25)}
+.submit-note{font-size:11px;color:var(--gray);text-align:center;margin-top:8px}
+
+/* ERROR */
+.err{font-size:11px;color:var(--red);margin-top:4px;display:none}
+.field.invalid input,.field.invalid select{border-color:var(--red)}
+.field.invalid .err{display:block}
+
+/* SUCCESS */
+.success{display:none;text-align:center;padding:70px 24px}
+.success-icon{font-size:56px;margin-bottom:20px}
+.success h2{font-size:26px;font-weight:800;color:var(--green);margin-bottom:10px}
+.success p{font-size:13px;color:var(--gray);line-height:1.7;max-width:420px;margin:0 auto}
+
+@media(max-width:500px){.two{grid-template-columns:1fr}.ws-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">NASTP · PSEB · Pakistan Film Society</div>
+  <h1>YUNI-TY 2026<br><span>Open Learning Weekend</span></h1>
+  <p class="hero-sub">27 – 28 June 2026 &nbsp;·&nbsp; NASTP Arena, Rawalpindi &nbsp;·&nbsp; Free Entry</p>
+  <div class="hero-stats">
+    <div><div class="stat-val">2,000+</div><div class="stat-lbl">Students</div></div>
+    <div><div class="stat-val">2</div><div class="stat-lbl">Days</div></div>
+    <div><div class="stat-val">12</div><div class="stat-lbl">Workshops</div></div>
+    <div><div class="stat-val">100%</div><div class="stat-lbl">Free</div></div>
+  </div>
+</div>
+
+<div class="prog-bar">
+  <div class="prog-inner">
+    <div class="steps">
+      <div class="step active" id="s1"></div>
+      <div class="step" id="s2"></div>
+      <div class="step" id="s3"></div>
+      <div class="step" id="s4"></div>
+      <div class="step" id="s5"></div>
+    </div>
+    <div class="prog-lbl">Step <span id="stepNum">1</span> of 5</div>
+  </div>
+</div>
+
+<div class="form-wrap">
+<form id="regForm" novalidate>
+
+  <!-- SEC 1: PERSONAL -->
+  <div class="section" id="sec1">
+    <div class="sec-head"><div class="sec-num">1</div><div class="sec-title">Personal Information</div></div>
+
+    <div class="two">
+      <div class="field" id="f-fname"><label>First Name <span class="req">*</span></label><input type="text" name="firstName" placeholder="First name" required><div class="err">Required</div></div>
+      <div class="field" id="f-lname"><label>Last Name <span class="req">*</span></label><input type="text" name="lastName" placeholder="Last name" required><div class="err">Required</div></div>
+    </div>
+
+    <div class="two">
+      <div class="field" id="f-cnic"><label>CNIC Number <span class="req">*</span></label><input type="text" name="cnic" placeholder="XXXXX-XXXXXXX-X" maxlength="15" required><div class="err">Enter valid CNIC</div></div>
+      <div class="field" id="f-phone"><label>WhatsApp Number <span class="req">*</span></label><input type="tel" name="whatsapp" placeholder="03XX-XXXXXXX" required><div class="err">Required</div></div>
+    </div>
+
+    <div class="field" id="f-email"><label>Email Address <span class="req">*</span></label><input type="text" name="email" placeholder="you@email.com" required><div class="err">Required</div></div>
+
+    <div class="two">
+      <div class="field" id="f-gender">
+        <label>Gender <span class="req">*</span></label>
+        <select name="gender" required><option value="" disabled selected>Select</option><option>Male</option><option>Female</option><option>Prefer not to say</option></select>
+        <div class="err">Required</div>
+      </div>
+      <div class="field" id="f-age"><label>Age <span class="req">*</span></label><input type="number" name="age" placeholder="e.g. 20" min="14" max="35" required><div class="err">Required</div></div>
+    </div>
+
+    <div class="field" id="f-city">
+      <label>City <span class="req">*</span></label>
+      <select name="city" required><option value="" disabled selected>Select your city</option>
+        <option>Islamabad</option><option>Rawalpindi</option><option>Lahore</option><option>Karachi</option><option>Peshawar</option><option>Quetta</option><option>Multan</option><option>Faisalabad</option><option>Sialkot</option><option>Gujranwala</option><option>Hyderabad</option><option>Abbottabad</option><option>Mardan</option><option>Bahawalpur</option><option>Sargodha</option><option>Sukkur</option><option>Larkana</option><option>Mirpur AJK</option><option>Muzaffarabad</option><option>Gilgit</option><option>Other</option>
+      </select>
+      <div class="err">Required</div>
+    </div>
+
+    <!-- Military/Govt child -->
+    <div class="field" id="f-milgov">
+      <label>Are you a child of a military or government employee? <span class="req">*</span></label>
+      <div class="pills">
+        <div class="pill"><input type="radio" name="milGov" id="mgY" value="Yes" required><label for="mgY">Yes</label></div>
+        <div class="pill"><input type="radio" name="milGov" id="mgN" value="No"><label for="mgN">No</label></div>
+      </div>
+      <div class="err" id="milgov-err">Required</div>
+    </div>
+  </div>
+
+  <!-- SEC 2: ACADEMIC -->
+  <div class="section" id="sec2">
+    <div class="sec-head"><div class="sec-num">2</div><div class="sec-title">Academic Information</div></div>
+
+    <div class="field" id="f-insttype">
+      <label>I am currently studying at a <span class="req">*</span></label>
+      <div class="pills">
+        <div class="pill"><input type="radio" name="instType" id="itU" value="University" required><label for="itU">University</label></div>
+        <div class="pill"><input type="radio" name="instType" id="itC" value="College"><label for="itC">College</label></div>
+      </div>
+      <div class="err" id="insttype-err">Required</div>
+    </div>
+
+    <!-- UNIVERSITY FIELDS -->
+    <div id="uniFields" class="hidden">
+      <div class="field" id="f-inst">
+        <label>University Name <span class="req">*</span></label>
+        <select name="institution" id="instSelect">
+          <option value="" disabled selected>Search or select your university</option>
+          <optgroup label="── Islamabad / Rawalpindi ──">
+            <option>NUST — National University of Sciences & Technology</option>
+            <option>COMSATS University Islamabad</option>
+            <option>Quaid-i-Azam University</option>
+            <option>International Islamic University Islamabad</option>
+            <option>Air University Islamabad</option>
+            <option>Bahria University Islamabad</option>
+            <option>Capital University of Science & Technology</option>
+            <option>Foundation University Islamabad</option>
+            <option>Riphah International University Islamabad</option>
+            <option>Federal Urdu University Islamabad</option>
+            <option>Preston University Islamabad</option>
+            <option>Hamdard University Islamabad</option>
+            <option>Pir Mehr Ali Shah Arid Agriculture University Rawalpindi</option>
+            <option>University of Wah</option>
+            <option>Fatima Jinnah Women University Rawalpindi</option>
+            <option>Rawalpindi Medical University</option>
+            <option>Rawalpindi Women University</option>
+            <option>National University of Medical Sciences</option>
+            <option>National University of Pakistan Rawalpindi</option>
+            <option>Army Public College of Management Sciences (APCOMS)</option>
+            <option>National Defence University Islamabad</option>
+            <option>Pakistan Institute of Engineering & Applied Sciences (PIEAS)</option>
+            <option>FAST-NUCES Islamabad</option>
+          </optgroup>
+          <optgroup label="── Punjab ──">
+            <option>University of the Punjab Lahore</option>
+            <option>University of Engineering & Technology Lahore</option>
+            <option>LUMS — Lahore University of Management Sciences</option>
+            <option>FAST-NUCES Lahore</option>
+            <option>COMSATS University Lahore</option>
+            <option>University of Central Punjab</option>
+            <option>Forman Christian College University</option>
+            <option>Kinnaird College for Women University</option>
+            <option>Government College University Lahore</option>
+            <option>Government College Women University Lahore</option>
+            <option>University of Education Lahore</option>
+            <option>Bahria University Lahore</option>
+            <option>Superior University Lahore</option>
+            <option>University of Management & Technology Lahore</option>
+            <option>Lahore Garrison University</option>
+            <option>Lahore Leads University</option>
+            <option>University of Lahore</option>
+            <option>Lahore School of Economics</option>
+            <option>Minhaj University Lahore</option>
+            <option>University of Home Economics Lahore</option>
+            <option>National College of Arts Lahore</option>
+            <option>University of Veterinary & Animal Sciences Lahore</option>
+            <option>University of Agriculture Faisalabad</option>
+            <option>Government College University Faisalabad</option>
+            <option>National Textile University Faisalabad</option>
+            <option>University of Faisalabad</option>
+            <option>University of Sargodha</option>
+            <option>Bahauddin Zakariya University Multan</option>
+            <option>University of Education Attock</option>
+            <option>University of Gujrat</option>
+            <option>University of Sialkot</option>
+            <option>GIFT University Gujranwala</option>
+            <option>Hajvery University Lahore</option>
+            <option>Riphah International University Lahore</option>
+            <option>Beaconhouse National University</option>
+          </optgroup>
+          <optgroup label="── Sindh ──">
+            <option>University of Karachi</option>
+            <option>NED University of Engineering & Technology</option>
+            <option>IBA — Institute of Business Administration Karachi</option>
+            <option>Aga Khan University</option>
+            <option>FAST-NUCES Karachi</option>
+            <option>Dow University of Health Sciences</option>
+            <option>Hamdard University Karachi</option>
+            <option>SZABIST — Shaheed Zulfikar Ali Bhutto Institute of Science & Technology</option>
+            <option>Mehran University of Engineering & Technology Jamshoro</option>
+            <option>University of Sindh Jamshoro</option>
+            <option>Liaquat University of Medical & Health Sciences</option>
+            <option>Sukkur IBA University</option>
+            <option>Shah Abdul Latif University Khairpur</option>
+            <option>University of Hyderabad</option>
+            <option>Indus Valley School of Art & Architecture</option>
+            <option>Greenwich University Karachi</option>
+          </optgroup>
+          <optgroup label="── KPK ──">
+            <option>University of Peshawar</option>
+            <option>University of Engineering & Technology Peshawar</option>
+            <option>COMSATS University Abbottabad</option>
+            <option>Abdul Wali Khan University Mardan</option>
+            <option>University of Malakand</option>
+            <option>Islamia College University Peshawar</option>
+            <option>University of Agriculture Peshawar</option>
+            <option>Hazara University Mansehra</option>
+            <option>University of Haripur</option>
+            <option>University of Swat</option>
+            <option>University of Swabi</option>
+            <option>Ghulam Ishaq Khan Institute of Engineering Sciences (GIKI)</option>
+            <option>Women University Mardan</option>
+            <option>Pak-Austria Fachhochschule Institute Haripur</option>
+            <option>University of Engineering & Technology Mardan</option>
+          </optgroup>
+          <optgroup label="── Balochistan ──">
+            <option>University of Balochistan Quetta</option>
+            <option>Balochistan University of Information Technology (BUITEMS)</option>
+            <option>University of Turbat</option>
+            <option>University of Loralai</option>
+            <option>University of Gwadar</option>
+            <option>Lasbela University of Agriculture, Water & Marine Sciences</option>
+            <option>Balochistan University of Engineering & Technology Khuzdar</option>
+          </optgroup>
+          <optgroup label="── AJK / GB ──">
+            <option>University of Azad Jammu & Kashmir Muzaffarabad</option>
+            <option>Karakoram International University Gilgit</option>
+            <option>University of Kotli AJK</option>
+            <option>Women University AJK</option>
+          </optgroup>
+          <option value="Other">Other — not listed</option>
+        </select>
+        <div class="err">Required</div>
+      </div>
+      <div class="field" id="f-campus"><label>Campus <span class="opt">(if applicable)</span></label><input type="text" name="campus" placeholder="e.g. H-12 Main Campus"></div>
+      <div class="two">
+        <div class="field" id="f-dept">
+          <label>Department <span class="req">*</span></label>
+          <select name="department" id="deptSelect">
+            <option value="" disabled selected>Select</option>
+            <option>Computer Science</option><option>Software Engineering</option><option>Information Technology</option><option>Cyber Security</option><option>Artificial Intelligence</option><option>Data Science</option><option>Electrical Engineering</option><option>Mechanical Engineering</option><option>Civil Engineering</option><option>Chemical Engineering</option><option>Telecom Engineering</option><option>Business Administration (BBA)</option><option>MBA</option><option>Economics</option><option>Accounting & Finance</option><option>Media & Communication</option><option>Mass Communication</option><option>Journalism</option><option>Social Sciences</option><option>Law / LLB</option><option>Medicine / MBBS</option><option>Pharmacy</option><option>Dentistry</option><option>Architecture</option><option>Design / Fine Arts</option><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Psychology</option><option>Education</option><option>Other</option>
+          </select>
+          <div class="err">Required</div>
+        </div>
+        <div class="field" id="f-sem">
+          <label>Semester <span class="req">*</span></label>
+          <select name="semester">
+            <option value="" disabled selected>Select</option>
+            <option>1st</option><option>2nd</option><option>3rd</option><option>4th</option><option>5th</option><option>6th</option><option>7th</option><option>8th</option><option>Final Year</option>
+          </select>
+          <div class="err">Required</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLLEGE FIELDS -->
+    <div id="collegeFields" class="hidden">
+      <div class="field" id="f-colname">
+        <label>College Name <span class="req">*</span></label>
+        <input type="text" name="collegeName" placeholder="Enter your college name">
+        <div class="err">Required</div>
+      </div>
+      <div class="two">
+        <div class="field" id="f-grade">
+          <label>Grade / Class <span class="req">*</span></label>
+          <select name="grade">
+            <option value="" disabled selected>Select</option>
+            <option>1st Year (11th)</option>
+            <option>2nd Year (12th)</option>
+          </select>
+          <div class="err">Required</div>
+        </div>
+        <div class="field" id="f-board">
+          <label>Board <span class="req">*</span></label>
+          <select name="board">
+            <option value="" disabled selected>Select your board</option>
+            <optgroup label="── Federal ──">
+              <option>Federal Board (FBISE) Islamabad</option>
+            </optgroup>
+            <optgroup label="── Punjab ──">
+              <option>BISE Lahore</option>
+              <option>BISE Rawalpindi</option>
+              <option>BISE Gujranwala</option>
+              <option>BISE Faisalabad</option>
+              <option>BISE Multan</option>
+              <option>BISE Sargodha</option>
+              <option>BISE Bahawalpur</option>
+              <option>BISE DG Khan</option>
+              <option>BISE Sahiwal</option>
+            </optgroup>
+            <optgroup label="── Sindh ──">
+              <option>BISE Karachi</option>
+              <option>BISE Hyderabad</option>
+              <option>BISE Sukkur</option>
+              <option>BISE Larkana</option>
+              <option>BISE Mirpurkhas</option>
+              <option>Aga Khan Board</option>
+            </optgroup>
+            <optgroup label="── KPK ──">
+              <option>BISE Peshawar</option>
+              <option>BISE Abbottabad</option>
+              <option>BISE Bannu</option>
+              <option>BISE Dera Ismail Khan</option>
+              <option>BISE Kohat</option>
+              <option>BISE Malakand</option>
+              <option>BISE Mardan</option>
+              <option>BISE Swat</option>
+            </optgroup>
+            <optgroup label="── Balochistan ──">
+              <option>BISE Quetta</option>
+            </optgroup>
+            <optgroup label="── AJK ──">
+              <option>AJK Board of Intermediate & Secondary Education</option>
+            </optgroup>
+            <optgroup label="── O/A Level ──">
+              <option>Cambridge International (O/A Level)</option>
+            </optgroup>
+            <option>Other</option>
+          </select>
+          <div class="err">Required</div>
+        </div>
+      </div>
+      <div class="field" id="f-coldept">
+        <label>Stream / Subject Group <span class="req">*</span></label>
+        <select name="collegeStream">
+          <option value="" disabled selected>Select</option>
+          <option>Pre-Engineering (FSc)</option>
+          <option>Pre-Medical (FSc)</option>
+          <option>ICS — Computer Science</option>
+          <option>ICS — Statistics</option>
+          <option>ICS — Physics</option>
+          <option>FA — General</option>
+          <option>FA — Arts</option>
+          <option>Commerce (ICom)</option>
+          <option>O Level / A Level</option>
+          <option>Other</option>
+        </select>
+        <div class="err">Required</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEC 3: STUDENT ID -->
+  <div class="section" id="sec3">
+    <div class="sec-head"><div class="sec-num">3</div><div class="sec-title">Student ID Verification</div></div>
+    <div class="notice"><p>Upload a clear photo of your <strong>student ID card</strong>. Make sure your name and institution are fully visible and readable.</p></div>
+    <div class="field" id="f-sid">
+      <label>Student ID Card Photo <span class="req">*</span></label>
+      <div class="file-zone" onclick="document.getElementById('sidFile').click()">
+        <input type="file" id="sidFile" name="studentId" accept="image/*,.pdf" required>
+        <div style="font-size:26px;margin-bottom:6px">🪪</div>
+        <div class="file-hint">Tap to upload &nbsp;·&nbsp; <span>JPG, PNG or PDF</span></div>
+        <div class="file-hint" style="margin-top:3px">Max 5MB &nbsp;·&nbsp; Card must be clearly visible</div>
+        <div class="file-name" id="sidName"></div>
+      </div>
+      <div class="err" id="sid-err">Please upload your student ID card</div>
+    </div>
+  </div>
+
+  <!-- SEC 4: EVENT ATTENDANCE -->
+  <div class="section" id="sec4">
+    <div class="sec-head"><div class="sec-num">4</div><div class="sec-title">Event Attendance</div></div>
+    <div class="field" id="f-days">
+      <label>Which day(s) will you be attending? <span class="req">*</span></label>
+      <div class="pills">
+        <div class="pill"><input type="radio" name="attendDays" id="d1" value="Day 1 only — Saturday 27 June" required><label for="d1">Day 1 only — Saturday 27 June</label></div>
+        <div class="pill"><input type="radio" name="attendDays" id="d2" value="Day 2 only — Sunday 28 June"><label for="d2">Day 2 only — Sunday 28 June</label></div>
+        <div class="pill"><input type="radio" name="attendDays" id="db" value="Both days — 27 & 28 June"><label for="db">Both days — 27 & 28 June 🔥</label></div>
+      </div>
+      <div class="err" id="days-err">Please select which day(s) you are attending</div>
+    </div>
+  </div>
+
+  <!-- SEC 5: WORKSHOPS -->
+  <div class="section" id="sec5">
+    <div class="sec-head"><div class="sec-num">5</div><div class="sec-title">Workshop Selection</div></div>
+    <div class="notice"><p>Select the workshops you want to attend. <strong>Timings and room assignments will be emailed to you once confirmed.</strong> You can select from any pillar.</p></div>
+    <div class="ws-grid">
+      <div class="ws-item pill-check"><input type="checkbox" name="ws" id="ws1" value="AI & Next Generation Software Engineering"><label for="ws1"><span class="ws-pillar">Tech</span><span class="ws-name">AI & Next Generation Software Engineering</span></label></div>
+      <div class="ws-item pill-check"><input type="checkbox" name="ws" id="ws2" value="Full Stack Web3 & Decentralized Apps"><label for="ws2"><span class="ws-pillar">Tech</span><span class="ws-name">Full Stack Web3 & Decentralized Apps</span></label></div>
+      <div class="ws-item pill-check"><input type="checkbox" name="ws" id="ws3" value="Next Gen Software Security & Ethical Hacking"><label for="ws3"><span class="ws-pillar">Tech</span><span class="ws-name">Next Gen Software Security & Ethical Hacking</span></label></div>
+      <div class="ws-item pill-check"><input type="checkbox" name="ws" id="ws4" value="UI/UX Design & Design Systems"><label for="ws4"><span class="ws-pillar">Tech</span><span class="ws-name">UI/UX Design & Design Systems</span></label></div>
+      <div class="ws-item pill-check"><input type="checkbox" name="ws" id="ws5" value="Financial Literacy & Tax Planning"><label for="ws5"><span class="ws-pillar">Corporate</span><span class="ws-name">Financial Literacy & Tax Planning</span></label></div>
+      <div class="ws-item pill-check"><input type="checkbox" name="ws" id="ws6" value="Startup Legalities & Intellectual Property"><label for="ws6"><span class="ws-pillar">Corporate</span><span class="ws-name">Startup Legalities & Intellectual Property</span></label></div>
+      <div class="ws-item pill-check"><input type="checkbox" name="ws" id="ws7" value="Freelancing Architecture & Global Client Acquisition"><label for="ws7"><span class="ws-pillar">Corporate</span><span class="ws-name">Freelancing Architecture & Global Client Acquisition</span></label></div>
+      <div class="ws-item pill-check"><input type="checkbox" name="ws" id="ws8" value="Confident Interview Technique & Personal Branding"><label for="ws8"><span class="ws-pillar">Corporate</span><span class="ws-name">Confident Interview Technique & Personal Branding</span></label></div>
+      <div class="ws-item pill-check"><input type="checkbox" name="ws" id="ws9" value="Speech Fluency & Public Speaking"><label for="ws9"><span class="ws-pillar">Grooming</span><span class="ws-name">Speech Fluency & Public Speaking</span></label></div>
+      <div class="ws-item pill-check"><input type="checkbox" name="ws" id="ws10" value="The Gentleman's Edge"><label for="ws10"><span class="ws-pillar">Grooming</span><span class="ws-name">The Gentleman's Edge — Etiquette & Mannerisms</span></label></div>
+      <div class="ws-item pill-check"><input type="checkbox" name="ws" id="ws11" value="PFS Masterclass"><label for="ws11"><span class="ws-pillar">PFS</span><span class="ws-name">PFS Masterclass — Cinematography / Film Production</span></label></div>
+      <div class="ws-item pill-check"><input type="checkbox" name="ws" id="ws12" value="Narrative Engineering & Script Writing"><label for="ws12"><span class="ws-pillar">PFS</span><span class="ws-name">Narrative Engineering & Script Writing</span></label></div>
+    </div>
+    <div class="err" id="ws-err" style="margin-top:10px">Please select at least one workshop</div>
+  </div>
+
+  <div class="submit-wrap">
+    <button type="submit" class="submit-btn">Complete Registration →</button>
+    <p class="submit-note">By registering you confirm you are a current student. Your ID will be verified before your confirmation is sent.</p>
+  </div>
+
+</form>
+
+<div class="success" id="successMsg">
+  <div class="success-icon">✅</div>
+  <h2>Registration Submitted!</h2>
+  <p>Your student ID is being verified. You'll receive a confirmation email within 24 hours. Check your WhatsApp too — we may reach out directly. 💚</p>
+</div>
+</div>
+
+<script>
+// Show/hide university vs college fields
+document.querySelectorAll('[name="instType"]').forEach(r=>{
+  r.addEventListener('change',function(){
+    const isUni = this.value==='University';
+    document.getElementById('uniFields').classList.toggle('hidden',!isUni);
+    document.getElementById('collegeFields').classList.toggle('hidden',isUni);
+    // toggle required
+    document.querySelectorAll('#uniFields select, #uniFields input[name="department"]').forEach(el=>{ el.required=isUni; });
+    document.querySelectorAll('#collegeFields input[name="collegeName"], #collegeFields select').forEach(el=>{ el.required=!isUni; });
+  });
+});
+
+// File name
+document.getElementById('sidFile').addEventListener('change',function(){
+  document.getElementById('sidName').textContent = this.files[0]?'✓ '+this.files[0].name:'';
+});
+
+// CNIC format
+document.querySelector('[name="cnic"]').addEventListener('input',function(){
+  let v=this.value.replace(/[^0-9]/g,'');
+  if(v.length>5) v=v.slice(0,5)+'-'+v.slice(5);
+  if(v.length>13) v=v.slice(0,13)+'-'+v.slice(13);
+  this.value=v.slice(0,15);
+});
+
+// Progress
+function updateProgress(){
+  const secs=['sec1','sec2','sec3','sec4','sec5'];
+  let active=0;
+  secs.forEach((id,i)=>{ const r=document.getElementById(id).getBoundingClientRect(); if(r.top<window.innerHeight*.65) active=i+1; });
+  for(let i=1;i<=5;i++){
+    const s=document.getElementById('s'+i);
+    s.classList.remove('done','active');
+    if(i<active) s.classList.add('done');
+    else if(i===active) s.classList.add('active');
+  }
+  document.getElementById('stepNum').textContent=Math.max(1,active);
+}
+window.addEventListener('scroll',updateProgress);
+updateProgress();
+
+// Clear errors on change
+document.querySelectorAll('input,select').forEach(el=>{
+  el.addEventListener('change',()=>{ const f=el.closest('.field'); if(f) f.classList.remove('invalid'); });
+});
+
+// Validate
+function setInv(id){ const f=document.getElementById('f-'+id); if(f) f.classList.add('invalid'); return false; }
+function clrInv(id){ const f=document.getElementById('f-'+id); if(f) f.classList.remove('invalid'); }
+function v(n){ const e=document.querySelector('[name="'+n+'"]'); return e?e.value.trim():''; }
+function rv(n){ const e=document.querySelector('[name="'+n+'"]:checked'); return e?e.value:''; }
+
+document.getElementById('regForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  let ok=true;
+
+  // Sec 1
+  if(!v('firstName')){ setInv('fname'); ok=false; } else clrInv('fname');
+  if(!v('lastName')){ setInv('lname'); ok=false; } else clrInv('lname');
+  if(!v('cnic')){ setInv('cnic'); ok=false; } else clrInv('cnic');
+  if(!v('whatsapp')){ setInv('phone'); ok=false; } else clrInv('phone');
+  if(!v('email')){ setInv('email'); ok=false; } else clrInv('email');
+  if(!v('gender')){ setInv('gender'); ok=false; } else clrInv('gender');
+  if(!v('age')){ setInv('age'); ok=false; } else clrInv('age');
+  if(!v('city')){ setInv('city'); ok=false; } else clrInv('city');
+  if(!rv('milGov')){ document.getElementById('milgov-err').style.display='block'; document.getElementById('f-milgov').classList.add('invalid'); ok=false; }
+  else { document.getElementById('milgov-err').style.display='none'; document.getElementById('f-milgov').classList.remove('invalid'); }
+
+  // Sec 2
+  const itype=rv('instType');
+  if(!itype){ document.getElementById('insttype-err').style.display='block'; document.getElementById('f-insttype').classList.add('invalid'); ok=false; }
+  else { document.getElementById('insttype-err').style.display='none'; document.getElementById('f-insttype').classList.remove('invalid'); }
+
+  if(itype==='University'){
+    if(!v('institution')){ setInv('inst'); ok=false; } else clrInv('inst');
+    if(!v('department')){ setInv('dept'); ok=false; } else clrInv('dept');
+    if(!v('semester')){ setInv('sem'); ok=false; } else clrInv('sem');
+  } else if(itype==='College'){
+    if(!v('collegeName')){ setInv('colname'); ok=false; } else clrInv('colname');
+    if(!v('grade')){ setInv('grade'); ok=false; } else clrInv('grade');
+    if(!v('board')){ setInv('board'); ok=false; } else clrInv('board');
+    if(!v('collegeStream')){ setInv('coldept'); ok=false; } else clrInv('coldept');
+  }
+
+  // Sec 3
+  const sid=document.getElementById('sidFile');
+  if(!sid.files||!sid.files[0]){ document.getElementById('sid-err').style.display='block'; document.getElementById('f-sid').classList.add('invalid'); ok=false; }
+  else { document.getElementById('sid-err').style.display='none'; document.getElementById('f-sid').classList.remove('invalid'); }
+
+  // Sec 4
+  if(!rv('attendDays')){ document.getElementById('days-err').style.display='block'; document.getElementById('f-days').classList.add('invalid'); ok=false; }
+  else { document.getElementById('days-err').style.display='none'; document.getElementById('f-days').classList.remove('invalid'); }
+
+  // Sec 5
+  if(!document.querySelectorAll('[name="ws"]:checked').length){ document.getElementById('ws-err').style.display='block'; ok=false; }
+  else document.getElementById('ws-err').style.display='none';
+
+  if(ok){
+    document.getElementById('regForm').style.display='none';
+    document.getElementById('successMsg').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  } else {
+    const fe=document.querySelector('.field.invalid');
+    if(fe) fe.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+});
+</script>
+</body>
+</html>

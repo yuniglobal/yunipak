@@ -43,6 +43,7 @@ const Navbar = () => {
     { name: 'Summer Camp', path: '/summer-camp', icon: Sun },
     { name: 'Trainings', path: '/trainings', icon: GraduationCap },
     { name: 'Blog', path: '/blog', icon: BookOpen },
+    { name: 'Registration', path: '/registration', icon: GraduationCap },
     { name: 'Contact', path: '/contact', icon: Mail }
   ];
 
