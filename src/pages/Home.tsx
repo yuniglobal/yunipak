@@ -408,7 +408,7 @@ export default function Home() {
             <p style={{ color: 'var(--text-tertiary)', fontSize: '0.9rem' }}>Official Registration Partner</p>
           </div>
           <div className="partner-card">
-            <div style={{ fontSize: '3rem' }}>🎓</div>
+            <div style={{ fontSize: '3rem' }}></div>
             <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Dual Certification</h3>
             <p style={{ color: 'var(--text-tertiary)', fontSize: '0.9rem' }}>Graduates receive both a Training Certification and an Internship Certification.</p>
           </div>

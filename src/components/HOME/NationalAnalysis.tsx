@@ -187,7 +187,7 @@ export default function NationalAnalysis() {
         {/* National Analysis Card */}
         <div className="analysis-card">
           <div>
-            <div className="card-header-icon">🇵🇰</div>
+            <div className="card-header-icon"></div>
             <h3 className="card-title-text">National Analysis</h3>
             <p className="card-lead-p">
               Pakistan possesses one of the world's youngest populations, yet faces critical systemic challenges 
@@ -234,7 +234,7 @@ export default function NationalAnalysis() {
         {/* Skills Gap Card */}
         <div className="analysis-card">
           <div>
-            <div className="card-header-icon">📉</div>
+            <div className="card-header-icon"></div>
             <h3 className="card-title-text">The Skills Gap Breakdown</h3>
             <p className="card-lead-p">
               The modern workforce faces severe deficiencies across technical, analytical, and professional spheres 

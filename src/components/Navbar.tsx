@@ -2,12 +2,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { Menu, X, Sun, Moon, ChevronRight, Home, Info, BookOpen, GraduationCap, Mail } from 'lucide-react';
+import { Menu, X, Sun, Moon, ChevronRight, Home, Info, BookOpen, GraduationCap, Mail, ClipboardList, ChevronDown, Users, User } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isContracted, setIsContracted] = useState(false);
+  const [isMobileRegOpen, setIsMobileRegOpen] = useState(false);
   const lastScrollY = useRef(0);
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
@@ -110,7 +111,6 @@ const Navbar = () => {
           transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
           box-shadow: 0 10px 40px rgba(0,0,0,0.2);
           pointer-events: auto;
-          overflow: hidden;
         }
 
         .scrolled .navbar-wrapper {
@@ -318,6 +318,171 @@ const Navbar = () => {
             gap: 0.75rem;
           }
         }
+
+        /* Dropdown Styling */
+        .nav-dropdown {
+          position: relative;
+          display: inline-block;
+        }
+        
+        .nav-dropdown-toggle {
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.5rem 0.75rem;
+          border-radius: 100px;
+          color: var(--text-secondary);
+          font-weight: 600;
+          font-size: 0.9rem;
+          transition: all 0.4s ease;
+        }
+
+        .nav-dropdown-toggle:hover {
+          color: var(--text-primary);
+          background: rgba(255,255,255,0.05);
+        }
+
+        .nav-dropdown-menu {
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          transform: translateX(-50%) translateY(10px);
+          background: var(--glass-bg-heavy);
+          backdrop-filter: blur(25px) saturate(200%);
+          -webkit-backdrop-filter: blur(25px) saturate(200%);
+          border: 1px solid var(--glass-border);
+          border-radius: 16px;
+          padding: 0.5rem;
+          min-width: 240px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s ease;
+          z-index: 1100;
+        }
+
+        .nav-dropdown:hover .nav-dropdown-menu {
+          opacity: 1;
+          visibility: visible;
+          transform: translateX(-50%) translateY(8px);
+        }
+
+        .dropdown-item {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.65rem 0.85rem;
+          color: var(--text-secondary);
+          text-decoration: none;
+          font-size: 0.85rem;
+          font-weight: 600;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+          color: var(--text-primary);
+          background: rgba(255,255,255,0.08);
+        }
+        
+        .dropdown-item.placeholder-item {
+          opacity: 0.7;
+        }
+        
+        .dropdown-item.placeholder-item:hover {
+          opacity: 1;
+        }
+
+        .contracted .nav-dropdown-toggle span {
+          max-width: 0;
+          opacity: 0;
+          overflow: hidden;
+          margin-left: 0;
+        }
+        
+        .contracted .nav-dropdown-toggle .chevron-icon {
+          display: none;
+        }
+        
+        .contracted .nav-dropdown-toggle {
+          gap: 0;
+          padding: 0.5rem;
+        }
+
+        /* Mobile Dropdown styles */
+        .mobile-dropdown-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 1rem 0;
+          font-size: clamp(1.4rem, 6vw, 2rem);
+          font-family: 'Outfit', sans-serif;
+          font-weight: 800;
+          color: var(--text-primary);
+          border-bottom: 1px solid var(--glass-border);
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .mobile-dropdown-header span {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        .mobile-dropdown-header .chevron-icon {
+          transition: transform 0.3s ease;
+        }
+
+        .mobile-dropdown-header.open .chevron-icon {
+          transform: rotate(90deg);
+        }
+
+        .mobile-dropdown-content {
+          max-height: 0;
+          opacity: 0;
+          overflow: hidden;
+          transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.4s ease;
+          display: flex;
+          flex-direction: column;
+          padding-left: 1.5rem;
+          border-left: 2px solid var(--glass-border);
+          margin-top: 0;
+          margin-bottom: 0;
+          gap: 0.5rem;
+        }
+
+        .mobile-dropdown-content.open {
+          max-height: 250px;
+          opacity: 1;
+          margin-top: 0.5rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .mobile-dropdown-item {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          padding: 0.75rem 0;
+          color: var(--text-secondary);
+          font-size: 1.1rem;
+          text-decoration: none;
+          font-weight: 600;
+          transition: all 0.3s ease;
+        }
+
+        .mobile-dropdown-item:hover {
+          color: var(--pk-green);
+          padding-left: 0.5rem;
+        }
+        
+        .mobile-dropdown-item.placeholder-item {
+          opacity: 0.7;
+        }
       `}</style>
 
       <div className="navbar-container">
@@ -339,6 +504,35 @@ const Navbar = () => {
               </div>
             );
           })}
+          
+          {/* Registrations Dropdown */}
+          <div className="nav-dropdown">
+            <div className="nav-dropdown-toggle">
+              <ClipboardList size={18} strokeWidth={2.5} />
+              <span>Registrations</span>
+              <ChevronDown size={14} strokeWidth={2.5} className="chevron-icon" />
+            </div>
+            <div className="nav-dropdown-menu">
+              <a 
+                href="https://forms.gle/dHUsKbX4i9zahny79" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="dropdown-item"
+              >
+                <Users size={16} strokeWidth={2} />
+                <span>Event Team Registration</span>
+              </a>
+              <a 
+                href="https://forms.gle/FKQr6jWuu5aP3c8V6" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="dropdown-item"
+              >
+                <User size={16} strokeWidth={2} />
+                <span>Individual Registration</span>
+              </a>
+            </div>
+          </div>
         </div>
 
         <div className="nav-actions">
@@ -390,6 +584,37 @@ const Navbar = () => {
             </div>
           );
         })}
+
+        {/* Mobile Registrations Dropdown */}
+        <div className={`mobile-dropdown-header ${isMobileRegOpen ? 'open' : ''}`} onClick={() => setIsMobileRegOpen(!isMobileRegOpen)}>
+          <span>
+            <ClipboardList size={28} strokeWidth={2.5} />
+            Registrations
+          </span>
+          <ChevronRight size={32} className="chevron-icon" />
+        </div>
+        <div className={`mobile-dropdown-content ${isMobileRegOpen ? 'open' : ''}`}>
+          <a 
+            href="https://forms.gle/dHUsKbX4i9zahny79" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="mobile-dropdown-item"
+            onClick={() => setIsOpen(false)}
+          >
+            <Users size={22} strokeWidth={2} />
+            Event Team Registration
+          </a>
+          <a 
+            href="https://forms.gle/FKQr6jWuu5aP3c8V6" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="mobile-dropdown-item"
+            onClick={() => setIsOpen(false)}
+          >
+            <User size={22} strokeWidth={2} />
+            <span>Individual Registration</span>
+          </a>
+        </div>
 
         <div style={{marginTop: 'auto', paddingBottom: '4rem'}}>
           <button 

@@ -607,7 +607,7 @@ const SummerPromoPopup: React.FC = () => {
               <div className="column-content">
                 <div className="popup-badge">
                   <div className="badge-pulse"></div>
-                  ☀️ Registrations Open!
+                  Registrations Open!
                 </div>
                 <h3 className="column-title prominent">YUNI Summer Camp 2026</h3>
                 <p className="column-desc">
@@ -648,7 +648,7 @@ const SummerPromoPopup: React.FC = () => {
                       <ShieldCheck size={24} />
                     </div>
                     <div className="congrats-text-wrap">
-                      <h4 className="congrats-title">Subscription Active! 🥳</h4>
+                      <h4 className="congrats-title">Subscription Active!</h4>
                       <p className="congrats-message">
                         Thank you for joining the YUNIVERSE newsletter.
                       </p>
@@ -668,7 +668,7 @@ const SummerPromoPopup: React.FC = () => {
                     
                     <form className="popup-form" onSubmit={handleSubscribe}>
                       <div className="popup-field">
-                        <span className="popup-field-icon">✉️</span>
+                        <span className="popup-field-icon"></span>
                         <input
                           type="email"
                           placeholder="Email address"
@@ -678,7 +678,7 @@ const SummerPromoPopup: React.FC = () => {
                         />
                       </div>
                       <div className="popup-field">
-                        <span className="popup-field-icon">📱</span>
+                        <span className="popup-field-icon"></span>
                         <input
                           type="tel"
                           placeholder="WhatsApp (e.g., 03123456789)"

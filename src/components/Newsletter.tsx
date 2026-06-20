@@ -48,7 +48,7 @@ const Newsletter: React.FC = () => {
 
       setStatus({
           type: 'success',
-          message: `Thank you for subscribing! 🥳\n\nYou have successfully joined the YUNIVERSE newsletter.`
+          message: `Thank you for subscribing!\n\nYou have successfully joined the YUNIVERSE newsletter.`
         });
 
         // Party popper animation confetti (dual burst)
@@ -577,7 +577,7 @@ const Newsletter: React.FC = () => {
 
           <form className="newsletter-form" onSubmit={handleSubscribe}>
             <div className="newsletter-field">
-              <span className="newsletter-field-icon">✉️</span>
+              <span className="newsletter-field-icon"></span>
               <input
                 type="email"
                 placeholder="Enter your email address"
@@ -588,7 +588,7 @@ const Newsletter: React.FC = () => {
             </div>
 
             <div className="newsletter-field">
-              <span className="newsletter-field-icon">📱</span>
+              <span className="newsletter-field-icon"></span>
               <input
                 type="tel"
                 placeholder="WhatsApp number (e.g., 03123456789)"
@@ -606,7 +606,7 @@ const Newsletter: React.FC = () => {
           </form>
 
           <p className="newsletter-privacy">
-            🔒 We respect your privacy. Unsubscribe at any time. No spam, ever.
+            We respect your privacy. Unsubscribe at any time. No spam, ever.
           </p>
         </div>
       </div>
@@ -632,7 +632,7 @@ const Newsletter: React.FC = () => {
                   <CheckCircle size={24} />
                 </div>
                 <div className="congrats-text-wrap">
-                  <h4 className="congrats-title">Subscription Active! 🥳</h4>
+                  <h4 className="congrats-title">Subscription Active!</h4>
                   <p className="congrats-message">
                     Thank you for joining the YUNIVERSE newsletter.
                   </p>
