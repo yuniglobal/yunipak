@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Search } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AnimatedTitle from "../AnimatedTitle";
@@ -292,7 +293,7 @@ const SummerCamp: React.FC = () => {
         <div className="course-grid">
           {filteredCourses.length === 0 ? (
             <div className="no-results-premium">
-              <div className="no-results-icon">🔍</div>
+              <div className="no-results-icon"><Search size={48} /></div>
               <p>No programs found. Select another category path.</p>
             </div>
           ) : (

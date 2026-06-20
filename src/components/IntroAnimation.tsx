@@ -142,7 +142,7 @@ export default function IntroAnimation({ onComplete }: IntroAnimationProps) {
         }
 
         .intro-overlay .jakarta-sans-font {
-          font-family: "Plus Jakarta Sans", sans-serif;
+          font-family: 'Inter', sans-serif;
           font-weight: 700;
         }
 

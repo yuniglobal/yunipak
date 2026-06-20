@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AnimatedBackground from "../AnimatedBackground";
 import { galleryImages } from "../../constants/yunityData";
+import { Camera } from "lucide-react";
 
 const Blog: React.FC = () => {
   const navigate = useNavigate();
@@ -22,8 +23,8 @@ const Blog: React.FC = () => {
 
           <header className="blog-detail-header">
             <span className="blog-category-badge-premium" style={{ background: 'var(--pk-green)' }}>
-              <span className="badge-icon">📷</span>
-              <span className="badge-text">Summit Behind-the-Scenes</span>
+              <span className="badge-icon" style={{ display: 'inline-flex', alignItems: 'center' }}><Camera size={14} /></span>
+              <span className="badge-text" style={{ marginLeft: '4px' }}>Summit Behind-the-Scenes</span>
             </span>
             <h1 className="blog-detail-title">
               Through the Viewfinder: <span className="text-gradient">48 Hours of Chaos, Caffeine, and Creative Spark at YUNIty</span>

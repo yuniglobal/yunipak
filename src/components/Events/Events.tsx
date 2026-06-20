@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AnimatedTitle from "../AnimatedTitle";
 import AnimatedBackground from "../AnimatedBackground";
-import { MapPin, CreditCard, UserCheck, ShieldCheck, Calendar, Clock } from 'lucide-react';
+import { MapPin, CreditCard, UserCheck, ShieldCheck, Calendar, Clock, Network, Heart, GraduationCap, Bot, Users, Handshake, Rocket, Camera, FileText } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -244,18 +244,18 @@ const EventsComponent: React.FC = () => {
     return colorClass === "brand" ? "var(--pk-green)" : "var(--pk-green-light)";
   };
 
-  const getCategoryIcon = (icon: string): string => {
-    const iconMap: { [key: string]: string } = {
-      "fa-network-wired": "🌐",
-      "fa-hand-holding-heart": "🤝",
-      "fa-graduation-cap": "🎓",
-      "fa-robot": "🤖",
-      "fa-users": "👥",
-      "fa-handshake": "🤝",
-      "fa-rocket": "🚀",
-      "fa-camera": "📷",
-    };
-    return iconMap[icon] || "📰";
+  const getCategoryIcon = (icon: string): React.ReactNode => {
+    switch (icon) {
+      case "fa-network-wired": return <Network size={14} />;
+      case "fa-hand-holding-heart": return <Heart size={14} />;
+      case "fa-graduation-cap": return <GraduationCap size={14} />;
+      case "fa-robot": return <Bot size={14} />;
+      case "fa-users": return <Users size={14} />;
+      case "fa-handshake": return <Handshake size={14} />;
+      case "fa-rocket": return <Rocket size={14} />;
+      case "fa-camera": return <Camera size={14} />;
+      default: return <FileText size={14} />;
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {

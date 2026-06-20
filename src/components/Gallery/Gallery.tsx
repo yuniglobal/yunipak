@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Camera } from "lucide-react";
 import gsap from "gsap";
 import AnimatedBackground from "../AnimatedBackground";
 import { galleryImages } from "../../constants/yunityData";
@@ -41,8 +42,8 @@ const Gallery: React.FC = () => {
 
           <header className="gallery-header-premium">
             <span className="blog-category-badge-premium" style={{ background: "var(--pk-green)" }}>
-              <span className="badge-icon">📷</span>
-              <span className="badge-text">Interactive Showcase</span>
+              <span className="badge-icon" style={{ display: 'inline-flex', alignItems: 'center' }}><Camera size={14} /></span>
+              <span className="badge-text" style={{ marginLeft: '4px' }}>Interactive Showcase</span>
             </span>
             <h1 className="gallery-title-premium">
               YUNI-TY 2026 : <span className="text-gradient">Memory Cloud</span>

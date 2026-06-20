@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Search, Clock, BarChart } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AnimatedTitle from "../AnimatedTitle";
@@ -197,7 +198,7 @@ const Trainings: React.FC = () => {
         <div className="course-grid">
           {filteredCourses.length === 0 ? (
             <div className="no-results-premium">
-              <div className="no-results-icon">🔍</div>
+              <div className="no-results-icon"><Search size={48} /></div>
               <p>No sequences found in this sector. Try another protocol.</p>
             </div>
           ) : (
@@ -217,8 +218,8 @@ const Trainings: React.FC = () => {
                     <h3 className="course-title-tech">{course.title}</h3>
                     <p className="instructor-tech">By {course.instructor}</p>
                     <div className="card-meta-tech">
-                      <span>⏱ {course.duration.split('•')[0]}</span>
-                      <span>📊 {course.level}</span>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><Clock size={14} /> {course.duration.split('•')[0]}</span>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><BarChart size={14} /> {course.level}</span>
                     </div>
                     <div className="card-footer-premium">
                       <span className="price-tag-tech">{course.price}</span>

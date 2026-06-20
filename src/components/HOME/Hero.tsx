@@ -187,7 +187,7 @@ export default function Hero() {
         <div>
           <div className="hero-badge">
             <span style={{ width: 8, height: 8, background: 'var(--pk-green-light)', borderRadius: '50%', boxShadow: '0 0 10px var(--pk-green-light)' }}></span>
-            Rebuilding the 21st-Century Shaheen
+            National Tech Fellowship
           </div>
         </div>
 

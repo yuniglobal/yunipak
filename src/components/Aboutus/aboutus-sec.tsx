@@ -16,7 +16,7 @@ const AboutUsPage: React.FC = () => {
   return (
     <div className="about-page-wrapper">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 
         :root {
           --pk-green-deep: #051d10;
@@ -84,7 +84,7 @@ const AboutUsPage: React.FC = () => {
           box-shadow: 0 0 15px rgba(197, 160, 89, 0.15);
         }
         .hero-title {
-          font-family: 'Playfair Display', serif;
+          font-family: 'Outfit', sans-serif;
           font-size: clamp(2.5rem, 6vw, 4.5rem);
           font-weight: 800;
           line-height: 1.1;
@@ -126,7 +126,7 @@ const AboutUsPage: React.FC = () => {
           display: block;
         }
         .section-title-text {
-          font-family: 'Playfair Display', serif;
+          font-family: 'Outfit', sans-serif;
           font-size: clamp(2rem, 4vw, 3rem);
           font-weight: 700;
           color: #ffffff;
@@ -286,13 +286,13 @@ const AboutUsPage: React.FC = () => {
           position: absolute;
           top: 1rem;
           right: 2rem;
-          font-family: 'Playfair Display', serif;
+          font-family: 'Outfit', sans-serif;
           font-size: 4rem;
           color: rgba(197, 160, 89, 0.08);
           line-height: 1;
         }
         .philosophy-title {
-          font-family: 'Playfair Display', serif;
+          font-family: 'Outfit', sans-serif;
           font-size: 1.5rem;
           font-weight: 700;
           color: var(--pk-gold-light);
@@ -453,7 +453,7 @@ const AboutUsPage: React.FC = () => {
             <ShieldCheck size={16} /> National Initiative
           </div>
           <h1 className="hero-title">YUNI Intelligence</h1>
-          <p className="hero-subtitle">Re-Building The 21st Century Shaheen 🦅</p>
+          <p className="hero-subtitle">Awakening Pakistan's Tech Potential</p>
           <p className="hero-description">
             Pakistan stands at a pivotal historical junction. With over 60% of our population under the age of 30, 
             we possess one of the largest demographic dividends globally. YUNI is a professional nation-building 

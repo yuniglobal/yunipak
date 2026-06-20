@@ -536,10 +536,7 @@ const Navbar = () => {
         </div>
 
         <div className="nav-actions">
-          <div className="theme-toggle" onClick={toggleTheme}>
-            {theme === 'dark' ? <Sun size={20} strokeWidth={2.5} /> : <Moon size={20} strokeWidth={2.5} />}
-          </div>
-          
+          {/* Theme toggle disabled/hidden as requested */}
           <div className="mobile-toggle" onClick={() => setIsOpen(true)}>
             <Menu size={24} strokeWidth={2.5} />
           </div>

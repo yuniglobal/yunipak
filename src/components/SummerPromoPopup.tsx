@@ -638,7 +638,7 @@ const SummerPromoPopup: React.FC = () => {
               <div className="column-content">
                 <div className="popup-badge blue-badge">
                   <div className="badge-pulse"></div>
-                  📢 Newsletter
+                  <Send size={14} style={{ marginRight: '4px' }} /> Newsletter
                 </div>
                 <h3 className="column-title">Welcome to YUNIVERSE</h3>
                 
