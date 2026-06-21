@@ -17,8 +17,6 @@ const AboutUsPage: React.FC = () => {
   return (
     <div className="about-page-wrapper">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
-
         :root {
           --pk-green-deep: #051d10;
           --pk-green-mid: #0b3720;
@@ -33,7 +31,6 @@ const AboutUsPage: React.FC = () => {
         .about-page-wrapper {
           background-color: var(--pk-green-deep);
           color: #ffffff;
-          font-family: 'Outfit', sans-serif;
           min-height: 100vh;
           overflow-x: hidden;
           position: relative;
