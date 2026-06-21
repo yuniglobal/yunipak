@@ -10,11 +10,11 @@ import Services from './pages/Services';
 import Contact from './pages/Contact';
 import Careers from './pages/Careers';
 import Events from './pages/Events';
-import SummerCampPage from './pages/SummerCamp';
+
 import TrainingsPage from './pages/Trainings';
 import Certificates from './pages/Certificates';
 import Blog from './pages/Blog';
-import Gallery from './pages/Gallery';
+
 import Legal from './pages/Legal';
 import RegistrationTeam from './pages/RegistrationTeam';
 import RegistrationIndividual from './pages/RegistrationIndividual';
@@ -85,12 +85,12 @@ function App() {
           <Route path="/Aboutus" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/summer-camp" element={<SummerCampPage />} />
+
           <Route path="/trainings" element={<TrainingsPage />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/events" element={<Events />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path="/gallery" element={<Gallery />} />
+
           <Route path="/certificates" element={<Certificates />} />
           <Route path="/registration-team" element={<RegistrationTeam />} />
           <Route path="/registration-individual" element={<RegistrationIndividual />} />

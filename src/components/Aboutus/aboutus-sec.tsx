@@ -11,6 +11,7 @@ import {
   Briefcase, 
   ShieldCheck
 } from 'lucide-react';
+import ScrollMotionPath from '../Services/ScrollMotionPath';
 
 const AboutUsPage: React.FC = () => {
   return (
@@ -692,6 +693,18 @@ const AboutUsPage: React.FC = () => {
               </div>
               <span className="partner-subtext">Pakistan Film Society</span>
             </div>
+          </div>
+        </section>
+
+        {/* Services Section */}
+        <section className="about-section">
+          <div className="section-header">
+            <span className="section-tag">What We Do</span>
+            <h2 className="section-title-text">Our Services</h2>
+            <div className="section-underline"></div>
+          </div>
+          <div style={{ marginTop: '-4rem' }}>
+            <ScrollMotionPath />
           </div>
         </section>
 

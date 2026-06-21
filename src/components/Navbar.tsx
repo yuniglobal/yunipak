@@ -39,7 +39,6 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', path: '/', icon: Home },
     { name: 'About Us', path: '/Aboutus', icon: Info },
-    { name: 'Summer Camp', path: '/summer-camp', icon: Sun },
     { name: 'Trainings', path: '/trainings', icon: GraduationCap },
     { name: 'Blog', path: '/blog', icon: BookOpen },
     { name: 'Contact', path: '/contact', icon: Mail }
@@ -609,7 +608,7 @@ const Navbar = () => {
           <button 
             className="btn-tech btn-tech-primary" 
             style={{width: '100%', justifyContent: 'center'}}
-            onClick={() => handleNavigate('/summer-camp')}
+            onClick={() => handleNavigate('/trainings')}
           >
             Get Started
           </button>
