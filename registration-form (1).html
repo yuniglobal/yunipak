@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workshop Registration</title>
+<style>
+  :root{
+    --ink:#eef5ef;
+    --paper:#060807;
+    --line:#1f2e22;
+    --accent:#34c97a;
+    --accent-light:#0f2417;
+    --muted:#8aa092;
+    --field-bg:#0c100d;
+    --card-bg:#0a0f0b;
+    --card-glow:0 0 0 1px rgba(52,201,122,.18), 0 0 24px rgba(52,201,122,.06);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 0%, rgba(52,201,122,.08), transparent 40%),
+      radial-gradient(circle at 85% 20%, rgba(52,201,122,.05), transparent 35%),
+      var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    line-height:1.5;
+    padding:32px 16px 80px;
+  }
+  .wrap{max-width:680px;margin:0 auto;}
+  header{margin-bottom:32px;border-bottom:1px solid var(--line);padding-bottom:18px;}
+  .eyebrow{
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    font-size:12px;
+    color:var(--accent);
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  h1{
+    font-size:30px;
+    margin:0 0 8px;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+  .sub{color:var(--muted);font-size:14.5px;max-width:54ch;}
+  fieldset{
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:20px 20px 22px;
+    margin:0 0 18px;
+    background:var(--card-bg);
+    box-shadow:var(--card-glow);
+  }
+  legend{
+    font-weight:700;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--accent);
+    padding:0 8px;
+  }
+  label{
+    display:block;
+    font-size:13.5px;
+    font-weight:600;
+    margin:14px 0 6px;
+    color:var(--ink);
+  }
+  label.first{margin-top:0;}
+  .hint{font-weight:400;color:var(--muted);font-size:12.5px;display:block;margin-top:2px;}
+  input[type=text],input[type=email],input[type=tel],select{
+    width:100%;
+    padding:10px 12px;
+    border:1px solid var(--line);
+    border-radius:7px;
+    font-size:14.5px;
+    background:var(--field-bg);
+    color:var(--ink);
+    font-family:inherit;
+  }
+  input[type=file]{
+    width:100%;
+    color:var(--muted);
+    font-size:13px;
+  }
+  input:focus,select:focus{
+    outline:2px solid var(--accent);
+    outline-offset:1px;
+    border-color:var(--accent);
+  }
+  .radio-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:6px;
+  }
+  .radio-card{
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:9px 14px;
+    font-size:13.5px;
+    cursor:pointer;
+    background:var(--field-bg);
+    color:var(--ink);
+    user-select:none;
+    flex:1 1 auto;
+    text-align:center;
+    transition:border-color .15s, background .15s;
+  }
+  .radio-card input{display:none;}
+  .radio-card.checked{
+    border-color:var(--accent);
+    background:var(--accent-light);
+    font-weight:700;
+    color:var(--accent);
+  }
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:540px){.grid2{grid-template-columns:1fr;}}
+  .conditional{
+    border-left:3px solid var(--accent-light);
+    padding-left:14px;
+    margin-top:14px;
+    display:none;
+  }
+  .conditional.show{display:block;}
+  .price-box{
+    background:var(--card-bg);
+    border:1px solid var(--accent);
+    box-shadow:0 0 28px rgba(52,201,122,.12);
+    color:var(--ink);
+    border-radius:14px;
+    padding:18px 20px;
+    margin:0 0 18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .price-box .label{font-size:12.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);}
+  .price-box .amount{font-size:28px;font-weight:700;color:var(--accent);}
+  .price-box .strike{font-size:13px;color:var(--muted);text-decoration:line-through;margin-right:8px;}
+  .day-check{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:6px;
+  }
+  .day-box{
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:10px 16px;
+    flex:1;
+    min-width:140px;
+    background:var(--field-bg);
+  }
+  .day-box label{margin:0 0 8px;display:flex;align-items:center;gap:8px;font-size:14px;}
+  .day-box input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);}
+  .day-box select{margin-top:4px;}
+  .day-box.disabled{opacity:.45;pointer-events:none;}
+  .workshop-list{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    margin-top:8px;
+  }
+  .ws-option{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    font-size:12.5px;
+    font-weight:400;
+    padding:7px 8px;
+    border:1px solid var(--line);
+    border-radius:6px;
+    background:var(--paper);
+    color:var(--ink);
+    cursor:pointer;
+  }
+  .ws-option input{margin-top:3px;width:14px;height:14px;flex:none;accent-color:var(--accent);}
+  .ws-option span{line-height:1.35;}
+  .ws-option em{color:var(--muted);font-style:normal;}
+  .ws-option.maxed{opacity:.4;pointer-events:none;}
+  .disabled-list{opacity:.4;pointer-events:none;}
+  .pay-card{
+    border:1px solid var(--accent);
+    border-radius:14px;
+    padding:18px 20px;
+    background:var(--card-bg);
+    box-shadow:var(--card-glow);
+    margin-bottom:14px;
+  }
+  .pay-card h4{
+    color:var(--accent);
+    margin:0 0 12px;
+    font-size:15px;
+    font-weight:700;
+  }
+  .pay-row{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    font-size:13.5px;
+    padding:6px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .pay-row:last-child{border-bottom:none;}
+  .pay-row .k{color:var(--muted);}
+  .pay-row .v{color:var(--ink);font-weight:600;text-align:right;}
+  .discount-box{
+    background:var(--accent-light);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+    font-size:13px;
+    color:var(--ink);
+    margin-top:14px;
+  }
+  .discount-box strong{color:var(--accent);}
+  .discount-list{
+    list-style:none;
+    margin:10px 0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .discount-list li{
+    background:var(--field-bg);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:10px 12px;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:6px 16px;
+  }
+  .dl-tag{
+    font-weight:700;
+    font-size:13px;
+    color:var(--ink);
+    flex:1 1 100%;
+  }
+  .dl-price{
+    font-size:13.5px;
+    color:var(--ink);
+    white-space:nowrap;
+  }
+  .dl-strike{
+    color:var(--muted);
+    text-decoration:line-through;
+  }
+  .dl-final{
+    color:var(--accent);
+    font-weight:700;
+    font-size:15px;
+  }
+  .dl-note{
+    color:var(--muted);
+    font-size:12px;
+  }
+  button[type=submit]{
+    width:100%;
+    background:var(--accent);
+    color:#04140a;
+    border:none;
+    padding:15px;
+    font-size:15px;
+    font-weight:700;
+    border-radius:8px;
+    cursor:pointer;
+    letter-spacing:.02em;
+  }
+  button[type=submit]:hover{background:#2bb56b;}
+  .note{font-size:12px;color:var(--muted);margin-top:10px;text-align:center;}
+  #successBox{
+    display:none;
+    background:var(--accent-light);
+    border:1px solid var(--accent);
+    color:var(--ink);
+    padding:18px;
+    border-radius:10px;
+    margin-bottom:18px;
+    font-size:14px;
+  }
+  #successBox h3{margin:0 0 6px;color:var(--accent);}
+  .req{color:var(--accent);}
+  .privacy-note{
+    margin-top:10px;
+    background:var(--accent-light);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:10px 12px;
+    font-size:12.5px;
+    color:var(--ink);
+    line-height:1.5;
+  }
+  .success-contact{
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px dashed var(--line);
+    font-size:13px;
+  }
+  .contact-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-top:8px;
+  }
+  .cg-label{
+    display:block;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--muted);
+  }
+  .cg-val{
+    display:block;
+    font-weight:700;
+    color:var(--ink);
+    font-size:13.5px;
+  }
+  .org-footer{
+    margin-top:36px;
+    padding-top:24px;
+    border-top:1px solid var(--line);
+    display:flex;
+    flex-wrap:wrap;
+    gap:24px;
+  }
+  .footer-col{
+    flex:1 1 160px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .footer-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-weight:700;
+    color:var(--accent);
+  }
+  .footer-val{
+    color:var(--ink);
+    font-size:14px;
+    font-weight:600;
+    line-height:1.4;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">YuniPakistan Presents</div>
+    <h1>YUNI-TY Attendee Experience Form</h1>
+    <div class="sub">YUNI-TY takes place on <strong>4th &amp; 5th July</strong>. Fill in your details below to register. You may attend up to 2 workshops per day (6 offered each day, 12 in total).</div>
+  </header>
+
+  <div id="successBox">
+    <h3>Registration recorded</h3>
+    <div id="successText"></div>
+    <div class="success-contact">
+      <div>Follow <strong><a href="https://instagram.com/yunity.pk" target="_blank" style="color:var(--ink);text-decoration:none;">@yunity.pk</a></strong> on Instagram for updates about the event.</div>
+      <div class="contact-grid">
+        <div>
+          <span class="cg-label">Queries (WhatsApp)</span>
+          <span class="cg-val"><a href="https://wa.me/923215615401" target="_blank" style="color:var(--ink);text-decoration:none;">+92 321 5615401</a></span>
+        </div>
+        <div>
+          <span class="cg-label">Queries (Email)</span>
+          <span class="cg-val"><a href="mailto:info@yunipakistan.com" style="color:var(--ink);text-decoration:none;">info@yunipakistan.com</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form id="regForm">
+
+    <fieldset>
+      <legend>Attendee details</legend>
+
+      <label class="first">Full name <span class="req">*</span></label>
+      <input type="text" id="fullName" required placeholder="As on CNIC / Student ID">
+
+      <label>CNIC / B-Form number <span class="req">*</span></label>
+      <input type="text" id="cnic" required placeholder="XXXXX-XXXXXXX-X" pattern="^\d{5}-\d{7}-\d{1}$">
+      <span class="hint">Used for entry verification at the venue. Format: 12345-1234567-1</span>
+
+      <label>Upload a photo of your CNIC / B-Form <span class="req">*</span></label>
+      <input type="file" id="cnicUpload" accept="image/*,.pdf" required>
+      <span class="hint">Accepted formats: JPG, PNG, PDF (max 5MB)</span>
+
+      <div class="privacy-note">
+        Your CNIC and student ID are only used for approval and to apply your discount. They are kept secure and not shared.
+      </div>
+
+      <div class="grid2">
+        <div>
+          <label>Email address <span class="req">*</span></label>
+          <input type="email" id="email" required placeholder="name@example.com">
+          <span class="hint">Your invitation and event updates will be sent here — use an email you check.</span>
+        </div>
+        <div>
+          <label>WhatsApp / Phone number <span class="req">*</span></label>
+          <input type="tel" id="phone" required placeholder="03XXXXXXXXX" pattern="^(0|\+92)3\d{9}$">
+        </div>
+      </div>
+      <span class="hint">Phone format: 03XXXXXXXXX or +923XXXXXXXXX</span>
+
+      <label>Gender <span class="req">*</span></label>
+      <select id="gender" required>
+        <option value="">Select</option>
+        <option>Female</option>
+        <option>Male</option>
+        <option>Prefer not to say</option>
+      </select>
+
+      <label>Date of birth <span class="req">*</span></label>
+      <input type="date" id="dob" required>
+
+      <div id="guardianBlock" class="conditional">
+        <div class="privacy-note" style="margin-top:0;margin-bottom:10px;">
+          Since you're under 18, we need a parent or guardian's details and consent for you to attend.
+        </div>
+
+        <div class="grid2">
+          <div>
+            <label class="first">Parent/Guardian name</label>
+            <input type="text" id="guardianName" placeholder="Full name">
+          </div>
+          <div>
+            <label class="first">Parent/Guardian contact number</label>
+            <input type="tel" id="guardianPhone" placeholder="03XXXXXXXXX" pattern="^(0|\+92)3\d{9}$">
+          </div>
+        </div>
+
+        <label style="display:flex;align-items:flex-start;gap:8px;font-weight:500;">
+          <input type="checkbox" id="guardianConsent" style="width:16px;height:16px;margin-top:3px;flex:none;accent-color:var(--accent);">
+          I am the parent/guardian of this attendee and I consent to their registration and attendance at YUNI-TY.
+        </label>
+      </div>
+
+      <label>City <span class="req">*</span></label>
+      <select id="addressCity" required>
+        <option value="">Select city</option>
+        <option>Islamabad</option>
+        <option>Rawalpindi</option>
+        <option>Lahore</option>
+        <option>Karachi</option>
+        <option>Faisalabad</option>
+        <option>Multan</option>
+        <option>Peshawar</option>
+        <option>Quetta</option>
+        <option>Sialkot</option>
+        <option>Gujranwala</option>
+        <option>Hyderabad</option>
+        <option>Sukkur</option>
+        <option>Bahawalpur</option>
+        <option>Sargodha</option>
+        <option>Abbottabad</option>
+        <option>Mardan</option>
+        <option>Gujrat</option>
+        <option>Sahiwal</option>
+        <option>Dera Ghazi Khan</option>
+        <option>Larkana</option>
+        <option>Mirpur (AJK)</option>
+        <option>Muzaffarabad</option>
+        <option>Gilgit</option>
+        <option>Other</option>
+      </select>
+
+      <div id="otherCityWrap" style="display:none;">
+        <label>Please specify city <span class="req">*</span></label>
+        <input type="text" id="otherCityInput" placeholder="Type city name">
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Attendee type</legend>
+      <label class="first">I am registering as <span class="req">*</span></label>
+      <div class="radio-row" id="attendeeTypeRow">
+        <label class="radio-card"><input type="radio" name="attendeeType" value="student"> Student (with valid Student ID)</label>
+        <label class="radio-card"><input type="radio" name="attendeeType" value="other"> Parent / Others</label>
+      </div>
+
+      <!-- STUDENT BLOCK -->
+      <div class="conditional" id="studentBlock">
+        <label class="first">Education level <span class="req">*</span></label>
+        <div class="radio-row" id="eduLevelRow">
+          <label class="radio-card"><input type="radio" name="eduLevel" value="college"> College</label>
+          <label class="radio-card"><input type="radio" name="eduLevel" value="university"> University</label>
+        </div>
+
+        <div id="collegeWrap" style="display:none;">
+          <label>City of your college <span class="req">*</span></label>
+          <select id="collegeCitySelect"></select>
+
+          <label>College name <span class="req">*</span></label>
+          <select id="collegeSelect"><option value="">Select city first</option></select>
+        </div>
+
+        <div id="otherCollegeWrap" style="display:none;">
+          <label>Please specify college name <span class="req">*</span></label>
+          <input type="text" id="otherCollegeInput" placeholder="Type college name">
+        </div>
+
+        <div id="uniWrap" style="display:none;">
+          <label>City of your university <span class="req">*</span></label>
+          <select id="uniCitySelect"></select>
+
+          <label>University name <span class="req">*</span></label>
+          <select id="uniSelect"><option value="">Select city first</option></select>
+        </div>
+
+        <div id="otherUniWrap" style="display:none;">
+          <label>Please specify university name <span class="req">*</span></label>
+          <input type="text" id="otherUniInput" placeholder="Type university name">
+        </div>
+
+        <label>Campus (if applicable)</label>
+        <input type="text" id="campusInput" placeholder="e.g. H-11 Campus, New Campus, City Campus">
+        <span class="hint">Leave blank if your institute has only one campus.</span>
+
+        <label>Do you have a valid student ID? <span class="req">*</span></label>
+        <div class="radio-row" id="hasIdRow">
+          <label class="radio-card"><input type="radio" name="hasStudentId" value="yes"> Yes</label>
+          <label class="radio-card"><input type="radio" name="hasStudentId" value="no"> No</label>
+        </div>
+        <span class="hint">Without a valid, verified student ID, the student discount cannot be applied — see the pricing breakdown below.</span>
+
+        <div id="studentIdDetailsWrap" style="display:none;">
+          <label>Student ID number <span class="req">*</span></label>
+          <input type="text" id="studentIdNum" placeholder="Enter your student ID card number">
+
+          <label>Upload a photo of your student ID <span class="req">*</span></label>
+          <input type="file" id="studentIdUpload" accept="image/*,.pdf">
+          <span class="hint">Accepted formats: JPG, PNG, PDF (max 5MB)</span>
+          <span class="hint">Kept secure, used only for discount verification.</span>
+
+          <label style="margin-top:10px;display:flex;align-items:center;gap:8px;font-weight:500;">
+            <input type="checkbox" id="idPolicyConfirm" style="width:16px;height:16px;accent-color:var(--accent);">
+            I understand that a wrong, expired, fake, or AI-generated student ID will result in automatic rejection of my registration, with no refund of the fee paid <span class="req">*</span>
+          </label>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Ticket &amp; schedule</legend>
+
+      <label class="first">Which day(s) will you attend? <span class="req">*</span></label>
+      <div class="day-check">
+        <div class="day-box">
+          <label><input type="checkbox" id="day1" value="Day 1"> Day 1 (4th July) — The Future of You</label>
+          <div id="day1WorkshopList" class="workshop-list disabled-list">
+            <label class="ws-option"><input type="checkbox" name="day1ws" value="Beyond the Degree — Career Strategy for the AI Era"> <span><strong>Beyond the Degree</strong><br><em>Career Strategy for the AI Era</em></span></label>
+            <label class="ws-option"><input type="checkbox" name="day1ws" value="The Great Disruption — AI & The Future of Software Engineering"> <span><strong>The Great Disruption</strong><br><em>AI & The Future of Software Engineering</em></span></label>
+            <label class="ws-option"><input type="checkbox" name="day1ws" value="Mind Games — Psychology of People"> <span><strong>Mind Games</strong><br><em>Psychology of People: Influence, Persuasion & Human Behavior</em></span></label>
+            <label class="ws-option"><input type="checkbox" name="day1ws" value="The Money Manual — Wealth Foundations"> <span><strong>The Money Manual</strong><br><em>Wealth Foundations: Financial Literacy, Wealth Building & Tax</em></span></label>
+            <label class="ws-option"><input type="checkbox" name="day1ws" value="The Art of Being Heard — Speech Fluency & Public Speaking"> <span><strong>The Art of Being Heard</strong><br><em>Speech Fluency, Public Speaking & Communication</em></span></label>
+            <label class="ws-option"><input type="checkbox" name="day1ws" value="The Unfair Advantage — Personal Branding & Presence"> <span><strong>The Unfair Advantage</strong><br><em>Personal Branding, Presence & Professional Etiquette</em></span></label>
+          </div>
+          <span class="hint">Pick up to 2</span>
+        </div>
+        <div class="day-box">
+          <label><input type="checkbox" id="day2" value="Day 2"> Day 2 (5th July) — The Future You Build</label>
+          <div id="day2WorkshopList" class="workshop-list disabled-list">
+            <label class="ws-option"><input type="checkbox" name="day2ws" value="Inside the Hacker's Mind — Ethical Hacking & Cybersecurity"> <span><strong>Inside the Hacker's Mind</strong><br><em>Ethical Hacking, Cybersecurity & Digital Defense</em></span></label>
+            <label class="ws-option"><input type="checkbox" name="day2ws" value="Builders of the Future — Full Stack Development & Web3"> <span><strong>Builders of the Future</strong><br><em>Full Stack Development, Web3 & Modern Tech Trends</em></span></label>
+            <label class="ws-option"><input type="checkbox" name="day2ws" value="Why Great Products Win — UI/UX Design & Product Thinking"> <span><strong>Why Great Products Win</strong><br><em>UI/UX Design & Product Thinking</em></span></label>
+            <label class="ws-option"><input type="checkbox" name="day2ws" value="The Freedom Formula — Freelancing & Digital Income"> <span><strong>The Freedom Formula</strong><br><em>Freelancing, Global Clients & Digital Income</em></span></label>
+            <label class="ws-option"><input type="checkbox" name="day2ws" value="Frame the World — Cinematography & Visual Storytelling"> <span><strong>Frame the World</strong><br><em>Cinematography, Content Creation & Visual Storytelling</em></span></label>
+            <label class="ws-option"><input type="checkbox" name="day2ws" value="The Startup Blueprint — Startup Fundamentals"> <span><strong>The Startup Blueprint</strong><br><em>Startup Fundamentals: From Idea to Company</em></span></label>
+          </div>
+          <span class="hint">Pick up to 2</span>
+        </div>
+      </div>
+      <span class="hint">Exact timings and sequence for each workshop will be intimated later via email. You can attend a maximum of 2 workshops per day.</span>
+
+      <div class="price-box">
+        <div>
+          <div class="label">Ticket price (PKR)</div>
+          <div class="amount"><span class="strike">Rs. 999</span> <span id="priceAmount">—</span></div>
+        </div>
+        <div style="font-size:12px;color:#c9c2b3;max-width:220px;text-align:right;" id="priceExplain">Select attendee type and day(s) to calculate</div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Payment</legend>
+      <label class="first">Amount to pay: <span id="payAmountLabel">—</span></label>
+      <span class="hint">Transfer this amount to either account below, then upload your payment screenshot or receipt.</span>
+
+      <div class="pay-card">
+        <h4>Bank Alfalah</h4>
+        <div class="pay-row"><span class="k">Title</span><span class="v">YUNI (SMC-PRIVATE) LIMITED</span></div>
+        <div class="pay-row"><span class="k">Account No.</span><span class="v">0140-1010831162</span></div>
+        <div class="pay-row"><span class="k">Branch</span><span class="v">Rawalpindi</span></div>
+      </div>
+
+      <div class="pay-card">
+        <h4>NayaPay</h4>
+        <div class="pay-row"><span class="k">Title</span><span class="v">YUNI (SMC-PRIVATE) LIMITED</span></div>
+        <div class="pay-row"><span class="k">Account No.</span><span class="v">0318-5861446</span></div>
+        <div class="pay-row"><span class="k">Type</span><span class="v">Wallet / Mobile</span></div>
+      </div>
+
+      <div class="discount-box">
+        <strong>Ticket prices, explained simply:</strong>
+        <ul class="discount-list">
+          <li>
+            <span class="dl-tag">Student, with valid ID</span>
+            <span class="dl-price"><span class="dl-strike">Rs. 999</span> → <span class="dl-final">Rs. 275</span> <span class="dl-note">/ one day</span></span>
+            <span class="dl-price"><span class="dl-strike">Rs. 1899</span> → <span class="dl-final">Rs. 499</span> <span class="dl-note">/ both days</span></span>
+          </li>
+          <li>
+            <span class="dl-tag">Student, no valid ID</span>
+            <span class="dl-price"><span class="dl-final">Rs. 999</span> <span class="dl-note">/ one day</span></span>
+            <span class="dl-price"><span class="dl-final">Rs. 1899</span> <span class="dl-note">/ both days</span></span>
+          </li>
+          <li>
+            <span class="dl-tag">Parent / Others</span>
+            <span class="dl-price"><span class="dl-final">Rs. 499</span> <span class="dl-note">/ one day</span></span>
+            <span class="dl-price"><span class="dl-final">Rs. 998</span> <span class="dl-note">/ both days</span></span>
+          </li>
+        </ul>
+        <span class="hint">The student discount only applies once your uploaded ID is verified — that's why the price drops from Rs. 999 to Rs. 275 (or Rs. 1899 to Rs. 499) only for students with a valid ID.</span>
+        <br><br>
+        <strong>Important:</strong> A wrong, expired, fake, or AI-generated student ID will be automatically rejected — and the fee will <strong>not</strong> be refunded.
+      </div>
+
+      <label>Payment method <span class="req">*</span></label>
+      <select id="paymentMethod" required>
+        <option value="">Select</option>
+        <option>Bank Alfalah Transfer</option>
+        <option>NayaPay</option>
+        <option>Easypaisa</option>
+        <option>JazzCash</option>
+        <option>Other Bank Transfer</option>
+        <option>Cash Deposit</option>
+        <option>Other</option>
+      </select>
+
+      <div id="bankWrap" style="display:none;">
+        <label>Select your bank <span class="req">*</span></label>
+        <select id="bankSelect">
+          <option value="">Select bank</option>
+          <option>Habib Bank Limited (HBL)</option>
+          <option>United Bank Limited (UBL)</option>
+          <option>National Bank of Pakistan (NBP)</option>
+          <option>MCB Bank</option>
+          <option>Allied Bank Limited (ABL)</option>
+          <option>Bank Alfalah</option>
+          <option>Meezan Bank</option>
+          <option>Askari Bank</option>
+          <option>Faysal Bank</option>
+          <option>Bank Al Habib</option>
+          <option>Standard Chartered Bank Pakistan</option>
+          <option>Soneri Bank</option>
+          <option>Summit Bank</option>
+          <option>JS Bank</option>
+          <option>Silkbank</option>
+          <option>Samba Bank</option>
+          <option>Dubai Islamic Bank Pakistan</option>
+          <option>Al Baraka Bank Pakistan</option>
+          <option>BankIslami Pakistan</option>
+          <option>The Bank of Punjab</option>
+          <option>The Bank of Khyber</option>
+          <option>Sindh Bank</option>
+          <option>First Women Bank</option>
+          <option>Industrial and Commercial Bank of China (ICBC)</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div id="otherBankWrap" style="display:none;">
+        <label>Please specify bank name <span class="req">*</span></label>
+        <input type="text" id="otherBankInput" placeholder="Type bank name">
+      </div>
+
+      <label>Upload payment proof (screenshot / receipt) <span class="req">*</span></label>
+      <input type="file" id="paymentUpload" accept="image/*,.pdf" required>
+      <span class="hint">Accepted formats: JPG, PNG, PDF (max 5MB)</span>
+    </fieldset>
+
+    <fieldset>
+      <legend>Emergency &amp; medical info</legend>
+      <span class="hint" style="margin-bottom:10px;display:block;">This stays with our on-site team only, so we can act quickly and correctly if you ever need help during the event.</span>
+
+      <div class="grid2">
+        <div>
+          <label class="first">Emergency contact name <span class="req">*</span></label>
+          <input type="text" id="emContactName" required placeholder="Full name">
+        </div>
+        <div>
+          <label class="first">Emergency contact number <span class="req">*</span></label>
+          <input type="tel" id="emContactPhone" required placeholder="03XXXXXXXXX" pattern="^(0|\+92)3\d{9}$">
+        </div>
+      </div>
+
+      <label>Relationship to you <span class="req">*</span></label>
+      <select id="emContactRelation" required>
+        <option value="">Select</option>
+        <option>Parent</option>
+        <option>Sibling</option>
+        <option>Spouse</option>
+        <option>Relative</option>
+        <option>Friend</option>
+        <option>Other</option>
+      </select>
+
+      <label>Blood group <span class="req">*</span></label>
+      <select id="bloodGroup" required>
+        <option value="">Select</option>
+        <option>A+</option>
+        <option>A-</option>
+        <option>B+</option>
+        <option>B-</option>
+        <option>AB+</option>
+        <option>AB-</option>
+        <option>O+</option>
+        <option>O-</option>
+        <option>Don't know</option>
+      </select>
+
+      <label>Known allergies or medical conditions we should be aware of</label>
+      <input type="text" id="medicalNotes" placeholder="e.g. asthma, peanut allergy, diabetes — or leave blank if none">
+
+      <label>Do you have any disability or accessibility need? <span class="req">*</span></label>
+      <select id="accessibilityNeed" required>
+        <option value="">Select</option>
+        <option>None</option>
+        <option>Wheelchair access</option>
+        <option>Visual impairment</option>
+        <option>Hearing impairment</option>
+        <option>Mobility assistance</option>
+        <option>Other</option>
+      </select>
+
+      <div id="otherAccessibilityWrap" style="display:none;">
+        <label>Please specify</label>
+        <input type="text" id="otherAccessibilityInput" placeholder="Briefly describe your accessibility need">
+      </div>
+
+      <label>Anything else our team should know to make your experience comfortable?</label>
+      <input type="text" id="comfortNotes" placeholder="e.g. dietary preference, anxiety, sensory sensitivity, seating preference — optional">
+      <span class="hint">Optional, but helps our on-ground team support you better.</span>
+
+      <label>Are you traveling from a city far from Islamabad / Rawalpindi? <span class="req">*</span></label>
+      <div class="radio-row" id="travelFarRow">
+        <label class="radio-card"><input type="radio" name="travelFar" value="yes"> Yes</label>
+        <label class="radio-card"><input type="radio" name="travelFar" value="no"> No</label>
+      </div>
+      <span class="hint">Letting us know helps us plan timing and on-ground support for out-of-town attendees.</span>
+    </fieldset>
+
+    <fieldset>
+      <legend>Additional info (optional)</legend>
+      <label class="first">How did you hear about this event?</label>
+      <select id="referral">
+        <option value="">Select</option>
+        <option>Instagram</option>
+        <option>Facebook</option>
+        <option>WhatsApp group</option>
+        <option>Friend / Family</option>
+        <option>College / University notice</option>
+        <option>Other</option>
+      </select>
+
+      <label>Referral code (if any)</label>
+      <input type="text" id="referralCode" placeholder="e.g. YUNI10" style="text-transform:uppercase;">
+      <span class="hint">Have a referral or promo code from a friend or ambassador? Enter it here.</span>
+    </fieldset>
+
+    <label style="display:flex;align-items:flex-start;gap:8px;font-weight:500;margin-bottom:14px;">
+      <input type="checkbox" id="liabilityConfirm" required style="width:16px;height:16px;margin-top:3px;flex:none;accent-color:var(--accent);">
+      I confirm the information above is accurate, and I am attending at my own discretion. YUNI-TY / YuniPakistan is not responsible for personal injury, loss, or damages during the event. <span class="req">*</span>
+    </label>
+
+    <button type="submit">Submit registration</button>
+    <div class="note">Your student ID and payment will be verified by our system before confirmation. You will receive an email with your invitation details within 3 days of registering.</div>
+  </form>
+
+  <footer class="org-footer">
+    <div class="footer-col">
+      <span class="footer-label">Headquarters</span>
+      <span class="footer-val">NASTP (National Aerospace Science &amp; Technology Park), Islamabad</span>
+    </div>
+    <div class="footer-col">
+      <span class="footer-label">Secure Line</span>
+      <span class="footer-val"><a href="https://wa.me/923215615401" target="_blank" style="color:var(--ink);text-decoration:none;">+92 321 5615401</a></span>
+    </div>
+    <div class="footer-col">
+      <span class="footer-label">Digital Drop</span>
+      <span class="footer-val"><a href="mailto:info@yunipakistan.com" style="color:var(--ink);text-decoration:none;">info@yunipakistan.com</a></span>
+    </div>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.2/confetti.browser.min.js"></script>
+<script>
+const instituteCities = ["Islamabad","Rawalpindi","Wah Cantt","Taxila","Attock","Chakwal","Murree","Gujar Khan","Jhelum","Other"];
+
+const collegesByCity = {
+  "Islamabad": ["Islamabad College for Boys, G-6/3","Islamabad Model College for Boys, F-8/4","Islamabad Model College for Girls, F-7/2","F.G. Degree College for Men, G-9/4","F.G. Degree College for Women, G-10/4","F.G. Sir Syed College, F-11","Roots College International, F-7","Roots Millennium College, F-8","Beaconhouse College Islamabad","Punjab College Islamabad","Superior College Islamabad","KIPS College Islamabad","Aspire College Islamabad","Army Public College of Management Sciences, Islamabad","Frontier Corps Public School & College","Islamabad Garrison Degree College","The City School College Programme, Islamabad","Other"],
+  "Rawalpindi": ["Government Gordon College","Government College Asghar Mall","Islamia College Rawalpindi","Government Postgraduate College for Boys, Rawalpindi","Government Postgraduate College for Women, Satellite Town","Viqar-un-Nisa Postgraduate College for Women","Govt. Degree College Westridge","Army Public College of Management Sciences, Rawalpindi","Punjab College Rawalpindi","Superior College Rawalpindi","KIPS College Rawalpindi","Garrison Degree College Rawalpindi","Cadet College Kohat Road","Other"],
+  "Wah Cantt": ["Wah Cantonment College","Government Degree College Wah Cantt","Punjab College Wah Cantt","Other"],
+  "Taxila": ["Government Degree College Taxila","Cadet College Taxila","Other"],
+  "Attock": ["Government Degree College Attock","Government Postgraduate College Attock","Other"],
+  "Chakwal": ["Government Postgraduate College Chakwal","Government Degree College for Women Chakwal","Other"],
+  "Murree": ["Lawrence College Murree","Government Degree College Murree","Other"],
+  "Gujar Khan": ["Government Degree College Gujar Khan","Government Degree College for Women Gujar Khan","Other"],
+  "Jhelum": ["Government Postgraduate College Jhelum","Government College for Women Jhelum","Other"],
+  "Other": ["Other"]
+};
+
+const universitiesByCity = {
+  "Islamabad": ["Quaid-i-Azam University (QAU)","COMSATS University Islamabad","National University of Sciences and Technology (NUST)","International Islamic University Islamabad (IIUI)","Air University Islamabad","Bahria University Islamabad","FAST National University (NUCES) Islamabad","National Defence University (NDU)","Allama Iqbal Open University (AIOU)","Capital University of Science and Technology (CUST)","Iqra University Islamabad Campus","Shifa Tameer-e-Millat University","Riphah International University Islamabad","Foundation University Islamabad","Preston University Islamabad","SZABIST Islamabad","Pakistan Institute of Engineering and Applied Sciences (PIEAS)","National University of Modern Languages (NUML)","Mohammad Ali Jinnah University Islamabad","Institute of Space Technology (IST)","Pakistan Institute of Fashion and Design (PIFD)","University of Management and Technology Islamabad Campus","Other"],
+  "Rawalpindi": ["Fatima Jinnah Women University (FJWU)","PMAS Arid Agriculture University Rawalpindi","Rawalpindi Medical University (RMU)","Foundation University Rawalpindi Campus","Bahria University Health Sciences Campus","Other"],
+  "Wah Cantt": ["University of Wah","COMSATS University Islamabad, Wah Campus","Wah Engineering College","Other"],
+  "Taxila": ["University of Engineering and Technology (UET) Taxila","HITEC University Taxila","Other"],
+  "Attock": ["COMSATS University Islamabad, Attock Campus","Other"],
+  "Chakwal": ["University of Chakwal","Other"],
+  "Murree": ["Other"],
+  "Gujar Khan": ["Other"],
+  "Jhelum": ["University of Jhelum","Other"],
+  "Other": ["Other"]
+};
+
+function fillSelect(id, arr, placeholder){
+  const sel = document.getElementById(id);
+  sel.innerHTML = '<option value="">'+placeholder+'</option>' + arr.map(c=>`<option value="${c}">${c}</option>`).join('');
+}
+
+function fillCitySelect(id){
+  const sel = document.getElementById(id);
+  sel.innerHTML = '<option value="">Select city</option>' + instituteCities.map(c=>`<option value="${c}">${c}</option>`).join('');
+}
+fillCitySelect('collegeCitySelect');
+fillCitySelect('uniCitySelect');
+
+// radio card styling sync
+document.querySelectorAll('.radio-row').forEach(row=>{
+  row.addEventListener('click', ()=>{
+    row.querySelectorAll('.radio-card').forEach(c=>c.classList.toggle('checked', c.querySelector('input').checked));
+  });
+});
+
+const attendeeTypeRow = document.getElementById('attendeeTypeRow');
+const studentBlock = document.getElementById('studentBlock');
+attendeeTypeRow.addEventListener('change', ()=>{
+  const val = document.querySelector('input[name=attendeeType]:checked').value;
+  studentBlock.classList.toggle('show', val === 'student');
+  calcPrice();
+});
+
+const eduLevelRow = document.getElementById('eduLevelRow');
+const collegeWrap = document.getElementById('collegeWrap');
+const uniWrap = document.getElementById('uniWrap');
+const otherCollegeWrap = document.getElementById('otherCollegeWrap');
+const otherUniWrap = document.getElementById('otherUniWrap');
+
+document.getElementById('dob').addEventListener('change', function(){
+  const guardianBlock = document.getElementById('guardianBlock');
+  if(!this.value){ guardianBlock.classList.remove('show'); return; }
+  const dobDate = new Date(this.value);
+  const today = new Date();
+  let age = today.getFullYear() - dobDate.getFullYear();
+  const m = today.getMonth() - dobDate.getMonth();
+  if(m < 0 || (m === 0 && today.getDate() < dobDate.getDate())) age--;
+  guardianBlock.classList.toggle('show', age < 18 && age >= 0);
+});
+
+document.getElementById('accessibilityNeed').addEventListener('change', function(){
+  document.getElementById('otherAccessibilityWrap').style.display = this.value === 'Other' ? 'block' : 'none';
+});
+
+document.getElementById('paymentMethod').addEventListener('change', function(){
+  document.getElementById('bankWrap').style.display = this.value === 'Other Bank Transfer' ? 'block' : 'none';
+  if(this.value !== 'Other Bank Transfer'){
+    document.getElementById('otherBankWrap').style.display = 'none';
+  }
+});
+document.getElementById('bankSelect').addEventListener('change', function(){
+  document.getElementById('otherBankWrap').style.display = this.value === 'Other' ? 'block' : 'none';
+});
+document.getElementById('addressCity').addEventListener('change', function(){
+  document.getElementById('otherCityWrap').style.display = this.value === 'Other' ? 'block' : 'none';
+});
+
+document.getElementById('hasIdRow').addEventListener('change', ()=>{
+  const val = document.querySelector('input[name=hasStudentId]:checked').value;
+  document.getElementById('studentIdDetailsWrap').style.display = val === 'yes' ? 'block' : 'none';
+  calcPrice();
+});
+
+eduLevelRow.addEventListener('change', ()=>{
+  const val = document.querySelector('input[name=eduLevel]:checked').value;
+  collegeWrap.style.display = val === 'college' ? 'block' : 'none';
+  uniWrap.style.display = val === 'university' ? 'block' : 'none';
+  otherCollegeWrap.style.display = 'none';
+  otherUniWrap.style.display = 'none';
+});
+
+document.getElementById('collegeCitySelect').addEventListener('change', function(){
+  const city = this.value;
+  if(!city){
+    fillSelect('collegeSelect', [], 'Select city first');
+    return;
+  }
+  fillSelect('collegeSelect', collegesByCity[city] || collegesByCity['Other'], 'Select your college');
+  otherCollegeWrap.style.display = 'none';
+});
+
+document.getElementById('uniCitySelect').addEventListener('change', function(){
+  const city = this.value;
+  if(!city){
+    fillSelect('uniSelect', [], 'Select city first');
+    return;
+  }
+  fillSelect('uniSelect', universitiesByCity[city] || universitiesByCity['Other'], 'Select your university');
+  otherUniWrap.style.display = 'none';
+});
+
+document.getElementById('collegeSelect').addEventListener('change', function(){
+  otherCollegeWrap.style.display = this.value === 'Other' ? 'block' : 'none';
+});
+document.getElementById('uniSelect').addEventListener('change', function(){
+  otherUniWrap.style.display = this.value === 'Other' ? 'block' : 'none';
+});
+
+// Day checkboxes enable/disable their workshop checklist
+const day1 = document.getElementById('day1');
+const day2 = document.getElementById('day2');
+const day1List = document.getElementById('day1WorkshopList');
+const day2List = document.getElementById('day2WorkshopList');
+
+function setupWorkshopLimit(listEl, dayCheckbox){
+  const boxes = listEl.querySelectorAll('input[type=checkbox]');
+  function refresh(){
+    const checkedCount = listEl.querySelectorAll('input[type=checkbox]:checked').length;
+    boxes.forEach(b=>{
+      b.closest('.ws-option').classList.toggle('maxed', checkedCount >= 2 && !b.checked);
+    });
+  }
+  boxes.forEach(b => b.addEventListener('change', refresh));
+  dayCheckbox.addEventListener('change', ()=>{
+    listEl.classList.toggle('disabled-list', !dayCheckbox.checked);
+    boxes.forEach(b=>{
+      b.disabled = !dayCheckbox.checked;
+      if(!dayCheckbox.checked) b.checked = false;
+    });
+    refresh();
+    calcPrice();
+  });
+  refresh();
+}
+setupWorkshopLimit(day1List, day1);
+setupWorkshopLimit(day2List, day2);
+day1.addEventListener('change', calcPrice);
+day2.addEventListener('change', calcPrice);
+
+const priceAmount = document.getElementById('priceAmount');
+const priceExplain = document.getElementById('priceExplain');
+
+function calcPrice(){
+  const typeEl = document.querySelector('input[name=attendeeType]:checked');
+  const bothDays = day1.checked && day2.checked;
+  const oneDay = (day1.checked || day2.checked) && !bothDays;
+
+  if(!typeEl || (!day1.checked && !day2.checked)){
+    priceAmount.textContent = '—';
+    priceExplain.textContent = 'Select attendee type and day(s) to calculate';
+    document.getElementById('payAmountLabel').textContent = '—';
+    return;
+  }
+
+  const noStudentId = typeEl.value === 'student' &&
+    document.querySelector('input[name=hasStudentId]:checked') &&
+    document.querySelector('input[name=hasStudentId]:checked').value === 'no';
+
+  let price, explain;
+  if(noStudentId){
+    price = bothDays ? 1899 : 999;
+    explain = 'No valid student ID · general price applies';
+  } else if(typeEl.value === 'student'){
+    price = bothDays ? 499 : 275;
+    explain = 'Student rate' + (bothDays ? ' · both days (discounted package, normally Rs. 999)' : ' · single day');
+  } else {
+    price = bothDays ? 998 : 499;
+    const typeLabel = 'Parent / Others rate';
+    explain = typeLabel + ' · Rs. 499 × ' + (bothDays ? '2 days' : '1 day');
+  }
+
+  priceAmount.textContent = 'Rs. ' + price;
+  priceExplain.textContent = explain;
+  document.getElementById('payAmountLabel').textContent = 'Rs. ' + price;
+}
+
+document.getElementById('regForm').addEventListener('submit', function(e){
+  e.preventDefault();
+
+  const attendeeType = document.querySelector('input[name=attendeeType]:checked');
+  if(!attendeeType){ alert('Please select attendee type.'); return; }
+  if(!document.getElementById('emContactName').value){ alert('Please provide an emergency contact name.'); return; }
+  if(!document.getElementById('emContactPhone').value){ alert('Please provide an emergency contact number.'); return; }
+  if(!document.getElementById('emContactRelation').value){ alert('Please select your relationship to the emergency contact.'); return; }
+  if(!document.getElementById('bloodGroup').value){ alert('Please select your blood group.'); return; }
+  if(!document.getElementById('dob').value){ alert('Please enter your date of birth.'); return; }
+  if(document.getElementById('guardianBlock').classList.contains('show')){
+    if(!document.getElementById('guardianName').value){ alert('Please provide the parent/guardian name.'); return; }
+    if(!document.getElementById('guardianPhone').value){ alert('Please provide the parent/guardian contact number.'); return; }
+    if(!document.getElementById('guardianConsent').checked){ alert('Parent/guardian consent is required for attendees under 18.'); return; }
+  }
+  if(!document.getElementById('accessibilityNeed').value){ alert('Please select an option for accessibility needs.'); return; }
+  if(document.getElementById('accessibilityNeed').value === 'Other' && !document.getElementById('otherAccessibilityInput').value){ alert('Please specify your accessibility need.'); return; }
+  if(!document.querySelector('input[name=travelFar]:checked')){ alert('Please let us know if you are traveling from far.'); return; }
+  if(!document.getElementById('liabilityConfirm').checked){ alert('Please confirm the liability acknowledgment to proceed.'); return; }
+  if(!document.getElementById('cnicUpload').files.length){ alert('Please upload a photo of your CNIC / B-Form.'); return; }
+  if(!day1.checked && !day2.checked){ alert('Please select at least one day.'); return; }
+  if(day1.checked && document.querySelectorAll('input[name=day1ws]:checked').length === 0){ alert('Please select at least 1 workshop for Day 1.'); return; }
+  if(day2.checked && document.querySelectorAll('input[name=day2ws]:checked').length === 0){ alert('Please select at least 1 workshop for Day 2.'); return; }
+
+  let institute = '';
+  if(attendeeType.value === 'student'){
+    const eduLevel = document.querySelector('input[name=eduLevel]:checked');
+    if(!eduLevel){ alert('Please select education level.'); return; }
+    if(eduLevel.value === 'college'){
+      if(!document.getElementById('collegeCitySelect').value){ alert('Please select the city of your college.'); return; }
+      institute = document.getElementById('collegeSelect').value === 'Other'
+        ? document.getElementById('otherCollegeInput').value
+        : document.getElementById('collegeSelect').value;
+    } else {
+      if(!document.getElementById('uniCitySelect').value){ alert('Please select the city of your university.'); return; }
+      institute = document.getElementById('uniSelect').value === 'Other'
+        ? document.getElementById('otherUniInput').value
+        : document.getElementById('uniSelect').value;
+    }
+    if(!institute){ alert('Please select or enter your institute name.'); return; }
+
+    const hasIdEl = document.querySelector('input[name=hasStudentId]:checked');
+    if(!hasIdEl){ alert('Please tell us if you have a valid student ID.'); return; }
+    if(hasIdEl.value === 'yes'){
+      if(!document.getElementById('studentIdNum').value){ alert('Please enter your student ID number.'); return; }
+      if(!document.getElementById('studentIdUpload').files.length){ alert('Please upload a photo of your student ID.'); return; }
+      if(!document.getElementById('idPolicyConfirm').checked){ alert('Please confirm you understand the student ID rejection policy.'); return; }
+    }
+  }
+
+  if(!document.getElementById('paymentMethod').value){ alert('Please select a payment method.'); return; }
+  if(document.getElementById('paymentMethod').value === 'Other Bank Transfer'){
+    if(!document.getElementById('bankSelect').value){ alert('Please select your bank.'); return; }
+    if(document.getElementById('bankSelect').value === 'Other' && !document.getElementById('otherBankInput').value){ alert('Please specify your bank name.'); return; }
+  }
+  if(!document.getElementById('addressCity').value){ alert('Please select your city.'); return; }
+  if(document.getElementById('addressCity').value === 'Other' && !document.getElementById('otherCityInput').value){ alert('Please specify your city.'); return; }
+  if(!document.getElementById('paymentUpload').files.length){ alert('Please upload your payment proof.'); return; }
+
+  calcPrice();
+
+  const isStudent = attendeeType.value === 'student';
+  const formIdSuffix = isStudent ? 'S' : 'O';
+  const randomNum = Math.floor(Math.random() * 6000 + 1).toString().padStart(4, '0');
+  const formId = "Unity P" + randomNum + formIdSuffix;
+
+  const summary = `
+    <strong>Registration ID:</strong> ${formId}<br>
+    <strong>Name:</strong> ${document.getElementById('fullName').value}<br>
+    <strong>Attending:</strong> ${[day1.checked?'Day 1':null, day2.checked?'Day 2':null].filter(Boolean).join(' & ')}<br>
+    <strong>Amount due:</strong> ${priceAmount.textContent} PKR<br>
+    <strong>Confirmation will be sent to:</strong> ${document.getElementById('email').value}<br><br>
+    Your registration is now pending verification. Once your student ID (if applicable) and payment are approved by our system, you will receive an email with your invitation details — usually within 3 days. If verification fails, your registration will be rejected and you'll be notified.<br><br>
+    <em>Please save your Registration ID (${formId}) as it will be used as your official reference number.</em>
+  `;
+
+  const submitData = new URLSearchParams();
+  submitData.append("formId", formId);
+  submitData.append("fullName", document.getElementById('fullName').value);
+  submitData.append("cnic", document.getElementById('cnic').value);
+  submitData.append("email", document.getElementById('email').value);
+  submitData.append("phone", document.getElementById('phone').value);
+  submitData.append("gender", document.getElementById('gender').value);
+  submitData.append("dob", document.getElementById('dob').value);
+  submitData.append("addressCity", document.getElementById('addressCity').value === 'Other' ? document.getElementById('otherCityInput').value : document.getElementById('addressCity').value);
+  submitData.append("attendeeType", attendeeType.value);
+  submitData.append("institute", institute);
+  const hasIdEl = document.querySelector('input[name=hasStudentId]:checked');
+  submitData.append("hasStudentId", hasIdEl ? hasIdEl.value : "");
+  submitData.append("studentIdNum", document.getElementById('studentIdNum').value);
+  submitData.append("day1", day1.checked ? "Yes" : "No");
+  submitData.append("day2", day2.checked ? "Yes" : "No");
+  submitData.append("day1Workshops", Array.from(document.querySelectorAll('input[name=day1ws]:checked')).map(cb => cb.value).join(", "));
+  submitData.append("day2Workshops", Array.from(document.querySelectorAll('input[name=day2ws]:checked')).map(cb => cb.value).join(", "));
+  submitData.append("price", priceAmount.textContent);
+  submitData.append("paymentMethod", document.getElementById('paymentMethod').value);
+  submitData.append("bankName", document.getElementById('bankSelect').value === 'Other' ? document.getElementById('otherBankInput').value : document.getElementById('bankSelect').value);
+  submitData.append("emContactName", document.getElementById('emContactName').value);
+  submitData.append("emContactPhone", document.getElementById('emContactPhone').value);
+  submitData.append("travelFar", document.querySelector('input[name=travelFar]:checked').value);
+  submitData.append("referral", document.getElementById('referral').value);
+  submitData.append("timestamp", new Date().toISOString());
+
+  const submitBtn = document.querySelector('button[type="submit"]');
+  const originalBtnText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting...';
+
+  fetch('https://script.google.com/macros/s/AKfycbxv3FVEPexjV4hLcAWNj6FafStyFzqzrJWzo-Zk8FJFOWkxw-mh9bxNi-ZYbwnLHyfzxg/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: submitData
+  }).then(() => {
+    document.getElementById('successText').innerHTML = summary;
+    document.getElementById('successBox').style.display = 'block';
+    if(typeof confetti === 'function'){
+      confetti({ particleCount: 140, spread: 80, origin: { y: 0.4 }, colors: ['#34c97a','#0f2417','#ffffff'] });
+      setTimeout(()=> confetti({ particleCount: 80, spread: 100, origin: { y: 0.5, x: 0.2 }, colors: ['#34c97a','#ffffff'] }), 250);
+      setTimeout(()=> confetti({ particleCount: 80, spread: 100, origin: { y: 0.5, x: 0.8 }, colors: ['#34c97a','#ffffff'] }), 400);
+    }
+    document.getElementById('successBox').scrollIntoView({behavior:'smooth'});
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+  }).catch((err) => {
+    alert("Submission failed. Please check your connection and try again.");
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+  });
+});
+</script>
+
+<!--
+  INTEGRATION NOTE FOR YOUR TEAM:
+  This form currently only validates and displays a confirmation on-page.
+  To actually collect responses into a spreadsheet, connect the submit
+  handler above to one of:
+    1. A Google Form (easiest - swap inputs to match a Google Form's field
+       names and POST to its formResponse URL), or
+    2. A Google Apps Script Web App tied to a Google Sheet, or
+    3. A simple backend (e.g. Formspree, FormSubmit, or your own server)
+       that writes rows to a database/spreadsheet.
+  Every dropdown/radio value is already a fixed string, so however you wire
+  it up, exported data will be consistent and easy to filter/pivot.
+-->
+</body>
+</html>

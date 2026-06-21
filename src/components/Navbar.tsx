@@ -512,18 +512,16 @@ const Navbar = () => {
             </div>
             <div className="nav-dropdown-menu">
               <a 
-                href="https://forms.gle/dHUsKbX4i9zahny79" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+                onClick={(e) => { e.preventDefault(); handleNavigate('/registration-team'); }}
+                style={{ cursor: 'pointer' }}
                 className="dropdown-item"
               >
                 <Users size={16} strokeWidth={2} />
                 <span>Event Team Registration</span>
               </a>
               <a 
-                href="https://forms.gle/FKQr6jWuu5aP3c8V6" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+                onClick={(e) => { e.preventDefault(); handleNavigate('/registration-individual'); }}
+                style={{ cursor: 'pointer' }}
                 className="dropdown-item"
               >
                 <User size={16} strokeWidth={2} />
@@ -590,21 +588,17 @@ const Navbar = () => {
         </div>
         <div className={`mobile-dropdown-content ${isMobileRegOpen ? 'open' : ''}`}>
           <a 
-            href="https://forms.gle/dHUsKbX4i9zahny79" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="mobile-dropdown-item"
-            onClick={() => setIsOpen(false)}
+                onClick={(e) => { e.preventDefault(); handleNavigate('/registration-team'); setIsOpen(false); }}
+                style={{ cursor: 'pointer' }}
+                className="mobile-dropdown-item"
           >
             <Users size={22} strokeWidth={2} />
             Event Team Registration
           </a>
           <a 
-            href="https://forms.gle/FKQr6jWuu5aP3c8V6" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+            onClick={(e) => { e.preventDefault(); handleNavigate('/registration-individual'); setIsOpen(false); }}
+            style={{ cursor: 'pointer' }}
             className="mobile-dropdown-item"
-            onClick={() => setIsOpen(false)}
           >
             <User size={22} strokeWidth={2} />
             <span>Individual Registration</span>

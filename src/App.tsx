@@ -16,6 +16,8 @@ import Certificates from './pages/Certificates';
 import Blog from './pages/Blog';
 import Gallery from './pages/Gallery';
 import Legal from './pages/Legal';
+import RegistrationTeam from './pages/RegistrationTeam';
+import RegistrationIndividual from './pages/RegistrationIndividual';
 import PromoBanner from './components/PromoBanner';
 import SummerPromoPopup from './components/SummerPromoPopup';
 import Newsletter from './components/Newsletter';
@@ -90,6 +92,8 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/certificates" element={<Certificates />} />
+          <Route path="/registration-team" element={<RegistrationTeam />} />
+          <Route path="/registration-individual" element={<RegistrationIndividual />} />
           <Route path="/privacy" element={<Legal defaultTab="privacy" />} />
           <Route path="/terms" element={<Legal defaultTab="terms" />} />
         </Routes>
