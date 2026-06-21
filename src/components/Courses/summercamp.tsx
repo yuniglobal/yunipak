@@ -206,11 +206,12 @@ const SummerCamp: React.FC = () => {
         designation: "", hearAboutUs: "", referralCode: "", whyJoin: "",
         declaration: false, timestamp: new Date().toISOString(), status: "pending",
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error('Submission error:', error);
+      const errMsg = error instanceof Error ? error.message : '';
       setSubmitStatus({
         type: 'error',
-        message: error.message || 'Enrollment submission failed. Please check your internet connection and try again.'
+        message: errMsg || 'Enrollment submission failed. Please check your internet connection and try again.'
       });
     } finally {
       setIsSubmitting(false);

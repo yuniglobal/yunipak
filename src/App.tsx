@@ -41,14 +41,14 @@ function App() {
     const checkPerformance = () => {
       const isLowEnd = (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) || 
                        (window.innerWidth < 768 && !('deviceMemory' in navigator)) ||
-                       // @ts-ignore
+                       // @ts-expect-error - navigator.deviceMemory is not officially standardized in all browsers
                        (navigator.deviceMemory && navigator.deviceMemory < 4);
       
       const checkWebGL = () => {
         try {
           const canvas = document.createElement('canvas');
           return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
-        } catch (e) {
+        } catch {
           return false;
         }
       };

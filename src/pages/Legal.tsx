@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AnimatedBackground from '../components/AnimatedBackground';
 import AnimatedTitle from '../components/AnimatedTitle';
@@ -13,21 +13,9 @@ const Legal: React.FC<LegalProps> = ({ defaultTab }) => {
   const location = useLocation();
   const navigate = useNavigate();
   
-  // Set tab based on prop, path, or default to privacy
-  const [activeTab, setActiveTab] = useState<TabType>('privacy');
-
-  useEffect(() => {
-    if (defaultTab) {
-      setActiveTab(defaultTab);
-    } else if (location.pathname.includes('terms')) {
-      setActiveTab('terms');
-    } else {
-      setActiveTab('privacy');
-    }
-  }, [location.pathname, defaultTab]);
+  const activeTab = defaultTab || (location.pathname.includes('terms') ? 'terms' : 'privacy');
 
   const handleTabChange = (tab: TabType) => {
-    setActiveTab(tab);
     // Smoothly update the URL without refreshing page
     navigate(tab === 'terms' ? '/terms' : '/privacy', { replace: true });
     window.scrollTo({ top: 0, behavior: 'smooth' });

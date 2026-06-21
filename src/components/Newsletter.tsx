@@ -60,7 +60,7 @@ const Newsletter: React.FC = () => {
           return Math.random() * (max - min) + min;
         };
 
-        const interval: any = setInterval(function() {
+        const interval = setInterval(function() {
           const timeLeft = animationEnd - Date.now();
 
           if (timeLeft <= 0) {
@@ -74,11 +74,12 @@ const Newsletter: React.FC = () => {
 
         setEmail('');
         setPhone('');
-    } catch (error: any) {
-      console.error('Newsletter error:', error);
+    } catch (error) {
+      const err = error as Error;
+      console.error('Newsletter error:', err);
       setStatus({
         type: 'error',
-        message: error.message || 'Something went wrong. Please try again.'
+        message: err.message || 'Something went wrong. Please try again.'
       });
     } finally {
       setIsSubmitting(false);

@@ -138,7 +138,7 @@ const Trainings: React.FC = () => {
         body: JSON.stringify(formData),
       });
       setSubmitStatus({ type: 'success', message: 'Enrollment data transmitted successfully! Our tactical team will contact you soon.' });
-    } catch (error) {
+    } catch {
       setSubmitStatus({ type: 'error', message: 'Data sync failed. Please check your connection and retry.' });
     } finally {
       setIsSubmitting(false);
@@ -187,7 +187,7 @@ const Trainings: React.FC = () => {
           {["all", "cybersecurity", "ai", "web", "digital", "ecommerce", "communications"].map((cat) => (
             <button
               key={cat}
-              onClick={() => setFilter(cat as any)}
+              onClick={() => setFilter(cat as Parameters<typeof setFilter>[0])}
               className={`filter-btn-premium ${filter === cat ? "active" : ""}`}
             >
               {cat.charAt(0).toUpperCase() + cat.slice(1).replace('cybersecurity', 'Cyber Security')}

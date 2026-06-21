@@ -1,8 +1,7 @@
 // src/components/Navbar.tsx
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useTheme } from '../context/ThemeContext';
-import { Menu, X, Sun, Moon, ChevronRight, Home, Info, BookOpen, GraduationCap, Mail, ClipboardList, ChevronDown, Users, User } from 'lucide-react';
+import { Menu, X, Sun, ChevronRight, Home, Info, BookOpen, GraduationCap, Mail, ClipboardList, ChevronDown, Users, User } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +9,6 @@ const Navbar = () => {
   const [isContracted, setIsContracted] = useState(false);
   const [isMobileRegOpen, setIsMobileRegOpen] = useState(false);
   const lastScrollY = useRef(0);
-  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
 

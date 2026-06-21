@@ -81,7 +81,7 @@ const SummerPromoPopup: React.FC = () => {
           return Math.random() * (max - min) + min;
         };
 
-        const interval: any = setInterval(function() {
+        const interval = setInterval(function() {
           const timeLeft = animationEnd - Date.now();
 
           if (timeLeft <= 0) {
@@ -93,9 +93,10 @@ const SummerPromoPopup: React.FC = () => {
           confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
           confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
         }, 250);
-    } catch (error: any) {
-      console.error('Newsletter error:', error);
-      setErrorMsg(error.message || 'Something went wrong. Please try again.');
+    } catch (error) {
+      const err = error as Error;
+      console.error('Newsletter error:', err);
+      setErrorMsg(err.message || 'Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
