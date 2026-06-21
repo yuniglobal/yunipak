@@ -6,25 +6,22 @@
 <title>Workshop Registration</title>
 <style>
   :root{
-    --ink:#eef5ef;
-    --paper:#060807;
-    --line:#1f2e22;
-    --accent:#34c97a;
-    --accent-light:#0f2417;
-    --muted:#8aa092;
-    --field-bg:#0c100d;
-    --card-bg:#0a0f0b;
-    --card-glow:0 0 0 1px rgba(52,201,122,.18), 0 0 24px rgba(52,201,122,.06);
+    --ink: #e2e8f0;
+    --paper: transparent;
+    --line: rgba(255, 255, 255, 0.15);
+    --accent: #d4af37;
+    --accent-light: rgba(212, 175, 55, 0.15);
+    --muted: #94a3b8;
+    --field-bg: rgba(0, 0, 0, 0.4);
+    --card-bg: rgba(2, 6, 4, 0.6);
+    --card-glow: 0 0 0 1px rgba(212, 175, 55, 0.18), 0 0 24px rgba(212, 175, 55, 0.06);
   }
   *{box-sizing:border-box;}
   body{
     margin:0;
-    background:
-      radial-gradient(circle at 15% 0%, rgba(52,201,122,.08), transparent 40%),
-      radial-gradient(circle at 85% 20%, rgba(52,201,122,.05), transparent 35%),
-      var(--paper);
+    background: transparent;
     color:var(--ink);
-    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     line-height:1.5;
     padding:32px 16px 80px;
   }
@@ -264,7 +261,7 @@
   button[type=submit]{
     width:100%;
     background:var(--accent);
-    color:#04140a;
+    color:#042414;
     border:none;
     padding:15px;
     font-size:15px;
@@ -272,8 +269,13 @@
     border-radius:8px;
     cursor:pointer;
     letter-spacing:.02em;
+    transition: all 0.3s ease;
   }
-  button[type=submit]:hover{background:#2bb56b;}
+  button[type=submit]:hover{
+    background: #c5a880;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+  }
   .note{font-size:12px;color:var(--muted);margin-top:10px;text-align:center;}
   #successBox{
     display:none;
