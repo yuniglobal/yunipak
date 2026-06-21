@@ -214,10 +214,14 @@ function handleEventRegistration(data) {
   const lastRow = sheet.getLastRow();
   const serialNo = lastRow === 0 ? 1 : lastRow;
   
+  const typeChar = (data.attendeeType && data.attendeeType.toLowerCase().includes('student')) ? 'S' : 'O';
+  const paddedNo = serialNo.toString().padStart(4, '0');
+  const generatedFormId = `YUNITY-P-${paddedNo}${typeChar}`;
+  
   const rowData = [
     serialNo,                                    // Sr. No
     new Date(),                                  // Registration Date
-    data.formId || "",                           // Form ID (Unity PxxxxS/O)
+    generatedFormId,                             // Form ID (YUNITY-P-xxxxS/O)
     "pending",                                   // Status
     data.fullName || "",                         // Full Name
     data.cnic || "",                             // CNIC
@@ -247,10 +251,17 @@ function handleEventRegistration(data) {
   
   sheet.appendRow(rowData);
   
+  // Send confirmation email
+  try {
+    sendEventConfirmationEmail(data, generatedFormId);
+  } catch(emailError) {
+    console.log("Email error: " + emailError);
+  }
+  
   return createJSONResponse({
     success: true, 
     message: "Event Registration submitted successfully",
-    formId: data.formId,
+    formId: generatedFormId,
     serialNo: serialNo
   });
 }
@@ -466,6 +477,64 @@ function sendConfirmationEmail(data) {
     `Dear ${data.fullName || "Student"},\n\n` +
     `Thank you for registering for ${data.courseTitle || "the course"}.\n\n` +
     `Next Steps:\n1. Our team will verify your payment within 24-48 hours\n2. You will receive login credentials for our LMS\n3. Course access will be granted upon approval\n\nNeed help? Contact us at support@yunipk.com`;
+  
+  try {
+    MailApp.sendEmail({ to: data.email, subject: subject, htmlBody: htmlBody, body: textBody, name: "YUNI Education" });
+  } catch (error) {
+    console.log("Email sending failed: " + error);
+  }
+}
+
+function sendEventConfirmationEmail(data, formId) {
+  if (!data.email) return;
+  const subject = `Registration Received - YUNI-TY 2026 Event | YUNI Education`;
+  const htmlBody = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f5f5f5;">
+      <div style="background: #000; padding: 20px; text-align: center; border-radius: 10px 10px 0 0;">
+        <h1 style="color: #d4af37; margin: 0;">YUNI-TY 2026</h1>
+      </div>
+      <div style="background: #fff; padding: 30px; border-radius: 0 0 10px 10px;">
+        <h2 style="color: #000;">Registration Received ✅</h2>
+        <p>Dear <strong>${escapeHtml(data.fullName) || "Attendee"}</strong>,</p>
+        <p>Thank you for registering for <strong>YUNI-TY 2026</strong>.</p>
+        
+        <div style="background: #f0f0f0; padding: 15px; border-radius: 8px; margin: 20px 0;">
+          <h3 style="margin-top: 0; color: #d4af37;">Registration Details:</h3>
+          <p><strong>Registration ID:</strong> ${escapeHtml(formId)}</p>
+          <p><strong>Attendee Type:</strong> ${escapeHtml(data.attendeeType) || "N/A"}</p>
+          <p><strong>Full Name:</strong> ${escapeHtml(data.fullName) || "N/A"}</p>
+          <p><strong>CNIC/B-Form:</strong> ${escapeHtml(data.cnic) || "N/A"}</p>
+          <p><strong>Phone Number:</strong> ${escapeHtml(data.phone) || "N/A"}</p>
+          <p><strong>City:</strong> ${escapeHtml(data.addressCity) || "N/A"}</p>
+          <p><strong>Institute:</strong> ${escapeHtml(data.institute) || "N/A"}</p>
+          ${data.day1 ? `<p><strong>Attending Day 1:</strong> ${escapeHtml(data.day1)}</p>` : ""}
+          ${data.day1Workshops ? `<p><strong>Day 1 Workshops:</strong> ${escapeHtml(data.day1Workshops)}</p>` : ""}
+          ${data.day2 ? `<p><strong>Attending Day 2:</strong> ${escapeHtml(data.day2)}</p>` : ""}
+          ${data.day2Workshops ? `<p><strong>Day 2 Workshops:</strong> ${escapeHtml(data.day2Workshops)}</p>` : ""}
+          <p><strong>Amount Due:</strong> ${escapeHtml(data.price) || "N/A"}</p>
+          <p><strong>Registration Date:</strong> ${new Date().toLocaleDateString()}</p>
+        </div>
+        
+        <p><strong>Next Steps:</strong></p>
+        <ol>
+          <li>Your registration is now pending verification.</li>
+          <li>Once your details are verified, you will receive an email with your official invitation.</li>
+          <li>If verification fails, your registration will be rejected and you will be notified.</li>
+        </ol>
+        
+        <p>Please save your Registration ID (<strong>${escapeHtml(formId)}</strong>) as it will be used as your official reference.</p>
+        
+        <p>You can check your registration status anytime by emailing us at <a href="mailto:info@yunipakistan.com">info@yunipakistan.com</a></p>
+        <hr style="margin: 20px 0;">
+        <p style="font-size: 12px; color: #666;">Need help? Contact us at info@yunipakistan.com or reply to this email.</p>
+      </div>
+    </div>
+  `;
+  const textBody = `Registration Received - YUNI-TY 2026\n\n` +
+    `Dear ${data.fullName || "Attendee"},\n\n` +
+    `Thank you for registering for YUNI-TY 2026.\n\n` +
+    `Registration ID: ${formId}\n\n` +
+    `Next Steps:\n1. Your registration is now pending verification.\n2. Once verified, you will receive an official invitation.\n\nNeed help? Contact us at info@yunipakistan.com`;
   
   try {
     MailApp.sendEmail({ to: data.email, subject: subject, htmlBody: htmlBody, body: textBody, name: "YUNI Education" });
