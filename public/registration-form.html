@@ -1129,15 +1129,12 @@ document.getElementById('regForm').addEventListener('submit', function(e){
       body: JSON.stringify(payload)
     }).then(res => res.json());
   }).then((data) => {
-    const returnedFormId = data.formId || "Pending Verification";
     const summary = `
-      <strong>Registration ID:</strong> ${returnedFormId}<br>
       <strong>Name:</strong> ${document.getElementById('fullName').value}<br>
       <strong>Attending:</strong> ${[day1.checked?'Day 1':null, day2.checked?'Day 2':null].filter(Boolean).join(' & ')}<br>
       <strong>Amount due:</strong> ${priceAmount.textContent} PKR<br>
       <strong>Confirmation will be sent to:</strong> ${document.getElementById('email').value}<br><br>
-      Your registration is now pending verification. Once your student ID (if applicable) and payment are approved by our system, you will receive an email with your invitation details — usually within 3 days. If verification fails, your registration will be rejected and you'll be notified.<br><br>
-      <em>Please save your Registration ID (${returnedFormId}) as it will be used as your official reference number.</em>
+      Your registration is now pending verification. Once your student ID (if applicable) and payment are approved by our system, you will receive an email with your invitation details — usually within 3 days. If verification fails, your registration will be rejected and you'll be notified.
     `;
     document.getElementById('successText').innerHTML = summary;
     document.getElementById('successBox').style.display = 'block';
