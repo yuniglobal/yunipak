@@ -65,11 +65,11 @@ const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbxv3FVEPexjV4
 const blogPosts: BlogPost[] = [
   {
     id: "blog-yunity-2026",
-    title: "Through the Viewfinder: 48 Hours at YUNIty",
+    title: "Through the Viewfinder: 48 Hours at YUNI-TY",
     category: "Summit",
     icon: "fa-camera",
     colorClass: "brand",
-    description: "A raw, behind-the-scenes look at the two days of chaos, caffeine, and creative sparks that defined YUNIty, through the eyes of the camera guy.",
+    description: "A raw, behind-the-scenes look at the two days of chaos, caffeine, and creative sparks that defined YUNI-TY, through the eyes of the camera guy.",
     date: "May 18, 2026",
     readTime: "8 min read",
     imageUrl: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=600&h=400&fit=crop&auto=format",
@@ -77,11 +77,11 @@ const blogPosts: BlogPost[] = [
   },
   {
     id: "gallery-yunity-2026",
-    title: "YUNIty 2026: Interactive Memory Cloud",
+    title: "YUNI-TY 2026: Interactive Memory Cloud",
     category: "Summit",
     icon: "fa-camera",
     colorClass: "brand",
-    description: "Launch the high-fidelity interactive gallery of the YUNIty event. Walk through the captured frames of our collective story.",
+    description: "Launch the high-fidelity interactive gallery of the YUNI-TY event. Walk through the captured frames of our collective story.",
     date: "May 18, 2026",
     readTime: "Interactive Showcase",
     imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop&auto=format",
@@ -1082,7 +1082,7 @@ const EventsComponent: React.FC = () => {
           .registration-container-premium { padding: 2rem; }
         }
 
-        /* --- YUNIty Blog Detail View --- */
+        /* --- YUNI-TY Blog Detail View --- */
         .yunity-blog-detail-view {
           padding: 2rem 0;
           color: var(--text-primary);

@@ -455,7 +455,7 @@ const SummerPromoPopup: React.FC = () => {
             <div className="badge-pulse"></div>
             Registrations Live!
           </div>
-          <h2 className="popup-title">Welcome to <span>YUNIty 2026</span></h2>
+          <h2 className="popup-title">Welcome to <span>YUNI-TY 2026</span></h2>
           <p className="popup-desc">
             Pakistan's premier youth and technology summit at NASTP Rawalpindi. Choose your track below to register and secure your spot today!
           </p>

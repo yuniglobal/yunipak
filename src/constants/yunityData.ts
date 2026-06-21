@@ -17,11 +17,11 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     id: "blog-yunity-2026",
-    title: "Through the Viewfinder: 48 Hours at YUNIty",
+    title: "Through the Viewfinder: 48 Hours at YUNI-TY",
     category: "Summit",
     icon: "fa-camera",
     colorClass: "brand",
-    description: "A raw, behind-the-scenes look at the two days of chaos, caffeine, and creative sparks that defined YUNIty, through the eyes of the camera guy.",
+    description: "A raw, behind-the-scenes look at the two days of chaos, caffeine, and creative sparks that defined YUNI-TY, through the eyes of the camera guy.",
     date: "May 18, 2026",
     readTime: "8 min read",
     imageUrl: "/gallery/_DSC2263.jpg",
@@ -29,11 +29,11 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: "gallery-yunity-2026",
-    title: "YUNIty 2026: Interactive Memory Cloud",
+    title: "YUNI-TY 2026: Interactive Memory Cloud",
     category: "Summit",
     icon: "fa-camera",
     colorClass: "brand",
-    description: "Launch the high-fidelity interactive gallery of the YUNIty event. Walk through the captured frames of our collective story.",
+    description: "Launch the high-fidelity interactive gallery of the YUNI-TY event. Walk through the captured frames of our collective story.",
     date: "May 18, 2026",
     readTime: "Interactive Showcase",
     imageUrl: "/gallery/_DSC2342.jpg",

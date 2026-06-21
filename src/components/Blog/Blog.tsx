@@ -27,7 +27,7 @@ const Blog: React.FC = () => {
               <span className="badge-text" style={{ marginLeft: '4px' }}>Summit Behind-the-Scenes</span>
             </span>
             <h1 className="blog-detail-title">
-              Through the Viewfinder: <span className="text-gradient">48 Hours of Chaos, Caffeine, and Creative Spark at YUNIty</span>
+              Through the Viewfinder: <span className="text-gradient">48 Hours of Chaos, Caffeine, and Creative Spark at YUNI-TY</span>
             </h1>
             <div className="blog-detail-meta">
               <span className="meta-author">By the Camera Guy</span>
@@ -40,7 +40,7 @@ const Blog: React.FC = () => {
 
           {/* Featured Image */}
           <div className="blog-detail-featured-image">
-            <img src="/gallery/_DSC2342.jpg" alt="YUNIty Event Viewfinder" />
+            <img src="/gallery/_DSC2342.jpg" alt="YUNI-TY Event Viewfinder" />
             <div className="scanline-overlay"></div>
             <div className="image-vignette"></div>
           </div>
@@ -51,7 +51,7 @@ const Blog: React.FC = () => {
               <h2 className="day-title"><span className="text-gradient">DAY 1</span> : Saturday, May 16th</h2>
               <h3 className="section-subtitle">08:00 AM — Morning Setup Chaos</h3>
               <p>
-                Fingers were freezing, making it a pain to dial in the exposure. By 8 AM, the lobby was a total madhouse—less tech summit, more like a logistics warehouse gone wild. Tripod bags, slider cases, and loose batteries were piled up by the doors. The YUNIty crew was running around with walkie-talkies, taping down thick power lines with rolls of gaffer tape, while volunteers in slightly oversized t-shirts tried to sort out the registration spreadsheets.
+                Fingers were freezing, making it a pain to dial in the exposure. By 8 AM, the lobby was a total madhouse—less tech summit, more like a logistics warehouse gone wild. Tripod bags, slider cases, and loose batteries were piled up by the doors. The YUNI-TY crew was running around with walkie-talkies, taping down thick power lines with rolls of gaffer tape, while volunteers in slightly oversized t-shirts tried to sort out the registration spreadsheets.
               </p>
               <p>
                 I grabbed my camera. Through the viewfinder, the lobby was just a blur of high-contrast motion. I spun the focus ring, catching a volunteer trying to balance a stack of lanyards while taking a desperate sip of black coffee. *Click.* Frame one: the raw, tired, caffeine-fueled start of Day 1.
@@ -77,7 +77,7 @@ const Blog: React.FC = () => {
 
               <h3 className="section-subtitle">The Beanbag Sanctuary</h3>
               <p>
-                Right outside the main hall was the ultimate chill spot: the waiting area. If you wanted to see what YUNIty was actually about, this was the place. My favorite shots of the day came from this little sunlit nook, which was basically just a pile of beanbags, empty cans, and laptops balanced on knees.
+                Right outside the main hall was the ultimate chill spot: the waiting area. If you wanted to see what YUNI-TY was actually about, this was the place. My favorite shots of the day came from this little sunlit nook, which was basically just a pile of beanbags, empty cans, and laptops balanced on knees.
               </p>
               <p>
                 I swapped to a wide 24mm lens to capture the chaos. People who were complete strangers two hours ago were sitting shoulder-to-shoulder on the floor, debating IDE themes, compiler errors, and where to get the best wings in town. No corporate hierarchy, no egos—just mentors in hoodies sitting on the floor with nervous freshmen, laughing over database horror stories.
@@ -103,14 +103,14 @@ const Blog: React.FC = () => {
 
               <h3 className="section-subtitle">Late Night Coding & Dev Check-in</h3>
               <p>
-                By midnight, the place went quiet, but the core YUNIty crew was still in the main hub, buried in lines of code, terminal outputs, and late-night system architecture debates. Exhaustion was hitting hard, but the focus was absolute.
+                By midnight, the place went quiet, but the core YUNI-TY crew was still in the main hub, buried in lines of code, terminal outputs, and late-night system architecture debates. Exhaustion was hitting hard, but the focus was absolute.
               </p>
               <p>
                 We gathered around the central workstation to run a quick sprint sanity check. The ambient blue glow from the screens lit up the tired, determined faces of our lead engineers. I cranked my ISO to 6400 and opened the aperture wide, capturing the quiet intensity of the team working through complex compiler logs and database integrations.
               </p>
 
               <div className="blog-image-wrapper">
-                <img src="/gallery/_DSC2263.jpg" alt="YUNIty core crew late night coding check-in" />
+                <img src="/gallery/_DSC2263.jpg" alt="YUNI-TY core crew late night coding check-in" />
                 <span className="image-caption">Frame #05: Late night dev check-in and technical troubleshooting.</span>
               </div>
             </div>
@@ -164,7 +164,7 @@ const Blog: React.FC = () => {
                 A huge part of the summit was the raw, unscripted energy of the participants. I spent a lot of time pacing the floor, waiting for the moments when people forgot the camera was there—the moments of intense focus, the bursts of laughter during keynotes, and the excitement of the final presentations.
               </p>
               <p>
-                I kept the shutter speed fast, capturing the split-second reactions. Whether it was the tension of waiting for results, the joy of a successful presentation, or the ambient buzz of the main hall, these frames caught the real pulse of YUNIty.
+                I kept the shutter speed fast, capturing the split-second reactions. Whether it was the tension of waiting for results, the joy of a successful presentation, or the ambient buzz of the main hall, these frames caught the real pulse of YUNI-TY.
               </p>
 
               {/* Collage Section */}
@@ -178,7 +178,7 @@ const Blog: React.FC = () => {
 
               <div className="gallery-cta-card card-glow-border">
                 <div className="gallery-cta-content">
-                  <h3>YUNIty 2026 Interactive Memory Cloud</h3>
+                  <h3>YUNI-TY 2026 Interactive Memory Cloud</h3>
                   <p>Step into our fully interactive, high-fidelity visual archive. Hover to focus, zoom, and explore the raw frames of the weekend.</p>
                   
                   {/* Gallery Glimpse Preview Grid */}
@@ -201,14 +201,14 @@ const Blog: React.FC = () => {
 
               <h3 className="section-subtitle" style={{ marginTop: '5rem' }}>The Post-Event Collapse</h3>
               <p>
-                Once the pitches were done, winners announced, and the crowd went home, the venue suddenly went dead silent. Just the YUNIty crew and volunteers left. We didn't pack up right away. We just collapsed on the cool lobby floor, leaning against the pillars.
+                Once the pitches were done, winners announced, and the crowd went home, the venue suddenly went dead silent. Just the YUNI-TY crew and volunteers left. We didn't pack up right away. We just collapsed on the cool lobby floor, leaning against the pillars.
               </p>
               <p>
                 I set my camera on a gear bag, threw on a wide lens, and set the self-timer to join the shot. No posed smiles here—just slouched shoulders, messy hair, and genuine smiles of relief. We sat in a circle around the gear, recounting the absolute chaos of the last 48 hours. For me, that was the realest photo of the whole event: a completely exhausted team, tight-knit, sharing the quiet after the storm.
               </p>
 
               <div className="blog-image-wrapper">
-                <img src="/gallery/_DSC2447.jpg" alt="The YUNIty core team sitting on the floor smiling" />
+                <img src="/gallery/_DSC2447.jpg" alt="The YUNI-TY core team sitting on the floor smiling" />
                 <span className="image-caption">Frame #10: The final group wrap-up and smiles of relief.</span>
               </div>
             </div>
