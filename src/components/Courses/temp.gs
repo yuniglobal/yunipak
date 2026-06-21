@@ -218,6 +218,23 @@ function handleEventRegistration(data) {
   const paddedNo = serialNo.toString().padStart(4, '0');
   const generatedFormId = `YUNITY-${typeChar}-${paddedNo}`;
   
+  // Create dedicated folder for this student
+  let mainFolder;
+  const mainFolders = DriveApp.getFoldersByName("YUNITY_2026_Registrations");
+  if (mainFolders.hasNext()) {
+    mainFolder = mainFolders.next();
+  } else {
+    mainFolder = DriveApp.createFolder("YUNITY_2026_Registrations");
+  }
+  
+  const studentFolderName = `${generatedFormId} - ${data.fullName || "Unknown"}`;
+  const studentFolder = mainFolder.createFolder(studentFolderName);
+  
+  // Upload files to student's dedicated folder
+  const cnicUrl = data.cnicFile ? uploadFileToDriveFolder(data.cnicFile, studentFolder, `CNIC_${generatedFormId}_${data.cnicFile.name}`) : "";
+  const studentIdUrl = data.studentIdFile ? uploadFileToDriveFolder(data.studentIdFile, studentFolder, `StudentID_${generatedFormId}_${data.studentIdFile.name}`) : "";
+  const paymentUrl = data.paymentFile ? uploadFileToDriveFolder(data.paymentFile, studentFolder, `Payment_${generatedFormId}_${data.paymentFile.name}`) : "";
+  
   const rowData = [
     serialNo,                                    // Sr. No
     new Date(),                                  // Registration Date
@@ -246,7 +263,10 @@ function handleEventRegistration(data) {
     data.travelFar || "",                        // Traveling from far
     data.referral || "",                         // Referral
     "Pending Review",                            // Admin Notes
-    data.timestamp || new Date().toISOString()   // Timestamp
+    data.timestamp || new Date().toISOString(),  // Timestamp
+    cnicUrl,                                     // CNIC Document
+    studentIdUrl,                                // Student ID Document
+    paymentUrl                                   // Payment Proof
   ];
   
   sheet.appendRow(rowData);
@@ -283,7 +303,7 @@ function getOrCreateEventSheet() {
         "Has Student ID", "Student ID Number", "Attending Day 1", "Attending Day 2", 
         "Day 1 Workshops", "Day 2 Workshops", "Amount Due", "Payment Method", "Bank Name", 
         "Emergency Contact Name", "Emergency Contact Phone", "Traveling from far", "Referral", 
-        "Admin Notes", "Timestamp"
+        "Admin Notes", "Timestamp", "CNIC Document", "Student ID Document", "Payment Proof"
       ];
       
       sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
@@ -403,6 +423,22 @@ function sendNewsletterConfirmationEmail(email, phone) {
 // =====================================================
 // UTILITIES & GENERAL HANDLERS
 // =====================================================
+
+function uploadFileToDriveFolder(fileObj, folder, fileName) {
+  if (!fileObj || !fileObj.data) return "";
+  
+  try {
+    const blob = Utilities.newBlob(Utilities.base64Decode(fileObj.data), fileObj.type, fileName);
+    
+    const file = folder.createFile(blob);
+    // Set sharing to anyone with the link can view
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+    return file.getUrl();
+  } catch (e) {
+    console.log("File upload error: " + e);
+    return "Upload failed: " + e.toString();
+  }
+}
 
 function createJSONResponse(data) {
   const response = ContentService.createTextOutput(JSON.stringify(data))
