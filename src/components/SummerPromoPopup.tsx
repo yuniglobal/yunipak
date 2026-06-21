@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { X, ArrowRight, Sparkles, ShieldCheck, Send, Award } from 'lucide-react';
+import { X, ArrowRight, Sparkles, ShieldCheck, Award, Users, User, Phone, Mail } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import confetti from 'canvas-confetti';
+
+const InstagramIcon: React.FC<{ size?: number }> = ({ size = 16 }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor">
+    <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6zm9.65 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
+  </svg>
+);
 
 const SummerPromoPopup: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
-
-  const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbxv3FVEPexjV4hLcAWNj6FafStyFzqzrJWzo-Zk8FJFOWkxw-mh9bxNi-ZYbwnLHyfzxg/exec';
-  const COUPON_CODE = '';
 
   useEffect(() => {
     // Show popup after 1.5 seconds if not dismissed during current session
@@ -36,72 +33,6 @@ const SummerPromoPopup: React.FC = () => {
     navigate(path);
   };
 
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setErrorMsg('Please enter a valid email address.');
-      return;
-    }
-
-    if (!phone || phone.length < 10) {
-      setErrorMsg('Please enter a valid phone number.');
-      return;
-    }
-
-    setIsSubmitting(true);
-    setErrorMsg('');
-
-    try {
-      const submitData = new URLSearchParams();
-      submitData.append('formType', 'newsletter');
-      submitData.append('email', email);
-      submitData.append('phone', phone);
-      submitData.append('couponCode', COUPON_CODE);
-      submitData.append('timestamp', new Date().toISOString());
-
-      await fetch(GOOGLE_SHEETS_API, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: submitData,
-      });
-
-      setIsSubscribed(true);
-        
-        // Party popper animation confetti (dual burst)
-        const duration = 3 * 1000;
-        const animationEnd = Date.now() + duration;
-        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 99999 };
-
-        const randomInRange = (min: number, max: number) => {
-          return Math.random() * (max - min) + min;
-        };
-
-        const interval = setInterval(function() {
-          const timeLeft = animationEnd - Date.now();
-
-          if (timeLeft <= 0) {
-            return clearInterval(interval);
-          }
-
-          const particleCount = 50 * (timeLeft / duration);
-          // since particles fall down, animate a bit higher than they would
-          confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
-          confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
-        }, 250);
-    } catch (error) {
-      const err = error as Error;
-      console.error('Newsletter error:', err);
-      setErrorMsg(err.message || 'Something went wrong. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   if (!isVisible) return null;
 
   return (
@@ -113,7 +44,7 @@ const SummerPromoPopup: React.FC = () => {
           left: 0;
           width: 100%;
           height: 100%;
-          background: rgba(0, 0, 0, 0.85);
+          background: rgba(2, 6, 4, 0.85);
           backdrop-filter: blur(12px);
           z-index: 5000;
           display: flex;
@@ -126,12 +57,12 @@ const SummerPromoPopup: React.FC = () => {
         .popup-card {
           width: 100%;
           max-width: 850px;
-          background: var(--bg-primary);
+          background: var(--bg-primary, #020604);
           border-radius: 28px;
           position: relative;
           overflow: hidden;
           padding: 3rem 2.5rem 2.5rem 2.5rem;
-          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
           border: 1px solid rgba(255, 255, 255, 0.08);
           animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
@@ -140,7 +71,7 @@ const SummerPromoPopup: React.FC = () => {
           content: '';
           position: absolute;
           top: -2px; left: -2px; right: -2px; bottom: -2px;
-          background: linear-gradient(135deg, var(--pk-green), transparent, var(--pk-green-light));
+          background: linear-gradient(135deg, var(--pk-green, #0c6238), transparent, var(--pk-green-light, #d4af37));
           z-index: -1;
           border-radius: 30px;
           opacity: 0.3;
@@ -152,7 +83,7 @@ const SummerPromoPopup: React.FC = () => {
           right: 1.5rem;
           background: rgba(255, 255, 255, 0.05);
           border: none;
-          color: var(--text-secondary);
+          color: var(--text-secondary, #94a3b8);
           width: 36px;
           height: 36px;
           border-radius: 50%;
@@ -170,35 +101,9 @@ const SummerPromoPopup: React.FC = () => {
           transform: rotate(90deg);
         }
 
-        .popup-split-container {
-          display: flex;
-          gap: 3rem;
+        .popup-header {
+          text-align: center;
           margin-bottom: 2rem;
-        }
-
-        .popup-column {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          position: relative;
-        }
-
-        .popup-column:first-child::after {
-          content: '';
-          position: absolute;
-          right: -1.5rem;
-          top: 5%;
-          bottom: 5%;
-          width: 1px;
-          background: rgba(255, 255, 255, 0.08);
-        }
-
-        .column-content {
-          text-align: left;
-          display: flex;
-          flex-direction: column;
-          height: 100%;
         }
 
         .popup-badge {
@@ -206,22 +111,21 @@ const SummerPromoPopup: React.FC = () => {
           align-items: center;
           gap: 0.5rem;
           background: rgba(12, 98, 56, 0.08);
-          color: var(--pk-green);
-          padding: 0.4rem 1rem;
+          color: var(--pk-green, #0c6238);
+          padding: 0.4rem 1.2rem;
           border-radius: 100px;
-          font-size: 0.7rem;
+          font-size: 0.75rem;
           font-weight: 800;
           text-transform: uppercase;
           letter-spacing: 0.08em;
-          margin-bottom: 1.2rem;
-          align-self: flex-start;
+          margin-bottom: 1rem;
           border: 1px solid rgba(12, 98, 56, 0.15);
         }
 
-        .popup-badge.blue-badge {
-          background: rgba(0, 145, 234, 0.08);
-          color: #0091ea;
-          border-color: rgba(0, 145, 234, 0.15);
+        .popup-badge.gold-badge {
+          background: rgba(212, 175, 55, 0.08);
+          color: var(--pk-green-light, #d4af37);
+          border-color: rgba(212, 175, 55, 0.15);
         }
 
         .badge-pulse {
@@ -233,138 +137,129 @@ const SummerPromoPopup: React.FC = () => {
           animation: pulse 1.5s infinite;
         }
 
-        .column-title {
+        .popup-title {
           font-family: 'Outfit', sans-serif;
-          font-size: 1.8rem;
-          font-weight: 800;
+          font-size: 2.2rem;
+          font-weight: 900;
           line-height: 1.2;
-          color: var(--text-primary);
+          color: var(--text-primary, #e2e8f0);
+          margin-bottom: 0.5rem;
+        }
+
+        .popup-title span {
+          background: linear-gradient(135deg, var(--pk-green, #0c6238) 0%, var(--pk-green-light, #d4af37) 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        .popup-desc {
+          color: var(--text-secondary, #94a3b8);
+          font-size: 0.95rem;
+          line-height: 1.6;
+          max-width: 600px;
+          margin: 0 auto;
+        }
+
+        .popup-split-container {
+          display: flex;
+          gap: 2rem;
+          margin-bottom: 2rem;
+        }
+
+        .popup-column {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 20px;
+          padding: 2rem;
+          transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .popup-column:hover {
+          transform: translateY(-4px);
+          background: rgba(255, 255, 255, 0.04);
+          border-color: rgba(212, 175, 55, 0.15);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .column-content {
+          text-align: left;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          margin-bottom: 1.5rem;
+        }
+
+        .column-header {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
           margin-bottom: 1rem;
         }
 
-        .column-title.prominent {
-          font-size: 2.2rem;
-          color: var(--pk-green);
+        .column-icon-wrap {
+          background: rgba(12, 98, 56, 0.1);
+          border: 1px solid rgba(12, 98, 56, 0.2);
+          border-radius: 12px;
+          width: 44px;
+          height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--pk-green, #0c6238);
+        }
+
+        .popup-column:last-child .column-icon-wrap {
+          background: rgba(212, 175, 55, 0.1);
+          border-color: rgba(212, 175, 55, 0.2);
+          color: var(--pk-green-light, #d4af37);
+        }
+
+        .column-title {
+          font-family: 'Outfit', sans-serif;
+          font-size: 1.4rem;
+          font-weight: 800;
+          color: var(--text-primary, #e2e8f0);
+          margin: 0;
         }
 
         .column-desc {
-          color: var(--text-secondary);
-          font-size: 0.9rem;
-          line-height: 1.6;
-          margin-bottom: 1.5rem;
-          min-height: 70px;
+          color: var(--text-secondary, #94a3b8);
+          font-size: 0.88rem;
+          line-height: 1.5;
+          margin-bottom: 1.25rem;
+          min-height: 48px;
         }
 
         .highlights-list {
           display: flex;
           flex-direction: column;
-          gap: 0.8rem;
-          margin-bottom: 2rem;
+          gap: 0.6rem;
         }
 
         .highlight-item {
           display: flex;
           align-items: center;
-          gap: 0.8rem;
-          font-size: 0.85rem;
+          gap: 0.6rem;
+          font-size: 0.82rem;
           font-weight: 600;
-          color: var(--text-primary);
+          color: var(--text-primary, #e2e8f0);
         }
 
         .highlight-item svg {
           flex-shrink: 0;
+          color: var(--pk-green, #0c6238);
+        }
+
+        .popup-column:last-child .highlight-item svg {
+          color: var(--pk-green-light, #d4af37);
         }
 
         .column-btn {
           width: 100%;
-          background: linear-gradient(135deg, var(--pk-green) 0%, var(--pk-green-light) 100%);
-          color: #000;
-          border: none;
-          padding: 1.1rem;
-          border-radius: 14px;
-          font-weight: 800;
-          font-size: 0.9rem;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.6rem;
-          cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-          box-shadow: 0 10px 20px rgba(12, 98, 56, 0.15);
-        }
-
-        .column-btn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 15px 25px rgba(12, 98, 56, 0.25);
-        }
-
-        .popup-footer-text {
-          text-align: center;
-          font-size: 0.8rem;
-          color: var(--text-tertiary);
-          border-top: 1px solid rgba(255, 255, 255, 0.05);
-          padding-top: 1.2rem;
-          margin-top: 1rem;
-        }
-
-        .popup-scroll-container {
-          width: 100%;
-          height: 100%;
-        }
-
-        /* Form styling inside popup */
-        .popup-form {
-          display: flex;
-          flex-direction: column;
-          gap: 0.8rem;
-          margin-top: auto;
-          width: 100%;
-        }
-
-        .popup-field {
-          display: flex;
-          align-items: center;
-          gap: 0.8rem;
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 12px;
-          padding: 0 1rem;
-          transition: all 0.3s ease;
-        }
-
-        .popup-field:focus-within {
-          border-color: #0091ea;
-          box-shadow: 0 0 0 3px rgba(0, 145, 234, 0.15);
-        }
-
-        .popup-field-icon {
-          color: rgba(255, 255, 255, 0.35);
-          font-size: 0.85rem;
-          flex-shrink: 0;
-          display: flex;
-          align-items: center;
-        }
-
-        .popup-field input {
-          flex: 1;
-          background: transparent;
-          border: none;
-          outline: none;
-          padding: 0.8rem 0;
-          color: var(--text-primary, #fff);
-          font-size: 0.9rem;
-          font-family: inherit;
-        }
-
-        .popup-field input::placeholder {
-          color: rgba(255, 255, 255, 0.3);
-        }
-
-        .popup-submit-btn {
-          width: 100%;
-          background: linear-gradient(135deg, #0091ea 0%, #00b0ff 100%);
+          background: linear-gradient(135deg, var(--pk-green, #0c6238) 0%, rgba(12, 98, 56, 0.8) 100%);
           color: #fff;
           border: none;
           padding: 1rem;
@@ -376,111 +271,82 @@ const SummerPromoPopup: React.FC = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 0.6rem;
+          gap: 0.5rem;
           cursor: pointer;
           transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-          box-shadow: 0 10px 20px rgba(0, 145, 234, 0.15);
+          box-shadow: 0 8px 20px rgba(12, 98, 56, 0.15);
+          margin-top: auto;
         }
 
-        .popup-submit-btn:hover:not(:disabled) {
+        .popup-column:last-child .column-btn {
+          background: linear-gradient(135deg, var(--pk-green-light, #d4af37) 0%, rgba(212, 175, 55, 0.8) 100%);
+          color: #000;
+          box-shadow: 0 8px 20px rgba(212, 175, 55, 0.15);
+        }
+
+        .column-btn:hover {
           transform: translateY(-2px);
-          box-shadow: 0 15px 25px rgba(0, 145, 234, 0.25);
+          box-shadow: 0 12px 24px rgba(12, 98, 56, 0.3);
         }
 
-        .popup-submit-btn:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
+        .popup-column:last-child .column-btn:hover {
+          box-shadow: 0 12px 24px rgba(212, 175, 55, 0.3);
         }
 
-        .popup-error-msg {
-          color: #ff4757;
-          font-size: 0.8rem;
-          font-weight: 600;
-          margin-top: -0.2rem;
-          margin-bottom: 0.2rem;
-          text-align: left;
-        }
-
-        /* Congrats Notification Card */
-        .congrats-notification-card {
-          background: rgba(12, 98, 56, 0.04);
-          border: 1px solid rgba(12, 98, 56, 0.2);
-          border-radius: 16px;
-          padding: 1.2rem;
-          display: flex;
-          gap: 1rem;
-          align-items: flex-start;
-          text-align: left;
-          box-shadow: 0 10px 30px rgba(12, 98, 56, 0.05), inset 0 0 15px rgba(12, 98, 56, 0.02);
+        /* Footer contact styles */
+        .popup-footer {
+          border-top: 1px solid rgba(255, 255, 255, 0.06);
+          padding-top: 1.25rem;
           margin-top: 1rem;
-          animation: slideInUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+          text-align: center;
         }
 
-        .congrats-icon-wrap {
-          background: rgba(12, 98, 56, 0.1);
-          border: 1px solid rgba(12, 98, 56, 0.3);
-          border-radius: 50%;
-          width: 44px;
-          height: 44px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--pk-green-light, #d4af37);
-          flex-shrink: 0;
-          box-shadow: 0 0 12px rgba(12, 98, 56, 0.1);
-        }
-
-        .congrats-text-wrap {
-          display: flex;
-          flex-direction: column;
-          gap: 0.3rem;
-          flex: 1;
-        }
-
-        .congrats-title {
-          font-size: 1rem;
-          font-weight: 800;
-          color: #fff;
-          margin: 0;
-        }
-
-        .congrats-message {
-          font-size: 0.85rem;
-          color: #a0aab2;
-          margin: 0;
-          line-height: 1.4;
-        }
-
-        .congrats-subtext {
-          font-size: 0.75rem;
-          color: var(--text-tertiary, rgba(255,255,255,0.35));
-          margin: 0;
-          line-height: 1.4;
-        }
-
-        .congrats-coupon {
-          align-self: flex-start;
-          background: rgba(12, 98, 56, 0.1);
-          border: 1px dashed rgba(212, 175, 55, 0.4);
-          color: var(--pk-green-light, #d4af37);
-          padding: 0.4rem 0.8rem;
-          border-radius: 8px;
-          font-family: monospace;
-          font-size: 0.85rem;
-          font-weight: 800;
-          margin-top: 0.5rem;
+        .popup-footer-title {
+          font-size: 0.8rem;
+          font-weight: 700;
+          color: var(--text-tertiary, #64748b);
+          text-transform: uppercase;
           letter-spacing: 0.05em;
+          margin-bottom: 0.75rem;
         }
 
-        @keyframes slideInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        .popup-contact-links {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 1.5rem;
+          flex-wrap: wrap;
+        }
+
+        .contact-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          color: var(--text-secondary, #94a3b8);
+          text-decoration: none;
+          font-size: 0.82rem;
+          font-weight: 600;
+          transition: all 0.2s ease;
+          padding: 0.25rem 0.5rem;
+          border-radius: 6px;
+        }
+
+        .contact-link:hover {
+          color: var(--pk-green-light, #d4af37);
+          background: rgba(255, 255, 255, 0.03);
+          transform: translateY(-1px);
+        }
+
+        .contact-link.wa:hover {
+          color: #25d366;
+        }
+
+        .contact-link.ig:hover {
+          color: #e1306c;
+        }
+
+        .contact-link.mail:hover {
+          color: #ea4335;
         }
 
         @keyframes fadeIn {
@@ -502,82 +368,53 @@ const SummerPromoPopup: React.FC = () => {
         @media (max-width: 768px) {
           .popup-card {
             max-width: 500px;
-            padding: 0;
+            padding: 2.5rem 1.5rem 1.5rem 1.5rem;
             max-height: 90vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-          }
-          .popup-scroll-container {
             overflow-y: auto;
-            padding: 3rem 1.5rem 1.5rem 1.5rem;
-            width: 100%;
           }
           .popup-close-btn {
-            position: absolute;
             top: 1rem;
             right: 1rem;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            z-index: 1000;
-            margin: 0;
+            width: 36px;
+            height: 36px;
           }
-          .popup-close-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
+          .popup-title {
+            font-size: 1.8rem;
+          }
+          .popup-desc {
+            font-size: 0.88rem;
           }
           .popup-split-container {
             flex-direction: column;
-            gap: 2.5rem;
+            gap: 1.25rem;
           }
-          .popup-column:first-child::after {
-            display: none;
-          }
-          .column-content {
-            text-align: center;
-            align-items: center;
-          }
-          .popup-badge {
-            margin-bottom: 1rem;
-            align-self: center;
-          }
-          .column-title {
-            font-size: 1.6rem;
-          }
-          .column-title.prominent {
-            font-size: 1.8rem;
+          .popup-column {
+            padding: 1.5rem;
           }
           .column-desc {
             min-height: auto;
-            font-size: 0.85rem;
           }
-          .highlights-list {
-            align-items: center;
-            margin-bottom: 1.5rem;
+          .popup-contact-links {
+            gap: 1rem;
           }
         }
 
         @media (max-width: 420px) {
           .popup-card {
-            padding: 0;
+            padding: 2rem 1rem 1.2rem 1rem;
             border-radius: 20px;
             max-height: 88vh;
           }
-          .popup-scroll-container {
-            padding: 2.5rem 1rem 1.2rem 1rem;
+          .popup-title {
+            font-size: 1.5rem;
           }
-          .popup-close-btn {
-            width: 36px;
-            height: 36px;
-            top: 0.8rem;
-            right: 0.8rem;
+          .popup-desc {
+            font-size: 0.8rem;
           }
           .column-title {
-            font-size: 1.3rem;
-          }
-          .column-title.prominent {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
           }
           .column-desc {
             font-size: 0.8rem;
@@ -586,12 +423,13 @@ const SummerPromoPopup: React.FC = () => {
             font-size: 0.78rem;
           }
           .column-btn {
-            padding: 0.9rem;
-            font-size: 0.82rem;
-            border-radius: 12px;
+            padding: 0.85rem;
+            font-size: 0.8rem;
           }
-          .popup-footer-text {
-            font-size: 0.72rem;
+          .popup-contact-links {
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
           }
         }
       `}</style>
@@ -601,108 +439,95 @@ const SummerPromoPopup: React.FC = () => {
           <X size={20} />
         </button>
 
-        <div className="popup-scroll-container">
-          <div className="popup-split-container">
-            {/* Column 1: Summer Camp 2026 */}
-            <div className="popup-column">
-              <div className="column-content">
-                <div className="popup-badge">
-                  <div className="badge-pulse"></div>
-                  Registrations Open!
-                </div>
-                <h3 className="column-title prominent">YUNI Summer Camp 2026</h3>
-                <p className="column-desc">
-                  Join our premium IT & soft skills programs. 7 specialized tracks designed for career growth and hands-on learning at NASTP.
-                </p>
-                <div className="highlights-list">
-                  <div className="highlight-item">
-                    <Sparkles size={18} color="var(--pk-green)" />
-                    <span>7 Specialized Tracks & Certifications</span>
-                  </div>
-                  <div className="highlight-item">
-                    <ShieldCheck size={18} color="var(--pk-green)" />
-                    <span>PSEB Certified Industry Programs</span>
-                  </div>
-                  <div className="highlight-item">
-                    <Award size={18} color="var(--pk-green)" />
-                    <span>Interactive Real-World Projects</span>
-                  </div>
-                </div>
-              </div>
-              <button className="column-btn" onClick={() => handleAction('/summer-camp')}>
-                Register Now <ArrowRight size={18} />
-              </button>
-            </div>
+        <div className="popup-header">
+          <div className="popup-badge">
+            <div className="badge-pulse"></div>
+            Registrations Live!
+          </div>
+          <h2 className="popup-title">Welcome to <span>YUNIty 2026</span></h2>
+          <p className="popup-desc">
+            Pakistan's premier youth and technology summit at NASTP Rawalpindi. Choose your track below to register and secure your spot today!
+          </p>
+        </div>
 
-            {/* Column 2: Newsletter */}
-            <div className="popup-column">
-              <div className="column-content">
-                <div className="popup-badge blue-badge">
-                  <div className="badge-pulse"></div>
-                  <Send size={14} style={{ marginRight: '4px' }} /> Newsletter
+        <div className="popup-split-container">
+          {/* Column 1: Individual Delegate */}
+          <div className="popup-column">
+            <div className="column-content">
+              <div className="column-header">
+                <div className="column-icon-wrap">
+                  <User size={22} />
                 </div>
-                <h3 className="column-title">Welcome to YUNIVERSE</h3>
-                
-                {isSubscribed ? (
-                  <div className="congrats-notification-card">
-                    <div className="congrats-icon-wrap">
-                      <ShieldCheck size={24} />
-                    </div>
-                    <div className="congrats-text-wrap">
-                      <h4 className="congrats-title">Subscription Active!</h4>
-                      <p className="congrats-message">
-                        Thank you for joining the YUNIVERSE newsletter.
-                      </p>
-                      <p className="congrats-subtext">
-                        We will send you updates on new programs, events, and resources.
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    <p className="column-desc" style={{ color: 'var(--pk-green-light)', fontWeight: 800, marginBottom: '0.5rem', minHeight: 'auto' }}>
-                      Join the YUNIVERSE Community!
-                    </p>
-                    <p className="column-desc" style={{ fontSize: '0.82rem', minHeight: 'auto', marginBottom: '1.2rem', color: 'var(--text-secondary)' }}>
-                      Subscribe to our newsletter to receive exclusive updates, curriculum announcements, and insights.
-                    </p>
-                    
-                    <form className="popup-form" onSubmit={handleSubscribe}>
-                      <div className="popup-field">
-                        <span className="popup-field-icon"></span>
-                        <input
-                          type="email"
-                          placeholder="Email address"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="popup-field">
-                        <span className="popup-field-icon"></span>
-                        <input
-                          type="tel"
-                          placeholder="WhatsApp (e.g., 03123456789)"
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                          required
-                        />
-                      </div>
-                      {errorMsg && <div className="popup-error-msg">{errorMsg}</div>}
-                      <button type="submit" className="popup-submit-btn" disabled={isSubmitting}>
-                        {isSubmitting ? 'Subscribing...' : (
-                          <>Subscribe <Send size={16} /></>
-                        )}
-                      </button>
-                    </form>
-                  </>
-                )}
+                <h3 className="column-title">Individual Registration</h3>
+              </div>
+              <p className="column-desc">
+                Register as an individual to participate in certified tech courses, skill workshops, and network with experts.
+              </p>
+              <div className="highlights-list">
+                <div className="highlight-item">
+                  <Sparkles size={16} />
+                  <span>Certified Workshops & Tracks</span>
+                </div>
+                <div className="highlight-item">
+                  <ShieldCheck size={16} />
+                  <span>Official Certificate Ref IDs</span>
+                </div>
+                <div className="highlight-item">
+                  <Award size={16} />
+                  <span>Keynote Panel Sessions</span>
+                </div>
               </div>
             </div>
+            <button className="column-btn" onClick={() => handleAction('/registration-individual')}>
+              Register Individually <ArrowRight size={16} />
+            </button>
           </div>
 
-          <div className="popup-footer-text">
-            Empowering the Youth through Modern Skills & Tech Education at NASTP Rawalpindi
+          {/* Column 2: Event Team */}
+          <div className="popup-column">
+            <div className="column-content">
+              <div className="column-header">
+                <div className="column-icon-wrap">
+                  <Users size={22} />
+                </div>
+                <h3 className="column-title">Team Application</h3>
+              </div>
+              <p className="column-desc">
+                Register your team to participate in collaborative competitions, startup pitches, and innovation exhibitions.
+              </p>
+              <div className="highlights-list">
+                <div className="highlight-item">
+                  <Sparkles size={16} />
+                  <span>Showcase Team Innovations</span>
+                </div>
+                <div className="highlight-item">
+                  <ShieldCheck size={16} />
+                  <span>Compete in Hackathons</span>
+                </div>
+                <div className="highlight-item">
+                  <Award size={16} />
+                  <span>Win Dynamic Awards</span>
+                </div>
+              </div>
+            </div>
+            <button className="column-btn" onClick={() => handleAction('/registration-team')}>
+              Register Your Team <ArrowRight size={16} />
+            </button>
+          </div>
+        </div>
+
+        <div className="popup-footer">
+          <div className="popup-footer-title">Need help with registration? Contact us</div>
+          <div className="popup-contact-links">
+            <a href="https://wa.me/923215615401" target="_blank" rel="noopener noreferrer" className="contact-link wa">
+              <Phone size={14} /> <span>+92 321 5615401</span>
+            </a>
+            <a href="https://instagram.com/yunity.pk" target="_blank" rel="noopener noreferrer" className="contact-link ig">
+              <InstagramIcon size={14} /> <span>@yunity.pk</span>
+            </a>
+            <a href="mailto:info@yunipakistan.com" className="contact-link mail">
+              <Mail size={14} /> <span>info@yunipakistan.com</span>
+            </a>
           </div>
         </div>
       </div>
