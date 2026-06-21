@@ -36,7 +36,7 @@ const SummerPromoPopup: React.FC = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="popup-overlay">
+    <div className="popup-overlay" onClick={(e) => { if (e.target === e.currentTarget) handleDismiss(); }}>
       <style>{`
         .popup-overlay {
           position: fixed;
@@ -48,15 +48,17 @@ const SummerPromoPopup: React.FC = () => {
           backdrop-filter: blur(12px);
           z-index: 5000;
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           justify-content: center;
-          padding: 1.5rem;
+          padding: 2rem 1.5rem;
+          overflow-y: auto;
           animation: fadeIn 0.5s ease;
         }
 
         .popup-card {
           width: 100%;
           max-width: 850px;
+          margin: auto;
           background: var(--bg-primary, #020604);
           border-radius: 28px;
           position: relative;
@@ -369,10 +371,6 @@ const SummerPromoPopup: React.FC = () => {
           .popup-card {
             max-width: 500px;
             padding: 2.5rem 1.5rem 1.5rem 1.5rem;
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
           }
           .popup-close-btn {
             top: 1rem;
@@ -405,7 +403,6 @@ const SummerPromoPopup: React.FC = () => {
           .popup-card {
             padding: 2rem 1rem 1.2rem 1rem;
             border-radius: 20px;
-            max-height: 88vh;
           }
           .popup-title {
             font-size: 1.5rem;
