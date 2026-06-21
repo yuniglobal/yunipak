@@ -12,6 +12,11 @@ const SummerPromoPopup: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
 
+  const handleDismiss = () => {
+    setIsVisible(false);
+    sessionStorage.setItem('promo-popup-dismissed', 'true');
+  };
+
   useEffect(() => {
     // Show popup after 1.5 seconds if not dismissed during current session
     const isDismissed = sessionStorage.getItem('promo-popup-dismissed');
@@ -36,11 +41,6 @@ const SummerPromoPopup: React.FC = () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isVisible]);
-
-  const handleDismiss = () => {
-    setIsVisible(false);
-    sessionStorage.setItem('promo-popup-dismissed', 'true');
-  };
 
   const handleAction = (path: string) => {
     handleDismiss();

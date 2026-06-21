@@ -82,7 +82,6 @@ const AboutUsPage: React.FC = () => {
           box-shadow: 0 0 15px rgba(197, 160, 89, 0.15);
         }
         .hero-title {
-          font-family: 'Outfit', sans-serif;
           font-size: clamp(2.5rem, 6vw, 4.5rem);
           font-weight: 800;
           line-height: 1.1;
@@ -124,7 +123,6 @@ const AboutUsPage: React.FC = () => {
           display: block;
         }
         .section-title-text {
-          font-family: 'Outfit', sans-serif;
           font-size: clamp(2rem, 4vw, 3rem);
           font-weight: 700;
           color: #ffffff;
@@ -284,13 +282,11 @@ const AboutUsPage: React.FC = () => {
           position: absolute;
           top: 1rem;
           right: 2rem;
-          font-family: 'Outfit', sans-serif;
           font-size: 4rem;
           color: rgba(197, 160, 89, 0.08);
           line-height: 1;
         }
         .philosophy-title {
-          font-family: 'Outfit', sans-serif;
           font-size: 1.5rem;
           font-weight: 700;
           color: var(--pk-gold-light);

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Camera } from "lucide-react";
 import gsap from "gsap";
-import AnimatedBackground from "../AnimatedBackground";
 import { galleryImages } from "../../constants/yunityData";
 
 const Gallery: React.FC = () => {
@@ -33,7 +32,6 @@ const Gallery: React.FC = () => {
 
   return (
     <section className="events-premium-section">
-      <AnimatedBackground />
       <div className="yunity-gallery-view animate-fade-in-up">
         <div className="gallery-container-premium">
           <button onClick={() => navigate("/events")} className="back-btn-tech">
@@ -108,11 +106,10 @@ const Gallery: React.FC = () => {
 
       <style>{`
         .events-premium-section {
-          min-height: 100vh;
           background: transparent;
           font-family: 'Inter', sans-serif;
           color: var(--text-primary);
-          padding-top: 100px;
+          padding: 4rem 0;
           position: relative;
         }
 

@@ -1,7 +1,7 @@
 // src/components/Navbar.tsx
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, Sun, ChevronRight, Home, Info, BookOpen, GraduationCap, Mail, ClipboardList, ChevronDown, Users, User } from 'lucide-react';
+import { Menu, X, ChevronRight, Home, Info, BookOpen, GraduationCap, Mail, ClipboardList, ChevronDown, Users, User } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

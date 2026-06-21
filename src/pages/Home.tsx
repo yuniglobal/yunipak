@@ -1,6 +1,6 @@
 
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Hero from '../components/HOME/Hero';
@@ -8,7 +8,6 @@ import FeaturesReveal from '../components/HOME/FeaturesReveal';
 import NationalAnalysis from '../components/HOME/NationalAnalysis';
 import CTA from '../components/HOME/CTA';
 import TextEffect from '../components/HOME/TextEffect';
-import FAQ from '../components/Services/FAQ';
 import AnimatedTitle from '../components/AnimatedTitle';
 import AnimatedBackground from '../components/AnimatedBackground';
 import GalleryComponent from '../components/Gallery/Gallery';
@@ -18,25 +17,8 @@ if (typeof window !== 'undefined') {
 }
 
 export default function Home() {
-  const statsRef = useRef<HTMLDivElement>(null);
   const teamRef = useRef<HTMLDivElement>(null);
   const testimonialsRef = useRef<HTMLDivElement>(null);
-  const partnersRef = useRef<HTMLDivElement>(null);
-
-    // Partners animation
-
-    if (partnersRef.current) {
-      gsap.fromTo(
-        partnersRef.current.querySelectorAll('.partner-card, .certificate-card'),
-        { y: 50, opacity: 0 },
-        {
-          y: 0, opacity: 1,
-          duration: 1, stagger: 0.2, ease: 'power4.out',
-          scrollTrigger: { trigger: partnersRef.current, start: 'top 85%' }
-        }
-      );
-    }
-  }, []);
 
   const team = [
     {

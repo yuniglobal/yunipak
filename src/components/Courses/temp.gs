@@ -216,7 +216,7 @@ function handleEventRegistration(data) {
   
   const typeChar = (data.attendeeType && data.attendeeType.toLowerCase().includes('student')) ? 'S' : 'O';
   const paddedNo = serialNo.toString().padStart(4, '0');
-  const generatedFormId = `YUNITY-P-${paddedNo}${typeChar}`;
+  const generatedFormId = `YUNITY-${typeChar}-${paddedNo}`;
   
   const rowData = [
     serialNo,                                    // Sr. No
