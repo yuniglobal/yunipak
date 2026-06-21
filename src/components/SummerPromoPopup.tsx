@@ -23,6 +23,20 @@ const SummerPromoPopup: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleDismiss();
+      }
+    };
+    if (isVisible) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isVisible]);
+
   const handleDismiss = () => {
     setIsVisible(false);
     sessionStorage.setItem('promo-popup-dismissed', 'true');
