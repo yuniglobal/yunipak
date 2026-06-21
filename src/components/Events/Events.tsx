@@ -366,17 +366,6 @@ const EventsComponent: React.FC = () => {
                       <p><span>Branch:</span> Rawalpindi</p>
                     </div>
                   </div>
-                  <div 
-                    className={`payment-node-card ${formData.paymentMethod === 'nayapay' ? 'active-node' : ''}`}
-                    onClick={() => setFormData(prev => ({ ...prev, paymentMethod: 'nayapay' }))}
-                  >
-                    <h4>NayaPay</h4>
-                    <div className="node-details">
-                      <p><span>Title:</span> YUNI (SMC-PRIVATE) LIMITED</p>
-                      <p><span>Account No:</span> 03185861446</p>
-                      <p><span>Type:</span> Wallet / Mobile</p>
-                    </div>
-                  </div>
                 </div>
 
                 <div className="input-group-tech">
@@ -384,7 +373,6 @@ const EventsComponent: React.FC = () => {
                     <label>Payment Method</label>
                     <select name="paymentMethod" value={formData.paymentMethod} onChange={handleInputChange} required>
                       <option value="bank">Bank Alfalah</option>
-                      <option value="nayapay">NayaPay</option>
                     </select>
                   </div>
                   <div className="field-tech">

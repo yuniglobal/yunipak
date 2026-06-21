@@ -137,10 +137,6 @@ const SummerCamp: React.FC = () => {
           updated.bankName = 'Bank Alfalah';
           updated.bankAccountTitle = 'YUNI (SMC-PRIVATE) LIMITED';
           updated.bankAccountNumber = '0140-1010831162';
-        } else if (value === 'nayapay') {
-          updated.bankName = 'NayaPay Wallet';
-          updated.bankAccountTitle = 'YUNI (SMC-PRIVATE) LIMITED';
-          updated.bankAccountNumber = '03185861446';
         }
       }
       return updated;
@@ -596,23 +592,6 @@ const SummerCamp: React.FC = () => {
                         <p><span>Branch:</span> Rawalpindi</p>
                       </div>
                     </div>
-                    <div 
-                      className={`payment-node-card ${formData.paymentMethod === 'nayapay' ? 'active-node' : ''}`}
-                      onClick={() => setFormData(prev => ({ 
-                        ...prev, 
-                        paymentMethod: 'nayapay',
-                        bankName: 'NayaPay Wallet',
-                        bankAccountTitle: 'YUNI (SMC-PRIVATE) LIMITED',
-                        bankAccountNumber: '03185861446'
-                      }))}
-                    >
-                      <h4>NayaPay Wallet</h4>
-                      <div className="node-details">
-                        <p><span>Title:</span> YUNI (SMC-PRIVATE) LIMITED</p>
-                        <p><span>Account No:</span> 03185861446</p>
-                        <p><span>Type:</span> Business Wallet</p>
-                      </div>
-                    </div>
                   </div>
 
                   <div className="input-group-tech">
@@ -620,7 +599,6 @@ const SummerCamp: React.FC = () => {
                       <label>Payment Mode</label>
                       <select name="paymentMethod" value={formData.paymentMethod} onChange={handleInputChange} required>
                         <option value="bank">Bank Alfalah</option>
-                        <option value="nayapay">NayaPay</option>
                       </select>
                     </div>
                     <div className="field-tech">
