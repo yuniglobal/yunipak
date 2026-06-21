@@ -71,7 +71,7 @@ const SummerPromoPopup: React.FC = () => {
 
         .popup-card {
           width: 100%;
-          max-width: 850px;
+          max-width: 600px;
           margin: auto;
           background: var(--bg-primary, #020604);
           border-radius: 28px;
@@ -178,6 +178,7 @@ const SummerPromoPopup: React.FC = () => {
 
         .popup-split-container {
           display: flex;
+          flex-direction: column;
           gap: 2rem;
           margin-bottom: 2rem;
         }
@@ -462,7 +463,7 @@ const SummerPromoPopup: React.FC = () => {
         </div>
 
         <div className="popup-split-container">
-          {/* Column 1: Individual Delegate */}
+          {/* Individual Delegate */}
           <div className="popup-column">
             <div className="column-content">
               <div className="column-header">
@@ -491,38 +492,6 @@ const SummerPromoPopup: React.FC = () => {
             </div>
             <button className="column-btn" onClick={() => handleAction('/registration-individual')}>
               Register Individually <ArrowRight size={16} />
-            </button>
-          </div>
-
-          {/* Column 2: Event Team */}
-          <div className="popup-column">
-            <div className="column-content">
-              <div className="column-header">
-                <div className="column-icon-wrap">
-                  <Users size={22} />
-                </div>
-                <h3 className="column-title">Team Application</h3>
-              </div>
-              <p className="column-desc">
-                Register your team to participate in collaborative competitions, startup pitches, and innovation exhibitions.
-              </p>
-              <div className="highlights-list">
-                <div className="highlight-item">
-                  <Sparkles size={16} />
-                  <span>Showcase Team Innovations</span>
-                </div>
-                <div className="highlight-item">
-                  <ShieldCheck size={16} />
-                  <span>Compete in Hackathons</span>
-                </div>
-                <div className="highlight-item">
-                  <Award size={16} />
-                  <span>Win Dynamic Awards</span>
-                </div>
-              </div>
-            </div>
-            <button className="column-btn" onClick={() => handleAction('/registration-team')}>
-              Register Your Team <ArrowRight size={16} />
             </button>
           </div>
         </div>
