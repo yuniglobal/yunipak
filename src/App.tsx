@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -63,24 +63,15 @@ function App() {
   }, []);
 
   // Scroll to top on route change
-  useLayoutEffect(() => {
-    // Force auto (instant) scroll behavior before scrolling
-    document.documentElement.style.scrollBehavior = 'auto';
-    
-    // Jump to top
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    
-    // Restore the smooth scroll behavior defined in CSS after the jump is guaranteed to have processed
-    const timer = setTimeout(() => {
-      document.documentElement.style.scrollBehavior = '';
-    }, 50);
-
-    return () => clearTimeout(timer);
-  }, [location.pathname]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname, location.search]);
 
   // Refresh ScrollTrigger on route changes to ensure animations are correctly calculated
   useLayoutEffect(() => {
-    ScrollTrigger.refresh();
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
   }, [location.pathname]);
 
   return (

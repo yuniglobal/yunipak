@@ -5,7 +5,7 @@ import SmoothScrollingPage from '../components/Aboutus/aboutus-sec';
 
 export default function AboutPage() {
   return (
-    <div>
+    <div className="home-container">
       <SmoothScrollingPage />
     </div>
   );

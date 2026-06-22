@@ -20,15 +20,22 @@ const AboutUsPage: React.FC = () => {
       <div className="relative z-10 pt-32">
         
         {/* Hero Section */}
-        <header className="text-center max-w-[1200px] mx-auto px-6 pt-8 pb-8 relative">
-          <div className="inline-flex items-center gap-2 bg-[var(--pk-green-glow-subtle)] border border-[var(--pk-green-light)] text-[var(--pk-green-light)] px-7 py-2.5 rounded-full text-sm font-bold uppercase tracking-widest mb-8 shadow-[0_0_15px_var(--pk-green-glow)]">
-            <ShieldCheck size={16} /> National Initiative
+        <header className="hero-content text-center mx-auto px-6 pb-2 relative" style={{ alignItems: 'center', maxWidth: '1200px' }}>
+          <div className="hero-badge mb-8">
+            <span style={{ width: 8, height: 8, background: 'var(--pk-green-light)', borderRadius: '50%', boxShadow: '0 0 10px var(--pk-green-light)' }}></span>
+            National Initiative
           </div>
-          <h1 className="section-title" style={{ fontSize: 'clamp(3rem, 10vw, 5rem)' }}>YUNI <span className="text-gradient">Intelligence</span></h1>
-          <p className="text-xl md:text-2xl text-[var(--text-primary)] font-semibold tracking-wide mb-8">
+          
+          <h1 className="hero-title" style={{ textAlign: 'center' }}>
+            <span className="hero-title-main">YUNI</span>
+            <span className="hero-title-accent">Intelligence</span>
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-[var(--pk-green-light)] font-semibold tracking-wide mb-6 mt-4">
             Awakening Pakistan's Tech Potential
           </p>
-          <p className="max-w-4xl mx-auto text-center text-lg leading-relaxed text-[var(--text-secondary)]">
+          
+          <p className="hero-sub mx-auto" style={{ textAlign: 'center', margin: '0 auto', maxWidth: '800px' }}>
             Pakistan stands at a pivotal historical junction. With over 60% of our population under the age of 30, 
             we possess one of the largest demographic dividends globally. YUNI is a professional nation-building 
             ecosystem dedicated to bridging structural, technological, and communication gaps for Pakistan's youth.
@@ -147,7 +154,7 @@ const AboutUsPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="mesh-card border-t-4 border-t-[var(--pk-green-light)] relative overflow-visible">
-              <span className="absolute top-4 right-8 text-6xl text-[var(--pk-green-glow)] leading-none font-serif">"</span>
+              <span className="absolute top-4 right-8 text-6xl text-[var(--pk-green-glow)] leading-none">"</span>
               <h3 className="text-2xl font-bold text-[var(--pk-green-light)] mb-2">Khudi</h3>
               <span className="text-sm font-bold text-[var(--pk-green)] uppercase tracking-widest mb-6 block">Self-Realization</span>
               <p className="text-[var(--text-secondary)] leading-relaxed">
@@ -156,7 +163,7 @@ const AboutUsPage: React.FC = () => {
             </div>
 
             <div className="mesh-card border-t-4 border-t-[var(--pk-green-light)] relative overflow-visible">
-              <span className="absolute top-4 right-8 text-6xl text-[var(--pk-green-glow)] leading-none font-serif">"</span>
+              <span className="absolute top-4 right-8 text-6xl text-[var(--pk-green-glow)] leading-none">"</span>
               <h3 className="text-2xl font-bold text-[var(--pk-green-light)] mb-2">Shaheen</h3>
               <span className="text-sm font-bold text-[var(--pk-green)] uppercase tracking-widest mb-6 block">Visionary Flight</span>
               <p className="text-[var(--text-secondary)] leading-relaxed">
@@ -165,7 +172,7 @@ const AboutUsPage: React.FC = () => {
             </div>
 
             <div className="mesh-card border-t-4 border-t-[var(--pk-green-light)] relative overflow-visible">
-              <span className="absolute top-4 right-8 text-6xl text-[var(--pk-green-glow)] leading-none font-serif">"</span>
+              <span className="absolute top-4 right-8 text-6xl text-[var(--pk-green-glow)] leading-none">"</span>
               <h3 className="text-2xl font-bold text-[var(--pk-green-light)] mb-2">Intellectual Sovereignty</h3>
               <span className="text-sm font-bold text-[var(--pk-green)] uppercase tracking-widest mb-6 block">Sovereign Development</span>
               <p className="text-[var(--text-secondary)] leading-relaxed">
