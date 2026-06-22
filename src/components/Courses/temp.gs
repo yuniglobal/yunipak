@@ -214,10 +214,6 @@ function handleEventRegistration(data) {
   const lastRow = sheet.getLastRow();
   const serialNo = lastRow === 0 ? 1 : lastRow;
   
-  const typeChar = (data.attendeeType && data.attendeeType.toLowerCase().includes('student')) ? 'S' : 'O';
-  const paddedNo = serialNo.toString().padStart(4, '0');
-  const generatedFormId = `YUNITY-${typeChar}-${paddedNo}`;
-  
   // Create dedicated folder for this student
   let mainFolder;
   const mainFolders = DriveApp.getFoldersByName("YUNITY_2026_Registrations");
@@ -227,18 +223,18 @@ function handleEventRegistration(data) {
     mainFolder = DriveApp.createFolder("YUNITY_2026_Registrations");
   }
   
-  const studentFolderName = `${generatedFormId} - ${data.fullName || "Unknown"}`;
+  const studentFolderName = `${serialNo} - ${data.fullName || "Unknown"}`;
   const studentFolder = mainFolder.createFolder(studentFolderName);
   
   // Upload files to student's dedicated folder
-  const cnicUrl = data.cnicFile ? uploadFileToDriveFolder(data.cnicFile, studentFolder, `CNIC_${generatedFormId}_${data.cnicFile.name}`) : "";
-  const studentIdUrl = data.studentIdFile ? uploadFileToDriveFolder(data.studentIdFile, studentFolder, `StudentID_${generatedFormId}_${data.studentIdFile.name}`) : "";
-  const paymentUrl = data.paymentFile ? uploadFileToDriveFolder(data.paymentFile, studentFolder, `Payment_${generatedFormId}_${data.paymentFile.name}`) : "";
+  const cnicUrl = data.cnicFile ? uploadFileToDriveFolder(data.cnicFile, studentFolder, `CNIC_${data.cnicFile.name}`) : "";
+  const studentIdUrl = data.studentIdFile ? uploadFileToDriveFolder(data.studentIdFile, studentFolder, `StudentID_${data.studentIdFile.name}`) : "";
+  const paymentUrl = data.paymentFile ? uploadFileToDriveFolder(data.paymentFile, studentFolder, `Payment_${data.paymentFile.name}`) : "";
   
   const rowData = [
     serialNo,                                    // Sr. No
     new Date(),                                  // Registration Date
-    generatedFormId,                             // Form ID (YUNITY-P-xxxxS/O)
+    "",                                          // Form ID (Removed)
     "pending",                                   // Status
     data.fullName || "",                         // Full Name
     data.cnic || "",                             // CNIC
@@ -273,7 +269,7 @@ function handleEventRegistration(data) {
   
   // Send confirmation email
   try {
-    sendEventConfirmationEmail(data, generatedFormId);
+    sendEventConfirmationEmail(data);
   } catch(emailError) {
     console.log("Email error: " + emailError);
   }
@@ -281,7 +277,6 @@ function handleEventRegistration(data) {
   return createJSONResponse({
     success: true, 
     message: "Event Registration submitted successfully",
-    formId: generatedFormId,
     serialNo: serialNo
   });
 }
@@ -521,7 +516,7 @@ function sendConfirmationEmail(data) {
   }
 }
 
-function sendEventConfirmationEmail(data, formId) {
+function sendEventConfirmationEmail(data) {
   if (!data.email) return;
   const subject = `Registration Received - YUNI-TY 2026 Event | YUNI Education`;
   const htmlBody = `
@@ -536,7 +531,6 @@ function sendEventConfirmationEmail(data, formId) {
         
         <div style="background: #f0f0f0; padding: 15px; border-radius: 8px; margin: 20px 0;">
           <h3 style="margin-top: 0; color: #d4af37;">Registration Details:</h3>
-          <p><strong>Registration ID:</strong> ${escapeHtml(formId)}</p>
           <p><strong>Attendee Type:</strong> ${escapeHtml(data.attendeeType) || "N/A"}</p>
           <p><strong>Full Name:</strong> ${escapeHtml(data.fullName) || "N/A"}</p>
           <p><strong>CNIC/B-Form:</strong> ${escapeHtml(data.cnic) || "N/A"}</p>
@@ -558,8 +552,6 @@ function sendEventConfirmationEmail(data, formId) {
           <li>If verification fails, your registration will be rejected and you will be notified.</li>
         </ol>
         
-        <p>Please save your Registration ID (<strong>${escapeHtml(formId)}</strong>) as it will be used as your official reference.</p>
-        
         <p>You can check your registration status anytime by emailing us at <a href="mailto:info@yunipakistan.com">info@yunipakistan.com</a></p>
         <hr style="margin: 20px 0;">
         <p style="font-size: 12px; color: #666;">Need help? Contact us at info@yunipakistan.com or reply to this email.</p>
@@ -569,7 +561,6 @@ function sendEventConfirmationEmail(data, formId) {
   const textBody = `Registration Received - YUNI-TY 2026\n\n` +
     `Dear ${data.fullName || "Attendee"},\n\n` +
     `Thank you for registering for YUNI-TY 2026.\n\n` +
-    `Registration ID: ${formId}\n\n` +
     `Next Steps:\n1. Your registration is now pending verification.\n2. Once verified, you will receive an official invitation.\n\nNeed help? Contact us at info@yunipakistan.com`;
   
   try {
