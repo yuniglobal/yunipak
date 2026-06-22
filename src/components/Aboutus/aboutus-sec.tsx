@@ -11,10 +11,12 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import ScrollMotionPath from '../Services/ScrollMotionPath';
+import AnimatedBackground from '../AnimatedBackground';
 
 const AboutUsPage: React.FC = () => {
   return (
     <div className="relative pb-20 overflow-x-hidden">
+      <AnimatedBackground />
       <div className="relative z-10 pt-32">
         
         {/* Hero Section */}
@@ -22,8 +24,8 @@ const AboutUsPage: React.FC = () => {
           <div className="inline-flex items-center gap-2 bg-[var(--pk-green-glow-subtle)] border border-[var(--pk-green-light)] text-[var(--pk-green-light)] px-7 py-2.5 rounded-full text-sm font-bold uppercase tracking-widest mb-8 shadow-[0_0_15px_var(--pk-green-glow)]">
             <ShieldCheck size={16} /> National Initiative
           </div>
-          <h1 className="section-title text-gradient">YUNI Intelligence</h1>
-          <p className="text-xl md:text-2xl text-[var(--pk-green)] font-semibold tracking-wide mb-8">
+          <h1 className="section-title" style={{ fontSize: 'clamp(3rem, 10vw, 5rem)' }}>YUNI <span className="text-gradient">Intelligence</span></h1>
+          <p className="text-xl md:text-2xl text-[var(--text-primary)] font-semibold tracking-wide mb-8">
             Awakening Pakistan's Tech Potential
           </p>
           <p className="max-w-4xl mx-auto text-lg leading-relaxed text-[var(--text-secondary)]">
@@ -35,10 +37,9 @@ const AboutUsPage: React.FC = () => {
 
         {/* National Analysis Section */}
         <section className="section-container">
-          <div className="title-wrapper">
-            <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block">Macro Landscape</span>
-            <h2 className="section-title text-gradient">National Analysis</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-transparent via-[var(--pk-green-light)] to-transparent mx-auto mt-4"></div>
+          <div className="section-header">
+            <span className="section-subtitle-premium">Macro Landscape</span>
+            <h2 className="section-title">National <span className="text-gradient">Analysis</span></h2>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -99,10 +100,9 @@ const AboutUsPage: React.FC = () => {
 
         {/* Workforce Skills Gap Breakdown */}
         <section className="section-container">
-          <div className="title-wrapper">
-            <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block">Talent Deficit Analysis</span>
-            <h2 className="section-title text-gradient">Workforce Skills Gap</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-transparent via-[var(--pk-green-light)] to-transparent mx-auto mt-4"></div>
+          <div className="section-header">
+            <span className="section-subtitle-premium">Talent Deficit Analysis</span>
+            <h2 className="section-title">Workforce <span className="text-gradient">Skills Gap</span></h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -140,10 +140,9 @@ const AboutUsPage: React.FC = () => {
 
         {/* Philosophy & Vision */}
         <section className="section-container">
-          <div className="title-wrapper">
-            <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block">Founding Principles</span>
-            <h2 className="section-title text-gradient">Philosophy & Vision</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-transparent via-[var(--pk-green-light)] to-transparent mx-auto mt-4"></div>
+          <div className="section-header">
+            <span className="section-subtitle-premium">Founding Principles</span>
+            <h2 className="section-title">Philosophy <span className="text-gradient">& Vision</span></h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -178,10 +177,9 @@ const AboutUsPage: React.FC = () => {
 
         {/* National Recognition Partners */}
         <section className="section-container">
-          <div className="title-wrapper">
-            <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block">Government & Defense Alignment</span>
-            <h2 className="section-title text-gradient">National Recognition Partners</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-transparent via-[var(--pk-green-light)] to-transparent mx-auto mt-4"></div>
+          <div className="section-header">
+            <span className="section-subtitle-premium">Government & Defense Alignment</span>
+            <h2 className="section-title">National <span className="text-gradient">Recognition</span></h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
@@ -213,10 +211,9 @@ const AboutUsPage: React.FC = () => {
 
         {/* Collaborative Partners Grid */}
         <section className="section-container">
-          <div className="title-wrapper">
-            <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block">Ecosystem Alignment</span>
-            <h2 className="section-title text-gradient">Collaborative & Ecosystem Partners</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-transparent via-[var(--pk-green-light)] to-transparent mx-auto mt-4"></div>
+          <div className="section-header">
+            <span className="section-subtitle-premium">Ecosystem Alignment</span>
+            <h2 className="section-title">Ecosystem <span className="text-gradient">Partners</span></h2>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
@@ -272,10 +269,9 @@ const AboutUsPage: React.FC = () => {
 
         {/* Services Section */}
         <section className="w-full overflow-hidden pb-24">
-          <div className="title-wrapper max-w-[1200px] mx-auto px-4 md:px-8 relative z-20 mt-16">
-            <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block text-center">What We Do</span>
-            <h2 className="section-title text-gradient text-center">Our Services</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-transparent via-[var(--pk-green-light)] to-transparent mx-auto mt-4"></div>
+          <div className="section-header relative z-20 mt-16 px-4">
+            <span className="section-subtitle-premium">What We Do</span>
+            <h2 className="section-title">Our <span className="text-gradient">Services</span></h2>
           </div>
           <div className="-mt-16 w-full relative z-10">
             <ScrollMotionPath />
