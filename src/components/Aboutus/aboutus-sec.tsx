@@ -20,7 +20,7 @@ const AboutUsPage: React.FC = () => {
       <div className="relative z-10 pt-32">
         
         {/* Hero Section */}
-        <header className="text-center section-container pt-8 pb-16 relative">
+        <header className="text-center max-w-[1200px] mx-auto px-6 pt-8 pb-8 relative">
           <div className="inline-flex items-center gap-2 bg-[var(--pk-green-glow-subtle)] border border-[var(--pk-green-light)] text-[var(--pk-green-light)] px-7 py-2.5 rounded-full text-sm font-bold uppercase tracking-widest mb-8 shadow-[0_0_15px_var(--pk-green-glow)]">
             <ShieldCheck size={16} /> National Initiative
           </div>
@@ -28,7 +28,7 @@ const AboutUsPage: React.FC = () => {
           <p className="text-xl md:text-2xl text-[var(--text-primary)] font-semibold tracking-wide mb-8">
             Awakening Pakistan's Tech Potential
           </p>
-          <p className="max-w-4xl mx-auto text-lg leading-relaxed text-[var(--text-secondary)]">
+          <p className="max-w-4xl mx-auto text-center text-lg leading-relaxed text-[var(--text-secondary)]">
             Pakistan stands at a pivotal historical junction. With over 60% of our population under the age of 30, 
             we possess one of the largest demographic dividends globally. YUNI is a professional nation-building 
             ecosystem dedicated to bridging structural, technological, and communication gaps for Pakistan's youth.
