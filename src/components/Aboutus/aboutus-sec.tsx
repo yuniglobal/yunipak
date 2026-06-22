@@ -18,7 +18,7 @@ const AboutUsPage: React.FC = () => {
       <div className="relative z-10 pt-32">
         
         {/* Hero Section */}
-        <header className="text-center mb-24 relative max-w-[1200px] mx-auto px-4 md:px-8">
+        <header className="text-center section-container pt-8 pb-16 relative">
           <div className="inline-flex items-center gap-2 bg-[var(--pk-green-glow-subtle)] border border-[var(--pk-green-light)] text-[var(--pk-green-light)] px-7 py-2.5 rounded-full text-sm font-bold uppercase tracking-widest mb-8 shadow-[0_0_15px_var(--pk-green-glow)]">
             <ShieldCheck size={16} /> National Initiative
           </div>
@@ -34,7 +34,7 @@ const AboutUsPage: React.FC = () => {
         </header>
 
         {/* National Analysis Section */}
-        <section className="mb-32 max-w-[1200px] mx-auto px-4 md:px-8">
+        <section className="section-container">
           <div className="title-wrapper">
             <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block">Macro Landscape</span>
             <h2 className="section-title text-gradient">National Analysis</h2>
@@ -98,7 +98,7 @@ const AboutUsPage: React.FC = () => {
         </section>
 
         {/* Workforce Skills Gap Breakdown */}
-        <section className="mb-32 max-w-[1200px] mx-auto px-4 md:px-8">
+        <section className="section-container">
           <div className="title-wrapper">
             <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block">Talent Deficit Analysis</span>
             <h2 className="section-title text-gradient">Workforce Skills Gap</h2>
@@ -139,7 +139,7 @@ const AboutUsPage: React.FC = () => {
         </section>
 
         {/* Philosophy & Vision */}
-        <section className="mb-32 max-w-[1200px] mx-auto px-4 md:px-8">
+        <section className="section-container">
           <div className="title-wrapper">
             <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block">Founding Principles</span>
             <h2 className="section-title text-gradient">Philosophy & Vision</h2>
@@ -177,7 +177,7 @@ const AboutUsPage: React.FC = () => {
         </section>
 
         {/* National Recognition Partners */}
-        <section className="mb-32 max-w-[1200px] mx-auto px-4 md:px-8">
+        <section className="section-container">
           <div className="title-wrapper">
             <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block">Government & Defense Alignment</span>
             <h2 className="section-title text-gradient">National Recognition Partners</h2>
@@ -212,7 +212,7 @@ const AboutUsPage: React.FC = () => {
         </section>
 
         {/* Collaborative Partners Grid */}
-        <section className="mb-32 max-w-[1200px] mx-auto px-4 md:px-8">
+        <section className="section-container">
           <div className="title-wrapper">
             <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block">Ecosystem Alignment</span>
             <h2 className="section-title text-gradient">Collaborative & Ecosystem Partners</h2>
@@ -271,8 +271,8 @@ const AboutUsPage: React.FC = () => {
         </section>
 
         {/* Services Section */}
-        <section className="mb-32 w-full overflow-hidden">
-          <div className="title-wrapper max-w-[1200px] mx-auto px-4 md:px-8 relative z-20">
+        <section className="w-full overflow-hidden pb-24">
+          <div className="title-wrapper max-w-[1200px] mx-auto px-4 md:px-8 relative z-20 mt-16">
             <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block text-center">What We Do</span>
             <h2 className="section-title text-gradient text-center">Our Services</h2>
             <div className="w-20 h-1 bg-gradient-to-r from-transparent via-[var(--pk-green-light)] to-transparent mx-auto mt-4"></div>

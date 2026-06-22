@@ -63,6 +63,12 @@ button, a, input, select, textarea {
   }
 }
 
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 8rem 1.5rem;
+}
+
 .title-wrapper {
   width: 100%;
   max-width: 60rem;
