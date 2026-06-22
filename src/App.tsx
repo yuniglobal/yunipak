@@ -64,16 +64,18 @@ function App() {
 
   // Scroll to top on route change
   useLayoutEffect(() => {
-    // Disable smooth scrolling temporarily to jump instantly to top
-    const originalStyle = window.getComputedStyle(document.documentElement).scrollBehavior;
+    // Force auto (instant) scroll behavior before scrolling
     document.documentElement.style.scrollBehavior = 'auto';
     
-    window.scrollTo(0, 0);
+    // Jump to top
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     
-    // Restore smooth scrolling
-    requestAnimationFrame(() => {
-      document.documentElement.style.scrollBehavior = originalStyle;
-    });
+    // Restore the smooth scroll behavior defined in CSS after the jump is guaranteed to have processed
+    const timer = setTimeout(() => {
+      document.documentElement.style.scrollBehavior = '';
+    }, 50);
+
+    return () => clearTimeout(timer);
   }, [location.pathname]);
 
   // Refresh ScrollTrigger on route changes to ensure animations are correctly calculated
