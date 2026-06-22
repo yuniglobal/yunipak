@@ -152,7 +152,7 @@ const AboutUsPage: React.FC = () => {
             <h2 className="section-title">Philosophy <span className="text-gradient">& Vision</span></h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             <div className="mesh-card border-t-4 border-t-[var(--pk-green-light)] relative overflow-visible">
               <span className="absolute top-4 right-8 text-6xl text-[var(--pk-green-glow)] leading-none">"</span>
               <h3 className="text-2xl font-bold text-[var(--pk-green-light)] mb-2">Khudi</h3>
@@ -170,109 +170,120 @@ const AboutUsPage: React.FC = () => {
                 Training the youth to think beyond immediate regional boundaries, look at global benchmarks, target high-altitude intellectual achievements, and navigate professional storms with sharp focus and resilience.
               </p>
             </div>
+          </div>
 
-            <div className="mesh-card border-t-4 border-t-[var(--pk-green-light)] relative overflow-visible">
-              <span className="absolute top-4 right-8 text-6xl text-[var(--pk-green-glow)] leading-none">"</span>
-              <h3 className="text-2xl font-bold text-[var(--pk-green-light)] mb-2">Intellectual Sovereignty</h3>
-              <span className="text-sm font-bold text-[var(--pk-green)] uppercase tracking-widest mb-6 block">Sovereign Development</span>
-              <p className="text-[var(--text-secondary)] leading-relaxed">
-                Reclaiming control of our economic and technological destiny. By nurturing world-class technical leaders locally, we aim to establish a self-reliant digital economy that drives national prosperity.
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Demographic Dividend */}
+            <div className="mesh-card">
+              <div className="mb-6 flex justify-center">
+                <div className="p-4 rounded-2xl bg-[var(--pk-green-light-subtle)] text-[var(--pk-green-light)]">
+                  <Users size={32} />
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-4 text-center">Demographic Dividend</h3>
+              <p className="text-[var(--text-secondary)] leading-relaxed text-center">
+                With over 60% of the population under 30, Pakistan has one of the world's largest youth cohorts. 
+                Harnessing this potential requires immediate, systemic interventions.
+              </p>
+            </div>
+
+            {/* Strategic Imperatives */}
+            <div className="mesh-card">
+              <div className="mb-6 flex justify-center">
+                <div className="p-4 rounded-2xl bg-[var(--pk-green-light-subtle)] text-[var(--pk-green-light)]">
+                  <TrendingUp size={32} />
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-4 text-center">Strategic Imperatives</h3>
+              <p className="text-[var(--text-secondary)] leading-relaxed text-center">
+                Developing professional IT hubs, promoting research & development, and cultivating global integration 
+                are crucial to prevent this resource from becoming an economic challenge.
+              </p>
+            </div>
+
+            {/* Global Integration */}
+            <div className="mesh-card">
+              <div className="mb-6 flex justify-center">
+                <div className="p-4 rounded-2xl bg-[var(--pk-green-light-subtle)] text-[var(--pk-green-light)]">
+                  <Globe size={32} />
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-4 text-center">Global Integration</h3>
+              <p className="text-[var(--text-secondary)] leading-relaxed text-center">
+                Positioning Pakistan as a top exporter of high-value services. Our programs align talent directly with 
+                international freelancing markets and corporate networks.
               </p>
             </div>
           </div>
         </section>
 
-        {/* National Recognition Partners */}
-        <section className="section-container">
+        {/* Pillars Section */}
+        <section className="section-container relative z-10">
           <div className="section-header">
-            <span className="section-subtitle-premium">Government & Defense Alignment</span>
-            <h2 className="section-title">National <span className="text-gradient">Recognition</span></h2>
+            <span className="section-subtitle-premium">Key Foundations</span>
+            <h2 className="section-title">Core <span className="text-gradient">Pillars</span></h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            {/* Partner 1: NASTP */}
-            <div className="mesh-card flex flex-col items-center text-center">
-              <div className="h-24 flex items-center justify-center mb-6">
-                <img src="/images/nastp.png" alt="NASTP Logo" className="max-h-full max-w-full object-contain" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Pillar 1 */}
+            <div className="mesh-card flex items-start gap-6">
+              <div className="p-4 rounded-2xl bg-[var(--pk-green-light-subtle)] text-[var(--pk-green-light)] shrink-0">
+                <Cpu size={24} />
               </div>
-              <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-2">NASTP</h3>
-              <div className="text-sm text-[var(--pk-green-light)] font-bold uppercase tracking-widest mb-4">Official Registration & Ecosystem Partner</div>
-              <p className="text-[var(--text-secondary)] leading-relaxed">
-                Collaborating under the National Aerospace Science & Technology Park framework to support technological innovation, training alignment, and high-altitude research initiatives.
-              </p>
+              <div>
+                <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">Technology & Engineering</h3>
+                <p className="text-[var(--text-secondary)] leading-relaxed">
+                  Focusing on cutting-edge fields like Aerospace, AI, Blockchain, and Advanced Software Engineering. 
+                  We equip youth with future-proof tech skills.
+                </p>
+              </div>
             </div>
 
-            {/* Partner 2: PSEB */}
-            <div className="mesh-card flex flex-col items-center text-center">
-              <div className="h-24 flex items-center justify-center mb-6">
-                <img src="/images/pseb-certificate.png" alt="PSEB Registration Certificate" className="max-h-full max-w-full object-contain rounded-lg shadow-sm" />
+            {/* Pillar 2 */}
+            <div className="mesh-card flex items-start gap-6">
+              <div className="p-4 rounded-2xl bg-[var(--pk-green-light-subtle)] text-[var(--pk-green-light)] shrink-0">
+                <Layers size={24} />
               </div>
-              <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-2">PSEB</h3>
-              <div className="text-sm text-[var(--pk-green-light)] font-bold uppercase tracking-widest mb-4">Official Registered Training Provider</div>
-              <p className="text-[var(--text-secondary)] leading-relaxed">
-                Officially registered with the Pakistan Software Export Board (PSEB) to deliver industry-validated IT training programs aligned with national standards, providing credentials recognized by top-tier tech companies.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Collaborative Partners Grid */}
-        <section className="section-container">
-          <div className="section-header">
-            <span className="section-subtitle-premium">Ecosystem Alignment</span>
-            <h2 className="section-title">Ecosystem <span className="text-gradient">Partners</span></h2>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-            {/* Partner 1: NICAT */}
-            <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
-              <div className="h-16 flex items-center justify-center mb-3">
-                <img src="/images/nicat.png" alt="NICAT Logo" className="max-h-full max-w-[150px] object-contain" />
+              <div>
+                <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">E-Commerce & Digital Trade</h3>
+                <p className="text-[var(--text-secondary)] leading-relaxed">
+                  Enabling global market access through comprehensive training in Amazon FBA, Shopify, dropshipping, 
+                  and digital agency management.
+                </p>
               </div>
-              <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Aerospace Technology Partner</span>
             </div>
 
-            {/* Partner 2: Fazaia Bilquis College */}
-            <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
-              <div className="h-16 flex items-center justify-center mb-3">
-                <img src="/images/fbc.png" alt="FBC Logo" className="max-h-full max-w-[150px] object-contain" />
+            {/* Pillar 3 */}
+            <div className="mesh-card flex items-start gap-6">
+              <div className="p-4 rounded-2xl bg-[var(--pk-green-light-subtle)] text-[var(--pk-green-light)] shrink-0">
+                <Briefcase size={24} />
               </div>
-              <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Fazaia Bilquis College</span>
+              <div>
+                <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">Professional Growth</h3>
+                <p className="text-[var(--text-secondary)] leading-relaxed">
+                  Fostering entrepreneurship, soft skills, communication, and business intelligence to turn 
+                  freelancers into agency owners and startup founders.
+                </p>
+              </div>
             </div>
 
-            {/* Partner 3: Nerdflow */}
-            <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
-              <div className="h-16 flex items-center justify-center mb-3">
-                <img src="/images/nerdflow.png" alt="Nerdflow Logo" className="max-h-full max-w-[150px] object-contain" />
+            {/* Pillar 4 */}
+            <div className="mesh-card flex items-start gap-6">
+              <div className="p-4 rounded-2xl bg-[var(--pk-green-light-subtle)] text-[var(--pk-green-light)] shrink-0">
+                <ShieldCheck size={24} />
               </div>
-              <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Tech Infrastructure</span>
-            </div>
-
-            {/* Partner 4: Prosmetic Solutions */}
-            <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
-              <div className="h-16 flex items-center justify-center mb-3">
-                <img src="/images/prosmetic.png" alt="Prosmetic Logo" className="max-h-full max-w-[150px] object-contain" />
+              <div>
+                <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">Ethical Leadership</h3>
+                <p className="text-[var(--text-secondary)] leading-relaxed">
+                  Instilling core values of professional integrity, national pride, and social responsibility 
+                  to build leaders who contribute to Pakistan's future.
+                </p>
               </div>
-              <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Solutions Provider</span>
-            </div>
-
-            {/* Partner 5: Event Agency (Mahnoor) */}
-            <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
-              <div className="h-16 flex items-center justify-center mb-3">
-                <img src="/images/eventagency.png" alt="Event Agency Logo" className="max-h-full max-w-[150px] object-contain" />
-              </div>
-              <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Management & Outreach</span>
-            </div>
-
-            {/* Partner 6: Pakistan Film Society */}
-            <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
-              <div className="h-16 flex items-center justify-center mb-3">
-                <img src="/images/pfs.png" alt="PFS Logo" className="max-h-full max-w-[150px] object-contain" />
-              </div>
-              <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Pakistan Film Society</span>
             </div>
           </div>
         </section>
+
+
 
         {/* Services Section */}
         <section className="w-full overflow-hidden pb-24">

@@ -88,7 +88,7 @@ export default function AnimatedBackground() {
           width: 100vw;
           height: 100vh;
           z-index: -5;
-          background: var(--bg-primary);
+          background: transparent;
           overflow: hidden;
           pointer-events: none;
         }

@@ -9,7 +9,6 @@ import NationalAnalysis from '../components/HOME/NationalAnalysis';
 import CTA from '../components/HOME/CTA';
 import TextEffect from '../components/HOME/TextEffect';
 import AnimatedTitle from '../components/AnimatedTitle';
-import AnimatedBackground from '../components/AnimatedBackground';
 import GalleryComponent from '../components/Gallery/Gallery';
 
 if (typeof window !== 'undefined') {
@@ -176,7 +175,6 @@ export default function Home() {
         }
       `}</style>
 
-      <AnimatedBackground />
       <Hero />
 
       <GalleryComponent />
@@ -184,6 +182,80 @@ export default function Home() {
       <FeaturesReveal />
 
       <NationalAnalysis />
+
+      {/* Collaborative Partners Grid */}
+      <section className="section-container">
+        <div className="section-header">
+          <span className="section-subtitle-premium">Ecosystem Alignment</span>
+          <h2 className="section-title">Ecosystem <span className="text-gradient">Partners</span></h2>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {/* Partner: NASTP */}
+          <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
+            <div className="h-16 flex items-center justify-center mb-3">
+              <img src="/images/nastp.png" alt="NASTP Logo" className="max-h-full max-w-[150px] object-contain" />
+            </div>
+            <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Strategic Partner</span>
+          </div>
+
+          {/* Partner: PSEB */}
+          <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
+            <div className="h-16 flex items-center justify-center mb-3">
+              <img src="/images/pseb-certificate.png" alt="PSEB Registration Certificate" className="max-h-full max-w-[150px] object-contain" />
+            </div>
+            <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Official Provider</span>
+          </div>
+
+          {/* Partner 1: NICAT */}
+          <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
+            <div className="h-16 flex items-center justify-center mb-3">
+              <img src="/images/nicat.png" alt="NICAT Logo" className="max-h-full max-w-[150px] object-contain" />
+            </div>
+            <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Aerospace Technology</span>
+          </div>
+
+          {/* Partner 2: Fazaia Bilquis College */}
+          <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
+            <div className="h-16 flex items-center justify-center mb-3">
+              <img src="/images/fbc.png" alt="FBC Logo" className="max-h-full max-w-[150px] object-contain" />
+            </div>
+            <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Fazaia Bilquis College</span>
+          </div>
+
+          {/* Partner 3: Nerdflow */}
+          <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
+            <div className="h-16 flex items-center justify-center mb-3">
+              <img src="/images/nerdflow.png" alt="Nerdflow Logo" className="max-h-full max-w-[150px] object-contain" />
+            </div>
+            <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Tech Infrastructure</span>
+          </div>
+
+          {/* Partner 4: Prosmetic Solutions */}
+          <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
+            <div className="h-16 flex items-center justify-center mb-3">
+              <img src="/images/prosmetic.png" alt="Prosmetic Logo" className="max-h-full max-w-[150px] object-contain" />
+            </div>
+            <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Solutions Provider</span>
+          </div>
+
+          {/* Partner 5: Event Agency (Mahnoor) */}
+          <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
+            <div className="h-16 flex items-center justify-center mb-3">
+              <img src="/images/eventagency.png" alt="Event Agency Logo" className="max-h-full max-w-[150px] object-contain" />
+            </div>
+            <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Management & Outreach</span>
+          </div>
+
+          {/* Partner 6: Pakistan Film Society */}
+          <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
+            <div className="h-16 flex items-center justify-center mb-3">
+              <img src="/images/pfs.png" alt="PFS Logo" className="max-h-full max-w-[150px] object-contain" />
+            </div>
+            <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Pakistan Film Society</span>
+          </div>
+        </div>
+      </section>
 
       <section className="section-container" ref={teamRef}>
         <AnimatedTitle className="section-title">The Core</AnimatedTitle>

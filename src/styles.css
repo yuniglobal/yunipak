@@ -15,14 +15,24 @@
   flex: 1 0 auto;
   position: relative;
   z-index: 1;
+  padding-top: 100px; /* Prevent heading cutoff behind fixed navbar */
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+@keyframes gradientBg {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 body {
   min-width: 320px;
+  background: linear-gradient(-45deg, var(--bg-primary), var(--bg-secondary), #04120a, var(--bg-primary));
+  background-size: 400% 400%;
+  animation: gradientBg 15s ease infinite;
 }
 
 img, video, canvas, svg {
@@ -754,7 +764,7 @@ h1, h2, h3, h4 {
 .hero-title {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .hero-title-main {

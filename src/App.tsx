@@ -21,6 +21,7 @@ import RegistrationIndividual from './pages/RegistrationIndividual';
 import PromoBanner from './components/PromoBanner';
 import SummerPromoPopup from './components/SummerPromoPopup';
 import Newsletter from './components/Newsletter';
+import AnimatedBackground from './components/AnimatedBackground';
 import './styles.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -29,9 +30,6 @@ ScrollTrigger.config({ limitCallbacks: true });
 
 function App() {
   const location = useLocation();
-
-
-
 
   // Disable browser's automatic scroll restoration
   useLayoutEffect(() => {
@@ -64,8 +62,15 @@ function App() {
 
   // Scroll to top on route change
   useEffect(() => {
+    document.documentElement.style.scrollBehavior = 'auto';
     window.scrollTo(0, 0);
-  }, [location.pathname, location.search]);
+    
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.documentElement.style.scrollBehavior = '';
+    }, 10);
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
 
   // Refresh ScrollTrigger on route changes to ensure animations are correctly calculated
   useLayoutEffect(() => {
@@ -76,6 +81,7 @@ function App() {
 
   return (
     <div className="app-wrapper">
+      <AnimatedBackground />
       {location.pathname === '/' && <PromoBanner />}
       <Navbar />
       <SummerPromoPopup />
