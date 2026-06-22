@@ -62,11 +62,18 @@ function App() {
     checkPerformance();
   }, []);
 
-  // Scroll to top on route change, EXCEPT for the Services page (where ScrollMotionPath lives)
+  // Scroll to top on route change
   useLayoutEffect(() => {
-    if (location.pathname !== '/services') {
-      window.scrollTo(0, 0);
-    }
+    // Disable smooth scrolling temporarily to jump instantly to top
+    const originalStyle = window.getComputedStyle(document.documentElement).scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    
+    window.scrollTo(0, 0);
+    
+    // Restore smooth scrolling
+    requestAnimationFrame(() => {
+      document.documentElement.style.scrollBehavior = originalStyle;
+    });
   }, [location.pathname]);
 
   // Refresh ScrollTrigger on route changes to ensure animations are correctly calculated
