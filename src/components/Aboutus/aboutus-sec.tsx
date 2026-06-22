@@ -15,10 +15,10 @@ import ScrollMotionPath from '../Services/ScrollMotionPath';
 const AboutUsPage: React.FC = () => {
   return (
     <div className="relative pb-20 overflow-x-hidden">
-      <div className="section-container relative z-10 max-w-[1200px] mx-auto pt-32 px-8">
+      <div className="relative z-10 pt-32">
         
         {/* Hero Section */}
-        <header className="text-center mb-24 relative">
+        <header className="text-center mb-24 relative max-w-[1200px] mx-auto px-4 md:px-8">
           <div className="inline-flex items-center gap-2 bg-[var(--pk-green-glow-subtle)] border border-[var(--pk-green-light)] text-[var(--pk-green-light)] px-7 py-2.5 rounded-full text-sm font-bold uppercase tracking-widest mb-8 shadow-[0_0_15px_var(--pk-green-glow)]">
             <ShieldCheck size={16} /> National Initiative
           </div>
@@ -34,7 +34,7 @@ const AboutUsPage: React.FC = () => {
         </header>
 
         {/* National Analysis Section */}
-        <section className="mb-32">
+        <section className="mb-32 max-w-[1200px] mx-auto px-4 md:px-8">
           <div className="title-wrapper">
             <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block">Macro Landscape</span>
             <h2 className="section-title text-gradient">National Analysis</h2>
@@ -98,7 +98,7 @@ const AboutUsPage: React.FC = () => {
         </section>
 
         {/* Workforce Skills Gap Breakdown */}
-        <section className="mb-32">
+        <section className="mb-32 max-w-[1200px] mx-auto px-4 md:px-8">
           <div className="title-wrapper">
             <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block">Talent Deficit Analysis</span>
             <h2 className="section-title text-gradient">Workforce Skills Gap</h2>
@@ -139,7 +139,7 @@ const AboutUsPage: React.FC = () => {
         </section>
 
         {/* Philosophy & Vision */}
-        <section className="mb-32">
+        <section className="mb-32 max-w-[1200px] mx-auto px-4 md:px-8">
           <div className="title-wrapper">
             <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block">Founding Principles</span>
             <h2 className="section-title text-gradient">Philosophy & Vision</h2>
@@ -177,7 +177,7 @@ const AboutUsPage: React.FC = () => {
         </section>
 
         {/* National Recognition Partners */}
-        <section className="mb-32">
+        <section className="mb-32 max-w-[1200px] mx-auto px-4 md:px-8">
           <div className="title-wrapper">
             <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block">Government & Defense Alignment</span>
             <h2 className="section-title text-gradient">National Recognition Partners</h2>
@@ -212,7 +212,7 @@ const AboutUsPage: React.FC = () => {
         </section>
 
         {/* Collaborative Partners Grid */}
-        <section className="mb-32">
+        <section className="mb-32 max-w-[1200px] mx-auto px-4 md:px-8">
           <div className="title-wrapper">
             <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block">Ecosystem Alignment</span>
             <h2 className="section-title text-gradient">Collaborative & Ecosystem Partners</h2>
@@ -271,13 +271,13 @@ const AboutUsPage: React.FC = () => {
         </section>
 
         {/* Services Section */}
-        <section className="mb-32">
-          <div className="title-wrapper">
-            <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block">What We Do</span>
-            <h2 className="section-title text-gradient">Our Services</h2>
+        <section className="mb-32 w-full overflow-hidden">
+          <div className="title-wrapper max-w-[1200px] mx-auto px-4 md:px-8 relative z-20">
+            <span className="text-[var(--pk-green-light)] text-sm font-bold uppercase tracking-widest mb-2 block text-center">What We Do</span>
+            <h2 className="section-title text-gradient text-center">Our Services</h2>
             <div className="w-20 h-1 bg-gradient-to-r from-transparent via-[var(--pk-green-light)] to-transparent mx-auto mt-4"></div>
           </div>
-          <div className="-mt-16">
+          <div className="-mt-16 w-full relative z-10">
             <ScrollMotionPath />
           </div>
         </section>
