@@ -519,8 +519,9 @@ const Navbar = () => {
                 <span>Event Team Registration</span>
               </a>
               <a
-                onClick={(e) => { e.preventDefault(); handleNavigate('https://onboarding.yunipakistan.com/'); }}
-                style={{ cursor: 'pointer' }}
+                href="https://onboarding.yunipakistan.com/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="dropdown-item"
               >
                 <User size={16} strokeWidth={2} />
@@ -595,8 +596,10 @@ const Navbar = () => {
             Event Team Registration
           </a>
           <a
-            onClick={(e) => { e.preventDefault(); handleNavigate('/registration-individual'); setIsOpen(false); }}
-            style={{ cursor: 'pointer' }}
+            href="https://onboarding.yunipakistan.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setIsOpen(false)}
             className="mobile-dropdown-item"
           >
             <User size={22} strokeWidth={2} />
