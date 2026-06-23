@@ -39,11 +39,11 @@ function App() {
 
     // Performance/Hardware Detection
     const checkPerformance = () => {
-      const isLowEnd = (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) || 
-                       (window.innerWidth < 768 && !('deviceMemory' in navigator)) ||
-                       // @ts-expect-error - navigator.deviceMemory is not officially standardized in all browsers
-                       (navigator.deviceMemory && navigator.deviceMemory < 4);
-      
+      const isLowEnd = (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) ||
+        (window.innerWidth < 768 && !('deviceMemory' in navigator)) ||
+        // @ts-expect-error - navigator.deviceMemory is not officially standardized in all browsers
+        (navigator.deviceMemory && navigator.deviceMemory < 4);
+
       const checkWebGL = () => {
         try {
           const canvas = document.createElement('canvas');
@@ -56,7 +56,7 @@ function App() {
       document.documentElement.setAttribute('data-perf', isLowEnd ? 'low' : 'high');
       document.documentElement.setAttribute('data-webgl', checkWebGL() ? 'true' : 'false');
     };
-    
+
     checkPerformance();
   }, []);
 
@@ -64,7 +64,7 @@ function App() {
   useEffect(() => {
     document.documentElement.style.scrollBehavior = 'auto';
     window.scrollTo(0, 0);
-    
+
     const timer = setTimeout(() => {
       window.scrollTo(0, 0);
       document.documentElement.style.scrollBehavior = '';

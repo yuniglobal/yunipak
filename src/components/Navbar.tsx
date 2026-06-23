@@ -16,22 +16,22 @@ const Navbar = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setIsScrolled(currentScrollY > 20);
-      
+
       // Contract on scrolling down, expand on scrolling up
       if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
         setIsContracted(true); // contracted
       } else if (currentScrollY < lastScrollY.current && currentScrollY > 50) {
         setIsContracted(false); // expanded
       }
-      
+
       // Always expand at the very top
       if (currentScrollY <= 50) {
         setIsContracted(false);
       }
-      
+
       lastScrollY.current = currentScrollY;
     };
-    
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -484,14 +484,14 @@ const Navbar = () => {
 
       <div className="navbar-container">
         <div className="nav-logo" onClick={() => navigate('/')}>
-          <img src="/images/logo1.png" alt="YUNI" style={{height: '35px', width: 'auto'}} />
+          <img src="/images/logo1.png" alt="YUNI" style={{ height: '35px', width: 'auto' }} />
         </div>
 
         <div className="nav-links">
           {navLinks.map((link) => {
             const Icon = link.icon;
             return (
-              <div 
+              <div
                 key={link.path}
                 className={`nav-link ${location.pathname === link.path ? 'active' : ''}`}
                 onClick={() => handleNavigate(link.path)}
@@ -501,7 +501,7 @@ const Navbar = () => {
               </div>
             );
           })}
-          
+
           {/* Registrations Dropdown */}
           <div className="nav-dropdown">
             <div className="nav-dropdown-toggle">
@@ -510,7 +510,7 @@ const Navbar = () => {
               <ChevronDown size={14} strokeWidth={2.5} className="chevron-icon" />
             </div>
             <div className="nav-dropdown-menu">
-              <a 
+              <a
                 onClick={(e) => { e.preventDefault(); handleNavigate('/registration-team'); }}
                 style={{ cursor: 'pointer' }}
                 className="dropdown-item"
@@ -518,8 +518,8 @@ const Navbar = () => {
                 <Users size={16} strokeWidth={2} />
                 <span>Event Team Registration</span>
               </a>
-              <a 
-                onClick={(e) => { e.preventDefault(); handleNavigate('/registration-individual'); }}
+              <a
+                onClick={(e) => { e.preventDefault(); handleNavigate('https://onboarding.yunipakistan.com/'); }}
                 style={{ cursor: 'pointer' }}
                 className="dropdown-item"
               >
@@ -540,10 +540,10 @@ const Navbar = () => {
 
       {/* Mobile Menu Overlay */}
       <div className={`mobile-menu ${isOpen ? 'open' : ''}`}>
-        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem'}}>
-          <img src="/images/logo1.png" alt="YUNI" style={{height: '40px', width: 'auto'}} />
-          <div 
-            onClick={() => setIsOpen(false)} 
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem' }}>
+          <img src="/images/logo1.png" alt="YUNI" style={{ height: '40px', width: 'auto' }} />
+          <div
+            onClick={() => setIsOpen(false)}
             style={{
               cursor: 'pointer',
               width: '48px',
@@ -559,12 +559,12 @@ const Navbar = () => {
             <X size={32} strokeWidth={2.5} />
           </div>
         </div>
-        
+
         {navLinks.map((link) => {
           const Icon = link.icon;
           return (
-            <div 
-              key={link.path} 
+            <div
+              key={link.path}
               className="mobile-nav-link"
               onClick={() => handleNavigate(link.path)}
             >
@@ -586,15 +586,15 @@ const Navbar = () => {
           <ChevronRight size={32} className="chevron-icon" />
         </div>
         <div className={`mobile-dropdown-content ${isMobileRegOpen ? 'open' : ''}`}>
-          <a 
-                onClick={(e) => { e.preventDefault(); handleNavigate('/registration-team'); setIsOpen(false); }}
-                style={{ cursor: 'pointer' }}
-                className="mobile-dropdown-item"
+          <a
+            onClick={(e) => { e.preventDefault(); handleNavigate('/registration-team'); setIsOpen(false); }}
+            style={{ cursor: 'pointer' }}
+            className="mobile-dropdown-item"
           >
             <Users size={22} strokeWidth={2} />
             Event Team Registration
           </a>
-          <a 
+          <a
             onClick={(e) => { e.preventDefault(); handleNavigate('/registration-individual'); setIsOpen(false); }}
             style={{ cursor: 'pointer' }}
             className="mobile-dropdown-item"
@@ -604,10 +604,10 @@ const Navbar = () => {
           </a>
         </div>
 
-        <div style={{marginTop: 'auto', paddingBottom: '4rem'}}>
-          <button 
-            className="btn-tech btn-tech-primary" 
-            style={{width: '100%', justifyContent: 'center'}}
+        <div style={{ marginTop: 'auto', paddingBottom: '4rem' }}>
+          <button
+            className="btn-tech btn-tech-primary"
+            style={{ width: '100%', justifyContent: 'center' }}
             onClick={() => handleNavigate('/trainings')}
           >
             Get Started
