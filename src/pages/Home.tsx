@@ -19,14 +19,7 @@ export default function Home() {
   const teamRef = useRef<HTMLDivElement>(null);
   const testimonialsRef = useRef<HTMLDivElement>(null);
 
-  const team = [
-    {
-      name: 'Abdul Moiz',
-      role: 'Founder',
-      image: '/images/moiz.jpeg',
-      desc: 'Driving the macro-vision of YUNI to build an unparalleled educational empire.'
-    }
-  ];
+
 
   const testimonials = [
     { name: 'Ahmed R.', course: 'Cybersecurity', text: 'The program at NASTP completely changed my trajectory. Landed a job immediately.', letter: 'A' },
@@ -96,6 +89,10 @@ export default function Home() {
           font-size: 2.5rem;
           font-weight: 800;
           margin-bottom: 1rem;
+        }
+
+        .mesh-card.small-team-card:hover .small-team-image {
+          filter: grayscale(0%);
         }
 
         /* Testimonials Design */
@@ -260,14 +257,30 @@ export default function Home() {
       <section className="section-container" ref={teamRef}>
         <AnimatedTitle className="section-title">The Core</AnimatedTitle>
         <div className="team-grid">
-          {team.map((member, i) => (
-            <div key={i} className="mesh-card">
-              <img src={member.image} alt={member.name} className="team-image" />
-              <div className="team-role">{member.role}</div>
-              <div className="team-name">{member.name}</div>
-              <p className="team-desc" style={{ color: 'var(--text-secondary)' }}>{member.desc}</p>
-            </div>
-          ))}
+          {/* Left: Abdul Moiz */}
+          <div className="mesh-card flex flex-col h-full">
+            <img src="/images/moiz.jpeg" alt="Abdul Moiz" className="team-image flex-grow" style={{ minHeight: '300px' }} />
+            <div className="team-role">Founder</div>
+            <div className="team-name">Abdul Moiz</div>
+            <p className="team-desc" style={{ color: 'var(--text-secondary)' }}>Driving the macro-vision of YUNI to build an unparalleled educational empire.</p>
+          </div>
+
+          {/* Right: 3 members */}
+          <div className="flex flex-col gap-4 h-full">
+            {[
+              { name: 'Ahmed Malik', role: 'COO', image: '/images/ahmed.jpeg' },
+              { name: 'Amna Adil', role: 'CMO', image: '/images/amna.jpeg' },
+              { name: 'Hafsa', role: 'Head of YUNITY', image: '/images/hafsa.jpeg' },
+            ].map((member, i) => (
+              <div key={i} className="small-team-card mesh-card flex items-center gap-6 p-4 flex-1">
+                <img src={member.image} alt={member.name} className="small-team-image w-24 h-24 rounded-full object-cover grayscale transition-all duration-500" />
+                <div>
+                  <div className="team-role mb-1">{member.role}</div>
+                  <div className="team-name text-2xl mb-0">{member.name}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
