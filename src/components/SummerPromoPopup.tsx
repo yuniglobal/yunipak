@@ -64,7 +64,7 @@ const SummerPromoPopup: React.FC = () => {
 
         .popup-card {
           width: 100%;
-          max-width: 850px;
+          max-width: 480px;
           background: var(--bg-primary, #020604);
           border-radius: 28px;
           position: relative;
@@ -111,26 +111,15 @@ const SummerPromoPopup: React.FC = () => {
 
         .popup-split-container {
           display: flex;
-          gap: 3rem;
+          flex-direction: column;
           margin-bottom: 2rem;
         }
 
         .popup-column {
-          flex: 1;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
           position: relative;
-        }
-
-        .popup-column:first-child::after {
-          content: '';
-          position: absolute;
-          right: -1.5rem;
-          top: 5%;
-          bottom: 5%;
-          width: 1px;
-          background: rgba(255, 255, 255, 0.08);
         }
 
         .column-content {
@@ -303,38 +292,7 @@ const SummerPromoPopup: React.FC = () => {
         </button>
 
         <div className="popup-split-container">
-          {/* Column 1: Summer Camp 2026 */}
-          <div className="popup-column">
-            <div className="column-content">
-              <div className="popup-badge">
-                <div className="badge-pulse"></div>
-                ☀️ Summer Camp 2026
-              </div>
-              <h3 className="column-title">Accelerate Your Skills</h3>
-              <p className="column-desc">
-                Join our premium IT & soft skills programs. 7 specialized tracks designed for career growth and hands-on learning at NASTP.
-              </p>
-              <div className="highlights-list">
-                <div className="highlight-item">
-                  <Sparkles size={18} color="var(--pk-green, #0c6238)" />
-                  <span>7 Specialized Tracks & Certifications</span>
-                </div>
-                <div className="highlight-item">
-                  <ShieldCheck size={18} color="var(--pk-green, #0c6238)" />
-                  <span>PSEB Certified Industry Programs</span>
-                </div>
-                <div className="highlight-item">
-                  <Award size={18} color="var(--pk-green, #0c6238)" />
-                  <span>Interactive Real-World Projects</span>
-                </div>
-              </div>
-            </div>
-            <button className="column-btn" onClick={() => handleAction('/Programs')}>
-              Register Now <ArrowRight size={18} />
-            </button>
-          </div>
-
-          {/* Column 2: Individual Registration */}
+          {/* Individual Registration */}
           <div className="popup-column">
             <div className="column-content">
               <div className="popup-badge blue-badge">

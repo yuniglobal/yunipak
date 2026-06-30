@@ -74,7 +74,7 @@ export default function TrainingsPage() {
           }}
         >
           <Tent size={20} />
-          <span>Summer Camp 2026</span>
+          <span>Summer Camp 2026 (Closed)</span>
         </button>
       </div>
 

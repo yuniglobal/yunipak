@@ -260,6 +260,7 @@ const SummerCamp: React.FC = () => {
           <AnimatedTitle>YUNI Summer Camp 2026</AnimatedTitle>
           <p className="subtitle-tech">Empower your summer. Learn future-proof skills from industry professionals with hands-on projects.</p>
           <div className="camp-badge-container">
+            <span className="camp-tag" style={{ background: 'rgba(255, 50, 50, 0.1)', color: '#ff6b6b', border: '1px solid rgba(255, 50, 50, 0.2)' }}><i className="fa-solid fa-lock"></i> Registrations Closed</span>
             <span className="camp-tag"><i className="fa-solid fa-calendar-days"></i> Starts June 2026</span>
             <span className="camp-tag"><i className="fa-solid fa-graduation-cap"></i> Ages 12 - 25+</span>
             <span className="camp-tag"><i className="fa-solid fa-award"></i> Project Certificates</span>
@@ -327,9 +328,12 @@ const SummerCamp: React.FC = () => {
                         {(() => {
                           const { discounted } = getDiscountedPrice(course.price);
                           return (
-                            <span className="price-tag-tech">
-                              {discounted}
-                            </span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                              <span className="price-tag-tech">
+                                {discounted}
+                              </span>
+                              <span style={{ fontSize: '0.75rem', background: 'rgba(255, 50, 50, 0.15)', color: '#ff6b6b', border: '1px solid rgba(255, 50, 50, 0.25)', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: 700 }}>Closed</span>
+                            </div>
                           );
                         })()}
                         <span className="price-sub-label">{course.priceLabel}</span>
@@ -439,8 +443,8 @@ const SummerCamp: React.FC = () => {
                     </div>
                     
                     <div className="module-actions-premium">
-                      <button onClick={() => handleEnroll(selectedCourse, sub)} className="module-enroll-btn">
-                        Enroll Now <i className="fa-solid fa-arrow-right"></i>
+                      <button disabled style={{ opacity: 0.6, cursor: 'not-allowed' }} className="module-enroll-btn">
+                        Registrations Closed <i className="fa-solid fa-lock"></i>
                       </button>
                     </div>
                   </div>
@@ -488,8 +492,8 @@ const SummerCamp: React.FC = () => {
                       </div>
                     </div>
                     
-                    <button onClick={() => handleEnroll(selectedCourse, sub)} className="sub-enroll-btn">
-                      Enroll in This Track <i className="fa-solid fa-arrow-right"></i>
+                    <button disabled style={{ opacity: 0.6, cursor: 'not-allowed' }} className="sub-enroll-btn">
+                      Registrations Closed <i className="fa-solid fa-lock"></i>
                     </button>
                   </div>
                 ))}
