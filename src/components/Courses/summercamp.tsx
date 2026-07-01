@@ -221,6 +221,7 @@ const SummerCamp: React.FC = () => {
     setCurrentView("course-detail");
   };
 
+  /*
   const handleEnroll = (course: SummerCampCourse, subcat: SubCategory) => {
     window.scrollTo(0, 0);
     setSelectedCourse(course);
@@ -242,6 +243,7 @@ const SummerCamp: React.FC = () => {
     setCurrentView("checkout");
     setSubmitStatus(null);
   };
+  */
 
   const handleBackToHub = () => {
     window.scrollTo(0, 0);
