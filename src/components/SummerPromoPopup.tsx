@@ -38,7 +38,11 @@ const SummerPromoPopup: React.FC = () => {
 
   const handleAction = (path: string) => {
     handleDismiss();
-    navigate(path);
+    if (path.startsWith('http')) {
+      window.location.href = path;
+    } else {
+      navigate(path);
+    }
   };
 
   if (!isVisible) return null;
@@ -318,7 +322,7 @@ const SummerPromoPopup: React.FC = () => {
                 </div>
               </div>
             </div>
-            <button className="column-btn blue-btn" onClick={() => handleAction('/registration-individual')}>
+            <button className="column-btn blue-btn" onClick={() => handleAction('https://onboarding.yunipakistan.com/')}>
               Register Individually <ArrowRight size={18} />
             </button>
           </div>
