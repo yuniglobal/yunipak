@@ -53,7 +53,7 @@ const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbxv3FVEPexjV4
 const Trainings: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>("trainings");
   const [selectedCourse, setSelectedCourse] = useState<TrainingCourse | null>(null);
-  const [filter, setFilter] = useState<"all" | "cybersecurity" | "ai" | "web" | "digital" | "ecommerce" | "communications" | "datascience">("all");
+  const [filter, setFilter] = useState<"all" | "cybersecurity" | "ai" | "robotics" | "web-tech" | "business" | "arts" | "languages">("all");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const studentsCountRef = useRef<HTMLSpanElement>(null);
@@ -71,14 +71,15 @@ const Trainings: React.FC = () => {
   });
 
   const filteredCourses = trainingsData.filter((course) => {
+    if (course.parentId) return false;
     if (filter === "all") return true;
     if (filter === "cybersecurity") return course.category === "Cybersecurity";
-    if (filter === "ai") return course.category === "AI" || course.category === "Data Science";
-    if (filter === "web") return course.category === "Web";
-    if (filter === "digital") return course.category === "Digital";
-    if (filter === "ecommerce") return course.category === "E-Commerce";
-    if (filter === "communications") return course.category === "Communications";
-    if (filter === "datascience") return course.category === "Data Science";
+    if (filter === "ai") return course.category === "AI";
+    if (filter === "robotics") return course.category === "Robotics & Drones";
+    if (filter === "web-tech") return course.category === "Web & Tech";
+    if (filter === "business") return course.category === "Business & Management";
+    if (filter === "arts") return course.category === "Creative Arts";
+    if (filter === "languages") return course.category === "Languages";
     return true;
   });
 
@@ -184,13 +185,22 @@ const Trainings: React.FC = () => {
         </div>
 
         <div className="filters-container">
-          {["all", "cybersecurity", "ai", "web", "digital", "ecommerce", "communications"].map((cat) => (
+          {[
+            { id: "all", label: "All Protocols" },
+            { id: "cybersecurity", label: "Cybersecurity" },
+            { id: "ai", label: "AI" },
+            { id: "robotics", label: "Robotics & Drones" },
+            { id: "web-tech", label: "Web & Tech" },
+            { id: "business", label: "Business & Management" },
+            { id: "arts", label: "Creative Arts" },
+            { id: "languages", label: "Languages" },
+          ].map((cat) => (
             <button
-              key={cat}
-              onClick={() => setFilter(cat as Parameters<typeof setFilter>[0])}
-              className={`filter-btn-premium ${filter === cat ? "active" : ""}`}
+              key={cat.id}
+              onClick={() => setFilter(cat.id as any)}
+              className={`filter-btn-premium ${filter === cat.id ? "active" : ""}`}
             >
-              {cat.charAt(0).toUpperCase() + cat.slice(1).replace('cybersecurity', 'Cyber Security')}
+              {cat.label}
             </button>
           ))}
         </div>
@@ -221,6 +231,24 @@ const Trainings: React.FC = () => {
                       <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><Clock size={14} /> {course.duration.split('•')[0]}</span>
                       <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><BarChart size={14} /> {course.level}</span>
                     </div>
+                    {trainingsData.some(c => c.parentId === course.id) && (
+                      <div style={{
+                        background: 'rgba(0, 143, 76, 0.1)',
+                        border: '1px dashed var(--pk-green)',
+                        color: 'var(--pk-green)',
+                        padding: '0.5rem 1rem',
+                        borderRadius: '0.8rem',
+                        fontSize: '0.85rem',
+                        fontWeight: 600,
+                        marginBottom: '1.5rem',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        width: 'fit-content'
+                      }}>
+                        Includes {trainingsData.filter(c => c.parentId === course.id).length} specialized modules
+                      </div>
+                    )}
                     <div className="card-footer-premium">
                       <span className="price-tag-tech">{course.price}</span>
                       <button onClick={() => handleViewCourse(course)} className="view-btn-tech">
@@ -295,6 +323,69 @@ const Trainings: React.FC = () => {
             </button>
           </div>
         </div>
+
+        {selectedCourse && (() => {
+          const subCourses = trainingsData.filter(c => c.parentId === selectedCourse.id);
+          if (subCourses.length === 0) return null;
+          return (
+            <div className="subcourses-section-premium" style={{ marginTop: '4rem' }}>
+              <h3 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <span style={{ color: 'var(--pk-green)' }}>✦</span> Program Modules & Sub-courses
+              </h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '2rem' }}>
+                {subCourses.map((sub) => (
+                  <div key={sub.id} className="subcourse-card-premium" style={{
+                    background: 'var(--glass-bg)',
+                    backdropFilter: 'blur(20px)',
+                    border: '1px solid var(--glass-border)',
+                    borderRadius: '2rem',
+                    padding: '2rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    transition: 'all 0.3s ease'
+                  }}>
+                    <div>
+                      <span style={{ 
+                        color: 'var(--pk-green)', 
+                        fontSize: '0.75rem', 
+                        fontWeight: 800, 
+                        textTransform: 'uppercase', 
+                        letterSpacing: '0.1em', 
+                        display: 'block', 
+                        marginBottom: '0.5rem' 
+                      }}>
+                        {sub.level} • {sub.duration}
+                      </span>
+                      <h4 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#fff', marginBottom: '0.75rem' }}>{sub.title}</h4>
+                      <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>{sub.description}</p>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border-light)', paddingTop: '1.25rem' }}>
+                      <span style={{ fontSize: '1.3rem', fontWeight: 900, color: 'var(--text-primary)' }}>{sub.price}</span>
+                      <button 
+                        onClick={() => handleEnroll(sub)}
+                        className="enroll-btn-sub"
+                        style={{
+                          background: 'rgba(0, 143, 76, 0.1)',
+                          border: '1px solid var(--pk-green)',
+                          color: 'var(--pk-green)',
+                          padding: '0.6rem 1.2rem',
+                          borderRadius: '10px',
+                          fontSize: '0.9rem',
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease'
+                        }}
+                      >
+                        Enroll Module
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
       </div>
     </div>
   );
@@ -565,6 +656,23 @@ const Trainings: React.FC = () => {
         }
         .submit-btn-premium:hover:not(:disabled) { background: var(--pk-green-light); transform: translateY(-3px); box-shadow: 0 15px 30px var(--pk-green-glow); }
         .submit-btn-premium:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .subcourse-card-premium {
+          transition: all 0.4s var(--transition-smooth) !important;
+        }
+        .subcourse-card-premium:hover {
+          transform: translateY(-8px);
+          border-color: var(--pk-green) !important;
+          box-shadow: 0 20px 40px var(--glass-shadow), 0 0 15px rgba(0, 143, 76, 0.15);
+        }
+        .enroll-btn-sub {
+          transition: all 0.3s ease !important;
+        }
+        .enroll-btn-sub:hover {
+          background: var(--pk-green) !important;
+          color: #fff !important;
+          box-shadow: 0 10px 20px rgba(0, 143, 76, 0.2);
+        }
 
         /* --- Responsive --- */
         @media (max-width: 1024px) {
