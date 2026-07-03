@@ -1,6 +1,6 @@
 
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Hero from '../components/HOME/Hero';
@@ -18,6 +18,7 @@ if (typeof window !== 'undefined') {
 export default function Home() {
   const teamRef = useRef<HTMLDivElement>(null);
   const testimonialsRef = useRef<HTMLDivElement>(null);
+  const [showBanner, setShowBanner] = useState(true);
 
 
 
@@ -170,7 +171,164 @@ export default function Home() {
             font-size: 2rem;
           }
         }
+
+        .apology-banner-premium {
+          position: relative;
+          background: rgba(255, 159, 10, 0.08);
+          border: 1px solid rgba(255, 159, 10, 0.2);
+          border-radius: 1.5rem;
+          margin: 6.5rem auto 0;
+          max-width: 1200px;
+          padding: 1.25rem 2rem;
+          backdrop-filter: blur(20px);
+          overflow: hidden;
+          z-index: 50;
+          transition: all 0.4s ease;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .apology-banner-glow {
+          position: absolute;
+          top: -50%;
+          left: -10%;
+          width: 300px;
+          height: 300px;
+          background: radial-gradient(circle, rgba(255, 159, 10, 0.15) 0%, transparent 70%);
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        .apology-banner-content {
+          position: relative;
+          z-index: 2;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1.5rem;
+          flex-wrap: wrap;
+        }
+
+        .apology-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.6rem;
+          background: rgba(255, 159, 10, 0.15);
+          border: 1px solid rgba(255, 159, 10, 0.3);
+          color: #ff9f0a;
+          padding: 0.5rem 1rem;
+          border-radius: 9999px;
+          font-size: 0.75rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          white-space: nowrap;
+        }
+
+        .apology-badge-dot {
+          width: 8px;
+          height: 8px;
+          background: #ff9f0a;
+          border-radius: 50%;
+          box-shadow: 0 0 10px #ff9f0a;
+          display: inline-block;
+          animation: pulse-apology 2s infinite;
+        }
+
+        @keyframes pulse-apology {
+          0% { opacity: 0.5; }
+          50% { opacity: 1; }
+          100% { opacity: 0.5; }
+        }
+
+        .apology-text {
+          flex: 1;
+          font-size: 0.95rem;
+          color: #ffe0b2;
+          line-height: 1.6;
+          margin: 0;
+        }
+
+        .apology-text strong {
+          color: #fff;
+          font-weight: 700;
+        }
+
+        .apology-close-btn {
+          background: rgba(255, 159, 10, 0.1);
+          border: 1px solid rgba(255, 159, 10, 0.2);
+          color: #ffe0b2;
+          font-size: 1.5rem;
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .apology-close-btn:hover {
+          background: #ff9f0a;
+          color: #000;
+          border-color: #ff9f0a;
+          transform: scale(1.1);
+          box-shadow: 0 0 15px rgba(255, 159, 10, 0.4);
+        }
+
+        @media (max-width: 1240px) {
+          .apology-banner-premium {
+            margin-left: 1.5rem;
+            margin-right: 1.5rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .apology-banner-premium {
+            margin: 5rem 1rem 0;
+            padding: 1.25rem 1.5rem;
+            border-radius: 1.2rem;
+          }
+          .apology-banner-content {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+          }
+          .apology-close-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2rem;
+          }
+          .apology-text {
+            padding-right: 2rem;
+          }
+        }
       `}</style>
+
+      {showBanner && (
+        <div className="apology-banner-premium">
+          <div className="apology-banner-glow"></div>
+          <div className="apology-banner-content">
+            <div className="apology-badge">
+              <span className="apology-badge-dot"></span>
+              Event Rescheduled
+            </div>
+            <p className="apology-text">
+              We sincerely apologize for the inconvenience: the grand YUNI event has been postponed to <strong>July 27, 2026</strong>. All registrations remain fully secured and active. We look forward to seeing you there!
+            </p>
+            <button 
+              className="apology-close-btn" 
+              onClick={() => setShowBanner(false)}
+              aria-label="Dismiss banner"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
 
       <Hero />
 
