@@ -317,10 +317,10 @@ export default function Home() {
               Event Rescheduled
             </div>
             <p className="apology-text">
-              We sincerely apologize for the inconvenience: the grand YUNI event has been postponed to <strong>July 27, 2026</strong>. All registrations remain fully secured and active. We look forward to seeing you there!
+              We sincerely apologize for the inconvenience: the grand YUNI event has been postponed to <strong>1-2 August 2026</strong>. All registrations remain fully secured and active. We look forward to seeing you there!
             </p>
-            <button 
-              className="apology-close-btn" 
+            <button
+              className="apology-close-btn"
               onClick={() => setShowBanner(false)}
               aria-label="Dismiss banner"
             >
