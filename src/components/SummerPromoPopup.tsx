@@ -296,34 +296,34 @@ const SummerPromoPopup: React.FC = () => {
         </button>
 
         <div className="popup-split-container">
-          {/* Individual Registration */}
+          {/* Yuni Trainings */}
           <div className="popup-column">
             <div className="column-content">
               <div className="popup-badge blue-badge">
                 <div className="badge-pulse"></div>
-                👤 YUNI-TY Event
+                📘 Yuni Trainings
               </div>
-              <h3 className="column-title">Individual Registration</h3>
+              <h3 className="column-title">Yuni Trainings</h3>
               <p className="column-desc">
-                Register as an individual to participate in certified tech courses, skill workshops, and network with experts.
+                Explore YUNI's professional training programs designed to build practical tech skills with mentorship and certification pathways.
               </p>
               <div className="highlights-list">
                 <div className="highlight-item">
                   <Sparkles size={18} color="#0091ea" />
-                  <span>Certified Workshops & Tracks</span>
+                  <span>Professional Tracks Across Domains</span>
                 </div>
                 <div className="highlight-item">
                   <ShieldCheck size={18} color="#0091ea" />
-                  <span>Official Certificate Ref IDs</span>
+                  <span>Structured Learning & Mentorship</span>
                 </div>
                 <div className="highlight-item">
                   <Award size={18} color="#0091ea" />
-                  <span>Keynote Panel Sessions</span>
+                  <span>Industry-Relevant Certifications</span>
                 </div>
               </div>
             </div>
-            <button className="column-btn blue-btn" onClick={() => handleAction('https://onboarding.yunipakistan.com/')}>
-              Register Individually <ArrowRight size={18} />
+            <button className="column-btn blue-btn" onClick={() => handleAction('/trainings')}>
+              Explore Yuni Trainings <ArrowRight size={18} />
             </button>
           </div>
         </div>
