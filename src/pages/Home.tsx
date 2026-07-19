@@ -426,7 +426,7 @@ export default function Home() {
           {/* Right: 3 members */}
           <div className="flex flex-col gap-4 h-full">
             {[
-              { name: 'Ahmed Malik', role: 'COO', image: '/images/ahmed.jpeg' },
+              
               { name: 'Amna Adil', role: 'CMO', image: '/images/amna.jpeg' },
               { name: 'Hafsa', role: 'Head of YUNITY', image: '/images/hafsa.jpeg' },
             ].map((member, i) => (
