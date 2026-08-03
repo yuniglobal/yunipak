@@ -128,10 +128,7 @@ const PromoBanner: React.FC = () => {
             </span>
             <span className="separator">|</span>
             <span>7 Specialized Tracks</span>
-            <span className="separator">|</span>
-            <span>NASTP Rawalpindi</span>
-            <span className="separator">|</span>
-            <span>PSEB Certified</span>
+            
           </div>
         ))}
       </div>

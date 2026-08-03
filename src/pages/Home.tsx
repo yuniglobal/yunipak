@@ -23,7 +23,7 @@ export default function Home() {
 
 
   const testimonials = [
-    { name: 'Ahmed R.', course: 'Cybersecurity', text: 'The program at NASTP completely changed my trajectory. Landed a job immediately.', letter: 'A' },
+    { name: 'Ahmed R.', course: 'Cybersecurity', text: 'The program completely changed my trajectory. Landed a job immediately.', letter: 'A' },
     { name: 'Fatima S.', course: 'Amazon Mastery', text: 'The YUNI ecosystem is incredible. We launched a real product during our professional training.', letter: 'F' },
     { name: 'Usman K.', course: 'Prompt Engineering', text: 'The YUNI LMS is smoother than my university. The gamification kept me hooked.', letter: 'U' }
   ];
@@ -317,7 +317,7 @@ export default function Home() {
               Event Rescheduled
             </div>
             <p className="apology-text">
-              We sincerely apologize for the inconvenience: the grand YUNI event has been postponed to <strong>1-2 August 2026</strong>. All registrations remain fully secured and active. We look forward to seeing you there!
+              We sincerely apologize for the inconvenience: the grand YUNI event has been postponed to <strong> August 2026</strong>. All registrations remain fully secured and active.Will Announce the new dates soon. 
             </p>
             <button
               className="apology-close-btn"
