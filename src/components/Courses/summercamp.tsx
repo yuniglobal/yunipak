@@ -213,7 +213,7 @@ const SummerCamp: React.FC = () => {
       setIsSubmitting(false);
     }
   };
-    setIsSubmitting(false),
+    
       
 
   const handleViewCourse = (course: SummerCampCourse) => {
