@@ -270,7 +270,7 @@ const Footer = () => {
               <img src="/images/logo2.png" alt="YUNI" style={{height: '50px', width: 'auto'}} />
             </div>
             <p className="footer-desc">
-              The technical benchmark of Pakistan. Based at NASTP, 
+              The technical benchmark of Pakistan.  
               we are architecting the next generation of engineers, 
               creators, and digital sovereign leaders.
             </p>
@@ -301,7 +301,7 @@ const Footer = () => {
         <div className="footer-bottom">
           <div className="footer-copyright">
             © {year} YUNI PAKISTAN COLLECTIVE
-            <div className="footer-built" style={{ marginTop: '0.5rem' }}>BUILT AT NASTP ISLAMABAD</div>
+            <div className="footer-built" style={{ marginTop: '0.5rem' }}>ISLAMABAD, PAKISTAN</div>
           </div>
           
           <div className="social-row">

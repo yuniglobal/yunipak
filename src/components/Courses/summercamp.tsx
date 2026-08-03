@@ -60,7 +60,7 @@ const getDiscountedPrice = (priceStr: string) => {
     numericVal: String(numeric)
   };
 };
-
+          
 const SummerCamp: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>("trainings");
   const [selectedCourse, setSelectedCourse] = useState<SummerCampCourse | null>(null);
@@ -213,6 +213,8 @@ const SummerCamp: React.FC = () => {
       setIsSubmitting(false);
     }
   };
+    setIsSubmitting(false),
+      
 
   const handleViewCourse = (course: SummerCampCourse) => {
     window.scrollTo(0, 0);

@@ -346,29 +346,8 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {/* Partner: NASTP */}
-          <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
-            <div className="h-16 flex items-center justify-center mb-3">
-              <img src="/images/nastp.png" alt="NASTP Logo" className="max-h-full max-w-[150px] object-contain" />
-            </div>
-            <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Strategic Partner</span>
-          </div>
-
-          {/* Partner: PSEB */}
-          <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
-            <div className="h-16 flex items-center justify-center mb-3">
-              <img src="/images/pseb-certificate.png" alt="PSEB Registration Certificate" className="max-h-full max-w-[150px] object-contain" />
-            </div>
-            <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Official Provider</span>
-          </div>
-
-          {/* Partner 1: NICAT */}
-          <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
-            <div className="h-16 flex items-center justify-center mb-3">
-              <img src="/images/nicat.png" alt="NICAT Logo" className="max-h-full max-w-[150px] object-contain" />
-            </div>
-            <span className="text-xs text-[var(--text-tertiary)] font-semibold uppercase tracking-widest">Aerospace Technology</span>
-          </div>
+          
+          
 
           {/* Partner 2: Fazaia Bilquis College */}
           <div className="glass-panel rounded-2xl h-36 flex flex-col items-center justify-center p-6 text-center transition-all hover:-translate-y-1 hover:border-[var(--pk-green-light)] hover:shadow-lg">
