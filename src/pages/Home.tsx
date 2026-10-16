@@ -389,7 +389,6 @@ export default function Home() {
           <div className="flex flex-col gap-4 h-full">
             {[
               
-              { name: 'Amna Adil', role: 'CMO', image: '/images/amna.jpeg' },
               { name: 'Hafsa', role: 'Head of YUNITY', image: '/images/hafsa.jpeg' },
             ].map((member, i) => (
               <div key={i} className="small-team-card mesh-card flex items-center gap-6 p-4 flex-1">
